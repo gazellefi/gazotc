@@ -2,7 +2,7 @@
 .bblist {
   display: flex;
   flex-direction: column;
-  margin: 25px 30px;
+  margin: 5px 5px;
 }
 .bblist_table {
   display: flex;
@@ -20,7 +20,7 @@
 .el-table {
   display: flex;
   flex-direction: column;
-  width: 1200px;
+  width: 600px;
 }
 </style>
 <template>
@@ -58,8 +58,8 @@
 
         <el-input
           v-model="form.zdnum"
-          placeholder="赛选数量"
-          style="margin-left: 15px; max-width: 250px"
+          placeholder="筛选数量"
+          style="margin-left: 15px; max-width: 100px"
         ></el-input>
 
         <el-button
@@ -71,12 +71,12 @@
         ></el-button>
       </div>
       <el-table v-loading="jiazai" :data="list">
-        <el-table-column fixed prop="iorder" label="订单"> </el-table-column>
-        <el-table-column prop="order" label="商家"> </el-table-column>
-        <el-table-column prop="moa" label="数量"> </el-table-column>
-        <el-table-column prop="zer" label="最低数"> </el-table-column>
-        <el-table-column prop="uni" label="单价"> </el-table-column>
-        <el-table-column fixed="right" label="操作">
+        <el-table-column align=center width=50px prop="iorder" label="订单"> </el-table-column>
+        <!-- <el-table-column prop="order" label="商家"> </el-table-column> -->
+        <el-table-column  align=center prop="moa" label="数量"> </el-table-column>
+        <el-table-column  align=center prop="zer" label="最低数"> </el-table-column>
+        <el-table-column align=center width=50px prop="uni" label="单价"> </el-table-column>
+        <el-table-column width=50px label="操作">
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="opengoumai(scope.row)"
               >购买</el-button
@@ -87,7 +87,7 @@
     </div>
 
     <!-- 弹出购买框 -->
-    <el-dialog title="买入" :visible.sync="mairucode" width="30%">
+    <el-dialog title="买入" :visible.sync="mairucode" width=350px>
       <el-form :model="mr_form" label-width="80px">
         <el-form-item label="订单号">
           <el-input v-model="mr_form.ddinfo['iorder']" disabled></el-input>
@@ -133,9 +133,9 @@ export default {
       dq.hbarr.push(huoarr[key]);
     }
 
-    dq.form["type"] = dq.hbarr[0]["key"];
-    dq.form["type_b"] =
-      dq.hbarr.length >= 1 ? dq.hbarr[1]["key"] : dq.hbarr[0]["key"];
+    dq.form["type_b"] = dq.hbarr[0]["key"];
+    dq.form["type"] =
+      dq.hbarr.length >= 1 ? dq.hbarr[2]["key"] : dq.hbarr[0]["key"];
     //初始化WEB3
     //监测用户是否安装MASK
     if (typeof ethereum === "undefined") {
@@ -158,19 +158,19 @@ export default {
       web3 = await new Web3(provider);
       if (web3 && provider) {
         //其他钱包使用测试网络
-        if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-          var wlcode = window.ethereum.networkVersion;
-          //imtoken只能查看 无法操作 出发是ETF主网
-          if (window.ethereum.isImToken) {
-            web3.setProvider(config["hyue"][config["key"]]["Url"]);
-          }
-          //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-          if (window.ethereum.isMetaMask && wlcode != 4) {
-            web3.setProvider(config["hyue"][config["key"]]["Url"]);
-          }
-        } else {
-          web3.setProvider(config["hyue"][config["key"]]["Url"]);
-        }
+        // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
+        //   var wlcode = window.ethereum.networkVersion;
+        //   //imtoken只能查看 无法操作 出发是ETF主网
+        //   if (window.ethereum.isImToken) {
+        //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+        //   }
+        //   //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
+        //   if (window.ethereum.isMetaMask && wlcode != 4) {
+        //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+        //   }
+        // } else {
+        //   web3.setProvider(config["hyue"][config["key"]]["Url"]);
+        // }
         address = provider.selectedAddress;
         ccdotconn = new web3.eth.Contract(ccdotc_abi, ccdotc_key);
         dq.listajax();
@@ -332,8 +332,9 @@ export default {
         Number(this.mr_form["ddinfo"]["uni"]) * 10 ** 6
       );
       //提交
+      console.log("1258")
       ccdotconn.methods
-        .cctaker(this.mr_form["ddinfo"]["iorder"], mr_num + "", mr_danjia + "")
+        .cctaker(this.mr_form["ddinfo"]["iorder"], dq.getFNum(mr_num) + "", mr_danjia + "")
         .send(
           {
             from: address,

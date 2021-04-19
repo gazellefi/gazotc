@@ -206,7 +206,7 @@
                     show-word-limit>
                     </el-input>
                 </div>
-                <p class="add_form_item_input_p" @click="beizhuxiugai">修改备注</p>
+                <p class="add_form_item_input_p" @click="beizhuxiugai">修改备注2</p>
             </div>
             <el-button type="primary" style="margin-top: 30px;" @click="tijiao">提交</el-button>
             <br />

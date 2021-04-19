@@ -140,7 +140,7 @@ import { Notify,Dialog,Toast  } from 'vant';
 
 import Web3 from "web3";
 import Web3Modal from "web3modal";
-import config from "../../config";
+//import config from "../../config";
 
 
 import dotsapi from "../../api/dots.json";
@@ -155,17 +155,17 @@ export default {
             huobi:[
                 {
                     id:"USDT",
-                    hyue:'0xEc8053A77D432A08b2C59363D98eCA903a12df5a',
-                    je:0,
-                    sdje:0,
-                    num:6
-                },
-                {
-                    id:"WETH",
-                    hyue:'0xf537270EdB6B5792c20D204bdc9Eb9735c6A790F',
+                    hyue:'0xa71edc38d189767582c38a3145b5873052c3e47a',
                     je:0,
                     sdje:0,
                     num:18
+                },
+                {
+                    id:"TEST",
+                    hyue:'0x489B639BC2D68bB6D6f21d8Ee0f3bdbf41fE1C88',
+                    je:0,
+                    sdje:0,
+                    num:6
                 }
             ],
             hbindex:0,
@@ -210,19 +210,19 @@ export default {
             web3 = new Web3(provider);
             if (web3 && provider) {
                 //其他钱包使用测试网络
-                if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-                    var wlcode = window.ethereum.networkVersion;
-                    //imtoken只能查看 无法操作 出发是ETF主网
-                    if (window.ethereum.isImToken) {
-                        web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                    }
-                    //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-                    if (window.ethereum.isMetaMask && wlcode != 4) {
-                        web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                    }
-                }else{
-                    web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                }
+                // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
+                //     var wlcode = window.ethereum.networkVersion;
+                //     //imtoken只能查看 无法操作 出发是ETF主网
+                //     if (window.ethereum.isImToken) {
+                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                //     }
+                //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
+                //     if (window.ethereum.isMetaMask && wlcode != 4) {
+                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                //     }
+                // }else{
+                //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                // }
                 address = provider.selectedAddress; 
                 dq.gethuobizichan();
             }
@@ -244,7 +244,8 @@ export default {
                 Toast.loading({
                     message: '查询中...'
                 });
-                var dotsconn = new web3.eth.Contract(dotsapi,'0xc25eFa9c0052856e4e4B713a180649b8c088a913');
+                var dotsconn = new web3.eth.Contract(dotsapi,'0x23D58bd73136888ffAa3fDE672FC41870E928AA3');
+                console.log(dotsconn)
                 //开始查询
                 dotsconn.methods.balancepro(address+"",dq.huobi[index]['hyue']+"").call((error,ret)=>{
                     if (ret) {
@@ -265,7 +266,6 @@ export default {
 
             listajax();
         },
-
         tixianajax(){
             if (this.huobi[this.hbindex]['je'] < Number(this.je)) {
                 Notify({ type: 'danger', message: '提款金额不能大于可提额度' });
@@ -277,7 +277,7 @@ export default {
             var dq = this;
             var lx_time = "";
             //执行提款操作
-            var dotsconn = new web3.eth.Contract(dotsapi,'0xc25eFa9c0052856e4e4B713a180649b8c088a913');
+            var dotsconn = new web3.eth.Contract(dotsapi,'0x23D58bd73136888ffAa3fDE672FC41870E928AA3');
             var tk_je = dq.huobi[dq.hbindex]['je'] - Number(dq.je);
             var numa = Number(dq.huobi[dq.hbindex]['num']);
             dotsconn.methods.withdraw(dq.huobi[dq.hbindex]['hyue']+"",(Number(dq.je)*(10**numa))+"").send({

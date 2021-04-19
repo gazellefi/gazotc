@@ -14,7 +14,6 @@
     .lqcsb_w_top{
         border-bottom: 1px solid #eee;
     }
-
     .lqcsb_w_ul{
         width: 100%;
         float: left;
@@ -44,6 +43,19 @@
         font-size: 14px;
         opacity: 0.8;
     }
+    .qianbao_view_head_item_li_num{
+        display: flex;
+        padding: 2.5px 15px;
+        font-size: 28px;
+        color: rgb(67, 57, 207);
+        align-content: center;
+    }
+    .qianbao_view_head_item_li{
+        display: flex;
+        padding: 2.5px 15px;
+        color: rgb(67, 57, 207);
+        align-items: center;
+    }
 </style>
 <template>
     <div class="lqcsb">
@@ -55,6 +67,7 @@
             :placeholder="true"
             z-index="55"
             :safe-area-inset-top="true"
+            @click-left="goback"
         />
 
         <div class="lqcsb_w" v-if="key == 'huobi'">
@@ -76,8 +89,10 @@
                     </div>
                 </div>
                 <div class="lqcsb_w_ul_item temsg">
-                    如领取测试失败<br /> 请联系微信:lulusun2016
+                    如领取测试币失败<br /> 请联系微信:lulusun2016
                 </div>
+                <div class="qianbao_view_head_item_li" style="opacity: 1.5;">你的测试币余额(Test)：</div>               
+                <div class="qianbao_view_head_item_li_num">{{ user_sc.toFixed(2) }}</div>
             </div>
         </div>
         <div class="lqcsb_w" v-if="key != 'huobi'">
@@ -103,7 +118,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 <script>
@@ -111,19 +125,23 @@ import lquapi from "../../api/lqu.json";
 import lquapihb from "../../abi/huobi/lqabi.json";
 
 import { Dialog,Notify  } from 'vant';
-
 import config from "../../config";
 
 import Web3 from "web3";
 import Web3Modal from "web3modal";
 
+var test_abi = config['hyue'][config['key']]['test']['abi'];
+var test_key = config['hyue'][config['key']]['test']['heyue'];
+
 var address;
 var web3;
+var testonn;
 export default {
     data(){
         return{
             key:config['key'],
             jiazai:false,
+            user_sc:0,
             zclisthb:[
                 {
                     id:"Test",
@@ -158,7 +176,7 @@ export default {
             //初始化
             webinit();
         }
-        // var dq = this;
+         var dq = this;
         async function webinit() {
             const providerOptions = {
                 /* See Provider Options Section */
@@ -170,29 +188,38 @@ export default {
             web3 = new Web3(provider);
             if (web3 && provider) {
                 address = provider.selectedAddress;
+                testonn = new web3.eth.Contract(test_abi, test_key);
+                dq.getsczc();
                 //其他钱包使用测试网络
-                if (window.ethereum.isImToken || window.ethereum.isMetaMask || window.ethereum.isHbWallet) {
-                    var wlcode = window.ethereum.networkVersion;
-                    //imtoken只能查看 无法操作 出发是ETF主网
-                    if (window.ethereum.isImToken) {
-                        web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                    }
-                    //检测是否是火币钱包
-                    if (window.ethereum.isHbWallet) {
-                        address = window.ethereum.address;
-                        web3.setProvider(config["hyue"]['huobi']["Url"]);
-                    }
-                    //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-                    if (window.ethereum.isMetaMask && wlcode != 4) {
-                        web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                    }
-                }else{
-                    web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                }
+                // if (window.ethereum.isImToken || window.ethereum.isMetaMask || window.ethereum.isHbWallet) {
+                //     var wlcode = window.ethereum.networkVersion;
+                //     //imtoken只能查看 无法操作 出发是ETF主网
+                //     if (window.ethereum.isImToken) {
+                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                //     }
+                //     //检测是否是火币钱包
+                //     if (window.ethereum.isHbWallet) {
+                //         address = window.ethereum.address;
+                //         web3.setProvider(config["hyue"]['huobi']["Url"]);
+                //     }
+                //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
+                //     if (window.ethereum.isMetaMask && wlcode != 4) {
+                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                //     }
+                // }else{
+                //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                // }
             }
         }
     },
     methods:{
+         async getsczc(){
+            var scze = await testonn.methods.balanceOf(address).call();
+            this.user_sc = scze/(10**6);
+        },
+        goback(){
+            this.$router.go(-1);
+        },
         lqajax(){
             var dq = this;
             var lquconn;
@@ -249,6 +276,7 @@ export default {
                 lquconn.methods.faucet(dq.zckey+"").send({
                     from:address
                 },(err,ret)=>{
+                    console.log(err)
                     dq.jiazai = false;
                     if (ret) {
                         var msg = knum+'个'+ktitle+'已发送到您的账户！';

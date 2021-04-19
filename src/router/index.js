@@ -55,6 +55,28 @@ const routes = [
     ]
   },
   {
+    path: '/simu',
+    name: 'simu',
+    component: ()=> import('../views/ccdotc/Simu'),
+    children:[
+      {
+        path: '/simu',
+        name: 'simu',
+        component: ()=> import('../views/ccdotc/simu/Qianbao')
+      },
+      {
+        path: '/simu/chongzhi',
+        name: 'chongzhi',
+        component: ()=> import('../views/ccdotc/simu/Chongzhi')
+      },
+      {
+        path: '/simu/tixian',
+        name: 'tixian',
+        component: ()=> import('../views/ccdotc/simu/Tixian')
+      }
+    ]
+  },
+  {
     path: '/ddinfow',
     name: 'ddinfow',
     component: ()=> import('../views/page/ddgl/Ddinfow')

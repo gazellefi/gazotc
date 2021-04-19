@@ -109,7 +109,7 @@
 <template>
     <div class="qianbao">
         <van-nav-bar
-            title="我的钱包"
+            title="法币钱包"
             right-text=""
             left-arrow
             :fixed="true"
@@ -135,7 +135,7 @@
                 <div class="qianbao_view_cd_item" style="margin-left: 0px;" @click="openurl('./chongzhi')">
                     <i class="el-icon-refresh-left"></i><span>充币</span>
                 </div>
-                <div class="qianbao_view_cd_item"  @click="openurl('./tixian')">
+                <div class="qianbao_view_cd_item"  @click="openurl('./tixianhb')">
                     <i class="el-icon-refresh-right"></i><span>提币</span>
                 </div>
                 <div class="qianbao_view_cd_item"  @click="openurl('./baozhengjin')">
@@ -180,9 +180,9 @@ import config from "../../config";
 var dotc_abi = config['hyue'][config['key']]['dotc']['abi'];
 var dotc_key = config['hyue'][config['key']]['dotc']['heyue'];
 
-import VConsole from "vconsole";
+//import VConsole from "vconsole";
 
-new VConsole();
+//new VConsole();
 //全局变量
 var web3 = "";
 var address = "";
@@ -195,7 +195,7 @@ export default {
             huobi:[{
                 id:"保证金",
                 hyue:'baozhengjing',
-                num:6
+                num:18
             }],
             list:[],
             user_zc:0
@@ -243,24 +243,24 @@ export default {
             if (web3 && provider) {
                 address = provider.selectedAddress;
                 //其他钱包使用测试网络
-                if (window.ethereum.isImToken || window.ethereum.isMetaMask || window.ethereum.isHbWallet) {
-                    var wlcode = window.ethereum.networkVersion;
-                    //imtoken只能查看 无法操作 出发是ETF主网
-                    if (window.ethereum.isImToken) {
-                        web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                    }
-                    //检测是否是火币钱包
-                    if (window.ethereum.isHbWallet) {
-                        address = window.ethereum.address;
-                        web3.setProvider(config["hyue"]['huobi']["Url"]);
-                    }
-                    //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-                    if (window.ethereum.isMetaMask && wlcode != 4) {
-                        web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                    }
-                }else{
-                    web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                }
+                // if (window.ethereum.isImToken || window.ethereum.isMetaMask || window.ethereum.isHbWallet) {
+                //     var wlcode = window.ethereum.networkVersion;
+                //     //imtoken只能查看 无法操作 出发是ETF主网
+                //     if (window.ethereum.isImToken) {
+                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                //     }
+                //     //检测是否是火币钱包
+                //     if (window.ethereum.isHbWallet) {
+                //         address = window.ethereum.address;
+                //         web3.setProvider(config["hyue"]['huobi']["Url"]);
+                //     }
+                //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
+                //     if (window.ethereum.isMetaMask && wlcode != 4) {
+                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                //     }
+                // }else{
+                //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                // }
                 dq.getqblist();
             }
         }
@@ -300,8 +300,13 @@ export default {
                                 balancepro:(Number(yue_arr[index]) / (10**num)).toFixed(2),
                                 lockpro:(Number(lock_yue_arr[index]) / (10**num)).toFixed(2)
                             });
-
-                            uzc = (Number(yue_arr[index]) / (10**num).toFixed(2)) + uzc;
+                        }
+                         for (let index = 0; index < dq.huobi.length-1; index++) {
+                            var num_a = Number(dq.huobi[index]['num']);
+                            //var zhic = dq.huobi[index]['key'];
+                            //var pros = dotsconn.methods.pros(zhic).call();
+                            //var danjia = Number(pros['uni']) / (10**6);
+                            uzc = ((Number(yue_arr[index])+Number(lock_yue_arr[index]))/ (10**num_a).toFixed(2)) + uzc;
                             dq.user_zc = uzc;
                         }
                         Toast.clear();
@@ -315,7 +320,7 @@ export default {
             if (e == 1) {
                 this.$router.push({ path: './chongzhi', query: { title:htitle+"" }});
             }else{
-                this.$router.push({ path: './tixian', query: { title:htitle+"" }});
+                this.$router.push({ path: './tixianhb', query: { title:htitle+"" }});
             }
         }
     }

@@ -138,10 +138,10 @@ button.anniu {
   content: "";
   position: absolute;
   bottom: 0;
-  width: 15px;
+  width: 40px;
   height: 2px;
   background-color: #2ead65;
-  left: calc((100% - 15px) / 2);
+  left: calc((100% - 40px) / 2);
   right: 0;
 }
 
@@ -184,6 +184,12 @@ button.anniu {
   display: flex;
   flex-direction: row;
   align-items: center;
+  font-size: 14px;
+}
+.ddlist_w_ddlist_ul_li_conn_lit {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
   font-size: 14px;
 }
 .ddlist_w_ddlist_ul_li_conn_li span.price-lab {
@@ -238,14 +244,14 @@ button.anniu {
             :class="tcode == 1 ? 'ac' : ''"
             @click="tcode = 1"
           >
-            购买
+            出售
           </div>
           <div
             class="ddlistaa_head_item_a anniucss"
             :class="tcode == 2 ? 'ac' : ''"
             @click="tcode = 2"
           >
-            出售
+            购买
           </div>
         </div>
 
@@ -383,7 +389,7 @@ button.anniu {
                 </div>
             </div>
 
-      <div class="ddlist_w_huobilist">
+      <div class="ddlist_w_huobilist" style="border-bottom: 1px solid #ddd;">
         <div class="ddlist_w_huobilist_ul">
           <div
             class="ddlist_w_huobilist_ul_li"
@@ -412,6 +418,7 @@ button.anniu {
                 {{ li.username }}
               </div>
               <span>({{ li.jd_num }}单/{{ li.bfb }}%)</span>
+              <span class="price-lab" style="margin-left: auto">订单号：{{ li.ddid }}</span>
             </div>
             <div class="ddlist_w_ddlist_ul_li_conn">
               <div class="ddlist_w_ddlist_ul_li_conn_li">
@@ -424,22 +431,29 @@ button.anniu {
                 >
                 <span class="price-lab jiage">{{ li.danjia }} {{ fabi }}</span>
               </div>
-              <div class="ddlist_w_ddlist_ul_li_conn_li">
-                <van-button
-                  type="info"
-                  @click="openmairu(li.ddid)"
-                  :disabled="li.user_u"
-                  v-if="tcode == 1"
-                  >出售{{ huobi }}</van-button
-                >
-                <van-button
-                  type="info"
-                  @click="openmairu(li.ddid)"
-                  :disabled="li.user_u"
-                  v-if="tcode == 2"
-                  >购买{{ huobi }}</van-button
-                >
-              </div>
+              <div class="ddlist_w_ddlist_ul_li_conn_lit">
+                  <span 
+                      >保证金:&nbsp;{{ li.bzj_u }}%</span
+                  >
+                  <span  style="margin-left: auto">
+                    <div class="ddlist_w_ddlist_ul_li_conn_li">
+                      <van-button
+                        type="info"
+                        @click="openmairu(li.ddid)"
+                        :disabled="li.user_u"
+                        v-if="tcode == 1"
+                        >出售{{ huobi }}</van-button
+                      >
+                      <van-button
+                        type="info"
+                        @click="openmairu(li.ddid)"
+                        :disabled="li.user_u"
+                        v-if="tcode == 2"
+                        >购买{{ huobi }}</van-button
+                      >
+                    </div>
+                 </span>
+               </div>
             </div>
           </div>
           <div class="ddlist_w_ddlist_ul_append">
@@ -469,12 +483,12 @@ var huobiarr = config["hbi"][config["key"]];
 var fabiarr = config["fabi"][config["key"]];
 var bzj_num = config["hyue"][config["key"]]["Bzj"]["num"];
 
-import VConsole from "vconsole";
+//import VConsole from "vconsole";
 
 export default {
   created() {
     this.body_h = document.documentElement.clientHeight;
-    new VConsole();
+    //new VConsole();
   },
   mounted() {
     var dq = this;
@@ -514,28 +528,28 @@ export default {
       if (web3 && provider) {
         Address = provider.selectedAddress;
         //其他钱包使用测试网络
-        if (
-          window.ethereum.isImToken ||
-          window.ethereum.isMetaMask ||
-          window.ethereum.isHbWallet
-        ) {
-          var wlcode = window.ethereum.networkVersion;
-          //imtoken只能查看 无法操作 出发是ETF主网
-          if (window.ethereum.isImToken) {
-            web3.setProvider(config["hyue"][config["key"]]["Url"]);
-          }
-          //检测是否是火币钱包
-          if (window.ethereum.isHbWallet) {
-            Address = window.ethereum.address;
-            web3.setProvider(config["hyue"]["huobi"]["Url"]);
-          }
-          //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-          if (window.ethereum.isMetaMask && wlcode != 4) {
-            web3.setProvider(config["hyue"][config["key"]]["Url"]);
-          }
-        } else {
-          web3.setProvider(config["hyue"][config["key"]]["Url"]);
-        }
+        // if (
+        //   window.ethereum.isImToken ||
+        //   window.ethereum.isMetaMask ||
+        //   window.ethereum.isHbWallet
+        // ) {
+        //   var wlcode = window.ethereum.networkVersion;
+        //   //imtoken只能查看 无法操作 出发是ETF主网
+        //   if (window.ethereum.isImToken) {
+        //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+        //   }
+        //   //检测是否是火币钱包
+        //   if (window.ethereum.isHbWallet) {
+        //     Address = window.ethereum.address;
+        //     web3.setProvider(config["hyue"]["huobi"]["Url"]);
+        //   }
+        //   //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
+        //   if (window.ethereum.isMetaMask && wlcode != 4) {
+        //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+        //   }
+        // } else {
+        //   web3.setProvider(config["hyue"][config["key"]]["Url"]);
+        // }
         dq.getlist(dq.tcode, dq.huobi, dq.fabi);
       }
     }

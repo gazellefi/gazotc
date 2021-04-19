@@ -4,6 +4,7 @@
         width: 375px;
         margin: auto;
         background-color: #fff;
+        margin: 5px 5px;
     }
     .fabu_head{
         width: calc(100% - 30px);
@@ -36,7 +37,7 @@
     }
     .fabu_tab_item.ac{
         opacity: 1;
-        color:aquamarine;
+        color:rgb(51, 75, 211);
         font-size: 22px;
     }
 
@@ -202,7 +203,7 @@
                     show-word-limit>
                     </el-input>
                 </div>
-                <p class="add_form_item_input_p" @click="user['user'] ? beizhuxiugai:''">修改备注</p>
+                <p class="add_form_item_input_p" @click="beizhuxiugai()">修改备注</p>
             </div>
             <el-button type="primary" style="margin-top: 30px;" @click="tijiao" :disabled="isform.zcye ? true:false">提交</el-button>
             <br />
@@ -259,19 +260,19 @@ export default {
             web3 = new Web3(provider);
             if (web3 && provider) {
                 //其他钱包使用测试网络
-                if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-                    var wlcode = window.ethereum.networkVersion;
-                    //imtoken只能查看 无法操作 出发是ETF主网
-                    if (window.ethereum.isImToken) {
-                        web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                    }
-                    //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-                    if (window.ethereum.isMetaMask && wlcode != 4) {
-                        web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                    }
-                }else{
-                    web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                }
+                // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
+                //     var wlcode = window.ethereum.networkVersion;
+                //     //imtoken只能查看 无法操作 出发是ETF主网
+                //     if (window.ethereum.isImToken) {
+                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                //     }
+                //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
+                //     if (window.ethereum.isMetaMask && wlcode != 4) {
+                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                //     }
+                // }else{
+                //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                // }
                 dq.user['user'] = provider.selectedAddress;
             }
         }
@@ -596,6 +597,7 @@ export default {
             function isdingdan() {
                 //监听订单发布结果
                 dotsconn.events.Merch("",(err,ret)=>{
+                    console.log(err, ret)
                     //结果
                     if (ret['returnValues']['owner'].toLowerCase() == dq.user['user']) {
                         Toast.clear();
@@ -698,6 +700,7 @@ export default {
                 ).send({
                     from:dq.user['user']
                 },(err,ret)=>{
+                    console.log(err, ret, dq.user['user'])
                     if (!ret) {
                         Toast.clear();
                         Toast({
@@ -712,6 +715,14 @@ export default {
                             forbidClick: true,
                             loadingType: 'spinner',
                         });
+                        setTimeout(() =>{ Toast.clear();
+                                         Dialog.alert({
+                                           title: '发布成功',
+                                           message: '可在我的订单中查看或修改',
+                                         }).then(() => {
+                                            this.$router.push('./ddguanli');
+                                         }); 
+                                        }, 5000);                
                     }
                 });
             }

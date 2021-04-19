@@ -109,7 +109,7 @@
 <template>
     <div class="qianbao">
         <van-nav-bar
-            title="我的钱包"
+            title="币币钱包"
             right-text=""
             left-arrow
             :fixed="true"
@@ -224,19 +224,19 @@ export default {
       
             if (web3 && provider) {
                 //其他钱包使用测试网络
-                if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-                    var wlcode = window.ethereum.networkVersion;
-                    //imtoken只能查看 无法操作 出发是ETF主网
-                    if (window.ethereum.isImToken) {
-                        web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                    }
-                    //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-                    if (window.ethereum.isMetaMask && wlcode != 4) {
-                        web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                    }
-                }else{
-                    web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                }
+                // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
+                //     var wlcode = window.ethereum.networkVersion;
+                //     //imtoken只能查看 无法操作 出发是ETF主网
+                //     if (window.ethereum.isImToken) {
+                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                //     }
+                //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
+                //     if (window.ethereum.isMetaMask && wlcode != 4) {
+                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                //     }
+                // }else{
+                //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                // }
                 address = provider.selectedAddress; 
                 ccdotconn = new web3.eth.Contract(ccdotc_abi, ccdotc_key);
                 dq.getqblist();
@@ -264,13 +264,13 @@ export default {
                     name:this.huobi[index]['id'],
                     balancepro:Number(balancepro) / (10**this.huobi[index]['num']),
                     lockpro:Number(lockpro) / (10**this.huobi[index]['num']),
-                    pros:Number(pros['uni'] / (10**binum)),
+                    pros:Number(pros['uni'] / (10**6)),
                 };
                 list.push(obj);
             }
             this.list = list;
-            for (let index = 0; index < list.length; index++) {
-                this.user_zc += (list[index]['balancepro'] * list[index]['pros']);
+            for (let index = 0; index < list.length-1; index++) {
+                this.user_zc += ((list[index]['balancepro']+list[index]['lockpro']) * list[index]['pros']);
             }
             Toast.clear();
         },

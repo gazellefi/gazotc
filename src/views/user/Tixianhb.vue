@@ -86,45 +86,49 @@
         margin-left: 15px;
         margin-top: 30px;
     }
-    .czhiview_form_shurk span{
-        font-size: 14px;
-        opacity: 0.5;
+    .czhiview_form_shurk_msg{
         padding-top: 15px;
+        opacity: 0.5;
+        font-size: 14px;
+        padding-left: 10px;
     }
 
-    .czhiview_form_czhi button{
-        width: 49%;
-    }
 
 
 </style>
 <template>
     <div class="chongzhi">
         <van-nav-bar
-            title="保证金"
+            title="提款"
             right-text=""
             left-arrow
             :fixed="true"
             :placeholder="true"
-            z-index="99"
             @click-left="goback"
+            z-index="99"
         />
         
         <div class="czhiview">
             <div class="czhiview_form">
+                <div class="czhiview_form_hblist">
+                    <div class="czhiview_form_hblist_t">选择货币</div>
+                    <div class="czhiview_form_hblist_ul">
+                        <div class="czhiview_form_hblist_item" v-for="(li,index) in huobi" :key="index" @click="hbindex = index" :class="hbindex == index ? 'ac':''">{{li.id}}</div>
+                    </div>
+                </div>
                 <div class="czhiview_form_shurk">
-                    <div class="czhiview_form_shurk_t">保证金</div>
+                    <div class="czhiview_form_shurk_t"> </div>
                     <div class="czhiview_form_shurk_input">
-                        <div class="czhiview_form_shurk_input_l">USDT</div>
+                        <div class="czhiview_form_shurk_input_l">{{ huobi[hbindex]['id'] }}</div>
                         <el-input placeholder="请输入内容" v-model="je"></el-input>
                     </div>
-                    <span>当前保证金余额：{{ balancemar_num }}</span>
-                    <span>USDT余额：{{ usdt_num }}</span>
+                    <div class="czhiview_form_shurk_msg">
+                        你可提额度 {{ huobi[hbindex]['je']  }}
+                    </div>
                 </div>
 
                 <div class="czhiview_form_czhi">
-                    <van-button type="primary" @click="chongzhi">转 入</van-button>
-                    <van-button type="info" style="margin-left: 2%;" @click="zhuanchu">转 出</van-button>
+                    <van-button type="primary" block @click="tixianajax">提 币</van-button>
                 </div>
             </div>
         </div>
@@ -132,28 +136,59 @@
     </div>
 </template>
 <script>
-import { Notify,Toast,Dialog  } from 'vant';
+import { Notify,Dialog,Toast  } from 'vant';
+
 import Web3 from "web3";
 import Web3Modal from "web3modal";
+//import config from "../../config";
 
-// import dotcapi from "../../api/dots.json";
 
-import config from "../../config";
-var dotc_abi = config['hyue'][config['key']]['dotc']['abi'];
-var dotc_key = config['hyue'][config['key']]['dotc']['heyue'];
-var usdt_key = config['hbi'][config['key']]['USDT']['heyue'];
-var bzj_num = config['hyue'][config['key']]['Bzj']['num'];
-var address = '';
-var web3 = '';
+import dotsapi from "../../api/dots.json";
+
+//全局变量
+var web3 = "";
+var address = "";
+var ethereum = window.ethereum;
 export default {
     data(){
         return{
-            je:0,
-            balancemar_num:0,
-            usdt_num:0
+            huobi:[
+                {
+                    id:"USDT",
+                    hyue:'0xa71edc38d189767582c38a3145b5873052c3e47a',
+                    je:0,
+                    sdje:0,
+                    num:6
+                },
+                {
+                    id:"TEST",
+                    hyue:'0x489B639BC2D68bB6D6f21d8Ee0f3bdbf41fE1C88',
+                    je:0,
+                    sdje:0,
+                    num:18
+                }
+            ],
+            hbindex:0,
+            je:0
         }
     },
     mounted(){
+        if (this.$route.query.title) {
+            for (let index = 0; index < this.huobi.length; index++) {
+                if (this.huobi[index]['id'] == this.$route.query.title) {
+                    this.hbindex = index;
+                    break;
+                }
+            }
+        }
+        //监测用户是否安装MASK
+        if (typeof ethereum === "undefined") {
+            alert("请先安装METAMASK插件");
+        } else {
+        //初始化
+         webinit();
+        }
+
         Toast.setDefaultOptions('loading',{
             forbidClick:false,
             closeOnClickOverlay:false,
@@ -161,13 +196,6 @@ export default {
             overlay:true
         });
 
-        //监测用户是否安装MASK
-        if (typeof ethereum === "undefined") {
-            alert("请先安装METAMASK插件");
-        } else {
-        //初始化
-            webinit();
-        }
         var dq = this;
         async function webinit() {
             const providerOptions = {
@@ -195,135 +223,87 @@ export default {
                 // }else{
                 //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
                 // }
-                address = provider.selectedAddress;
-                //查询该用户的保证金余额
-                dq.balancemarajax();
+                address = provider.selectedAddress; 
+                dq.gethuobizichan();
             }
         }
+        
     },
-
-    
     methods:{
         goback(){
             this.$router.go(-1);
         },
-        balancemarajax(){
-            Toast.loading({
-                message: '查询中...'
-            });
-            var dq = this;
+        gethuobizichan(){
             var index = 0;
-            var doctconn = new web3.eth.Contract(dotc_abi,dotc_key);
-            doctconn.methods.balancemar(address+"").call((err,ret)=>{
-                if (ret) {
-                    index++;
-                    var balancemar = Number(ret) / (10**bzj_num);
-                    dq.balancemar_num = balancemar;
-                    if (index == 2) {
-                        Toast.clear();
-                    }
-                }
-            });
-            doctconn.methods.balancepro(address+"",usdt_key).call((error,ret)=>{
-                if (ret) {
-                    index++;
-                    var usdt_num = Number(ret) / (10**bzj_num);
-                    dq.usdt_num = usdt_num;
-                    if (index == 2) {
-                        Toast.clear();
-                    }
-                }
-            });
-        },
-        chongzhi(){
-            if (this.je <= 0) {
-                Notify({ type: 'warning', message: '请输入正确的金额' });
-                return;
-            }
-            if (this.je > this.usdt_num) {
-                Notify({ type: 'warning', message: '转入金额不能大于USDT余额' });
-                return;
-            }
             var dq = this;
-            
-            Toast.loading({
-                message: '转入中...'
-            });
-            var lx_time = "";
-            //开始转入保证金
-            var doctconn = new web3.eth.Contract(dotc_abi,dotc_key);
-            doctconn.methods.transfer("1",(Number(this.je)*(10**bzj_num))+"").send({
-                from:address
-            },(error,ret)=>{
-                if (ret) {
-                    zhuanru_lx();
+            function listajax() {
+                if (index >= dq.huobi.length) {
+                    Toast.clear();
+                    return;
                 }
-            });
-            
-            //轮询查询是否转入成功 
-            function zhuanru_lx() {
-                doctconn.methods.balancemar(address+"").call((err,ret)=>{
+                Toast.loading({
+                    message: '查询中...'
+                });
+                var dotsconn = new web3.eth.Contract(dotsapi,'0x23D58bd73136888ffAa3fDE672FC41870E928AA3');
+                console.log(dotsconn)
+                //开始查询
+                dotsconn.methods.balancepro(address+"",dq.huobi[index]['hyue']+"").call((error,ret)=>{
                     if (ret) {
-                        var balancemar = Number(ret) / (10**bzj_num);
-                        if (balancemar >= dq.balancemar_num + Number(dq.je)) {
-                            Toast.clear();
-                            clearTimeout(lx_time);
-                            Dialog.alert({
-                                title: '转入成功',
-                                message: '已转入 '+ dq.je +' USDT到保证金',
-                            }).then(() => {
-                                window.location.reload();
-                            });
-                        }else{
-                            lx_time = setTimeout(() => {
-                                zhuanru_lx();
-                            }, 3000);
-                        }
+                        var balancepro = Number(ret);
+                        dotsconn.methods.lockpro(address+"",dq.huobi[index]['hyue']+"").call((error,ret)=>{
+                            if (ret) {
+                                var lockpro = Number(ret);
+                                var numa = Number(dq.huobi[index]['num']);
+                                dq.huobi[index]['je'] = (balancepro / (10**numa)).toFixed(2);
+                                dq.huobi[index]['sdje'] = (lockpro/ (10**numa)).toFixed(2);
+                                index = index+1;
+                                listajax();
+                            }
+                        });
                     }
                 });
             }
-        },
-        zhuanchu(){
-            if (this.je <= 0) {
-                Notify({ type: 'warning', message: '请输入正确的金额' });
-                return;
-            }
-            if (this.je > this.balancemar_num) {
-                Notify({ type: 'warning', message: '转出金额不能大于保证金余额余额' });
-                return;
-            }
-            var dq = this;
-            Toast.loading({
-                message: '转出中...'
-            });
 
+            listajax();
+        },
+        tixianajax(){
+            if (this.huobi[this.hbindex]['je'] < Number(this.je)) {
+                Notify({ type: 'danger', message: '提款金额不能大于可提额度' });
+                return;
+            }
+            Toast.loading({
+                message: '正在提款中...'
+            });
+            var dq = this;
             var lx_time = "";
-            var doctconn = new web3.eth.Contract(dotc_abi,dotc_key);
-            doctconn.methods.transfer("2",(Number(this.je)*(10**bzj_num))+"").send({
+            //执行提款操作
+            var dotsconn = new web3.eth.Contract(dotsapi,'0x23D58bd73136888ffAa3fDE672FC41870E928AA3');
+            var tk_je = dq.huobi[dq.hbindex]['je'] - Number(dq.je);
+            var numa = Number(dq.huobi[dq.hbindex]['num']);
+            dotsconn.methods.withdraw(dq.huobi[dq.hbindex]['hyue']+"",(Number(dq.je)*(10**numa))+"").send({
                 from:address
             },(error,ret)=>{
                 if (ret) {
-                    zhuanchu_lx();
+                    tik_lunxun();
                 }
             });
 
-            //轮询查询是否转入成功 
-            function zhuanchu_lx() {
-                doctconn.methods.balancemar(address+"").call((err,ret)=>{
+            function tik_lunxun() {
+                dotsconn.methods.balancepro(address+"",dq.huobi[dq.hbindex]['hyue']+"").call((error,ret)=>{
                     if (ret) {
-                        var balancemar = Number(ret) / (10**bzj_num);
-                        if (balancemar == dq.balancemar_num - Number(dq.je)) {
+                        var balancepro = Number(ret) / (10**numa);
+                        if (balancepro == tk_je) {
                             Toast.clear();
                             clearTimeout(lx_time);
                             Dialog.alert({
-                                title: '转出成功',
-                                message: '已转出 '+ dq.je +'',
+                                title: '提示',
+                                message: '提款成功！',
                             }).then(() => {
                                 window.location.reload();
                             });
                         }else{
                             lx_time = setTimeout(() => {
-                                zhuanchu_lx();
+                                tik_lunxun();
                             }, 3000);
                         }
                     }

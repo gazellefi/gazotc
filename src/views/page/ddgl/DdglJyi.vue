@@ -309,10 +309,10 @@
                         {{ li.Uoa }} {{ li.pro }}
                     </div>
                     <div class="ddgl_fabu_ul_li">
-                        {{ li.mma }}  {{ li.pro }}
+                        {{ li.mma }}  usdt
                     </div>
                     <div class="ddgl_fabu_ul_li">
-                        {{ li.uma }} {{ li.pro }}
+                        {{ li.uma }}  usdt
                     </div>
                     <div class="ddgl_fabu_ul_li">
                         {{ li.unit }} CNY
@@ -349,11 +349,11 @@
                         USDT <i class="el-icon-arrow-down el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>黄金糕</el-dropdown-item>
-                        <el-dropdown-item>狮子头</el-dropdown-item>
-                        <el-dropdown-item>螺蛳粉</el-dropdown-item>
-                        <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-                        <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
+                        <el-dropdown-item>USDT</el-dropdown-item>
+                        <el-dropdown-item disabled>WHT</el-dropdown-item>
+                        <el-dropdown-item disabled>GAZ</el-dropdown-item>
+                        <el-dropdown-item disabled>HBTC</el-dropdown-item>
+                        <el-dropdown-item >TEST</el-dropdown-item>
                     </el-dropdown-menu>
                     </el-dropdown>
                 </div>
@@ -363,11 +363,8 @@
                         出售<i class="el-icon-arrow-down el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>黄金糕</el-dropdown-item>
-                        <el-dropdown-item>狮子头</el-dropdown-item>
-                        <el-dropdown-item>螺蛳粉</el-dropdown-item>
-                        <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-                        <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
+                        <el-dropdown-item>出售</el-dropdown-item>
+                        <el-dropdown-item>购买</el-dropdown-item>
                     </el-dropdown-menu>
                     </el-dropdown>
                 </div>
@@ -377,11 +374,9 @@
                         CNY<i class="el-icon-arrow-down el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>黄金糕</el-dropdown-item>
-                        <el-dropdown-item>狮子头</el-dropdown-item>
-                        <el-dropdown-item>螺蛳粉</el-dropdown-item>
-                        <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-                        <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
+                        <el-dropdown-item>CNY</el-dropdown-item>
+                        <el-dropdown-item disabled>USD</el-dropdown-item>
+                        <el-dropdown-item divided>HKD</el-dropdown-item>
                     </el-dropdown-menu>
                     </el-dropdown>
                 </div>
@@ -391,19 +386,19 @@
             <div class="ddgl_fabu_wap_ul">
                 <div class="ddgl_fabu_wap_ul_li" v-for="(li,index) in list" :key="index">
                     <div class="ddgl_fabu_wap_ul_li_item">
-                        <div class="ddgl_fabu_wap_ul_li_item_l">类型：{{ li.type }}</div>
-                        <div class="ddgl_fabu_wap_ul_li_item_r"> </div>
+                        <div class="ddgl_fabu_wap_ul_li_item_l">订单号：{{ li.ddid }}</div>
+                        <div class="ddgl_fabu_wap_ul_li_item_r">类型：{{ li.type }} </div>
                     </div>
                     <div class="ddgl_fabu_wap_ul_li_item">
                         <div class="ddgl_fabu_wap_ul_li_item_l">数量：{{ li.Uoa }} {{ li.pro }}</div>
                         <div class="ddgl_fabu_wap_ul_li_item_r">单价</div>
                     </div>
                     <div class="ddgl_fabu_wap_ul_li_item">
-                        <div class="ddgl_fabu_wap_ul_li_item_l">商家保证金：{{ li.mma }}  {{ li.pro }}</div>
-                        <div class="ddgl_fabu_wap_ul_li_item_r" style="color: rgb(0, 250, 104);">{{ li.unit }} {{ li.pro }}</div>
+                        <div class="ddgl_fabu_wap_ul_li_item_l">商家保证金：{{ li.mma }}  usdt</div>
+                        <div class="ddgl_fabu_wap_ul_li_item_r" style="color: rgb(100, 200, 104);">{{ li.unit }} CNY</div>
                     </div>
                     <div class="ddgl_fabu_wap_ul_li_item">
-                        <div class="ddgl_fabu_wap_ul_li_item_l">用户保证金：{{ li.uma }}  {{ li.pro }}</div>
+                        <div class="ddgl_fabu_wap_ul_li_item_l">用户保证金：{{ li.uma }}  usdt</div>
                     </div>
                     <div class="ddgl_fabu_wap_ul_li_item">
                         <div class="ddgl_fabu_wap_ul_li_item_l">资产释放：</div>
@@ -494,19 +489,19 @@ export default {
             web3 = new Web3(provider);
             if (web3 && provider) {
                 //其他钱包使用测试网络
-                if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-                    var wlcode = window.ethereum.networkVersion;
-                    //imtoken只能查看 无法操作 出发是ETF主网
-                    if (window.ethereum.isImToken) {
-                        web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                    }
-                    //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-                    if (window.ethereum.isMetaMask && wlcode != 4) {
-                        web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                    }
-                }else{
-                    web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                }
+                // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
+                //     var wlcode = window.ethereum.networkVersion;
+                //     //imtoken只能查看 无法操作 出发是ETF主网
+                //     if (window.ethereum.isImToken) {
+                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                //     }
+                //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
+                //     if (window.ethereum.isMetaMask && wlcode != 4) {
+                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                //     }
+                // }else{
+                //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                // }
                 Address = provider.selectedAddress;
                 dq.getuinfo(Address);
                 dq.getlist();
@@ -566,7 +561,7 @@ export default {
                                 ddid:result[0][index][0],
                                 Uoa:Number(result[0][index][1]) / (10**h_num),
                                 uma:Number(result[0][index][2]) / (10**6),
-                                mma:Number(result[0][index][3]) / (10**6),
+                                mma:Number(result[0][index][3]) / (10**18),
                                 release:result[0][index][4],
                                 timc:result[0][index][5],
                                 agree:result[0][index][6],

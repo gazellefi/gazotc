@@ -24,8 +24,9 @@ import wethabi from "./abi/etfcshi/proabi/wethabi.json";
 import usdtabihb from "./abi/huobi/proabi/usdtabi.json";
 import whtabi from "./abi/huobi/proabi/whtabi.json";
 import testabi from "./abi/huobi/proabi/testabi.json";
+import gazabi from "./abi/huobi/gaz.json";
 
-var mr_key = !localStorage.morenkey ? 'etfcshi':localStorage.morenkey; 
+var mr_key = !localStorage.morenkey ? 'huobi':localStorage.morenkey; 
 /*
     hbi - deling是否需要清零
     hbi - show是否需要显示
@@ -78,6 +79,15 @@ var config = {
                 abi:whtabi,
                 deling:false
             },
+            Gaz:{
+                show:true,
+                id:"Gaz",
+                key:"0x67617a0000000000000000000000000000000000000000000000000000000000",
+                num:18,
+                heyue:"0x1f7c94c8834070330D59E8dA410704dc4f36444b",
+                abi:gazabi,
+                deling:false
+            },
             Test:{
                 show:true,
                 id:"Test",
@@ -120,8 +130,8 @@ var config = {
                 show:true,
                 key:"0x6575720000000000000000000000000000000000000000000000000000000000",
                 id:"EUR"
-            }
-            ,RUB:{
+            },
+            RUB:{
                 show:true,
                 key:"0x7275620000000000000000000000000000000000000000000000000000000000",
                 id:"RUB"
@@ -157,8 +167,8 @@ var config = {
                 show:true,
                 key:"0x6575720000000000000000000000000000000000000000000000000000000000",
                 id:"EUR"
-            }
-            ,RUB:{
+            },
+            RUB:{
                 show:true,
                 key:"0x7275620000000000000000000000000000000000000000000000000000000000",
                 id:"RUB"

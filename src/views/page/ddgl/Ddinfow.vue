@@ -75,7 +75,7 @@
                     </div>
                     <div class="ddinfo_w_v_ul_item">
                         <div class="ddinfo_w_v_ul_item_l">资产类型:</div>
-                        <div class="ddinfo_w_v_ul_item_r">{{ ddifo.pro_b }}</div>
+                        <div class="ddinfo_w_v_ul_item_r">{{ ddifo.pro_c }}</div>
                     </div>
                     <div class="ddinfo_w_v_ul_item">
                         <div class="ddinfo_w_v_ul_item_l">用户地址:</div>
@@ -95,7 +95,7 @@
                     </div>
                     <div class="ddinfo_w_v_ul_item">
                         <div class="ddinfo_w_v_ul_item_l">交易数量:</div>
-                        <div class="ddinfo_w_v_ul_item_r">{{ ddifo.Uoa }} USDT</div>
+                        <div class="ddinfo_w_v_ul_item_r">{{ ddifo.Uoa }} {{ ddifo.pro_c }}</div>
                     </div>
                     <div class="ddinfo_w_v_ul_item">
                         <div class="ddinfo_w_v_ul_item_l">下单时间:</div>
@@ -145,7 +145,8 @@
                         <span v-if="ddifo.pau == 1">用户暂停</span>
                         <span v-if="ddifo.pau == 2">商家暂停</span>
                     </div>
-                    <van-button plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">提前释放</van-button>
+                    <!-- <van-button plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">提前释放</van-button> -->
+                    <van-button plain type="primary" @click="setddcode('tq_ddajax')" >提前释放</van-button>
                     <div class="msg">
                         <span v-if="ddifo.agree == 1">用户同意释放</span>
                         <span v-if="ddifo.agree == 2">商家同意释放</span>
@@ -332,19 +333,19 @@ export default {
             web3 = new Web3(provider);
             if (web3 && provider) {
                //其他钱包使用测试网络
-                if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-                    var wlcode = window.ethereum.networkVersion;
-                    //imtoken只能查看 无法操作 出发是ETF主网
-                    if (window.ethereum.isImToken) {
-                        web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                    }
-                    //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-                    if (window.ethereum.isMetaMask && wlcode != 4) {
-                        web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                    }
-                }else{
-                    web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                }
+                // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
+                //     var wlcode = window.ethereum.networkVersion;
+                //     //imtoken只能查看 无法操作 出发是ETF主网
+                //     if (window.ethereum.isImToken) {
+                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                //     }
+                //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
+                //     if (window.ethereum.isMetaMask && wlcode != 4) {
+                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                //     }
+                // }else{
+                //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                // }
                 address = provider.selectedAddress;
                 dq.dquser = address;
                 if (dq.ddid) {
@@ -396,9 +397,10 @@ export default {
                     dq.ddifo['agree'] = Number(ret['agree']); 
                     dq.ddifo['pau'] = ret['pau'];
                     dq.ddifo['uma'] = Number(ret['uma']) / (10**6);
-                    dq.ddifo['mma'] = Number(ret['mma']) / (10**6);
+                    dq.ddifo['mma'] = Number(ret['mma']) / (10**18);
                     //扩展数据
                     dq.ddifo['Umark_b'] =  ret['Umark'] == '0x6275790000000000000000000000000000000000000000000000000000000000' ? '购买':'出售';
+                    dq.ddifo['pro_c'] =  ret['pro'] == '0x7573647400000000000000000000000000000000000000000000000000000000' ? 'usdt':'Test';
                     for (let index = 0; index < huobijson['huobi'].length; index++) {
                         var num = 0;
                         if (huobijson['huobi'][index]['key'] == ret['pro']) {

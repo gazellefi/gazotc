@@ -188,27 +188,30 @@ export default {
                 /* See Provider Options Section */
             };
             const web3Modal = new Web3Modal({
-                network: "mainnet",
-                cacheProvider: true,
+                // network: "mainnet",
+                // cacheProvider: true,
                 providerOptions,
             });
             var provider = await web3Modal.connect();
+            console.log('aaaaaaaaaaaaa', provider)
             web3 = new Web3(provider);
+            const accounts = await web3.eth.getAccounts();
+            console.log(accounts)
             if (web3 && provider) {
                 //其他钱包使用测试网络
-                if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-                    var wlcode = window.ethereum.networkVersion;
-                    //imtoken只能查看 无法操作 出发是ETF主网
-                    if (window.ethereum.isImToken) {
-                        web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                    }
-                    //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-                    if (window.ethereum.isMetaMask && wlcode != 4) {
-                        web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                    }
-                }else{
-                    web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                }
+                // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
+                //     var wlcode = window.ethereum.networkVersion;
+                //     //imtoken只能查看 无法操作 出发是ETF主网
+                //     if (window.ethereum.isImToken) {
+                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                //     }
+                //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
+                //     if (window.ethereum.isMetaMask && wlcode != 4) {
+                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                //     }
+                // }else{
+                //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                // }
                 address = provider.selectedAddress;
             }
         }
@@ -282,6 +285,7 @@ export default {
             }
         },
         async hbczhi(){
+            console.log("充值定位")
             //火币充值专用
             Toast.loading({
                 message: '加载中...'
@@ -306,14 +310,18 @@ export default {
                 dqyue = await doctconn.methods.balancepro(address,config['hbi'][config['key']]['Test']['heyue']).call();
                 //查询授权余额
                 var sqyue = await Testconn.methods.allowance(address,config['hyue'][config['key']]['dotc']['heyue']).call();
-                if (sqyue >= this.getFNum(Number(this.je) * (10**6))) {
+                if (Number(sqyue) >= Number(this.je) * (10**6)) {
                     //直接充值
                     chongzhiajax();
                 }else{
                     var cznum = this.getFNum((Number(this.je) * (10**6))* 100);
+                    console.log(web3)
+                    const accounts = await web3.eth.getAccounts()
+                    console.log(accounts)
                     Testconn.methods.approve(config['hyue'][config['key']]['dotc']['heyue'],cznum).send({
                         from:address
                     },(err,ret)=>{
+                        console.log(err)
                         if (ret) {
                             //轮询查询是否授权成功
                             Testconnlx(cznum);
@@ -364,7 +372,10 @@ export default {
             //充值
             function chongzhiajax() {
                     var cznumb  = dq.getFNum((Number(dq.je) * (10**6)));
-                    doctconn.methods.deposit(config['hbi'][config['key']]['Test']['heyue'],cznumb).send({
+                    console.log(cznumb)
+                    var zictype = config['hbi'][config['key']]['Test']['heyue']
+                    console.log(zictype)
+                    doctconn.methods.deposit(zictype, cznumb).send({
                         from:address
                     },(err,ret)=>{
                         if (ret) {
@@ -387,10 +398,10 @@ export default {
                 this.hbczhi();
                 return;
             }
-            if (this.key == 'huobi' &&  this.hbilist[this.hbindex]['title'] == 'USDT') {
-                Notify({ type: 'warning', message: 'USDT暂不支持充值！' });
-                return;
-            }
+            // if (this.key == 'huobi' &&  this.hbilist[this.hbindex]['title'] == 'USDT') {
+            //     Notify({ type: 'warning', message: 'USDT暂不支持充值！' });
+            //     return;
+            // }
 
             Toast.loading({
                 message: '加载中...'
@@ -404,12 +415,12 @@ export default {
             //开始充值 监测授权余额 
             if (this.hbilist[this.hbindex]['title'] == 'USDT') {
                 //查询USDT初始余额
-                doctconn.methods.balancepro(address+"","0xEc8053A77D432A08b2C59363D98eCA903a12df5a").call((err,ret)=>{
+                doctconn.methods.balancepro(address+"","0xa71EdC38d189767582C38A3145b5873052c3e47a").call((err,ret)=>{
                     if (ret) {
-                        usdt_yue = Number(ret) / (10**6);
+                        usdt_yue = Number(ret) / (10**18);
                         usdtconn.methods.balanceOf(address+"").call((errb,retb)=>{
                             if (retb) {
-                                var balanceOf = Number(retb) / (10**6);
+                                var balanceOf = Number(retb) / (10**18);
                                 if (balanceOf < Number(dq.je)) {
                                     Toast.clear();
                                     Dialog.alert({
@@ -428,7 +439,7 @@ export default {
                 });
             }else if (this.hbilist[this.hbindex]['title'] == 'WETH') {
                 //查询USDT初始余额
-                doctconn.methods.balancepro(address+"","0xc25eFa9c0052856e4e4B713a180649b8c088a913").call((err,ret)=>{
+                doctconn.methods.balancepro(address+"","0x23D58bd73136888ffAa3fDE672FC41870E928AA3").call((err,ret)=>{
                     if (ret) {
                         usdt_yue = Number(ret) / (10**18);
                         wethconn.methods.balanceOf(address+"").call((errb,retb)=>{
@@ -457,10 +468,11 @@ export default {
                 Toast.loading({
                     message: '正在充值中...'
                 });
-                var zictype = dq.hbilist[dq.hbindex]['title'] == 'USDT' ? '0xEc8053A77D432A08b2C59363D98eCA903a12df5a':'0xf537270EdB6B5792c20D204bdc9Eb9735c6A790F';
+                var zictype = dq.hbilist[dq.hbindex]['title'] == 'USDT' ? '0xa71EdC38d189767582C38A3145b5873052c3e47a':'0xf537270EdB6B5792c20D204bdc9Eb9735c6A790F';
                
-                var num = dq.hbilist[dq.hbindex]['title'] == 'USDT' ? 6:18;
+                var num = dq.hbilist[dq.hbindex]['title'] == 'USDT' ? 18:18;
                 var cznum = dq.getFNum((Number(dq.je) * (10**num)));
+                console.log("充值中")
                 doctconn.methods.deposit(zictype,cznum+"").send({
                     from:address
                 },(err,ret)=>{
@@ -471,8 +483,8 @@ export default {
             }
 
             function chongzhi_lx() {
-                var num = dq.hbilist[dq.hbindex]['title'] == 'USDT' ? 6:18;
-                var zictype = dq.hbilist[dq.hbindex]['title'] == 'USDT' ? '0xEc8053A77D432A08b2C59363D98eCA903a12df5a':'0xf537270EdB6B5792c20D204bdc9Eb9735c6A790F';
+                var num = dq.hbilist[dq.hbindex]['title'] == 'USDT' ? 18:18;
+                var zictype = dq.hbilist[dq.hbindex]['title'] == 'USDT' ? '0xa71EdC38d189767582C38A3145b5873052c3e47a':'0xf537270EdB6B5792c20D204bdc9Eb9735c6A790F';
                 doctconn.methods.balancepro(address+"",zictype).call((err,ret)=>{
                     if (ret) {
                         var balancepro = Number(ret) / (10**num);
@@ -515,6 +527,7 @@ export default {
                     message: 'WETH余额授权中....',
                 });
                 var cznum = dq.getFNum(((Number(dq.je) * 100) * (10**18)));
+                console.log("授权中")
                 wethconn.methods.approve("0xc25eFa9c0052856e4e4B713a180649b8c088a913",cznum+"").send({
                     from:address
                 },(err,ret)=>{
@@ -544,10 +557,10 @@ export default {
             }
             // ============= usdt ===============
             function get_usdt_shouquan() {
-                usdtconn.methods.allowance(address+"","0xc25eFa9c0052856e4e4B713a180649b8c088a913").call((err,ret)=>{
+                usdtconn.methods.allowance(address+"","0x23D58bd73136888ffAa3fDE672FC41870E928AA3").call((err,ret)=>{
                     if (ret) {
                         Toast.clear();
-                        var allowance = Number(ret) / (10**6);
+                        var allowance = Number(ret) / (10**18);
                         if (allowance == 0) {
                             set_usdt_shouquan();
                         }else{
@@ -567,7 +580,7 @@ export default {
                 Toast.loading({
                     message: 'USDT授权余额不足，正在清零，请稍等...',
                 });
-                usdtconn.methods.approve("0xc25eFa9c0052856e4e4B713a180649b8c088a913",0+"").send({
+                usdtconn.methods.approve("0x23D58bd73136888ffAa3fDE672FC41870E928AA3",0+"").send({
                     from:address
                 },(err,ret)=>{
                     if (ret) {
@@ -583,7 +596,7 @@ export default {
                 Toast.loading({
                     message: 'USDT余额重新授权中....',
                 });
-                usdtconn.methods.approve("0xc25eFa9c0052856e4e4B713a180649b8c088a913",((Number(dq.je) * 100) * (10**6))+"").send({
+                usdtconn.methods.approve("0x23D58bd73136888ffAa3fDE672FC41870E928AA3",((Number(dq.je) * 100) * (10**18))+"").send({
                     from:address
                 },(err,ret)=>{
                     if (ret) {
@@ -597,9 +610,9 @@ export default {
 
             //usdt轮询
             function usdt_lunxun(c) {
-                usdtconn.methods.allowance(address+"","0xc25eFa9c0052856e4e4B713a180649b8c088a913").call((err,ret)=>{
+                usdtconn.methods.allowance(address+"","0x23D58bd73136888ffAa3fDE672FC41870E928AA3").call((err,ret)=>{
                     if (ret) {
-                        var allowance = Number(ret) / (10**6);
+                        var allowance = Number(ret) / (10**18);
                         if (c == 1) {
                             if (allowance == 0) {
                                 Toast.clear();

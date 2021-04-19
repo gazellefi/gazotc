@@ -22,9 +22,9 @@ export default {
   created(){
     if (typeof window.ethereum === 'undefined') {
       this.$notify.error({
-        title: '未连接钱包',
+        title: '未检测到钱包',
         duration:0,
-        message: '系统检测您未连接钱包插件！'
+        message: '请确保网络选择一致，并退出钱包或刷新页面再试一次！'
       });
     }
   }

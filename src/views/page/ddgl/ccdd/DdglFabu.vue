@@ -93,14 +93,14 @@
             <div class="ddgl_fabu_p_head_u_c_user">{{ uinfo["user_u"] }}</div>
           </div>
         </div>
-        <div class="ddgl_fabu_p_head_fabu anniucss" @click="openfabu">
+        <!-- <div class="ddgl_fabu_p_head_fabu anniucss" @click="openfabu">
           发布委托单
-        </div>
+        </div> -->
       </div>
 
       <div>
         <el-table :data="list" stripe style="width: 100%">
-          <el-table-column prop="did" label="订单ID"> </el-table-column>
+          <el-table-column width=70 prop="did" label="订单ID"> </el-table-column>
           <el-table-column label="总数">
             <template slot-scope="scope">
               {{ scope.row.moa }} {{ scope.row.pro }}
@@ -232,19 +232,19 @@ export default {
       web3 = new Web3(provider);
       if (web3 && provider) {
         //其他钱包使用测试网络
-        if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-          var wlcode = window.ethereum.networkVersion;
-          //imtoken只能查看 无法操作 出发是ETF主网
-          if (window.ethereum.isImToken) {
-            web3.setProvider(config["hyue"][config["key"]]["Url"]);
-          }
-          //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-          if (window.ethereum.isMetaMask && wlcode != 4) {
-            web3.setProvider(config["hyue"][config["key"]]["Url"]);
-          }
-        } else {
-          web3.setProvider(config["hyue"][config["key"]]["Url"]);
-        }
+        // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
+        //   var wlcode = window.ethereum.networkVersion;
+        //   //imtoken只能查看 无法操作 出发是ETF主网
+        //   if (window.ethereum.isImToken) {
+        //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+        //   }
+        //   //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
+        //   if (window.ethereum.isMetaMask && wlcode != 4) {
+        //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+        //   }
+        // } else {
+        //   web3.setProvider(config["hyue"][config["key"]]["Url"]);
+        // }
         Address = provider.selectedAddress;
         dq.getuinfo(Address);
         dq.getuser_list(Address);

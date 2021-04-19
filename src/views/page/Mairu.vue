@@ -235,7 +235,7 @@
                 <div class="view_form_item_t">{{ ddinfo['Mmark'] == '0x6275790000000000000000000000000000000000000000000000000000000000' ? '收到':'支付' }}</div>
                 <div class="view_form_item_input">
                     <div class="view_form_item_input_srk">
-                        <van-field  placeholder="666-1,734.16" v-model="form.je" :disabled="code"/>
+                        <van-field  placeholder="你将支付或收到的法币" v-model="form.je" :disabled="true"/>
                     </div>
                     <div class="view_form_item_input_msg">CNY</div>
                 </div>
@@ -244,7 +244,7 @@
                 <div class="view_form_item_t">保证金</div>
                 <div class="view_form_item_input">
                     <div class="view_form_item_input_srk">
-                        <van-field  placeholder="0.00" v-model="form.bzj" :disabled="true"/>
+                        <van-field  placeholder="你将抵押的保证金" v-model="form.bzj" :disabled="true"/>
                     </div>
                     <div class="view_form_item_input_msg">USDT</div>
                 </div>
@@ -377,17 +377,12 @@ export default {
                 return;
             }
             var sxf = 0;
-            var shuere = (e * Number(this.pros['uni'])) / (10**bzj_num);
-            var bilie = (3000 / this.pros.rati)*1000;
-            //计算价格、
-            if ((shuere >= 3) && shuere < bilie) {
-                sxf = 3 /  (Number(this.pros['uni']) / (10**bzj_num));
-            }
-
+            var shuere = (e * Number(this.pros['rati']))/(10**6);
+            var bilie = (3 / Number(this.pros['uni']))*10**6;
             if (shuere >= bilie) {
-                sxf = e *  (this.pros.rati / (10**bzj_num));
+                sxf = shuere;
             }
-            
+            else {sxf = bilie;}
 
             this.ddinfo['sxf_je'] = sxf;
             this.ddinfo['sxf_shuere'] = shuere;
@@ -407,7 +402,7 @@ export default {
                 var z = x * y;
                 return z;
             }
-            this.form['bzj'] = Number(this.getnume(mul(mul((e*this.pros.one),this.pros.uni),this.pros.mar)/mul(this.pros.pri,this.pros.one) / (10 ** bzj_num))).toFixed(3);
+            this.form['bzj'] = Number(this.getnume(mul(mul(e,this.pros.uni),this.pros.mar)/mul(this.pros.pri, (10 ** 6)))).toFixed(2);
         },
         'form.je'(e){
             if (!e) {
@@ -449,19 +444,19 @@ export default {
       web3 = new Web3(provider);
       if (web3 && provider) {
           //其他钱包使用测试网络
-                if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-                    var wlcode = window.ethereum.networkVersion;
-                    //imtoken只能查看 无法操作 出发是ETF主网
-                    if (window.ethereum.isImToken) {
-                        web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                    }
-                    //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-                    if (window.ethereum.isMetaMask && wlcode != 4) {
-                        web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                    }
-                }else{
-                    web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                }
+                // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
+                //     var wlcode = window.ethereum.networkVersion;
+                //     //imtoken只能查看 无法操作 出发是ETF主网
+                //     if (window.ethereum.isImToken) {
+                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                //     }
+                //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
+                //     if (window.ethereum.isMetaMask && wlcode != 4) {
+                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                //     }
+                // }else{
+                //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                // }
         address = provider.selectedAddress;
         if (dq.ddid) {
             //判断是否传入订单号
@@ -600,9 +595,9 @@ export default {
                         fabi:fabi,
                         Mowner:ret.Mowner,
                         unit:Number(ret.unit / 100),
-                        mal:huobi == 'USDT' ? (Number(ret.mal) / (10**bzj_num)).toFixed(2):(Number(ret.mal) / (10**18)).toFixed(2),
-                        zer:huobi == 'USDT' ? (Number(ret.zer) / (10**bzj_num)).toFixed(2):(Number(ret.zer) / (10**18)).toFixed(2),
-                        Moa:huobi == 'USDT' ? (Number(ret.Moa) / (10**bzj_num)).toFixed(2):(Number(ret.Moa) / (10**18)).toFixed(2),
+                        mal:huobi == 'USDT' ? (Number(ret.mal) / (10**bzj_num)).toFixed(2):(Number(ret.mal) / (10**6)).toFixed(2),
+                        zer:huobi == 'USDT' ? (Number(ret.zer) / (10**bzj_num)).toFixed(2):(Number(ret.zer) / (10**6)).toFixed(2),
+                        Moa:huobi == 'USDT' ? (Number(ret.Moa) / (10**bzj_num)).toFixed(2):(Number(ret.Moa) / (10**6)).toFixed(2),
                         bMar:0,
                         mar:(Number(ret.mar) / (10**4)).toFixed(2),
                         mlive:ret.mlive,

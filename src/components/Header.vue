@@ -230,7 +230,12 @@
 <template>
   <div class="vhtml_head">
     <div class="vhtml_head_left">
-      <div class="vhtml_head_left_logo">GAZOTC</div>
+      <!-- <div class="vhtml_head_left_logo">GAZOTC</div> -->
+      <div class="vhtml_head_left_logo"
+           @click="openurl"
+      >
+       <p> <img src="@/assets/title.png" alt="GAZOTC" width="48" height="45"></p>
+      </div>
       <div class="vhtml_head_left_l">
         <div
           class="vhtml_head_left_l_item hidden-xs-only ac anniucss"
@@ -241,20 +246,20 @@
         <el-dropdown
           @command="wlxuanze"
           trigger="click"
-          class="vhtml_head_left_r_item hidden-sm-and-down"
+          class="vhtml_head_left_logo"
         >
           <span class="el-dropdown-link anniucss" style="color: #fff">
-            <span v-if="morenkey == 'etfcshi'">以太坊Rinkeby测试网</span>
-            <span v-if="morenkey == 'etf'">以太坊主网</span>
             <span v-if="morenkey == 'huobi'">火币Heco主网</span>
+            <span v-if="morenkey == 'etfcshi'">以太坊Rinkeby</span>
+            <span v-if="morenkey == 'etf'">以太坊主网</span>
             <span v-if="morenkey == 'tron'">波场主网</span>
              
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="etfcshi">以太坊Rinkeby测试网</el-dropdown-item>
-            <el-dropdown-item command="etf">以太坊主网</el-dropdown-item>
             <el-dropdown-item command="huobi">火币Heco主网</el-dropdown-item>
+            <el-dropdown-item command="etfcshi">以太坊Rinkeby</el-dropdown-item>
+            <el-dropdown-item command="etf">以太坊主网</el-dropdown-item>        
             <el-dropdown-item command="tron">波场主网</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -359,6 +364,7 @@
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="./qianbao">法币钱包</el-dropdown-item>
             <el-dropdown-item command="./ccuser">币币钱包</el-dropdown-item>
+            <el-dropdown-item command="./simu">锁仓钱包</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <div
@@ -370,16 +376,23 @@
             @click="wapcd = wapcd ? false : true"
           >
             <i :class="wapcd ? 'el-icon-close' : 'el-icon-s-operation'"></i>
+            菜单
           </div>
           <div class="vhtml_head_left_r_item_view" v-if="wapcd">
             <div class="vhtml_head_left_r_item_view_item">
-              <div class="vhtml_head_left_r_item_view_item_t">网络选择</div>
+              <!-- <div class="vhtml_head_left_r_item_view_item_t">网络选择</div>
               <div class="vhtml_head_left_r_item_view_item_ul">
+                <div
+                  class="vhtml_head_left_r_item_view_item_ul_li anniucss"
+                  @click="wlxuanze('huobi')"
+                >
+                  火币Heco主网
+                </div>
                 <div
                   class="vhtml_head_left_r_item_view_item_ul_li anniucss"
                   @click="wlxuanze('etfcshi')"
                 >
-                  以太坊Rinkeby测试网
+                  以太坊Rinkeby
                 </div>
                 <div
                   class="vhtml_head_left_r_item_view_item_ul_li anniucss"
@@ -389,21 +402,21 @@
                 </div>
                 <div
                   class="vhtml_head_left_r_item_view_item_ul_li anniucss"
-                  @click="wlxuanze('huobi')"
-                >
-                  火币Heco主网
-                </div>
-                <div
-                  class="vhtml_head_left_r_item_view_item_ul_li anniucss"
                   @click="wlxuanze('暂未开放')"
                 >
                   波场主网
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="vhtml_head_left_r_item_view_item">
               <div class="vhtml_head_left_r_item_view_item_t">钱包</div>
               <div class="vhtml_head_left_r_item_view_item_ul">
+                <div
+                  class="vhtml_head_left_r_item_view_item_ul_li anniucss"
+                  @click="openqb('./beizhu')"
+                 >
+                  联系信息
+                </div>
                 <div
                   class="vhtml_head_left_r_item_view_item_ul_li anniucss"
                   @click="openqb('./lqcsb')"
@@ -421,6 +434,12 @@
                   @click="openqb('./ccuser')"
                 >
                   币币钱包
+                </div>
+                <div
+                  class="vhtml_head_left_r_item_view_item_ul_li anniucss"
+                  @click="openqb('./simu')"
+                >
+                  锁仓钱包
                 </div>
               </div>
             </div>
@@ -925,7 +944,7 @@ var ArbOne, Dotc, ArbTwo, Arbdate;
 export default {
   data() {
     return {
-      morenkey:localStorage.morenkey ? localStorage.morenkey:'etfcshi',
+      morenkey:localStorage.morenkey ? localStorage.morenkey:'huobi',
       loading: false,
       wapcd: false,
 
@@ -1087,23 +1106,26 @@ export default {
         providerOptions,
       });
       var provider = await web3Modal.connect();
+      console.log('121212121', provider)
       web3 = new Web3(provider);
       if (web3 && provider) {
         //其他钱包使用测试网络
-                if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-                    var wlcode = window.ethereum.networkVersion;
-                    //imtoken只能查看 无法操作 出发是ETF主网
-                    if (window.ethereum.isImToken) {
-                        web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                    }
-                    //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-                    if (window.ethereum.isMetaMask && wlcode != 4) {
-                        web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                    }
-                }else{
-                    web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                }
+            // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
+            //     var wlcode = window.ethereum.networkVersion;
+            //     //imtoken只能查看 无法操作 出发是ETF主网
+            //     if (window.ethereum.isImToken) {
+            //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+            //     }
+            //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
+            //     if (window.ethereum.isMetaMask && wlcode != 4) {
+            //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+            //     }
+            // }else{
+            //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+            // }
         address = provider.selectedAddress;
+        console.log(config)
+        console.log(config["hyue"][config["key"]]["ArbOne"]["heyue"])
         ArbOne = new web3.eth.Contract(
           config["hyue"][config["key"]]["ArbOne"]["abi"],
           config["hyue"][config["key"]]["ArbOne"]["heyue"]
@@ -1148,6 +1170,16 @@ export default {
         }
       }
       if (e == "./ccuser") {
+        if (!webtrue) {
+          this.$notify.error({
+            title: "未连接钱包",
+            duration: 2000,
+            message: "系统检测您未安装钱包插件！",
+          });
+          return;
+        }
+      }
+      if (e == "./simu") {
         if (!webtrue) {
           this.$notify.error({
             title: "未连接钱包",

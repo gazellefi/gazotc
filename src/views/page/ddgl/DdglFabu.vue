@@ -181,6 +181,10 @@
         display: flex;
         flex-direction: row;
     }
+    .ddgl_fabu_wap_ul_li_itemt{
+        display: flex;
+        flex-direction: row;
+    }
     .ddgl_fabu_wap_ul_li_item_l{
         margin-right: auto;
         font-size: 15px;
@@ -247,9 +251,10 @@
                         </el-dropdown-menu>
                         </el-dropdown>
                     </div>
+                    
                 </div>
 
-                <div class="ddgl_fabu_p_head_fabu anniucss" @click="openfabu">发布委托单</div>
+                <!-- <div class="ddgl_fabu_p_head_fabu anniucss" @click="openfabu">发布委托单</div> -->
             </div>
 
             <!-- 列表 -->
@@ -273,11 +278,14 @@
                     <div class="ddgl_fabu_ul_li">
                         单价
                     </div>
-                    <div class="ddgl_fabu_ul_li">
+                    <!-- <div class="ddgl_fabu_ul_li">
                         保证金余额
-                    </div>
+                    </div> -->
                     <div class="ddgl_fabu_ul_li">
                         用户保证金比例
+                    </div>
+                    <div class="ddgl_fabu_ul_li">
+                        订单状态
                     </div>
                     <div class="ddgl_fabu_ul_li">
                         操作
@@ -304,11 +312,14 @@
                     <div class="ddgl_fabu_ul_li danjiayanse">
                         {{ li.unit }} {{li.fiat}}
                     </div>
-                    <div class="ddgl_fabu_ul_li">
+                    <!-- <div class="ddgl_fabu_ul_li">
                         {{ li.mar }} USDT
+                    </div> -->
+                    <div class="ddgl_fabu_ul_li bzjyanse">
+                        {{ li.mar }}%
                     </div>
                     <div class="ddgl_fabu_ul_li bzjyanse">
-                        {{ li.mlive }}%
+                        {{ li.mlive == 1 ? '上架中':'已下架'  }}
                     </div>
                     <div class="ddgl_fabu_ul_li" style="opacity: 1;">
                         <van-button plain type="info" size="small" @click="pcxiugaidd(1,index)">修 改</van-button>
@@ -367,8 +378,11 @@
             <div class="ddgl_fabu_wap_ul">
                 <div class="ddgl_fabu_wap_ul_li" v-for="(li,index) in list" :key="index">
                     <div class="ddgl_fabu_wap_ul_li_item">
-                        <div class="ddgl_fabu_wap_ul_li_item_l">类型：</div>
-                        <div class="ddgl_fabu_wap_ul_li_item_r">{{ li.Mmark }}</div>
+                        <div class="ddgl_fabu_wap_ul_li_item_l">订单号：{{ li.ddid }}</div>
+                        <div class="ddgl_fabu_wap_ul_li_item_r">{{ li.mlive == 1 ? '上架中':'已下架' }}</div>
+                    </div>
+                    <div class="ddgl_fabu_wap_ul_li_item">
+                        <div class="ddgl_fabu_wap_ul_li_item_l">类型：{{ li.Mmark }}</div>
                     </div>
                     <div class="ddgl_fabu_wap_ul_li_item">
                         <div class="ddgl_fabu_wap_ul_li_item_l">数量：{{ li.Moa }} {{ li.pro }}</div>
@@ -379,6 +393,7 @@
                         <div class="ddgl_fabu_wap_ul_li_item_r" style="color: rgb(0, 110, 255);">{{ li.unit }} {{li.fiat}}</div>
                     </div>
                     <div class="ddgl_fabu_wap_ul_li_item">
+                        <div class="ddgl_fabu_wap_ul_li_item_l">保证金：{{ li.mar }}%</div>
                         <van-button type="primary"  @click="pcxiugaidd(2,index)">修 改</van-button>
                     </div>
                 </div>
@@ -398,12 +413,15 @@
                 <el-form-item label="修改类型">
                     <el-select v-model="set_form.tcode" placeholder="请选择修改类型">
                         <el-option
-                            v-for="item in [{code:1,name:'修改单价'},{code:2,name:'修改数量'}]"
+                            v-for="item in [{code:1,name:'修改单价'},{code:2,name:'修改数量'},{code:3,name:'修改订单状态'}]"
                             :key="item.code"
                             :label="item.name"
                             :value="item.code">
                         </el-option>
                     </el-select>
+                </el-form-item>
+                <el-form-item label="订单状态" v-if="set_form.tcode == 3">
+                   <el-button>{{ set_form.mlive == 1 ? '上架中':'已下架' }}</el-button>
                 </el-form-item>
                 <el-form-item label="数量" v-if="set_form.tcode == 2">
                     <el-input v-model="set_form.num"></el-input>
@@ -487,13 +505,13 @@ export default {
             var provider = await web3Modal.connect();
             web3 = new Web3(provider);
             if (web3 && provider) {
-                var wlcode = window.ethereum.networkVersion;
-        if (window.ethereum.isImToken && wlcode != 1) {
-          web3.setProvider(config["hyue"][config["key"]]["Url"]);
-        }
-        if (window.ethereum.isMetaMask && wlcode != 4) {
-          web3.setProvider(config["hyue"][config["key"]]["Url"]);
-        }
+                // var wlcode = window.ethereum.networkVersion;
+                // if (window.ethereum.isImToken && wlcode != 1) {
+                //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                // }
+                // if (window.ethereum.isMetaMask && wlcode != 4) {
+                //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+                // }
                 Address = provider.selectedAddress;
                 dq.getuinfo(Address);
                 dq.getlist();
@@ -505,10 +523,12 @@ export default {
             pcxgcode:false,
             type_code:1,
             xgindex:0,
+            value1: false,
             set_form:{
                 ddid:0,
                 num:0,
                 danjia:0,
+                mlive:0,
                 tcode:0,
                 obj:{}
             },
@@ -564,6 +584,7 @@ export default {
                ddid:this.list[index]['ddid'],
                num:this.list[index]['Moa'],
                danjia:this.list[index]['unit'],
+               mlive:this.list[index]['mlive'],
                obj:this.list[index]
            };
            
@@ -577,6 +598,7 @@ export default {
                 ddid:0,
                 num:0,
                 danjia:0,
+                mlive:0,
                 tcode:0,
                 obj:{}
             };
@@ -603,7 +625,10 @@ export default {
                    }else{
                        set_modify_moa();
                    }
+               }else if (this.set_form['tcode'] == 3) {
+                    set_mlive();
                }
+
            }
 
 
@@ -625,14 +650,32 @@ export default {
                     }
                 });
             }
-           
+           //修改订单状态
+            function set_mlive() {
+                dq.pcxgcode = false;
+                Toast.loading({
+                    message: '修改请求中...'
+                });                                   
+                var contracts = new web3.eth.Contract(dotc_abi,dotc_key);
+                contracts.methods.cageMlive(Number(dq.set_form['obj']['ddid'])).send({
+                    from:dq.uinfo['user']
+                },(err, ret) => {
+                    Toast.clear();
+                    if (ret) {
+                        Toast.success('已提交修改请求！');
+                    }else{
+                        Toast.fail('请点击同意授权！');
+                    }
+                });
+            }
            //修改单价
             function set_modify_unit() {
                 dq.pcxgcode = false;
                 Toast.loading({
                     message: '修改请求中...'
-                });
+                });                                   
                 var danjia = Number(dq.set_form['danjia']) * 100;
+                console.log(danjia)
                 var contracts = new web3.eth.Contract(dotc_abi,dotc_key);
                 contracts.methods.modify_unit(Number(dq.set_form['obj']['ddid']),Number(danjia)).send({
                     from:dq.uinfo['user']
@@ -715,7 +758,7 @@ export default {
             var list = [];
             var dq = this;
             var contracts = new web3.eth.Contract(dotc_abi,dotc_key);
-            contracts.methods.ownerIssue(Address+"",10+"").call((err, result) => {
+            contracts.methods.ownerIssue(Address+"",20+"").call((err, result) => {
                 if (result) {
                     if (result[0].length > 0) {
                         for (let index = 0; index < result[0].length; index++) {

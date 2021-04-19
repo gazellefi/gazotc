@@ -29,8 +29,8 @@
         position: absolute;
         bottom: 0;
         /* width: 50px; */
-        height: 5px;
-        background-color: aquamarine;
+        height: 2px;
+        background-color: rgb(40, 209, 68);
         left: 0;
         right: 0;
         border-radius: 5px;
@@ -49,10 +49,10 @@
     <div class="ddlist">
         <div class="ddlist_head">
             <div class="ddlist_head_kj">
-                <div class="ddlist_head_kj_item anniucss" :class="acindex == 0 ? 'ac':''" style="margin-left: 0;" @click="acindex = 0">法币发布</div>
-                <div class="ddlist_head_kj_item anniucss" :class="acindex == 1 ? 'ac':''" @click="acindex = 1">法币交易</div>
-                <div class="ddlist_head_kj_item anniucss" :class="acindex == 2 ? 'ac':''"  @click="acindex = 2">币币发布</div>
-                <div class="ddlist_head_kj_item anniucss" :class="acindex == 3 ? 'ac':''" @click="acindex = 3">币币交易</div>
+                <div align=center class="ddlist_head_kj_item anniucss" :class="acindex == 0 ? 'ac':''" style="margin-left: 0;" @click="acindex = 0">法币发布</div>
+                <div align=center class="ddlist_head_kj_item anniucss" :class="acindex == 1 ? 'ac':''" @click="acindex = 1">法币交易</div>
+                <div align=center class="ddlist_head_kj_item anniucss" :class="acindex == 2 ? 'ac':''"  @click="acindex = 2">币币发布</div>
+                <div align=center class="ddlist_head_kj_item anniucss" :class="acindex == 3 ? 'ac':''" @click="acindex = 3">币币交易</div>
             </div>
         </div>
         <div class="ddlist_view hidden-xs-only">
