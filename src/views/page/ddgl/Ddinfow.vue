@@ -87,7 +87,7 @@
                     </div>
                     <div class="ddinfo_w_v_ul_item">
                         <div class="ddinfo_w_v_ul_item_l">用户锁定的保证金:</div>
-                        <div class="ddinfo_w_v_ul_item_r">{{ ddifo.uma }} USDT</div>
+                        <div class="ddinfo_w_v_ul_item_r">{{ ddifo.uma.toFixed(2) }} USDT</div>
                     </div>
                     <div class="ddinfo_w_v_ul_item">
                         <div class="ddinfo_w_v_ul_item_l">商家锁定的保证金:</div>
@@ -139,21 +139,21 @@
                     ddifo['myuser'] == ddifo['Madd'] && ddifo['Umark_b'] == '购买'
                 ">
                     <van-button plain type="primary" @click="setddcode('qx_ddajax')" :disabled="anarr('qx_ddajax')">取消</van-button>
-                    <van-button plain type="primary" @click="setddcode('fk_ddajax')" :disabled="anarr('qx_ddajax')">已付款</van-button>
+                    <!-- <van-button plain type="primary" @click="setddcode('fk_ddajax')" :disabled="anarr('qx_ddajax')">已付款</van-button> -->
                     <van-button plain type="primary" @click="setddcode('zt_ddajax',2)" :disabled="anarr('zt_ddajax')">暂停释放保证金</van-button>
                     <div class="msg">
                         <span v-if="ddifo.pau == 1">用户暂停</span>
                         <span v-if="ddifo.pau == 2">商家暂停</span>
                     </div>
                     <!-- <van-button plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">提前释放</van-button> -->
-                    <van-button plain type="primary" @click="setddcode('tq_ddajax')" >提前释放</van-button>
+                    <van-button plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax')">提前释放保证金</van-button>
                     <div class="msg">
                         <span v-if="ddifo.agree == 1">用户同意释放</span>
                         <span v-if="ddifo.agree == 2">商家同意释放</span>
                         <span v-if="ddifo.agree == 3">双方同意释放</span>
                     </div>
                     <van-button plain type="primary"  @click="setddcode('sf_ddajax')" :disabled="anarr('sf_ddajax')">释放保证金</van-button>
-                    <van-button plain type="primary" :disabled="anarr('ss_ddajax')">申诉</van-button>
+                    <van-button plain type="primary" @click="openurl('./zhongcai')" :disabled="anarr('ss_ddajax')">申诉</van-button>
                 </div>
 
                 <div class="ddinfo_w_anarr" v-if="
@@ -165,14 +165,14 @@
                         <span v-if="ddifo.pau == 1">用户暂停</span>
                         <span v-if="ddifo.pau == 2">商家暂停</span>
                     </div>
-                    <van-button plain type="primary" :disabled="anarr('tq_ddajax','Madd')">提前释放</van-button>
+                    <van-button plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">提前释放保证金</van-button>
                     <div class="msg">
                         <span v-if="ddifo.agree == 1">用户同意释放</span>
                         <span v-if="ddifo.agree == 2">商家同意释放</span>
                         <span v-if="ddifo.agree == 3">双方同意释放</span>
                     </div>
-                    <van-button plain type="primary" :disabled="anarr('sf_ddajax')">释放保证金</van-button>
-                    <van-button plain type="primary" :disabled="anarr('ss_ddajax')">申诉</van-button>
+                    <van-button plain type="primary" @click="setddcode('sf_ddajax')" :disabled="anarr('sf_ddajax')">释放保证金</van-button>
+                    <van-button plain type="primary" @click="openurl('./zhongcai')" :disabled="anarr('ss_ddajax')">申诉</van-button>
                 </div>
 
 
@@ -180,20 +180,20 @@
                     ddifo['myuser'] == ddifo['Uadd'] && ddifo['Umark_b'] == '出售'
                 ">
                     <van-button plain type="primary" @click="setddcode('qx_ddajax')" :disabled="anarr('qx_ddajax')">取消</van-button>
-                    <van-button plain type="primary" @click="setddcode('fk_ddajax')" :disabled="anarr('qx_ddajax')">已付款</van-button>
+                    <!-- <van-button plain type="primary" @click="setddcode('fk_ddajax')" :disabled="anarr('qx_ddajax')">已付款</van-button> -->
                     <van-button plain type="primary" @click="setddcode('zt_ddajax',1)" :disabled="anarr('zt_ddajax')">暂停释放保证金</van-button>
                     <div class="msg">
                         <span v-if="ddifo.pau == 1">用户暂停</span>
                         <span v-if="ddifo.pau == 2">商家暂停</span>
                     </div>
-                    <van-button plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Uadd')">提前释放</van-button>
+                    <van-button plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Uadd')">提前释放保证金</van-button>
                     <div class="msg">
                         <span v-if="ddifo.agree == 1">用户同意释放</span>
                         <span v-if="ddifo.agree == 2">商家同意释放</span>
                         <span v-if="ddifo.agree == 3">双方同意释放</span>
                     </div>
                     <van-button plain type="primary"  @click="setddcode('sf_ddajax')" :disabled="anarr('sf_ddajax')">释放保证金</van-button>
-                    <van-button plain type="primary" :disabled="anarr('ss_ddajax')">申诉</van-button>
+                    <van-button plain type="primary" @click="openurl('./zhongcai')" :disabled="anarr('ss_ddajax')">申诉</van-button>
                 </div>
 
                 <div class="ddinfo_w_anarr" v-if="
@@ -205,14 +205,14 @@
                         <span v-if="ddifo.pau == 1">用户暂停</span>
                         <span v-if="ddifo.pau == 2">商家暂停</span>
                     </div>
-                    <van-button plain type="primary"  @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">提前释放</van-button>
+                    <van-button plain type="primary"  @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">提前释放保证金</van-button>
                     <div class="msg">
                         <span v-if="ddifo.agree == 1">用户同意释放</span>
                         <span v-if="ddifo.agree == 2">商家同意释放</span>
                         <span v-if="ddifo.agree == 3">双方同意释放</span>
                     </div>
-                    <van-button plain type="primary" :disabled="anarr('sf_ddajax')">释放保证金</van-button>
-                    <van-button plain type="primary" :disabled="anarr('ss_ddajax')">申诉</van-button>
+                    <van-button plain type="primary" @click="setddcode('sf_ddajax')" :disabled="anarr('sf_ddajax')">释放保证金</van-button>
+                    <van-button plain type="primary" @click="openurl('./zhongcai')" :disabled="anarr('ss_ddajax')">申诉</van-button>
                 </div>
 
                 <!-- 不是商家也不是卖家 -->
@@ -224,7 +224,7 @@
                         <span v-if="ddifo.pau == 2">商家暂停</span>
                     </van-button>
                     <van-button plain type="primary" :disabled="true">
-                        <span v-if="ddifo.agree == 0">提前释放</span>
+                        <span v-if="ddifo.agree == 0">提前释放保证金</span>
                         <span v-if="ddifo.agree == 1">用户同意释放</span>
                         <span v-if="ddifo.agree == 2">商家同意释放</span>
                         <span v-if="ddifo.agree == 3">双方同意释放</span>
@@ -253,7 +253,7 @@
 </template>
 <script>
 import ddinfomodel from "./ddinfo.json";
-
+import { Toast  } from 'vant';
 
 import config from "../../../config";
 var dotc_abi = config['hyue'][config['key']]['dotc']['abi'];
@@ -282,6 +282,8 @@ for (const key in fbarr) {
 var web3 = "";
 var address = "";
 var  ethereum = window.ethereum;
+var bzj_num = config["hyue"][config["key"]]["Bzj"]["num"];
+var uarm;
 
 import Web3 from "web3"
 import Web3Modal from "web3modal"
@@ -357,6 +359,71 @@ export default {
         
     },
     methods:{
+        //如果过亿请转换
+        getFNum(num_str) {
+        num_str = num_str.toString();
+        if (num_str.indexOf("+") != -1) {
+            num_str = num_str.replace("+", "");
+        }
+        if (num_str.indexOf("E") != -1 || num_str.indexOf("e") != -1) {
+            var resValue = "",
+            power = "",
+            result = null,
+            dotIndex = 0,
+            resArr = [],
+            sym = "";
+            var numStr = num_str.toString();
+            if (numStr[0] == "-") {
+            // 如果为负数，转成正数处理，先去掉‘-’号，并保存‘-’.
+            numStr = numStr.substr(1);
+            sym = "-";
+            }
+            if (numStr.indexOf("E") != -1 || numStr.indexOf("e") != -1) {
+            var regExp = new RegExp(
+                "^(((\\d+.?\\d+)|(\\d+))[Ee]{1}((-(\\d+))|(\\d+)))$",
+                "ig"
+            );
+            result = regExp.exec(numStr);
+            if (result != null) {
+                resValue = result[2];
+                power = result[5];
+                result = null;
+            }
+            if (!resValue && !power) {
+                return false;
+            }
+            dotIndex = resValue.indexOf(".") == -1 ? 0 : resValue.indexOf(".");
+            resValue = resValue.replace(".", "");
+            resArr = resValue.split("");
+            if (Number(power) >= 0) {
+                var subres = resValue.substr(dotIndex);
+                var length = dotIndex == 0 ? 0 : subres.length;
+                power = Number(power);
+                //幂数大于小数点后面的数字位数时，后面加0
+                for (var i = 0; i < power - length; i++) {
+                resArr.push("0");
+                }
+                if (power - subres.length < 0) {
+                resArr.splice(dotIndex + power, 0, ".");
+                }
+            } else {
+                power = power.replace("-", "");
+                power = Number(power);
+                //幂数大于等于 小数点的index位置, 前面加0
+                for (let i = 0; i < power - dotIndex; i++) {
+                resArr.unshift("0");
+                }
+                var n = power - dotIndex >= 0 ? 1 : -(power - dotIndex);
+                resArr.splice(n, 0, ".");
+            }
+            }
+            resValue = resArr.join("");
+
+            return sym + resValue;
+        } else {
+            return num_str;
+        }
+        },
         //时间转换
         gettime_zh(e){
             if (e) {
@@ -396,8 +463,8 @@ export default {
                     dq.ddifo['timc'] = ret['timc']; 
                     dq.ddifo['agree'] = Number(ret['agree']); 
                     dq.ddifo['pau'] = ret['pau'];
-                    dq.ddifo['uma'] = Number(ret['uma']) / (10**6);
-                    dq.ddifo['mma'] = Number(ret['mma']) / (10**18);
+                    dq.ddifo['uma'] = Number(ret['uma'])/ (10**bzj_num);
+                    dq.ddifo['mma'] = Number(ret['mma']) / (10**bzj_num);
                     //扩展数据
                     dq.ddifo['Umark_b'] =  ret['Umark'] == '0x6275790000000000000000000000000000000000000000000000000000000000' ? '购买':'出售';
                     dq.ddifo['pro_c'] =  ret['pro'] == '0x7573647400000000000000000000000000000000000000000000000000000000' ? 'usdt':'Test';
@@ -458,10 +525,11 @@ export default {
             }
             if (type == 'qx_ddajax') {
                 //判断是否放币
-                if (dq.ddifo['timb']) {
-                    alert('该订单无法取消');
-                    return;
-                }
+                // if (dq.ddifo['timb']) {
+                //     alert('该订单无法取消');
+                //     return;
+                // }
+                console.log('该订单无法取消')
                 qx_ddajax();
             }
             if (type == 'fk_ddajax') {
@@ -488,7 +556,17 @@ export default {
                 fb_ddajax();
             }
             function qx_ddajax() {
-                console.log('取消订单');
+                dotsconn.methods.releAss(dq.ddid+"").send({
+                    from:address
+                },(err,ret)=>{
+                    if (ret) {
+                        Toast.clear();
+                        Toast.success('订单已取消,请稍后查看');
+                    }else{
+                        Toast.clear();
+                        Toast.fail('请同意授权！');
+                    }
+                });
             }
             function fk_ddajax() {
                 dotsconn.methods.paid(dq.ddid).send({
@@ -529,8 +607,8 @@ export default {
                             break;
                         }
                     }
-                    var uarm = mul(mul(Uoa,Number(pros.uni)),Number(uara))/mul(Number(pri),Number(pros.one));
-                    if ((Number(dq.ddifo['uma']) ** (10**6)) >= uarm) {
+                    uarm = mul((mul(Uoa,Number(pros.uni))/mul(Number(pri),Number(pros.one))),Number(uara));
+                    if (dq.ddifo['uma']  >= uarm/(10**bzj_num)) {
                         ck(true);
                     }else{
                         ck(false,uarm);
@@ -546,12 +624,12 @@ export default {
                         if (!e) {
                             Dialog.confirm({
                                 title: '警告',
-                                message: '保证金不足，最低需要保证金‘'+ (uarm / (10**6)).toFixed(0) +'’，请追冲保证金后操作！',
-                                confirmButtonText:'追冲',
+                                message: '保证金不足，最低需要保证金‘'+ (uarm / (10**bzj_num)).toFixed(2) +'’，请追加保证金后操作！',
+                                confirmButtonText:'追加保证金',
                                 cancelButtonText:'放弃'
                             })
                             .then(() => {
-                                // on confirm
+                                mar_add();
                             })
                             .catch(() => {
                                 // on cancel
@@ -568,22 +646,67 @@ export default {
                 function user_pan() {
                     dotsconn.methods.pauseMar(dq.ddid).send({
                         from:address
-                    });
+                    },(err,ret)=>{
+                    if (ret) {
+                        Toast.clear();
+                        Toast.success('订单已暂停,请稍后查看');
+                    }else{
+                        Toast.clear();
+                        Toast.fail('请同意授权！');
+                    }
+                });
+                }
+                function mar_add() {
+                    dotsconn.methods.addMar(dq.ddid,dq.getFNum(uarm)).send({
+                        from:address
+                    },(err,ret)=>{
+                    if (ret) {
+                        Toast.clear();
+                        Toast.success('保证金已追加,请稍后查看');
+                    }else{
+                        Toast.clear();
+                        Toast.fail('请同意授权！');
+                    }
+                });
                 }
             }
             function tq_ddajax() {
                 dotsconn.methods.aheadMar(dq.ddid).send({
                     from:address
+                },(err,ret)=>{
+                    if (ret) {
+                        Toast.clear();
+                        Toast.success('同意保证金释放,请稍后查看');
+                    }else{
+                        Toast.clear();
+                        Toast.fail('请同意授权！');
+                    }
                 });
             }
             function sf_ddajax() {
                 dotsconn.methods.releMar(dq.ddid).send({
                     from:address
+                },(err,ret)=>{
+                    if (ret) {
+                        Toast.clear();
+                        Toast.success('保证金已释放,请稍后查看');
+                    }else{
+                        Toast.clear();
+                        Toast.fail('请同意授权！');
+                    }
                 });
             }
             function fb_ddajax(){
                 dotsconn.methods.releAss(dq.ddid+"").send({
                     from:address
+                },(err,ret)=>{
+                    if (ret) {
+                        Toast.clear();
+                        Toast.success('资产已释放,请稍后查看');
+                    }else{
+                        Toast.clear();
+                        Toast.fail('请同意授权！');
+                    }
                 });
             }
         },
@@ -591,16 +714,18 @@ export default {
         onClickLeft(){
             this.$router.go(-1);
         },
-
+        openurl(url){
+            this.$router.push(url);
+        },
 
         //按钮状态
         anarr(tcode,code) {
             var ddinfo = this.ddifo;
             if(tcode == 'qx_ddajax'){
-                if (ddinfo['timb'] != 0 || ddinfo['release'] != 0 || ddinfo['pau'] != 0) {
-                    return true;
-                }else{
+                if (ddinfo['release'] == 0 && ddinfo['timc'] == 0 ) {
                     return false;
+                }else{
+                    return true;
                 }
             }  
             if(tcode == 'zt_ddajax'){
@@ -612,18 +737,21 @@ export default {
                 }
             } 
             if(tcode == 'fb_ddajax'){
-                if (ddinfo['release'] != 0 || ddinfo['pau'] != 0 || (ddinfo['timc'] != 0 && ddinfo['agree'] == 3)) {
-                    return true;
-                }else{
+                if (ddinfo['release'] == 0 && ddinfo['timc'] == 0 ) {
                     return false;
+                }else{
+                    return true;
                 }
             } 
             if(tcode == 'tq_ddajax'){
-                if (Number(ddinfo['release']) == 0 || Number(ddinfo['pau']) == 0) {
+                console.log(ddinfo['time'])
+                if (ddinfo['time'] != 0 ) {
+                        return true;
+                }else {
                     //我是否点击了 
                     if (code == 'Madd') {
                         //商家
-                        if (ddinfo['agree'] == 1 || ddinfo['agree'] == 3) {
+                        if (ddinfo['agree'] == 2 || ddinfo['agree'] == 3) {
                             return true;
                         }else{
                             return false;
@@ -636,8 +764,6 @@ export default {
                             return false;
                         }
                     }
-                }else{
-                    return true;
                 }
             }
             if (tcode == 'sf_ddajax') {
@@ -654,12 +780,8 @@ export default {
             }
             
             if (tcode == 'ss_ddajax') {
-                if (ddinfo['agree'] == 3) {
-                    if (ddinfo['time'] != 0 ) {
-                        return true;
-                    }else{
-                        return false;
-                    }
+                if ((ddinfo['release'] == 0 && ddinfo['timc'] == 0 )|| ddinfo['time'] == 0 ) {
+                    return false;
                 }else{
                     return true;
                 }

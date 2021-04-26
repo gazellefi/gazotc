@@ -200,7 +200,7 @@
   padding: 5px 0;
 }
 .zcglul_li_r.maleftreft{
-  margin: 0 15px;
+  margin: 0 1px;
 }
 .zcglul_li.daojishi{
   height: 70px;
@@ -419,12 +419,6 @@
                 </div>
                 <div
                   class="vhtml_head_left_r_item_view_item_ul_li anniucss"
-                  @click="openqb('./lqcsb')"
-                >
-                  领取测试币
-                </div>
-                <div
-                  class="vhtml_head_left_r_item_view_item_ul_li anniucss"
                   @click="openqb('./qianbao')"
                 >
                   法币钱包
@@ -448,6 +442,12 @@
               <div class="vhtml_head_left_r_item_view_item_ul">
                 <div
                   class="vhtml_head_left_r_item_view_item_ul_li anniucss"
+                  @click="openqb('./lqcsb')"
+                >
+                  领取测试币
+                </div>
+                <div
+                  class="vhtml_head_left_r_item_view_item_ul_li anniucss"
                   @click="openqb('./')"
                 >
                   法币OTC
@@ -460,15 +460,38 @@
                 </div>
                 <div
                   class="vhtml_head_left_r_item_view_item_ul_li anniucss"
-                  @click="openqb('./zhongcai')"
-                >
-                  仲裁
-                </div>
-                <div
-                  class="vhtml_head_left_r_item_view_item_ul_li anniucss"
                   @click="openqb('./ddguanli')"
                 >
                   我的订单
+                </div>
+              </div>
+            </div>
+            <div class="vhtml_head_left_r_item_view_item">
+              <div class="vhtml_head_left_r_item_view_item_t">仲裁</div>
+              <div class="vhtml_head_left_r_item_view_item_ul">
+                <div
+                  class="vhtml_head_left_r_item_view_item_ul_li anniucss"
+                  @click="openqb('./zhongcai')"
+                >
+                  仲裁列表
+                </div>
+                <div
+                  class="vhtml_head_left_r_item_view_item_ul_li anniucss"
+                  @click="openqb('openbzjwin')"
+                >
+                  保证金分配
+                </div>
+                <div
+                  class="vhtml_head_left_r_item_view_item_ul_li anniucss"
+                  @click="openqb('openbzcfanwin')"
+                >
+                  仲裁方案
+                </div>
+                <div
+                  class="vhtml_head_left_r_item_view_item_ul_li anniucss"
+                  @click="openqb('openzcgl')"
+                >
+                  仲裁管理
                 </div>
               </div>
             </div>
@@ -513,7 +536,7 @@
     </div>
 
     <!-- 保证金分配弹框 -->
-    <el-dialog title="保证金分配" :visible.sync="bzj_t.code" width="30%">
+    <el-dialog title="保证金分配" :visible.sync="bzj_t.code" width=350px>
       <span v-if="bzj_t['ddinfo']['code']">
         <el-input v-model="bzj_t['ddid']" placeholder="请输入订单号"></el-input>
       </span>
@@ -540,20 +563,20 @@
             用户地址：{{ bzj_t["ddinfo"]["uad"] }}
           </div>
           <div class="ddinfodialog_itemcolumn_item" v-if="bzj_t['ddinfo_code']">
-            商家保证金：{{ bzj_t["ddinfo"]["mma"].toFixed(2) }} /
-            {{ bzj_t["ddinfo"]["pro"] }}
+            商家保证金：{{ bzj_t["ddinfo"]["mma"].toFixed(2) }} 
+            usdt
           </div>
           <div class="ddinfodialog_itemcolumn_item" v-if="bzj_t['ddinfo_code']">
-            用户保证金：{{ bzj_t["ddinfo"]["uma"].toFixed(2) }} /
-            {{ bzj_t["ddinfo"]["pro"] }}
+            用户保证金：{{ bzj_t["ddinfo"]["uma"].toFixed(2) }} 
+            usdt
           </div>
           <div class="ddinfodialog_itemcolumn_item" v-if="bzj_t['ddinfo_code']">
-            交易数量：{{ bzj_t["ddinfo"]["uoa"].toFixed(2) }} /
+            交易数量：{{ bzj_t["ddinfo"]["uoa"].toFixed(2) }} 
             {{ bzj_t["ddinfo"]["pro"] }}
           </div>
         </div>
         <div class="ddinfodialog_itemcolumn">
-          我的保证金：
+          商家保证金：
 
           <div class="ddinfodialog_item_form">
             <el-select
@@ -563,8 +586,8 @@
             >
               <el-option
                 v-for="item in [
-                  { value: 1, label: '增加' },
-                  { value: 2, label: '减少' },
+                  { value: 2, label: '增加' },
+                  { value: 1, label: '减少' },
                 ]"
                 :key="item.value"
                 :label="item.label"
@@ -580,45 +603,62 @@
             ></el-input>
           </div>
         </div>
-        <div class="ddinfodialog_item">
+        <div class="ddinfodialog_item" 
+             v-if="bzj_t['ddinfo']['juese'] != '其他'">
           我的设置：<span v-if="bzj_t['ddinfo']['juese'] == '用户'"
-            >{{ bzj_t["ddinfo"]["usz"].toFixed(2) }} /
-            {{ bzj_t["ddinfo"]["pro"] }} /
+            >
             {{
               bzj_t["ddinfo"]["uwho"] == 1
-                ? "增加"
+                ? "增加用户"
                 : bzj_t["ddinfo"]["uwho"] == 2
-                ? "减少"
-                : "未设置"
+                ? "减少用户"
+                : "（未设置）"
             }}
+            {{ bzj_t["ddinfo"]["usz"].toFixed(2) }} 
+            usdt            
           </span>
           <span v-if="bzj_t['ddinfo']['juese'] == '商家'"
-            >{{ bzj_t["ddinfo"]["msz"].toFixed(2) }} /
-            {{ bzj_t["ddinfo"]["pro"] }} /
-            {{
+            >{{
               bzj_t["ddinfo"]["mwho"] == 1
-                ? "增加"
+                ? "增加用户"
                 : bzj_t["ddinfo"]["mwho"] == 2
-                ? "减少"
-                : "未设置"
+                ? "减少用户"
+                : "（未设置）"
             }}
+            {{ bzj_t["ddinfo"]["msz"].toFixed(2) }} 
+            usdt 
           </span>
-          <span v-if="bzj_t['ddinfo']['juese'] == '其他'">0.00</span>
+        </div>
+        <div class="ddinfodialog_item" 
+             v-if="bzj_t['ddinfo']['juese'] == '其他'">
+          用户设置：<span v-if="bzj_t['ddinfo']['juese'] == '其他'"
+            >
+            {{
+              bzj_t["ddinfo"]["uwho"] == 1
+                ? "增加用户"
+                : bzj_t["ddinfo"]["uwho"] == 2
+                ? "减少用户"
+                : "（未设置）"
+            }}
+            {{ bzj_t["ddinfo"]["usz"].toFixed(2) }} 
+            usdt            
+          </span>
         </div>
         <div
           class="ddinfodialog_item"
           v-if="bzj_t['ddinfo']['juese'] == '商家'"
         >
           用户设置：<span
-            >{{ bzj_t["ddinfo"]["usz"].toFixed(2) }} /
-            {{ bzj_t["ddinfo"]["pro"] }} /
-            {{
+            >{{
               bzj_t["ddinfo"]["uwho"] == 1
-                ? "增加"
+                ? "增加用户"
                 : bzj_t["ddinfo"]["uwho"] == 2
-                ? "减少"
-                : "未设置"
-            }}</span
+                ? "减少用户"
+                : "（未设置）"
+            }}
+            {{ bzj_t["ddinfo"]["usz"].toFixed(2) }} 
+            usdt 
+            </span
           >
           <el-button
             :loading="loading"
@@ -634,15 +674,16 @@
           v-if="bzj_t['ddinfo']['juese'] == '用户'"
         >
           商家设置：<span
-            >{{ bzj_t["ddinfo"]["msz"].toFixed(2) }} /
-            {{ bzj_t["ddinfo"]["pro"] }} /
-            {{
+            >{{
               bzj_t["ddinfo"]["mwho"] == 1
-                ? "增加"
+                ? "增加用户"
                 : bzj_t["ddinfo"]["mwho"] == 2
-                ? "减少"
-                : "未设置"
-            }}</span
+                ? "减少用户"
+                : "（未设置）"
+            }}
+            {{ bzj_t["ddinfo"]["msz"].toFixed(2) }} 
+            usdt 
+            </span
           >
           <el-button
             :loading="loading"
@@ -651,6 +692,23 @@
             v-if="bzj_t['ddinfo']['mwho'] != 0"
             @click="zhixing_shezhi"
             >执行商家设置</el-button
+          >
+        </div>
+        <div
+          class="ddinfodialog_item"
+          v-if="bzj_t['ddinfo']['juese'] == '其他'"
+        >
+          商家设置：<span
+            >{{
+              bzj_t["ddinfo"]["mwho"] == 1
+                ? "增加用户"
+                : bzj_t["ddinfo"]["mwho"] == 2
+                ? "减少用户"
+                : "（未设置）"
+            }}
+            {{ bzj_t["ddinfo"]["msz"].toFixed(2) }} 
+            usdt 
+            </span
           >
         </div>
       </div>
@@ -680,7 +738,7 @@
     <el-dialog
       title="第二轮仲裁方案"
       :visible.sync="bzj_fangan.code"
-      width="30%"
+      width=350px
     >
       <span v-if="!bzj_fangan.data.code">
         <el-input
@@ -706,14 +764,14 @@
             用户地址：{{ bzj_fangan.data["uad"].substring(0, 8) }} ....
           </div>
           <div class="bzj_fangan_ul_li_ul_li">
-            交易数量：{{ bzj_fangan.data["uoa"].toFixed(2) }} /
+            交易数量：{{ bzj_fangan.data["uoa"].toFixed(2) }} 
             {{ bzj_fangan.data["pro"] }}
           </div>
           <div class="bzj_fangan_ul_li_ul_li">
-            商家保证金：{{ bzj_fangan.data["mma"].toFixed(2) }} / USDT
+            商家保证金：{{ bzj_fangan.data["mma"].toFixed(2) }}  USDT
           </div>
           <div class="bzj_fangan_ul_li_ul_li">
-            用户证金：{{ bzj_fangan.data["uma"].toFixed(2) }} / USDT
+            用户证金：{{ bzj_fangan.data["uma"].toFixed(2) }}  USDT
           </div>
         </div>
         <div class="bzj_fangan_ul_li title">仲裁方案</div>
@@ -769,23 +827,23 @@
           </el-input>
         </div>
         <div class="bzj_fangan_ul_li">
-          <span class="bzj_fangan_ul_lia">商家仲裁员：</span
+          <span class="bzj_fangan_ul_lia">用户仲裁员：</span
           ><el-input
             size="mini"
             placeholder="请输入"
             v-model="bzj_fangan.from.sjzcy"
           >
-            <template slot="append">USDT</template>
+            <template slot="append">GAZ</template>
           </el-input>
         </div>
         <div class="bzj_fangan_ul_li">
-          <span class="bzj_fangan_ul_lia">用户仲裁员：</span>
+          <span class="bzj_fangan_ul_lia">商家仲裁员：</span>
           <el-input
             size="mini"
             placeholder="请输入"
             v-model="bzj_fangan.from.yhzcy"
           >
-            <template slot="append">USDT</template>
+            <template slot="append">GAZ</template>
           </el-input>
         </div>
         <div class="bzj_fangan_ul_li">
@@ -795,7 +853,7 @@
             placeholder="请输入费用"
             v-model="bzj_fangan.from.zcfeiyong"
           >
-            <template slot="append">USDT</template>
+            <template slot="append">GAZ</template>
           </el-input>
         </div>
       </div>
@@ -823,7 +881,7 @@
     <el-dialog
       title="第二轮仲裁管理"
       :visible.sync="zcgldata.code"
-      width="30%"
+      width=350px
     >
     <span v-if="!zcgldata.tcode">
       <el-input v-model="zcgldata.ddid"  placeholder="请输入订单号"></el-input>
@@ -855,13 +913,13 @@
             用户地址：{{ zcgldata['info']['ddinfo']['uad'].substring(0,7) }}....
           </div>
           <div class="zcglul_li_r_item">
-            交易数量：{{ zcgldata['info']['ddinfo']['uoa'] }} / {{ zcgldata['info']['ddinfo']['pro'] }}
+            交易数量：{{ zcgldata['info']['ddinfo']['uoa'] }}  {{ zcgldata['info']['ddinfo']['pro'] }}
           </div>
           <div class="zcglul_li_r_item">
-            商家保证金：{{ zcgldata['info']['ddinfo']['mma'] }} / USDT
+            商家保证金：{{ zcgldata['info']['ddinfo']['mma']  }}  USDT
           </div>
           <div class="zcglul_li_r_item">
-            用户保证金：{{ zcgldata['info']['ddinfo']['uma'] }} / USDT
+            用户保证金：{{ zcgldata['info']['ddinfo']['uma'] }}  USDT
           </div>
         </div>
       </div>
@@ -878,9 +936,9 @@
                   :value="item">
                 </el-option>
               </el-select>
-              <el-button type="text" style="margin-left: 5px;"><i class="el-icon-circle-plus-outline"></i> 新建</el-button>
+              <el-button type="text" style="margin-left: 5px;" @click="openqb('openbzcfanwin')"><i class="el-icon-circle-plus-outline"></i> 新建</el-button>
           </div>
-          <div style="margin-top: 5px;">票数 {{ !zcgldata['info']['tpjdu']?0:zcgldata['info']['tpjdu'] }}/7</div>
+          <div style="margin-top: 5px;">票数 {{ !zcgldata['info']['tpjdu']?0:zcgldata['info']['tpjdu'] }}/5</div>
         </div>
       </div>
       <div class="zcglul_li">
@@ -889,23 +947,23 @@
       </div>
       <div class="zcglul_li">
         <div class="zcglul_li_l">保证金：</div>
-        <div class="zcglul_li_r">({{ zcgldata['info']['who'] == 1 ? '扣除商家的保证金':'扣除用户的保证金' }}) {{ zcgldata['info']['bzjnum'] }} USDT</div>
+        <div class="zcglul_li_r">({{ zcgldata['info']['who'] == 1 ? '扣除商家的保证金':'扣除用户的保证金' }}) <br> {{ zcgldata['info']['bzjnum'] }} USDT</div>
       </div>
       <div class="zcglul_li">
         <div class="zcglul_li_l">商家仲裁员：</div>
-        <div class="zcglul_li_r">{{ zcgldata['info']['sjnum'] }} USDT</div>
+        <div class="zcglul_li_r">{{ zcgldata['info']['sjnum'] }} GAZ</div>
       </div>
       <div class="zcglul_li">
         <div class="zcglul_li_l">用户仲裁员：</div>
-        <div class="zcglul_li_r">{{ zcgldata['info']['yhnum'] }} USDT</div>
+        <div class="zcglul_li_r">{{ zcgldata['info']['yhnum'] }} GAZ</div>
       </div>
       <div class="zcglul_li">
         <div class="zcglul_li_l">第二轮仲裁费：</div>
-        <div class="zcglul_li_r">{{ zcgldata['info']['delnum'] }} USDT</div>
+        <div class="zcglul_li_r">{{ zcgldata['info']['delnum'] }} GAZ</div>
       </div>
       <div class="zcglul_li daojishi">
         <div class="zcglul_li_l">投票倒计时</div>
-        <div class="zcglul_li_r"><van-count-down :time="zcgldata['info'].djsval" /></div>
+        <div class="zcglul_li_r"><van-count-down :time="zcgldata['info'].djsval" format="DD 天 HH 时 mm 分 ss 秒" /></div>
       </div>
       <div class="zcglul_li coll">
         <div class="zcglul_li_item">
@@ -939,6 +997,7 @@ var address = "";
 var ethereum = window.ethereum;
 var webtrue = false;
 var ArbOne, Dotc, ArbTwo, Arbdate;
+var bzj_num = config["hyue"][config["key"]]["Bzj"]["num"];
 
 
 export default {
@@ -1069,19 +1128,22 @@ export default {
       var dq = this;
       ArbTwo.methods.slates(dq.zcgldata.ddid,dq.zcgldata['faid']).call((err,ret)=>{
         if (ret) {
-          dq.zcgldata.info['zcguishu'] = ret['arb'] == 1 ? '商家':'用户';
+          if (ret['arb'] == 1) dq.zcgldata.info['zcguishu'] =  '商家';
+          if (ret['arb'] == 2) dq.zcgldata.info['zcguishu'] =  '用户';
+          if (ret['arb'] == 0) dq.zcgldata.info['zcguishu'] =  '已释放';
           dq.zcgldata.info['who'] = ret['who'];
-          dq.zcgldata.info['delnum'] = Number(ret['fees']) / (10**6);
+          dq.zcgldata.info['bzjnum'] = ret['comp']/ 10**bzj_num;
+          dq.zcgldata.info['delnum'] = Number(ret['fees']) / (10**bzj_num);
         }
       });
       ArbTwo.methods.slat(dq.zcgldata.ddid,dq.zcgldata['faid'],3).call((err,ret)=>{
           if (ret) {
-            dq.zcgldata.info.sjnum = Number(ret) / (10**6);
+            dq.zcgldata.info.sjnum = Number(ret) / (10**bzj_num);
           }
         });
       ArbTwo.methods.slat(dq.zcgldata.ddid,dq.zcgldata['faid'],2).call((err,ret)=>{
           if (ret) {
-            dq.zcgldata.info.yhnum = Number(ret) / (10**6);
+            dq.zcgldata.info.yhnum = Number(ret) / (10**bzj_num);
           }
         });
     }
@@ -1146,6 +1208,71 @@ export default {
     }
   },
   methods: {
+    //如果过亿请转换
+    getFNum(num_str) {
+      num_str = num_str.toString();
+      if (num_str.indexOf("+") != -1) {
+        num_str = num_str.replace("+", "");
+      }
+      if (num_str.indexOf("E") != -1 || num_str.indexOf("e") != -1) {
+        var resValue = "",
+          power = "",
+          result = null,
+          dotIndex = 0,
+          resArr = [],
+          sym = "";
+        var numStr = num_str.toString();
+        if (numStr[0] == "-") {
+          // 如果为负数，转成正数处理，先去掉‘-’号，并保存‘-’.
+          numStr = numStr.substr(1);
+          sym = "-";
+        }
+        if (numStr.indexOf("E") != -1 || numStr.indexOf("e") != -1) {
+          var regExp = new RegExp(
+            "^(((\\d+.?\\d+)|(\\d+))[Ee]{1}((-(\\d+))|(\\d+)))$",
+            "ig"
+          );
+          result = regExp.exec(numStr);
+          if (result != null) {
+            resValue = result[2];
+            power = result[5];
+            result = null;
+          }
+          if (!resValue && !power) {
+            return false;
+          }
+          dotIndex = resValue.indexOf(".") == -1 ? 0 : resValue.indexOf(".");
+          resValue = resValue.replace(".", "");
+          resArr = resValue.split("");
+          if (Number(power) >= 0) {
+            var subres = resValue.substr(dotIndex);
+            var length = dotIndex == 0 ? 0 : subres.length;
+            power = Number(power);
+            //幂数大于小数点后面的数字位数时，后面加0
+            for (var i = 0; i < power - length; i++) {
+              resArr.push("0");
+            }
+            if (power - subres.length < 0) {
+              resArr.splice(dotIndex + power, 0, ".");
+            }
+          } else {
+            power = power.replace("-", "");
+            power = Number(power);
+            //幂数大于等于 小数点的index位置, 前面加0
+            for (let i = 0; i < power - dotIndex; i++) {
+              resArr.unshift("0");
+            }
+            var n = power - dotIndex >= 0 ? 1 : -(power - dotIndex);
+            resArr.splice(n, 0, ".");
+          }
+        }
+        resValue = resArr.join("");
+
+        return sym + resValue;
+      } else {
+        return num_str;
+      }
+    },
     wlxuanze(e){
       this.wapcd = false;
       if (e == 'etfcshi' || e == 'huobi') {
@@ -1294,8 +1421,6 @@ export default {
           });
           return;
         }
-        this.zcgldata['code'] = true;
-        return;
       }
       this.$router.push(e);
     },
@@ -1359,8 +1484,9 @@ export default {
           //有数据
           ddinfodata(ddinfo);
         } else {
-          this.loading = false;
-          this.$message.error("请输入正确的订单！");
+          ddinfodata(ddinfo);
+          // this.loading = false;
+          // this.$message.error("请输入正确的订单！");
         }
       }
 
@@ -1441,19 +1567,24 @@ export default {
           this.bzj_t["ddinfo"]["juese"] == "用户" ||
           this.bzj_t["ddinfo"]["juese"] == "商家"
         ) {
+          console.log(667788)
+            console.log(Number(this.bzj_t.bzjnum))
+            console.log(Number(this.bzj_t["ddinfo"]["uma"]))
+            console.log(this.bzj_t.bzjcode)
           if (this.bzj_t.bzjcode == 1) {
-            if (this.bzj_t.bzjnum <= Number(this.bzj_t["ddinfo"]["mma"])) {
+            if (Number(this.bzj_t.bzjnum) <= Number(this.bzj_t["ddinfo"]["mma"])) {
               setbzj();
             } else {
               this.loading = false;
-              this.$message.error("增加保证金不能大于商家保证金");
+              this.$message.error("商家保证金减少不能大于商家保证金数量");
             }
           } else {
-            if (this.bzj_t.bzjnum <= Number(this.bzj_t["ddinfo"]["uma"])) {
+             console.log(6677899)
+            if (Number(this.bzj_t.bzjnum) <= Number(this.bzj_t["ddinfo"]["uma"])) {
               setbzj();
             } else {
               this.loading = false;
-              this.$message.error("减少保证金不能大于用户保证金");
+              this.$message.error("商家增加保证金不能大于用户保证金数量");
             }
           }
         } else {
@@ -1474,7 +1605,7 @@ export default {
         //保证金倍数
         var bzjnum = config["hyue"][config["key"]]["Bzj"]["num"];
         var bzjnnn = dq.bzj_t.bzjnum * 10 ** bzjnum;
-        ArbOne.methods.setComp(dq.bzj_t.ddid, dq.bzj_t.bzjcode, bzjnnn).send(
+        ArbOne.methods.setComp(dq.bzj_t.ddid, dq.getFNum(dq.bzj_t.bzjcode), dq.getFNum(bzjnnn)).send(
           {
             from: address,
           },
@@ -1661,16 +1792,16 @@ export default {
       var mma = Number(user.mma);
       var uma = Number(user.uma);
       var tol =
-        Number(this.bzj_fangan.from.sjzcy) * 10 ** 6 +
-        Number(this.bzj_fangan.from.yhzcy) * 10 ** 6;
+        Number(this.bzj_fangan.from.sjzcy) * 10**bzj_num +
+        Number(this.bzj_fangan.from.yhzcy) * 10**bzj_num;
       if (
-        add(tol, mul(Number(this.bzj_fangan.from.zcfeiyong) * 10 ** 6, meg)) ==
+        add(tol, mul(Number(this.bzj_fangan.from.zcfeiyong) * 10**bzj_num, meg)) ==
         mul(add(arm, mma), 2)
       ) {
-        var numbbbbb = Number(this.bzj_fangan.from.bzjnum) * 10 ** 6;
+        var numbbbbb = Number(this.bzj_fangan.from.bzjnum) * 10**bzj_num;
         //第二轮仲裁员分配的仲裁费必须低于最高比例
         if (
-          mul(Number(this.bzj_fangan.from.zcfeiyong) * 10 ** 6, 10 ** 6) <=
+          mul(Number(this.bzj_fangan.from.zcfeiyong) * 10**bzj_num, 10 ** 6) <=
           mul(mma, Number(arat))
         ) {
           //设置保证金调整方案,@_who == 1 扣除商家的保证金,@_who == 2 扣除用户的保证金,
@@ -1700,10 +1831,10 @@ export default {
 
       //提交本次设置方案
       async function getfanan() {
-        var numbbbbb = Number(dq.bzj_fangan.from.bzjnum) * 10 ** 6;
-        var zcfeiyong = Number(dq.bzj_fangan.from.zcfeiyong) * 10 ** 6;
-        var sjzcy = Number(dq.bzj_fangan.from.sjzcy) * 10 ** 6;
-        var yhzcy = Number(dq.bzj_fangan.from.yhzcy) * 10 ** 6;
+        var numbbbbb = dq.getFNum(dq.bzj_fangan.from.bzjnum * 10 ** 12*10**6);
+        var zcfeiyong = dq.getFNum(dq.bzj_fangan.from.zcfeiyong * 10 ** 12*10**6);
+        var sjzcy = dq.getFNum(dq.bzj_fangan.from.sjzcy * 10 ** 12*10**6);
+        var yhzcy = dq.getFNum(dq.bzj_fangan.from.yhzcy * 10 ** 12*10**6);
         var array = new Array(4);
         array[0] = 0;
         array[1] = 0;
@@ -1714,18 +1845,18 @@ export default {
           .scheme(
             dq.bzj_fangan["ddid"],
             dq.bzj_fangan.from.who + "",
+            _who + "",
             numbbbbb + "",
             array,
             zcfeiyong + ""
           )
           .call();
         var isfanan = await ArbTwo.methods.plan(shasing).call();
-        if (isfanan) {
+        if (isfanan != 0) {
           dq.bzj_fangan.loading = false;
-          dq.$message.error("您好，此方案已存在!");
+          dq.$message.error("您好，此方案已存在!,方案编号为{isfanan}");
           return;
         }
-
         ArbTwo.methods
           .scheme(
             dq.bzj_fangan["ddid"],
@@ -1804,7 +1935,14 @@ export default {
         var arbs = await ArbTwo.methods.arbs(data.ddid).call();
         var Timc = await ArbTwo.methods.Timc().call();
         //查询默认编号投票人数 以及信息
+        var guishu;
         var slates = await ArbTwo.methods.slates(data.ddid,data['faid']).call();
+          if (slates['arb'] == 1) guishu =  '商家';
+          if (slates['arb'] == 2) guishu =  '用户';
+          if (slates['arb'] == 0) guishu =  '已释放';
+          console.log(34567)
+          console.log(data['faid'])
+          console.log(slates['comp'])
         var weight = await ArbTwo.methods.weight(data.ddid,arbs['timc'],data['faid']).call();
 
         var sjzcy_num = 0;
@@ -1836,7 +1974,11 @@ export default {
         //倒计时
         var dqtime = Math.round(new Date() / 1000);
         var ensjc = Number(Timc) + Number(arbs['timc']);
-        var djsval = ensjc - dqtime;
+        var djsval = (dqtime - ensjc)*1000;
+        console.log("倒计时1")
+        console.log(dqtime)
+        console.log(ensjc)
+        console.log(djsval)
         dq.zcgldata = {
           code:data.code,
           loading:false,
@@ -1854,21 +1996,20 @@ export default {
               uad:ddinfo['uad'],
               mad:ddinfo['mad'],
               pro:pro_id,
-              mma:Number(ddinfo['mma']) / (10**6),
-              uma:Number(ddinfo['uma']) / (10**pro_num),
-              uoa:Number(ddinfo['uoa']) / (10**6)
+              mma:Number(ddinfo['mma']) / (10**bzj_num),
+              uma:Number(ddinfo['uma']) / (10**bzj_num),
+              uoa:Number(ddinfo['uoa']) / (10**pro_num)
             },
             tpjdu:weight,
-            zcguishu:slates['arb'] == 1 ? '商家':'用户',
-            bzjnum:Number(slates['comp']) / (10**6),
+            zcguishu:guishu,
+            bzjnum:Number(slates['comp']) / (10**bzj_num),
             who:slates['who'],
-            sjnum:Number(sjzcy_num) / (10**6),
-            yhnum:Number(yhzcy_num) / (10**6),
-            delnum:Number(slates['fees']) / (10**6),
+            sjnum:Number(sjzcy_num) / (10**bzj_num),
+            yhnum:Number(yhzcy_num) / (10**bzj_num),
+            delnum:Number(slates['fees']) / (10**bzj_num),
             djsval:djsval
           }
         }
-
         //查询我是否双方交易之一
         if (zmxiaoxie(JSON.stringify(ddinfo)).indexOf(zmxiaoxie(address)) != -1) {
           if (zmxiaoxie(ddinfo['mad']) == zmxiaoxie(address)) {
@@ -1899,7 +2040,10 @@ export default {
       var dq  = this;
       this.zcgldata.loading = true;
       var arbs = await ArbTwo.methods.arbs(this.zcgldata.ddid).call();
-      var pau = await ArbTwo.methods.arbn(this.zcgldata.ddid,arbs['time'],address).call();
+      var pau = await ArbTwo.methods.arbn(this.zcgldata.ddid,arbs['timc'],address).call();
+      console.log(999)
+      console.log(arbs['time'])
+      console.log(pau)
       if (arbs['time'] == 0 && pau == this.zcgldata.faid) {
         ArbTwo.methods.notVote(this.zcgldata.ddid,this.zcgldata.faid).send({
           from:address
@@ -1962,8 +2106,8 @@ export default {
       var arbs = await ArbTwo.methods.arbs(this.zcgldata.ddid).call();
       var weight = await ArbTwo.methods.weight(this.zcgldata.ddid,arbs['timc'],this.zcgldata['faid']).call();
       var leg = await ArbTwo.methods.leg().call();
-      if (Number(weight) >= Number(leg) && Number(arbs['time']) > 0) {
-        ArbTwo.methods.arbs(this.zcgldata.ddid).send({from:address},(err,ret)=>{
+      if (Number(weight) >= Number(leg) && Number(arbs['time']) == 0) {
+        ArbTwo.methods.accept(this.zcgldata.ddid,this.zcgldata['faid']).send({from:address},(err,ret)=>{
           dq.zcgldata['loading'] = false;
           if (ret) {
             dq.$message({
@@ -1971,12 +2115,12 @@ export default {
               type: 'success'
             });
           }else{
-            dq.$message.error('操作失败！');
+            dq.$message.error('操作失败1！');
           }
         });
       }else{
         this.zcgldata['loading'] = false;
-        this.$message.error('操作失败！');
+        this.$message.error('操作失败2！');
       }
     },
     //执行投票 execute
@@ -1994,7 +2138,7 @@ export default {
        if (Number(weight) >= Number(leg) && Number(arbs['time']) != 0 && Number(Time) < dqtime - Number(arbs['time'])) {
          if (Number(arbs['finish']) != 0) {
            dq.zcgldata.loading = false;
-           this.$message.error('执行失败！');
+           this.$message.error('已执行！');
            return;
          }
          ArbTwo.methods.execute(this.zcgldata.ddid,this.zcgldata['faid']).send({from:address},(err,ret)=>{

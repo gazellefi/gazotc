@@ -1,6 +1,6 @@
 <template>
   <el-container v-loading="loading">
-    <el-dialog title="第二轮仲裁报名" :visible.sync="deldata['dialogcode']" width="40%">
+    <el-dialog title="第二轮仲裁报名" :visible.sync="deldata['dialogcode']" width=350px>
       <div>
         <p>
           我的账号：<span>{{  deldata.myuser.user }}</span>
@@ -36,6 +36,64 @@
       </span>
     </el-dialog>
     <el-tabs type="border-card" class="table" v-model="tabindex">
+      
+      <el-tab-pane label="仲裁员列表" name="3">
+        <span slot="label"><i class="el-icon-suitcase"></i> 仲裁员列表</span>
+        <template>
+          <el-row class="con-title">
+            <div class="con-title_auto"></div>
+            <div class="res add" @click="sq_zcy_dialog">
+              <i class="el-icon-circle-plus-outline"></i
+              ><span>申请成为仲裁员</span>
+            </div>
+          </el-row>
+          <el-container>
+            <el-table :data="listarr['zc_list']" style="width: 100%">
+              <el-table-column
+                fixed
+                prop="index"
+                label="序号"
+              ></el-table-column>
+              <el-table-column prop="store" label="仲裁员">
+                <template slot-scope="scope">
+                  <div class="zcy_list_user">{{ scope.row.username }}</div>
+                  <div class="zcy_list_username">{{ scope.row.user_b }}</div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="invite" label="邀请次数"></el-table-column>
+              <el-table-column prop="succeed" label="仲裁单数"></el-table-column>
+              <el-table-column
+                prop="appl"
+                label="第二轮报名次数"
+              ></el-table-column>
+              <el-table-column
+                prop="balanceMar"
+                label="保证金余额"
+              >
+                <template slot-scope="scope">
+                  {{scope.row.balanceMar  }} GAZ
+                </template>
+              </el-table-column>
+              <el-table-column prop="lock" label="冻结状态">
+                <template slot-scope="scope">
+                  {{scope.row.lock == 0 ? '正常':'冻结'  }}
+                </template>
+              </el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button
+                    size="mini"
+                    :loading="scope.row.jiazai"
+                    :disabled="scope.row.lock == 1 ? true:false"
+                    @click="yaoqingajax(scope.row)"
+                    >{{scope.row.lock == 0 ? '邀请':'已冻结'  }}</el-button
+                  >
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-container>
+        </template>
+      </el-tab-pane>
       <el-tab-pane name="1">
         <span slot="label"><i class="el-icon-files"></i> 第一轮仲裁订单</span>
         <template>
@@ -244,70 +302,19 @@
               </el-table-column>
               <el-table-column label="操作" >
                 <template slot-scope="scope">
-                 <el-button size="mini" :disabled="(scope.row.timc == 0 ? false:(scope.row.timc != 0 && scope.row.timd == 0) ? false:true)" @click="derlunbaomingajax(scope.row)">报名</el-button>
+                 <div v-if="options_value_b == 0" > 
+                   <el-button size="mini" :disabled="(scope.row.timc == 0 ? false:(scope.row.timc != 0 && scope.row.timd == 0) ? false:true)" @click="derlunbaomingajax(scope.row)">报名</el-button>
+                 </div>
+                 <div v-if="options_value_b == 1" > 
+                    <el-button size="mini" @click="openqb('openzcgl')">详情</el-button>
+                 </div>
                 </template>
               </el-table-column>
             </el-table>
           </el-container>
         </template>
       </el-tab-pane>
-      <el-tab-pane label="仲裁员列表" name="3">
-        <span slot="label"><i class="el-icon-suitcase"></i> 仲裁员列表</span>
-        <template>
-          <el-row class="con-title">
-            <div class="con-title_auto"></div>
-            <div class="res add" @click="sq_zcy_dialog">
-              <i class="el-icon-circle-plus-outline"></i
-              ><span>申请成为仲裁员</span>
-            </div>
-          </el-row>
-          <el-container>
-            <el-table :data="listarr['zc_list']" style="width: 100%">
-              <el-table-column
-                fixed
-                prop="index"
-                label="序号"
-              ></el-table-column>
-              <el-table-column prop="store" label="仲裁员">
-                <template slot-scope="scope">
-                  <div class="zcy_list_user">{{ scope.row.username }}</div>
-                  <div class="zcy_list_username">{{ scope.row.user_b }}</div>
-                </template>
-              </el-table-column>
-              <el-table-column prop="invite" label="邀请次数"></el-table-column>
-              <el-table-column prop="succeed" label="仲裁单数"></el-table-column>
-              <el-table-column
-                prop="appl"
-                label="第二轮报名次数"
-              ></el-table-column>
-              <el-table-column
-                prop="balanceMar"
-                label="保证金额"
-              >
-                <template slot-scope="scope">
-                  {{scope.row.balanceMar  }} USDT
-                </template>
-              </el-table-column>
-              <el-table-column prop="lock" label="冻结状态">
-                <template slot-scope="scope">
-                  {{scope.row.lock == 0 ? '正常':'冻结'  }}
-                </template>
-              </el-table-column>
-              <el-table-column label="操作">
-                <template slot-scope="scope">
-                  <el-button
-                    size="mini"
-                    :loading="scope.row.jiazai"
-                    :disabled="scope.row.lock == 1 ? true:false"
-                    @click="yaoqingajax(scope.row)"
-                    >{{scope.row.lock == 0 ? '邀请':'已冻结'  }}</el-button
-                  >
-                </template>
-              </el-table-column>
-            </el-table>
-          </el-container>
-        </template>
-      </el-tab-pane>
+      
 
       <el-tab-pane label="我申述的订单" name="4">
         <span slot="label"><i class="el-icon-suitcase"></i> 我参与的</span>
@@ -457,7 +464,7 @@
       <p>
         订单详情：<span>{{ row.orderID }}</span>
       </p>
-      <div class="case">仲裁方案</div>
+      <div class="case">仲裁方案1</div>
       <div>
         <span>编号</span>
         <el-input
@@ -507,9 +514,9 @@
         </el-option>
       </el-select>
       <div>我的设置</div>
-      <el-button type="primary" @click="marginSeting">提交</el-button>
+      <el-button type="primary" @click="marginSeting">提交1</el-button>
     </el-dialog>
-    <el-dialog title="报名/退出" :visible.sync="sq_zc_data['show']" width="40%">
+    <el-dialog title="报名/退出" :visible.sync="sq_zc_data['show']" width=300px>
     <div class="sq_zc_css">
       <p>我的账号：{{ sq_zc_data['info']['user'] }}</p>
       <p>我的昵称：{{ sq_zc_data['info']['username'] }}</p>
@@ -518,7 +525,7 @@
       <p>我参与第二轮仲裁订单的订单数: {{ sq_zc_data['info']['del_ddnum'] }}</p>
       <p>我成功仲裁订单数: {{ sq_zc_data['info']['cg_zcddnum'] }}</p>
       <p>仲裁员编号：{{ sq_zc_data['info']['cg_zcid'] }}</p>
-      <p>保证金余额：{{ sq_zc_data['info']['user_bzj'] }} GAZ</p>
+      <p>保证金余额：{{ sq_zc_data['info']['user_bzj'].toFixed(2) }} GAZ</p>
       <el-select v-model="sq_zc_data.signDefualt" placeholder="请选择">
         <el-option
           v-for="item in sq_zc_data.sign"
@@ -533,7 +540,7 @@
       <el-button type="primary" @click="sq_zcy_ajax">提交</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="我参与的第一轮仲裁" :visible.sync="dyl_zc['code']" width="40%">
+    <el-dialog title="我参与的第一轮仲裁" :visible.sync="dyl_zc['code']" width=350px>
       <p>
         我的账号：<span>{{ dyl_zc['my_user'] }}</span>
       </p>
@@ -565,8 +572,8 @@
       </div>
       <p>被邀请方：{{ dyl_zc['byqf'] }}</p>
       <p>仲裁结果：{{ dyl_zc['zcinfo']['arb'] == 0 ?'未开始仲裁': dyl_zc['zcinfo']['arb'] == 1 ? '用户获胜': dyl_zc['zcinfo']['arb'] == 2 ? '商家获胜':'进入第二轮仲裁'}}</p>
-      <p>商家仲裁员：{{ dyl_zc['zcinfo']['uadd'] }}</p>
-      <p>用户仲裁员：{{ dyl_zc['zcinfo']['madd'] }}</p>
+      <p>商家仲裁员：{{ dyl_zc['zcinfo']['madd'] }}</p>
+      <p>用户仲裁员：{{ dyl_zc['zcinfo']['uadd'] }}</p>
 
       <div>仲裁倒计时：
         <div v-if="dyl_zc.zcinfo.djs_val == 0">未开始</div>
@@ -579,7 +586,7 @@
       <el-button type="primary" :disabled="dyl_zc.zhixingcode" @click="zhixingajax">执行</el-button>
     </el-dialog>
 
-    <el-dialog title="邀请仲裁员" :visible.sync="zc_user_yq['show']" width="30%">
+    <el-dialog title="邀请仲裁员" :visible.sync="zc_user_yq['show']" width=350px>
       <div class="zc_user_yq">
         <div class="zc_user_yq_ul">
           <div class="zc_user_yq_ul_item">
@@ -600,11 +607,11 @@
           </div>
 
           <div class="zc_user_yq_ul_item sousou">
-            <div class="zc_user_yq_ul_item_l">
+            <div  class="zc_user_yq_ul_item_l">
               订单号：
             </div>
             <div class="zc_user_yq_ul_item_r sousou_r">
-              <el-input v-model="zc_user_yq['did']" placeholder="请输入订单ID"></el-input> <el-button icon="el-icon-search" circle @click="sousou_dd" :loading="loadingsoudd"></el-button>
+              <el-input  v-model="zc_user_yq['did']" placeholder="请输入订单ID" ></el-input> <el-button icon="el-icon-search" circle @click="sousou_dd" :loading="loadingsoudd"></el-button>
             </div>
           </div>
           <div class="zc_user_yq_ul_item ddinfo" v-if="zc_user_yq.dinfo['sj_user']">
@@ -723,6 +730,7 @@ var bzjnum = config['hyue'][config['key']]['Bzj']['num'];
 let Base64 = require('js-base64').Base64;
 import Web3 from "web3";
 import Web3Modal from "web3modal";
+import { Dialog,Toast } from 'vant';
 var address, web3,ArbOne,ArbTwo,GazConn,Dotc,Arbdate;
 
 function 字母转小写(值) {
@@ -1020,6 +1028,10 @@ export default {
     //弹出错误提示
   },
   methods: {
+      openqb(e) {
+      this.wapcd = false;
+      this.$router.push(e);
+    },
     //如果过亿请转换
     getFNum(num_str) {
       num_str = num_str.toString();
@@ -1045,22 +1057,28 @@ export default {
             "ig"
           );
           result = regExp.exec(numStr);
+          console.log(1324)
+          console.log(result)
           if (result != null) {
             resValue = result[2];
             power = result[5];
             result = null;
           }
+          console.log(!resValue)
+          console.log(!power)
           if (!resValue && !power) {
             return false;
           }
           dotIndex = resValue.indexOf(".") == -1 ? 0 : resValue.indexOf(".");
           resValue = resValue.replace(".", "");
           resArr = resValue.split("");
+          console.log(resArr)
           if (Number(power) >= 0) {
             var subres = resValue.substr(dotIndex);
+            var length = dotIndex == 0 ? 0 : subres.length;
             power = Number(power);
             //幂数大于小数点后面的数字位数时，后面加0
-            for (var i = 0; i <= power - subres.length; i++) {
+            for (var i = 0; i < power - length; i++) {
               resArr.push("0");
             }
             if (power - subres.length < 0) {
@@ -1359,8 +1377,8 @@ export default {
                   obj[key] = ZcDelList[key];
                 }
                 obj['did'] = Number(infoarr[index][0]);
-                obj['uoa'] = (Number(infoarr[index][1]) / (10**bzjnum)).toFixed(2);
-                obj['uma'] = (Number(infoarr[index][2]) / (10**zc_num)).toFixed(2);
+                obj['uoa'] = (Number(infoarr[index][1]) / (10**zc_num)).toFixed(2);
+                obj['uma'] = (Number(infoarr[index][2]) / (10**bzjnum)).toFixed(2);
                 obj['mma'] = (Number(infoarr[index][3]) / (10**bzjnum)).toFixed(2);
                 obj['timc'] = Number(infoarr[index][4]);
                 obj['timd'] = Number(infoarr[index][5]);
@@ -1409,6 +1427,7 @@ export default {
       var Timc = await ArbTwo.methods.Timc().call();
       var Timd = await ArbTwo.methods.Timd().call();
       var Time = await ArbTwo.methods.Timd().call();
+      
       var dqtime = Math.round(new Date() / 1000);
       await ArbOne.methods.applDeal(address+"",num).call((err, ret) => {
           if (ret) {
@@ -1428,13 +1447,14 @@ export default {
                     break;
                   }
                 }
+                var arbw = ArbTwo.methods.arbw(infoarr[index][0],address+"").call();
                 var obj = {};
                 for (const key in ZcDelList) {
                   obj[key] = ZcDelList[key];
                 }
                 obj['did'] = Number(infoarr[index][0]);
-                obj['uoa'] = (Number(infoarr[index][1]) / (10**bzjnum)).toFixed(2);
-                obj['uma'] = (Number(infoarr[index][2]) / (10**zc_num)).toFixed(2);
+                obj['uoa'] = (Number(infoarr[index][1]) / (10**zc_num)).toFixed(2);
+                obj['uma'] = (Number(infoarr[index][2]) / (10**bzjnum)).toFixed(2);
                 obj['mma'] = (Number(infoarr[index][3]) / (10**bzjnum)).toFixed(2);
                 obj['timc'] = 0;
                 obj['timd'] = Number(infoarr[index][5]);
@@ -1443,6 +1463,7 @@ export default {
 
                 obj['pro'] = zc_id;
                 obj['mark'] = typearr[index][1];
+                obj['arbw'] = arbw;
 
                 obj['uad'] = userarr[index][0];
                 obj['mad'] = userarr[index][1];
@@ -1776,13 +1797,21 @@ export default {
             this.$message.error('订单不存在！');
             dq.loadingsoudd = false;
           }else{
-            dq.loadingsoudd = false;
-            dq.$alert('订单未初始化，请点击确定！', '提示', {
-              confirmButtonText: '确定',
-              callback: () => {
-                ddinit();
-              }
-            });
+             dq.loadingsoudd = false;
+             Dialog.confirm({
+                    title: '提示3',
+                    message: '订单未初始化，请点击确定！',
+                    confirmButtonText:'确定',
+                    cancelButtonText:'取消',
+                    cancelButtonColor:'',
+                    getContainer:'body'
+                })
+                .then(() => {
+                    ddinit();
+                })
+                .catch(() => {               
+                });
+                return;
           }
       }else{
         initdata();
@@ -1858,15 +1887,49 @@ export default {
       }
     },
     //邀请仲裁
-    yq_zc_ajax(){
+    async yq_zc_ajax(){
       if (!this.zc_user_yq['form_user']) {
         return;
       }
-      ArbOne.methods.hope(this.zc_user_yq['did']+"",this.zc_user_yq['zc_key'],this.zc_user_yq['form_user']+"").send({
+      var dq = this;
+      //查询授权状态与GAZ余额
+        var gaz_sq = await GazConn.methods.allowance(address+"",config['hyue'][config['key']]['ArbOne']['heyue']).call();
+        var gaz_sqa = Number(gaz_sq) / (10**bzjnum);
+        if (gaz_sqa < 1000) {
+          //需要先授权
+          dq.loadingsoudd = true;
+          Dialog.confirm({
+                    message: 'GAZ未授权, 是否授权?',
+                    confirmButtonText:'确定',
+                    cancelButtonText:'取消',
+                    cancelButtonColor:'',
+                    getContainer:'body'
+          }).then(() => {
+            GazConn.methods.approve(config['hyue'][config['key']]['ArbOne']['heyue']).send({from:address},()=>{
+              Gazis();
+            });
+          }).catch(() => {});
+          return;
+        }else {add_sq_ajax();}
+        //轮询检测授权是否成功
+        function Gazis() {
+          GazConn.methods.allowance(address+"",config['hyue'][config['key']]['ArbOne']['heyue']).call((err,ret)=>{
+            if ((Number(ret) / (10**bzjnum)) > gaz_sqa) {
+              add_sq_ajax();
+            }else{
+              setTimeout(() => {
+                Gazis();
+              }, 3000);
+            }
+          });
+        }
+      function add_sq_ajax() {
+      ArbOne.methods.hope(dq.zc_user_yq['did']+"",dq.zc_user_yq['zc_key'],dq.zc_user_yq['form_user']+"").send({
         from:address
       },(err,ret)=>{
         console.log(ret);
       });
+      }
     },
     //申请成为仲裁员
     async sq_zcy_dialog(){
@@ -1902,6 +1965,7 @@ export default {
         if (this.sq_zc_data['je'] == 0) {
           return;
         }
+        console.log(this.sq_zc_data['info']['user_bzj'])
         if (this.sq_zc_data['je'] > this.sq_zc_data['info']['user_bzj']) {
           return;
         }
@@ -1913,21 +1977,33 @@ export default {
           }).then(() => {}).catch(() => {});
           return;
         }
-        var tk_je = Number(this.sq_zc_data['je']) * (10**bzjnum);
+        var tk_je = dq.getFNum(this.sq_zc_data['je'] * (10**bzjnum));
+        console.log(tk_je)
         //执行提款AJAX exitArb
-        ArbOne.methods.exitArb(address+"",tk_je+"").send({from:address});
+        ArbOne.methods.exitArb(address+"",tk_je+"").send({
+                    from:address
+                },(err,ret)=>{
+                    if (ret) {
+                        Toast.clear();
+                        Toast.success('提现成功,请稍后查看');
+                    }else{
+                        Toast.clear();
+                        Toast.fail('请同意授权！');
+                    }
+                });
       }else{
         if (this.sq_zc_data['info']['cg_zcid'] != 0) {
           alert('已报名');
           return;
         }
         if (this.sq_zc_data['je'] <= 0) {
+          alert('请正确填写数额');
           return;
         }
         var lea = await ArbOne.methods.lea().call();
-        lea = Number(lea) / (10 ** 18);
+        lea = Number(lea) / (10 ** bzjnum);
         if (this.sq_zc_data['je'] < lea) {
-          console.log(lea);
+          alert('不能低于最低保证金');
           return;
         }
         //查询授权状态与GAZ余额
@@ -1935,11 +2011,18 @@ export default {
         var gaz_sqa = Number(gaz_sq) / (10**bzjnum);
         if (gaz_sqa < this.sq_zc_data['je']) {
           //需要先授权
-          this.$confirm('GAZ授权余额不足, 是否授权?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
+          Dialog.confirm({
+                    message: 'GAZ未授权, 是否授权?',
+                    confirmButtonText:'确定',
+                    cancelButtonText:'取消',
+                    cancelButtonColor:'',
+                    getContainer:'body'
           }).then(() => {
+            Toast.loading({
+                  message: 'GAZ正在授权...',
+                  forbidClick: true,
+                  loadingType: 'spinner',
+              });
             GazConn.methods.approve(config['hyue'][config['key']]['ArbOne']['heyue']).send({from:address},()=>{
               Gazis();
             });
@@ -1971,17 +2054,33 @@ export default {
           //var cznum = dq.getFNum(Number(dq.je) * (10**dq.hbilist[dq.hbindex]['num']));
           //执行报名 arbApply
           ArbOne.methods.arbApply(num+"").send({
-            from:address
-          },(err,ret)=>{
-            console.log(ret);
-          });
+                    from:address
+                },(err,ret)=>{
+                    if (ret) {
+                        Toast.clear();
+                        Toast.success('报名成功,请稍后查看');
+                    }else{
+                        Toast.clear();
+                        Toast.fail('请同意授权！');
+                    }
+                });
         }
     },
     //执行
     async zhixingajax(){
       // exAss 先查询user what
       var user = await ArbOne.methods.user(this.dyl_zc['did']+"").call();
-      ArbOne.methods.exAss(this.dyl_zc['did']+"",user['what']).send({from:address});
+      ArbOne.methods.exAss(this.dyl_zc['did']+"",user['what']).send({
+                    from:address
+                },(err,ret)=>{
+                    if (ret) {
+                        Toast.clear();
+                        Toast.success('仲裁已执行,请稍后查看');
+                    }else{
+                        Toast.clear();
+                        Toast.fail('请同意授权！');
+                    }
+                });
     },
     //赞成提交
     agree() {
@@ -1999,6 +2098,15 @@ export default {
       this.deldata['dialogcode'] = true;
       this.deldata['data'] = 订单详情;
       var 仲裁详情 = await ArbTwo.methods.arbs(订单详情['did']).call();
+      var user = await ArbTwo.methods.user(订单详情['did']).call();
+      if (user.mma == 0) {
+        Toast.loading({
+             message: '订单未初始化，请先确认',
+             forbidClick: true,
+             loadingType: 'spinner',
+            });
+         inittwo();
+      }
       var 报名人数列表 = await ArbTwo.methods.applySuceed(订单详情['did']).call();
       if (仲裁详情) {
         //查询最多人数
@@ -2023,6 +2131,20 @@ export default {
       }else{
         this.deldata['dialogcode'] = false;
       }
+
+       async function inittwo(){
+      ArbTwo.methods.init(订单详情['did']).send({
+                    from:address
+                },(err,ret)=>{
+                    if (ret) {
+                        Toast.clear();
+                        Toast.success('订单已初始化,请稍后查看');
+                    }else{
+                        Toast.clear();
+                        Toast.fail('请同意授权！');
+                    }
+                });
+      }
     },
     //第二轮报名提交
     async kaishibaomingajax(){
@@ -2033,13 +2155,14 @@ export default {
       var lock = await ArbOne.methods.lock(address).call();
       var balanceMar = await ArbOne.methods.balanceMar(address).call();
       var user = await ArbOne.methods.user(dq.deldata['data']['did']).call();
+      console.log(user)
       if (this.deldata['Arbs']['arb'] == 3 && this.deldata['Arbs']['timd'] == 0) {
-        if (arber <= peg && lock == 0 &&  Number(balanceMar) >= Number(user.mma)) {
+        if (Number(arber) <= Number(peg) && lock == 0 &&  Number(balanceMar) >= Number(user.mma)) {
           //获取加密字符串
           var arbTwoApply = await Arbdate.methods.arbTwoApply(address,this.deldata['Arbs']['timc']).call();
           //查询是否存在
           var slot = await ArbTwo.methods.slot(arbTwoApply).call();
-          if (slot) {
+          if (slot != 0) {
             dq.$message.error('你已成功报名！');
             return;
           }
@@ -2054,12 +2177,12 @@ export default {
           });
         }else{
           dq.deldata.loading = false;
-          this.$message.error('已停止报名 - error-code：10003');
+          this.$message.error('报名失败');
         }
         
       }else{
         dq.deldata.loading = false;
-        this.$message.error('已停止报名 - error-code：10002');
+        this.$message.error('已停止报名');
       }
       //轮询查询是否报名成功
       async function bmlxsql() {

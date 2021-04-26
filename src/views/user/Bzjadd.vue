@@ -272,7 +272,8 @@ export default {
                                 title: '转入成功',
                                 message: '已转入 '+ dq.je +' USDT到保证金',
                             }).then(() => {
-                                window.location.reload();
+                                 dq.balancemarajax();
+                                 dq.je=0;
                             });
                         }else{
                             lx_time = setTimeout(() => {
@@ -319,7 +320,8 @@ export default {
                                 title: '转出成功',
                                 message: '已转出 '+ dq.je +'',
                             }).then(() => {
-                                window.location.reload();
+                                 dq.balancemarajax();
+                                 dq.je=0;
                             });
                         }else{
                             lx_time = setTimeout(() => {

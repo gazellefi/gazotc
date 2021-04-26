@@ -41,7 +41,7 @@ var huobi = {
         abi:test
     },
     Arbdate:{
-        heyue:"0x563205190bC13d1eE34b971EA41DA6dBA5ca9444",
+        heyue:"0xb18AFC1Abf1D6B4bc14027bb0B69333192f8C6C1",
         abi:Arbdate
     }
 };

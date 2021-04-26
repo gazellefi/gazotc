@@ -429,6 +429,7 @@ let Base64 = require('js-base64').Base64;
 import config from "../../../config";
 var dotc_abi = config['hyue'][config['key']]['dotc']['abi'];
 var dotc_key = config['hyue'][config['key']]['dotc']['heyue'];
+var bzj_num = config["hyue"][config["key"]]["Bzj"]["num"];
 var huobi = {
     huobi:[],
     fabi:[]
@@ -560,8 +561,8 @@ export default {
                             obj = {
                                 ddid:result[0][index][0],
                                 Uoa:Number(result[0][index][1]) / (10**h_num),
-                                uma:Number(result[0][index][2]) / (10**6),
-                                mma:Number(result[0][index][3]) / (10**18),
+                                uma:Number(result[0][index][2]) / (10**bzj_num),
+                                mma:Number(result[0][index][3]) / (10**bzj_num),
                                 release:result[0][index][4],
                                 timc:result[0][index][5],
                                 agree:result[0][index][6],

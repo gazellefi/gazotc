@@ -135,7 +135,7 @@
                 <div class="qianbao_view_cd_item" style="margin-left: 0px;" @click="openurl('./chongzhi')">
                     <i class="el-icon-refresh-left"></i><span>充币</span>
                 </div>
-                <div class="qianbao_view_cd_item"  @click="openurl('./tixianhb')">
+                <div class="qianbao_view_cd_item"  @click="openurl('./tixian')">
                     <i class="el-icon-refresh-right"></i><span>提币</span>
                 </div>
                 <div class="qianbao_view_cd_item"  @click="openurl('./baozhengjin')">
@@ -320,7 +320,7 @@ export default {
             if (e == 1) {
                 this.$router.push({ path: './chongzhi', query: { title:htitle+"" }});
             }else{
-                this.$router.push({ path: './tixianhb', query: { title:htitle+"" }});
+                this.$router.push({ path: './tixian', query: { title:htitle+"" }});
             }
         }
     }

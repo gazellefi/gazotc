@@ -123,7 +123,7 @@
                         <el-input placeholder="请输入内容" v-model="je"></el-input>
                     </div>
                     <div class="czhiview_form_shurk_msg">
-                        你可提额度 {{ huobi[hbindex]['je']  }}
+                        你可提额度 {{ (this.huobi[this.hbindex]['je']/ (10**huobi[hbindex]['num'])).toFixed(2)  }}
                     </div>
                 </div>
 
@@ -136,40 +136,30 @@
     </div>
 </template>
 <script>
-import { Notify,Dialog,Toast  } from 'vant';
+import { Toast  } from 'vant';
 
 import Web3 from "web3";
 import Web3Modal from "web3modal";
-//import config from "../../config";
-
-
-import dotsapi from "../../api/dots.json";
-
-//全局变量
+import config from "../../config";
+var hbarr = [];
+for (const key in config['hbi'][config['key']]) {
+    config['hbi'][config['key']][key]['je'] = 0;
+    hbarr.push(config['hbi'][config['key']][key]);
+}
 var web3 = "";
 var address = "";
 var ethereum = window.ethereum;
 export default {
-    data(){
+     data(){
         return{
-            huobi:[
-                {
-                    id:"USDT",
-                    hyue:'0xa71edc38d189767582c38a3145b5873052c3e47a',
-                    je:0,
-                    sdje:0,
-                    num:18
-                },
-                {
-                    id:"TEST",
-                    hyue:'0x489B639BC2D68bB6D6f21d8Ee0f3bdbf41fE1C88',
-                    je:0,
-                    sdje:0,
-                    num:6
-                }
-            ],
+            huobi:hbarr,
             hbindex:0,
             je:0
+        }
+    },
+    watch:{
+        hbindex(){
+            this.gethuobizichan();
         }
     },
     mounted(){
@@ -185,8 +175,8 @@ export default {
         if (typeof ethereum === "undefined") {
             alert("请先安装METAMASK插件");
         } else {
-        //初始化
-         webinit();
+            //初始化
+            webinit();
         }
 
         Toast.setDefaultOptions('loading',{
@@ -229,81 +219,137 @@ export default {
         }
         
     },
-    methods:{
+     methods:{
         goback(){
             this.$router.go(-1);
         },
-        gethuobizichan(){
-            var index = 0;
-            var dq = this;
-            function listajax() {
-                if (index >= dq.huobi.length) {
-                    Toast.clear();
-                    return;
-                }
-                Toast.loading({
-                    message: '查询中...'
-                });
-                var dotsconn = new web3.eth.Contract(dotsapi,'0x23D58bd73136888ffAa3fDE672FC41870E928AA3');
-                console.log(dotsconn)
-                //开始查询
-                dotsconn.methods.balancepro(address+"",dq.huobi[index]['hyue']+"").call((error,ret)=>{
-                    if (ret) {
-                        var balancepro = Number(ret);
-                        dotsconn.methods.lockpro(address+"",dq.huobi[index]['hyue']+"").call((error,ret)=>{
-                            if (ret) {
-                                var lockpro = Number(ret);
-                                var numa = Number(dq.huobi[index]['num']);
-                                dq.huobi[index]['je'] = (balancepro / (10**numa)).toFixed(2);
-                                dq.huobi[index]['sdje'] = (lockpro/ (10**numa)).toFixed(2);
-                                index = index+1;
-                                listajax();
-                            }
-                        });
-                    }
-                });
+        //如果过亿请转换
+        getFNum(num_str) {
+            num_str = num_str.toString();
+            if (num_str.indexOf("+") != -1) {
+                num_str = num_str.replace("+", "");
             }
+            if (num_str.indexOf("E") != -1 || num_str.indexOf("e") != -1) {
+                var resValue = "",
+                power = "",
+                result = null,
+                dotIndex = 0,
+                resArr = [],
+                sym = "";
+                var numStr = num_str.toString();
+                if (numStr[0] == "-") {
+                // 如果为负数，转成正数处理，先去掉‘-’号，并保存‘-’.
+                numStr = numStr.substr(1);
+                sym = "-";
+                }
+                if (numStr.indexOf("E") != -1 || numStr.indexOf("e") != -1) {
+                    var regExp = new RegExp(
+                        "^(((\\d+.?\\d+)|(\\d+))[Ee]{1}((-(\\d+))|(\\d+)))$",
+                        "ig"
+                    );
+                    result = regExp.exec(numStr);
+                    if (result != null) {
+                        resValue = result[2];
+                        power = result[5];
+                        result = null;
+                    }
+                    if (!resValue && !power) {
+                        return false;
+                    }
+                    dotIndex = resValue.indexOf(".") == -1 ? 0 : resValue.indexOf(".");
+                    resValue = resValue.replace(".", "");
+                    resArr = resValue.split("");
+                    if (Number(power) >= 0) {
+                        var subres = resValue.substr(dotIndex);
+                        var length = dotIndex == 0 ? 0 : subres.length;
+                        power = Number(power);
+                        //幂数大于小数点后面的数字位数时，后面加0
+                        for (var i = 0; i < power - length; i++) {
+                        resArr.push("0");
+                        }
+                        if (power - subres.length < 0) {
+                        resArr.splice(dotIndex + power, 0, ".");
+                        }
+                    } else {
+                        power = power.replace("-", "");
+                        power = Number(power);
+                        //幂数大于等于 小数点的index位置, 前面加0
+                        for (let i = 0; i < power - dotIndex; i++) {
+                        resArr.unshift("0");
+                        }
+                        var n = power - dotIndex >= 0 ? 1 : -(power - dotIndex);
+                        resArr.splice(n, 0, ".");
+                    }
+                }
+                resValue = resArr.join("");
 
-            listajax();
+                return sym + resValue;
+            } else {
+                return num_str;
+            }
+        },
+        gethuobizichan(){
+            //查询资产余额
+            var czconn = new web3.eth.Contract(
+                config['hyue'][config['key']]['dotc']['abi'],
+                config['hyue'][config['key']]['dotc']['heyue']
+            );
+            czconn.methods.balancepro(address,this.huobi[this.hbindex]['heyue']).call((err,ret)=>{
+                    if (ret) {
+                    this.huobi[this.hbindex]['je'] = ret;
+                     console.log(ret)
+                     console.log(213)
+                    }
+                });    
         },
         tixianajax(){
-            if (this.huobi[this.hbindex]['je'] < Number(this.je)) {
-                Notify({ type: 'danger', message: '提款金额不能大于可提额度' });
-                return;
-            }
-            Toast.loading({
-                message: '正在提款中...'
-            });
+            Toast.loading({message: '提款中...'});
+            var dq_je = this.huobi[this.hbindex]['je'];
             var dq = this;
-            var lx_time = "";
-            //执行提款操作
-            var dotsconn = new web3.eth.Contract(dotsapi,'0x23D58bd73136888ffAa3fDE672FC41870E928AA3');
-            var tk_je = dq.huobi[dq.hbindex]['je'] - Number(dq.je);
-            var numa = Number(dq.huobi[dq.hbindex]['num']);
-            dotsconn.methods.withdraw(dq.huobi[dq.hbindex]['hyue']+"",(Number(dq.je)*(10**numa))+"").send({
-                from:address
-            },(error,ret)=>{
-                if (ret) {
-                    tik_lunxun();
-                }
-            });
-
-            function tik_lunxun() {
-                dotsconn.methods.balancepro(address+"",dq.huobi[dq.hbindex]['hyue']+"").call((error,ret)=>{
+            var czconn = new web3.eth.Contract(
+                config['hyue'][config['key']]['dotc']['abi'],
+                config['hyue'][config['key']]['dotc']['heyue']
+            );
+            var tkje = this.je * (10**this.huobi[this.hbindex]['num']);
+            tkje = dq.getFNum(tkje);
+            if (Number(dq_je) >= Number(tkje)) {
+                //执行提款操作
+                czconn.methods.withdraw(this.huobi[this.hbindex]['heyue'],tkje).send({
+                    from:address
+                },(err,ret)=>{
                     if (ret) {
-                        var balancepro = Number(ret) / (10**numa);
-                        if (balancepro == tk_je) {
+                        tikchaxun();
+                        // setTimeout(() =>{ Toast.clear();
+                        //                  Dialog.alert({
+                        //                    title: '提现成功',
+                        //                    message: '资产已经提现到你的钱包地址',
+                        //                  }).then(() => {
+                                            
+                        //                  }); 
+                        //                 }, 5000); 
+                    }else{
+                        Toast.clear();
+                        Toast.fail('请同意授权！');
+                    }
+                });
+            }else{
+                Toast.clear();
+                Toast.fail('提款金额不能超过提款额度');
+            }
+
+            //轮询查询是否提款成功
+            function tikchaxun() {
+                var  tk_je = dq_je - (dq.je * (10**dq.huobi[dq.hbindex]['num']));
+                czconn.methods.balancepro(address,dq.huobi[dq.hbindex]['heyue']).call((err,ret)=>{
+                    if (ret) {
+                        if (ret == tk_je) {
                             Toast.clear();
-                            clearTimeout(lx_time);
-                            Dialog.alert({
-                                title: '提示',
-                                message: '提款成功！',
-                            }).then(() => {
-                                window.location.reload();
-                            });
+                            Toast.success('提款成功');
+                            dq.gethuobizichan();
+                            dq.je = 0;
                         }else{
-                            lx_time = setTimeout(() => {
-                                tik_lunxun();
+                            setTimeout(() => {
+                                tikchaxun();
                             }, 3000);
                         }
                     }

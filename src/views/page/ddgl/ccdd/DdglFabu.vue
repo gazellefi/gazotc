@@ -314,9 +314,10 @@ export default {
           resArr = resValue.split("");
           if (Number(power) >= 0) {
             var subres = resValue.substr(dotIndex);
+            var length = dotIndex == 0 ? 0 : subres.length;
             power = Number(power);
             //幂数大于小数点后面的数字位数时，后面加0
-            for (var i = 0; i <= power - subres.length; i++) {
+            for (var i = 0; i < power - length; i++) {
               resArr.push("0");
             }
             if (power - subres.length < 0) {

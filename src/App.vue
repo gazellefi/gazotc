@@ -21,11 +21,11 @@ div,
 export default {
   created(){
     if (typeof window.ethereum === 'undefined') {
-      this.$notify.error({
-        title: '未检测到钱包',
-        duration:0,
-        message: '请确保网络选择一致，并退出钱包或刷新页面再试一次！'
-      });
+      // this.$notify.error({
+      //   title: '未检测到钱包',
+      //   duration:0,
+      //   message: '请确保网络选择一致，并退出钱包或刷新页面再试一次！'
+      // });
     }
   }
 }
