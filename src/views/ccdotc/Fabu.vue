@@ -86,86 +86,67 @@
 }
 </style>
 <template>
-  <div  class="fabu">
+  <div class="fabu">
     <!-- 表单 -->
     <div cclass="add">
       <div class="add_form">
         <div class="add_form_item_xuanze">
           <div class="add_form_item xz" style="margin-left: 0">
             <div class="add_form_item_input">
-              <el-select v-model="pro" placeholder="请选择">
-                <el-option
-                  v-for="item in proarr"
-                  :key="item.id"
-                  :label="item.id"
-                  :value="item.id"
-                >
+              <el-select v-model="pro" placeholder="Please select">
+                <el-option v-for="item in proarr" :key="item.id" :label="item.id" :value="item.id">
                 </el-option>
               </el-select>
             </div>
           </div>
           <div class="add_form_item xz">
             <div class="add_form_item_input">
-              <el-select v-model="prob" placeholder="请选择">
-                <el-option
-                  v-for="item in proarr"
-                  :key="item.id"
-                  :label="item.id"
-                  :value="item.id"
-                >
+              <el-select v-model="prob" placeholder="Please select">
+                <el-option v-for="item in proarr" :key="item.id" :label="item.id" :value="item.id">
                 </el-option>
               </el-select>
             </div>
           </div>
         </div>
         <div class="add_form_item">
-          <div class="add_form_item_t">单价</div>
+          <div class="add_form_item_t">Unit Price</div>
           <div class="add_form_item_input">
-            <el-input placeholder="请输入内容" v-model="form['danj']">
+            <el-input placeholder="Please enter the content" v-model="form['danj']">
               <template slot="append">{{ prob }}</template>
             </el-input>
           </div>
           <div class="add_form_item_input errormsg" v-if="form['danj'] == 0">
-            单价不能为空
+            Unit price cannot be blank
           </div>
         </div>
         <div class="add_form_item">
-          <div class="add_form_item_t">数量</div>
+          <div class="add_form_item_t">quantity</div>
           <div class="add_form_item_input">
-            <el-input placeholder="请输入内容" v-model="form['num']">
+            <el-input placeholder="Please enter the content" v-model="form['num']">
               <template slot="append">{{ pro }}</template>
             </el-input>
           </div>
-          <div
-            class="add_form_item_input errormsg"
-            v-if="balancepro < form['num']"
-          >
-            * 发布数量不能超过 （ {{ balancepro }} ）！
+          <div class="add_form_item_input errormsg" v-if="balancepro < form['num']">
+            * Published quantity cannot exceed （ {{ balancepro }} ）！
           </div>
           <div class="add_form_item_input errormsg" v-if="balancepro == 0">
-            * 发布出售订单需先充值！
+            * You need to recharge before publishing a sales order!
           </div>
           <div class="add_form_item_input errormsg" v-if="form['num'] == 0">
-            数量不能为空
+            Quantity cannot be empty
           </div>
         </div>
         <div class="add_form_item">
-          <div class="add_form_item_t">最低量</div>
+          <div class="add_form_item_t">Minimum quantity</div>
           <div class="add_form_item_input">
-            <el-input placeholder="请输入内容" v-model="form['zdnum']">
+            <el-input placeholder="Please enter the content" v-model="form['zdnum']">
               <template slot="append">{{ pro }}</template>
             </el-input>
           </div>
         </div>
-        <el-button
-          type="primary"
-          style="margin-top: 30px"
-          @click="fabuajax"
-          :disabled="
+        <el-button type="primary" style="margin-top: 30px" @click="fabuajax" :disabled="
             form['danj'] && form['num'] ? false : true
-          "
-          >提交</el-button
-        >
+          ">Submit</el-button>
         <br />
       </div>
     </div>
@@ -196,7 +177,7 @@ export default {
     //初始化WEB3
     //监测用户是否安装MASK
     if (typeof ethereum === "undefined") {
-      alert("请先安装METAMASK插件");
+      alert("Please install the metamask plug-in first");
     } else {
       webinit();
     }
@@ -214,19 +195,19 @@ export default {
       web3 = new Web3(provider);
       if (web3 && provider) {
         //其他钱包使用测试网络
-                // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-                //     var wlcode = window.ethereum.networkVersion;
-                //     //imtoken只能查看 无法操作 出发是ETF主网
-                //     if (window.ethereum.isImToken) {
-                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                //     }
-                //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-                //     if (window.ethereum.isMetaMask && wlcode != 4) {
-                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                //     }
-                // }else{
-                //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                // }
+        // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
+        //     var wlcode = window.ethereum.networkVersion;
+        //     //imtoken只能查看 无法操作 出发是ETF主网
+        //     if (window.ethereum.isImToken) {
+        //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+        //     }
+        //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
+        //     if (window.ethereum.isMetaMask && wlcode != 4) {
+        //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+        //     }
+        // }else{
+        //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+        // }
         address = provider.selectedAddress;
         ccdotconn = new web3.eth.Contract(ccdotc_abi, ccdotc_key);
         //监听是否发布成功
@@ -352,12 +333,12 @@ export default {
       await this.getproyue();
       //判断资产余额是否足够
       if (this.form.num > this.balancepro) {
-        Notify({ type: 'warning', message: '资产余额不足！' });
+        Notify({ type: 'warning', message: 'Insufficient asset balance!' });
         return;
       }
 
       Toast.loading({
-        message: "发布中...",
+        message: "In release...",
         forbidClick: true,
         loadingType: "spinner",
       });
@@ -396,7 +377,7 @@ export default {
         }
       );
 
-      //监听发布订单结果
+      //监听Release order结果
       function lx_dd_jt() {
         ccdotconn.methods.balancepro(address, heyue_key).call((err, ret) => {
           if (ret) {
@@ -406,8 +387,8 @@ export default {
               dq.balanceprob = balanceprob;
               Toast.clear();
               Dialog.alert({
-                title: "发布成功",
-                message: "发布成功！可在我的订单中查看或修改",
+                title: "Published successfully",
+                message: "Published successfully! Can be viewed or modified in my order",
               }).then(() => {
                 dq.form = {
                   danj: null,

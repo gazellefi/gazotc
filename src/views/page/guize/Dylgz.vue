@@ -1,66 +1,66 @@
 <style>
-    .jygz{
-        width: calc(375px - 30px);
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-        padding: 15px;
-    }
+.jygz {
+  width: calc(375px - 30px);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
 
-    .jygz_t{
-        font-size: 16px;
-        opacity: 0.8;
-    }
+.jygz_t {
+  font-size: 16px;
+  opacity: 0.8;
+}
 
-    .jygz_msg{
-        padding: 10px 0;
-        font-size: 18px;
-    }
+.jygz_msg {
+  padding: 10px 0;
+  font-size: 18px;
+}
 </style>
 <template>
-    <div class="jygz" :style="{'width':isphone ? ' calc(375px - 30px)':' calc(1200px - 30px)'}">
-        <div class="jygz_t">
-            第一轮仲裁员规则
-        </div>
-        <div class="jygz_msg">
-            1. 第一轮仲裁的标的可能是资产，也可能是保证金；<br /><br />
-            2. 交易双方分别邀请仲裁员不超过m位，但只需一位仲裁员投出赞成票；<br /><br />
-            3. 邀请时必选按比例缴纳仲裁费；<br /><br />
-            4. 每位仲裁员只能被同一个订单的一方邀请；<br /><br />
-            5. 仲裁员只能做出被邀请方肯定的投票,否定不需要投票,也不能为对方投票；<br /><br />
-            6. 投票时，仲裁员需同时满足4个条件：<br /><br />
-            1）被该订单交易方之一邀请；<br /><br />
-            2）仲裁员编号在n位以内；<br /><br />
-            3）保证金余额大于仲裁订单要求的余额；<br /><br />
-            4）没有参与第二轮仲裁的案子，保证金未被冻结；<br /><br />
-            7. 投票时会从仲裁员的保证金余额中扣除相应保证金；<br /><br />
-            8. 在一方做出肯定仲裁后，另一方需在规定的时间内做出仲裁结果；<br /><br />
-            9. 过期后，如果只有一方做出肯定仲裁，则该方获胜；<br /><br />
-            10. 获胜一方的仲裁员可获得被邀请方缴纳的仲裁费；<br /><br />
-            11. 如果失败一方也缴纳了仲裁费，则将弥补给获胜方；<br /><br />
-            12. 如果在规定的时间内，双方都做出了肯定的仲裁，则进入第二轮仲裁；
-        </div>
+  <div class="jygz" :style="{'width':isphone ? ' calc(375px - 30px)':' calc(1200px - 30px)'}">
+    <div class="jygz_t">
+      First round arbitrator rules
     </div>
+    <div class="jygz_msg">
+      1. The subject matter of the first round of arbitration may be assets or deposits;<br /><br />
+      2. Both parties to the transaction shall invite no more than m arbitrators, but only one arbitrator shall vote in favour;<br /><br />
+      3. The arbitration fee must be paid in proportion when inviting;<br /><br />
+      4. Each arbitrator can only be invited by one party of the same order;<br /><br />
+      5. The arbitrator can only make a positive vote for the invited party, and no vote is required for the negative party, nor can he vote for the other party;<br /><br />
+      6. When voting, the arbitrator shall meet four conditions at the same time:<br /><br />
+      1) Invited by one of the order participants;<br /><br />
+      2) The number of arbitrators shall be within n digits;<br /><br />
+      3) The balance of the deposit is greater than the balance required by the arbitration order;<br /><br />
+      4) For cases that did not participate in the second round of arbitration, the deposit was not frozen;<br /><br />
+      7. The corresponding deposit will be deducted from the balance of the arbitrator's deposit during voting;<br /><br />
+      8. After one party makes an affirmative arbitration, the other party shall make the arbitration result within the specified time;<br /><br />
+      9. After the expiration, if only one party makes an affirmative arbitration, that party will win;<br /><br />
+      10. The arbitrator of the winning party may receive the arbitration fee paid by the invited party;<br /><br />
+      11. If the losing party also pays the arbitration fee, it will compensate the winning party;<br /><br />
+      12. If both parties have made affirmative arbitration within the specified time, the second round of arbitration shall be entered;
+    </div>
+  </div>
 </template>
 <script>
 export default {
-    created(){
-        var ua = navigator.userAgent;
-        var ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
-        isIphone =!ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
-        isAndroid = ua.match(/(Android)\s+([\d.]+)/),
-        isMobile = isIphone || isAndroid;
-        //判断
-        if(isMobile){
-            this.isphone = true;
-        }else{
-            this.isphone = false;
-        }
-    },
-    data(){
-        return{
-            isphone:false
-        }
+  created() {
+    var ua = navigator.userAgent;
+    var ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
+      isIphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
+      isAndroid = ua.match(/(Android)\s+([\d.]+)/),
+      isMobile = isIphone || isAndroid;
+    //判断
+    if (isMobile) {
+      this.isphone = true;
+    } else {
+      this.isphone = false;
     }
+  },
+  data() {
+    return {
+      isphone: false
+    }
+  }
 }
 </script>

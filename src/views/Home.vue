@@ -1,27 +1,27 @@
 <style>
-
-  html,body{
-    background-color: #fff;
-    margin: 0;
-    padding: 0;
-  }
-  .views{
-    width: 100%;
-    float: left;
-  }
+html,
+body {
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+}
+.views {
+  width: 100%;
+  float: left;
+}
 </style>
 <template>
-<div  :style="{'background-color':$route.path != '/' ? '':'#fff'}">
+  <div style="height:100%" :style="{'background-color':$route.path != '/' ? '':'#fff'}">
     <Header />
     <div class="views">
       <router-view />
     </div>
-</div>
+  </div>
 </template>
 <script>
 import Header from "../components/Header";
 export default {
-  components:{
+  components: {
     Header
   }
 }

@@ -25,83 +25,54 @@
 </style>
 <template>
   <div class="bblist">
-    <div
-      class="bblist_table"
-      :style="{
+    <div class="bblist_table" :style="{
         'margin-left': type == 'pc' ? 'auto' : '',
         'margin-right': type == 'pc' ? 'auto' : '',
-      }"
-    >
+      }">
       <div class="bblist_table_left">
-        <el-select v-model="form.type" placeholder="请选择">
-          <el-option
-            v-for="item in hbarr"
-            :key="item.key"
-            :label="item.id"
-            :value="item.key"
-          >
+        <el-select v-model="form.type" placeholder="Please select">
+          <el-option v-for="item in hbarr" :key="item.key" :label="item.id" :value="item.key">
           </el-option>
         </el-select>
-        <el-select
-          placeholder="请选择"
-          style="margin-left: 15px"
-          v-model="form.type_b"
-        >
-          <el-option
-            v-for="item in hbarr"
-            :key="item.key"
-            :label="item.id"
-            :value="item.key"
-          >
+        <el-select placeholder="Please select" style="margin-left: 15px" v-model="form.type_b">
+          <el-option v-for="item in hbarr" :key="item.key" :label="item.id" :value="item.key">
           </el-option>
         </el-select>
 
-        <el-input
-          v-model="form.zdnum"
-          placeholder="筛选数量"
-          style="margin-left: 15px; max-width: 100px"
-        ></el-input>
+        <el-input v-model="form.zdnum" placeholder="Number of filters" style="margin-left: 15px; max-width: 100px"></el-input>
 
-        <el-button
-          type="primary"
-          icon="el-icon-search"
-          circle
-          style="margin-left: 15px"
-          @click="listajax"
-        ></el-button>
+        <el-button type="primary" icon="el-icon-search" circle style="margin-left: 15px" @click="listajax"></el-button>
       </div>
       <el-table v-loading="jiazai" :data="list">
-        <el-table-column align=center width=50px prop="iorder" label="订单"> </el-table-column>
-        <!-- <el-table-column prop="order" label="商家"> </el-table-column> -->
-        <el-table-column  align=center prop="moa" label="数量"> </el-table-column>
-        <el-table-column  align=center prop="zer" label="最低数"> </el-table-column>
-        <el-table-column align=center width=50px prop="uni" label="单价"> </el-table-column>
-        <el-table-column width=50px label="操作">
+        <el-table-column align=center width=50px prop="iorder" label="order"> </el-table-column>
+        <!-- <el-table-column prop="order" label="Merchant"> </el-table-column> -->
+        <el-table-column align=center prop="moa" label="quantity"> </el-table-column>
+        <el-table-column align=center prop="zer" label="Minimum number"> </el-table-column>
+        <el-table-column align=center width=50px prop="uni" label="Unit price"> </el-table-column>
+        <el-table-column width=50px label="operation">
           <template slot-scope="scope">
-            <el-button type="text" size="small" @click="opengoumai(scope.row)"
-              >购买</el-button
-            >
+            <el-button type="text" size="small" @click="opengoumai(scope.row)">purchase</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
 
     <!-- 弹出购买框 -->
-    <el-dialog title="买入" :visible.sync="mairucode" width=350px>
+    <el-dialog title="purchase" :visible.sync="mairucode" width=350px>
       <el-form :model="mr_form" label-width="80px">
-        <el-form-item label="订单号">
+        <el-form-item label="order number">
           <el-input v-model="mr_form.ddinfo['iorder']" disabled></el-input>
         </el-form-item>
-        <el-form-item label="买入单价">
+        <el-form-item label="Purchase unit price">
           <el-input v-model="mr_form.ddinfo['uni']" disabled></el-input>
         </el-form-item>
-        <el-form-item label="买入数量">
+        <el-form-item label="Purchase quantity">
           <el-input v-model="mr_form.num"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="mairucode = false">取 消</el-button>
-        <el-button type="primary" @click="mairuajax">买 入</el-button>
+        <el-button @click="mairucode = false">Cancel</el-button>
+        <el-button type="primary" @click="mairuajax">purchase</el-button>
       </span>
     </el-dialog>
   </div>
@@ -315,15 +286,15 @@ export default {
     mairuajax() {
       var dq = this;
       if (!this.mr_form["num"]) {
-        alert("请输入数量");
+        alert("Please enter quantity");
         return;
       }
       if (this.mr_form["num"] < Number(this.mr_form["ddinfo"]["zer"])) {
-        alert("不能少于最低数量");
+        alert("Not less than the minimum quantity");
         return;
       }
       if (this.mr_form["num"] > Number(this.mr_form["ddinfo"]["moa"])) {
-        alert("不能大于最高数量");
+        alert("Cannot be greater than the maximum quantity");
         return;
       }
 
@@ -343,7 +314,7 @@ export default {
           (err, ret) => {
             if (ret) {
               dq.mairucode = false;
-              dq.$message.success("买入成功！");
+              dq.$message.success("Buy successfully!");
             }
           }
         );

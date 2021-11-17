@@ -3,7 +3,7 @@
     <router-view />
   </div>
 </template>
-<style>
+<style lang="less">
 html,
 body,
 div,
@@ -13,13 +13,13 @@ div,
   list-style: none;
 }
 
-.anniucss{
-  cursor:pointer
+.anniucss {
+  cursor: pointer;
 }
 </style>
 <script>
 export default {
-  created(){
+  created() {
     if (typeof window.ethereum === 'undefined') {
       // this.$notify.error({
       //   title: '未检测到钱包',

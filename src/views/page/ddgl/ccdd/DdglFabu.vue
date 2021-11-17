@@ -94,86 +94,53 @@
           </div>
         </div>
         <!-- <div class="ddgl_fabu_p_head_fabu anniucss" @click="openfabu">
-          发布委托单
+          Issue entrustment order
         </div> -->
       </div>
 
       <div>
         <el-table :data="list" stripe style="width: 100%">
-          <el-table-column width=70 prop="did" label="订单ID"> </el-table-column>
-          <el-table-column label="总数">
+          <el-table-column width=70 prop="did" label="Order ID"> </el-table-column>
+          <el-table-column label="total">
             <template slot-scope="scope">
               {{ scope.row.moa }} {{ scope.row.pro }}
             </template>
           </el-table-column>
-          <el-table-column label="最低数">
+          <el-table-column label="Minimum number">
             <template slot-scope="scope">
               {{ scope.row.zer }} {{ scope.row.pro }}
             </template>
           </el-table-column>
-          <el-table-column label="单价">
+          <el-table-column label="Unit Price">
             <template slot-scope="scope">
               {{ scope.row.uni }} {{ scope.row.swap }}
             </template>
           </el-table-column>
-          <el-table-column label="修改">
+          <el-table-column label="Modify">
             <template slot-scope="scope">
-              <el-button type="text" @click="setdd(scope.row)">修改</el-button>
+              <el-button type="text" @click="setdd(scope.row)">modify</el-button>
             </template>
           </el-table-column>
         </el-table>
       </div>
 
       <div>
-        <el-dialog
-          title="修改订单"
-          :visible.sync="dialogVisible"
-          :width="isphone ? '90%' : '30%'"
-        >
-          <div
-            class="setdd_form"
-            v-loading="loading"
-            element-loading-text="修改中..."
-          >
-            <el-input
-              v-model="form.did"
-              placeholder="请输入订单ID"
-              :disabled="true"
-            ></el-input>
-            <el-select
-              v-model="form.type"
-              placeholder="请选择"
-              style="margin-top: 15px"
-            >
-              <el-option
-                v-for="item in [
-                  { value: 1, label: '修改单价' },
-                  { value: 2, label: '修改数量' },
-                ]"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
+        <el-dialog title="Modify order" :visible.sync="dialogVisible" :width="isphone ? '90%' : '30%'">
+          <div class="setdd_form" v-loading="loading" element-loading-text="Modifying...">
+            <el-input v-model="form.did" placeholder="Please enter order ID" :disabled="true"></el-input>
+            <el-select v-model="form.type" placeholder="Please select" style="margin-top: 15px">
+              <el-option v-for="item in [
+                  { value: 1, label: 'Modify unit price' },
+                  { value: 2, label: 'Modified quantity' },
+                ]" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
-            <el-input
-              v-model="form.danj"
-              placeholder="请输入单价"
-              v-if="form.type == 1"
-              style="margin-top: 15px"
-            ></el-input>
-            <el-input
-              v-model="form.num"
-              placeholder="请输入数量"
-              v-if="form.type == 2"
-              style="margin-top: 15px"
-            ></el-input>
+            <el-input v-model="form.danj" placeholder="Please enter unit price" v-if="form.type == 1" style="margin-top: 15px"></el-input>
+            <el-input v-model="form.num" placeholder="Please enter quantity" v-if="form.type == 2" style="margin-top: 15px"></el-input>
           </div>
           <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="setdd_ajax" :loading="loading"
-              >修 改</el-button
-            >
+            <el-button @click="dialogVisible = false">Cancel</el-button>
+            <el-button type="primary" @click="setdd_ajax" :loading="loading">Modification</el-button>
           </span>
         </el-dialog>
       </div>
@@ -454,7 +421,7 @@ export default {
                   set_dd_num();
                 } else {
                   dq.loading = false;
-                  dq.$message.error("资产余额不足！");
+                  dq.$message.error("Insufficient asset balance!");
                 }
               }
             });
@@ -481,7 +448,7 @@ export default {
                       }
                     }
                     dq.$message({
-                      message: "修改成功",
+                      message: "Modified successfully",
                       type: "success",
                     });
                   } else {
@@ -502,7 +469,7 @@ export default {
                       }
                     }
                     dq.$message({
-                      message: "修改成功",
+                      message: "Modified successfully",
                       type: "success",
                     });
                   } else {
@@ -529,7 +496,7 @@ export default {
               lx_chaxun();
             } else {
               dq.loading = false;
-              dq.$message.error("请同意授权");
+              dq.$message.error("Please agree to the authorization");
             }
           }
         );
@@ -545,7 +512,7 @@ export default {
               lx_chaxun();
             } else {
               dq.loading = false;
-              dq.$message.error("请同意授权");
+              dq.$message.error("Please agree to the authorization");
             }
           }
         );

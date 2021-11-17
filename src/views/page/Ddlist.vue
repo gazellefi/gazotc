@@ -135,7 +135,7 @@ button.anniu {
   color: #2ead65;
 }
 .ddlist_w_huobilist_ul_li.ac::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 0;
   width: 40px;
@@ -239,19 +239,11 @@ button.anniu {
       <!-- 订单列表 -->
       <div class="ddlistaa_head">
         <div class="ddlistaa_head_item">
-          <div
-            class="ddlistaa_head_item_a anniucss"
-            :class="tcode == 1 ? 'ac' : ''"
-            @click="tcode = 1"
-          >
-            出售
+          <div class="ddlistaa_head_item_a anniucss" :class="tcode == 1 ? 'ac' : ''" @click="tcode = 1">
+            sell
           </div>
-          <div
-            class="ddlistaa_head_item_a anniucss"
-            :class="tcode == 2 ? 'ac' : ''"
-            @click="tcode = 2"
-          >
-            购买
+          <div class="ddlistaa_head_item_a anniucss" :class="tcode == 2 ? 'ac' : ''" @click="tcode = 2">
+            purchase
           </div>
         </div>
 
@@ -261,12 +253,7 @@ button.anniu {
               {{ huobi }} <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item
-                v-for="li in hbarr"
-                :key="li.id"
-                :command="li.id"
-                >{{ li.id }}</el-dropdown-item
-              >
+              <el-dropdown-item v-for="li in hbarr" :key="li.id" :command="li.id">{{ li.id }}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -276,37 +263,23 @@ button.anniu {
               {{ fabi }} <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item
-                v-for="li in fbarr"
-                :key="li.id"
-                :command="li.id"
-                >{{ li.id }}</el-dropdown-item
-              >
+              <el-dropdown-item v-for="li in fbarr" :key="li.id" :command="li.id">{{ li.id }}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
         <div class="ddlistaa_head_item fabu">
-          <van-button
-            type="info"
-            class="ddlistaa_head_item_an"
-            @click="openfabu"
-            >发布委托单</van-button
-          >
+          <van-button type="info" class="ddlistaa_head_item_an" @click="openfabu">Issue entrustment order</van-button>
         </div>
       </div>
       <!-- 表格 -->
       <div class="listul" v-loading="loading">
-        <el-table
-          :fixed="true"
-          :data="list"
-          style="width: 100%; overflow: auto"
-        >
-          <el-table-column label="商家" width="180">
+        <el-table :fixed="true" :data="list" style="width: 100%; overflow: auto">
+          <el-table-column label="Merchant" width="180">
             <template slot-scope="scope">
               <div class="listul_user">
                 <div class="listul_user_name">{{ scope.row.username }}</div>
                 <div class="listul_user_conn">
-                  ({{ scope.row.jd_num }}单/{{ scope.row.bfb }}%)
+                  ({{ scope.row.jd_num }}order/{{ scope.row.bfb }}%)
                 </div>
                 <div class="listul_user_zh">
                   {{ scope.row.user }}
@@ -314,52 +287,40 @@ button.anniu {
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="ddid" label="订单号" width="100">
+          <el-table-column prop="ddid" label="order number" width="100">
           </el-table-column>
-          <el-table-column prop="num" width="180" label="数量">
+          <el-table-column prop="num" width="180" label="quantity">
             <template slot-scope="scope">
               {{ scope.row.num }} {{ huobi }}
             </template>
           </el-table-column>
-          <el-table-column width="200" label="限额">
+          <el-table-column width="200" label="quota">
             <template slot-scope="scope">
               {{ scope.row.zd_mun }} - {{ scope.row.zg_mun }} {{ huobi }}
             </template>
           </el-table-column>
-          <el-table-column label="单价" width="180">
+          <el-table-column label="Unit price" width="180">
             <template slot-scope="scope">
               <div class="danjia">{{ scope.row.danjia }} {{ fabi }}</div>
             </template>
           </el-table-column>
-          <el-table-column width="150" label="保证金余额">
+          <el-table-column width="150" label="margin balance">
             <template slot-scope="scope"> {{ scope.row.bzj }} USDT </template>
           </el-table-column>
-          <el-table-column label="保证金要求">
+          <el-table-column label="Margin requirements">
             <template slot-scope="scope"> {{ scope.row.bzj_u }}% </template>
           </el-table-column>
-          <el-table-column prop="address" width="150" label="操作">
+          <el-table-column prop="address" width="150" label="operation">
             <template slot-scope="scope">
-              <van-button
-                type="primary"
-                @click="openmairu(scope.row.ddid)"
-                :disabled="scope.row.user_u"
-                v-if="tcode == 1"
-                >出 售 {{ huobi }}</van-button
-              >
-              <van-button
-                type="primary"
-                @click="openmairu(scope.row.ddid)"
-                :disabled="scope.row.user_u"
-                v-if="tcode == 2"
-                >购 买 {{ huobi }}</van-button
-              >
+              <van-button type="primary" @click="openmairu(scope.row.ddid)" :disabled="scope.row.user_u" v-if="tcode == 1">sell {{ huobi }}</van-button>
+              <van-button type="primary" @click="openmairu(scope.row.ddid)" :disabled="scope.row.user_u" v-if="tcode == 2">Purchase {{ huobi }}</van-button>
             </template>
           </el-table-column>
         </el-table>
 
         <div class="listul_load">
           <div class="listul_load_an">
-            <el-button @click="loadajax">加载更多</el-button>
+            <el-button @click="loadajax">Load more</el-button>
           </div>
         </div>
       </div>
@@ -368,36 +329,25 @@ button.anniu {
     <!-- wap显示 -->
     <div class="hidden-sm-and-up">
       <div class="ddlist_w_head">
-                <div class="ddlist_w_head_a">
-                    <div class="ddlist_w_head_a_item" style=" margin-left: 0px;" :class="tcode == 1 ? 'ac':''" @click="tcode = 1">出售</div>
-                    <div class="ddlist_w_head_a_item" :class="tcode == 2 ? 'ac':''" @click="tcode = 2">购买</div>
-                </div>
-                <div class="ddlist_w_head_b">
-                    <el-dropdown trigger="click" @command="xuanzefabi">
-                        <span class="el-dropdown-link">
-                        {{ fabi }} <i class="el-icon-arrow-down el-icon--right"></i>
-                        </span>
-                        <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item
-                            v-for="li in fbarr"
-                            :key="li.id"
-                            :command="li.id"
-                            >{{ li.id }}</el-dropdown-item
-                        >
-                        </el-dropdown-menu>
-                    </el-dropdown>
-                </div>
-            </div>
+        <div class="ddlist_w_head_a">
+          <div class="ddlist_w_head_a_item" style=" margin-left: 0px;" :class="tcode == 1 ? 'ac':''" @click="tcode = 1">sell</div>
+          <div class="ddlist_w_head_a_item" :class="tcode == 2 ? 'ac':''" @click="tcode = 2">purchase</div>
+        </div>
+        <div class="ddlist_w_head_b">
+          <el-dropdown trigger="click" @command="xuanzefabi">
+            <span class="el-dropdown-link">
+              {{ fabi }} <i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item v-for="li in fbarr" :key="li.id" :command="li.id">{{ li.id }}</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+      </div>
 
       <div class="ddlist_w_huobilist" style="border-bottom: 1px solid #ddd;">
         <div class="ddlist_w_huobilist_ul">
-          <div
-            class="ddlist_w_huobilist_ul_li"
-            v-for="li in hbarr"
-            :key="li.id"
-            :class="huobi == li.id ? 'ac' : ''"
-            @click="xuanzehuobi(li.id)"
-          >
+          <div class="ddlist_w_huobilist_ul_li" v-for="li in hbarr" :key="li.id" :class="huobi == li.id ? 'ac' : ''" @click="xuanzehuobi(li.id)">
             {{ li.id }}
           </div>
           <!-- <div class="ddlist_w_huobilist_ul_li" :class="huobi == 'WETH'?'ac':''" @click="xuanzehuobi('WETH')">
@@ -408,58 +358,36 @@ button.anniu {
 
       <div class="ddlist_w_ddlist" v-loading="loading">
         <div class="ddlist_w_ddlist_ul">
-          <div
-            class="ddlist_w_ddlist_ul_li"
-            v-for="(li, index) in list"
-            :key="index"
-          >
+          <div class="ddlist_w_ddlist_ul_li" v-for="(li, index) in list" :key="index">
             <div class="ddlist_w_ddlist_ul_li_u">
               <div class="ddlist_w_ddlist_ul_li_u_username">
                 {{ li.username }}
               </div>
-              <span>({{ li.jd_num }}单/{{ li.bfb }}%)</span>
-              <span class="price-lab" style="margin-left: auto">订单号：{{ li.ddid }}</span>
+              <span>({{ li.jd_num }}order/{{ li.bfb }}%)</span>
+              <span class="price-lab" style="margin-left: auto">order number:{{ li.ddid }}</span>
             </div>
             <div class="ddlist_w_ddlist_ul_li_conn">
               <div class="ddlist_w_ddlist_ul_li_conn_li">
-                <span>数量:&nbsp;{{ li.num }} {{ huobi }}</span>
-                <span class="price-lab" style="opacity: 0.7">单价</span>
+                <span>quantity:&nbsp;{{ li.num }} {{ huobi }}</span>
+                <span class="price-lab" style="opacity: 0.7">Unit Price</span>
               </div>
               <div class="ddlist_w_ddlist_ul_li_conn_li">
-                <span
-                  >限额:&nbsp;{{ li.zd_mun }}-{{ li.zg_mun }} {{ huobi }}</span
-                >
+                <span>quota:&nbsp;{{ li.zd_mun }}-{{ li.zg_mun }} {{ huobi }}</span>
                 <span class="price-lab jiage">{{ li.danjia }} {{ fabi }}</span>
               </div>
               <div class="ddlist_w_ddlist_ul_li_conn_lit">
-                  <span 
-                      >保证金:&nbsp;{{ li.bzj_u }}%</span
-                  >
-                  <span  style="margin-left: auto">
-                    <div class="ddlist_w_ddlist_ul_li_conn_li">
-                      <van-button
-                        type="info"
-                        @click="openmairu(li.ddid)"
-                        :disabled="li.user_u"
-                        v-if="tcode == 1"
-                        >出售{{ huobi }}</van-button
-                      >
-                      <van-button
-                        type="info"
-                        @click="openmairu(li.ddid)"
-                        :disabled="li.user_u"
-                        v-if="tcode == 2"
-                        >购买{{ huobi }}</van-button
-                      >
-                    </div>
-                 </span>
-               </div>
+                <span>bond:&nbsp;{{ li.bzj_u }}%</span>
+                <span style="margin-left: auto">
+                  <div class="ddlist_w_ddlist_ul_li_conn_li">
+                    <van-button type="info" @click="openmairu(li.ddid)" :disabled="li.user_u" v-if="tcode == 1">sell{{ huobi }}</van-button>
+                    <van-button type="info" @click="openmairu(li.ddid)" :disabled="li.user_u" v-if="tcode == 2">purchase{{ huobi }}</van-button>
+                  </div>
+                </span>
+              </div>
             </div>
           </div>
           <div class="ddlist_w_ddlist_ul_append">
-            <van-button plain type="primary" :disabled="load" @click="loadajax"
-              >加载更多...</van-button
-            >
+            <van-button plain type="primary" :disabled="load" @click="loadajax">Load more...</van-button>
           </div>
         </div>
       </div>

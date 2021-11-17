@@ -14,6 +14,7 @@
 */
 
 import huobi from "./abi/huobi";
+import bian from "./abi/bian";
 import etfcshiarr from "./abi/etfcshi";
 
 //以太坊测试网ABI资产地址
@@ -26,6 +27,12 @@ import whtabi from "./abi/huobi/proabi/whtabi.json";
 import testabi from "./abi/huobi/proabi/testabi.json";
 import gazabi from "./abi/huobi/gaz.json";
 
+//币安资产ABI地址
+import usdtabib from "./abi/bian/proabi/usdtabi.json";
+import btcabi from "./abi/bian/proabi/btcabi.json";
+import ethabi from "./abi/bian/proabi/ethabi.json";
+import gazabib from "./abi/bian/gaz.json";
+
 var mr_key = !localStorage.morenkey ? 'huobi':localStorage.morenkey; 
 /*
     hbi - deling是否需要清零
@@ -37,6 +44,7 @@ var config = {
     key:mr_key,
     hyue:{
         huobi:huobi,
+        bian:bian,
         etfcshi:etfcshiarr
     },
     hbi:{
@@ -59,6 +67,44 @@ var config = {
                 abi:wethabi,
                 deling:false
             }
+        },
+        bian:{
+            USDT:{
+                show:true,
+                key:"0x7573647400000000000000000000000000000000000000000000000000000000",
+                num:18,
+                heyue:"0x55d398326f99059ff775485246999027b3197955",
+                abi:usdtabib,
+                id:"USDT",
+                deling:false
+            },
+            BTC:{
+                show:true,
+                id:"BTC",
+                key:"0x6274630000000000000000000000000000000000000000000000000000000000",
+                num:18,
+                heyue:"0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c",
+                abi:btcabi,
+                deling:false
+            },
+            ETH:{
+                show:true,
+                id:"ETH",
+                key:"0x6574680000000000000000000000000000000000000000000000000000000000",
+                num:18,
+                heyue:"0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+                abi:ethabi,
+                deling:false
+            },
+            Gaz:{
+                show:true,
+                id:"Gaz",
+                key:"0x67617a0000000000000000000000000000000000000000000000000000000000",
+                num:18,
+                heyue:"0xCE5C72a775A3e4D032Fbb08C66c8BdfA9A5d216F",
+                abi:gazabib,
+                deling:false
+            }           
         },
         huobi:{
             USDT:{
@@ -138,6 +184,43 @@ var config = {
             }
         },
         huobi:{
+            CNY:{
+                show:true,
+                key:"0x636e790000000000000000000000000000000000000000000000000000000000",
+                id:"CNY"
+            },
+            USD:{
+                show:true,
+                key:"0x7573640000000000000000000000000000000000000000000000000000000000",
+                id:"USD"
+            },
+            HKD:{
+                show:true,
+                key:"0x686b640000000000000000000000000000000000000000000000000000000000",
+                id:"HKD"
+            },
+            THB:{
+                show:true,
+                key:"0x7468620000000000000000000000000000000000000000000000000000000000",
+                id:"THB"
+            },
+            JPY:{
+                show:true,
+                key:"0x6a70790000000000000000000000000000000000000000000000000000000000",
+                id:"JPY"
+            },
+            EUR:{
+                show:true,
+                key:"0x6575720000000000000000000000000000000000000000000000000000000000",
+                id:"EUR"
+            },
+            RUB:{
+                show:true,
+                key:"0x7275620000000000000000000000000000000000000000000000000000000000",
+                id:"RUB"
+            },
+        },
+        bian:{
             CNY:{
                 show:true,
                 key:"0x636e790000000000000000000000000000000000000000000000000000000000",

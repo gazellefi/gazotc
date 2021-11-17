@@ -1,47 +1,52 @@
 [
-    {
-        "id":7,
-        "title":"团队名称",
-        "key":"team_beizhu"
-    },
-    {
-        "id":0,
-        "title":"昵称",
-        "key":"nc"
-    },
-    {
-        "id":8,
-        "title":"仲裁昵称",
-        "key":"zc_beizhu"
-    },
-    {
-        "id":1,
-        "title":"电话",
-        "key":"dh"
-    },
-    {
-        "id":2,
-        "title":"微信",
-        "key":"wx"
-    },
-    {
-        "id":3,
-        "title":"QQ",
-        "key":"qq"
-    },
-    {
-        "id":4,
-        "title":"微博",
-        "key":"wb"
-    },
-    {
-        "id":5,
-        "title":"今日头条",
-        "key":"jrtt"
-    },
-    {
-        "id":6,
-        "title":"商家备注",
-        "key":"beizhu"
-    }
+  {
+    "id": 7,
+    "title": "Recommender",
+    "key": "team_beizhu"
+  },
+  {
+    "id": 0,
+    "title": "Trader",
+    "key": "nc"
+  },
+  {
+    "id": 8,
+    "title": "Arbitrators",
+    "key": "zc_beizhu"
+  },
+  {
+    "id": 5,
+    "title": "full name",
+    "key": "name"
+  },
+  {
+    "id": 9,
+    "title": "ID number",
+    "key": "id"
+  },
+  {
+    "id": 1,
+    "title": "Telephone",
+    "key": "dh"
+  },
+  {
+    "id": 2,
+    "title": "WeChat",
+    "key": "wx"
+  },
+  {
+    "id": 3,
+    "title": "mailbox",
+    "key": "em"
+  },
+  {
+    "id": 4,
+    "title": "other",
+    "key": "qt"
+  },
+  {
+    "id": 6,
+    "title": "Merchant remarks",
+    "key": "beizhu"
+  }
 ]

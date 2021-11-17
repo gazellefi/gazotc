@@ -75,12 +75,12 @@
   margin-left: auto;
 }
 
-.setdd_form{
-    display: flex;
-    flex-direction: column;
+.setdd_form {
+  display: flex;
+  flex-direction: column;
 }
 
-.ac{
+.ac {
   color: rgb(1, 217, 255);
 }
 </style>
@@ -101,33 +101,33 @@
 
       <div>
         <el-table :data="list" stripe style="width: 100%">
-          <el-table-column prop="did" label="订单ID"> </el-table-column>
-          <el-table-column prop="madd" label="商家">
+          <el-table-column prop="did" label="Order ID"> </el-table-column>
+          <el-table-column prop="madd" label="Merchant">
             <template slot-scope="scope">
               <span :class="uinfo.user == scope.row.madd_b ? 'ac':''">{{ scope.row.madd }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="uadd" label="用户">
+          <el-table-column prop="uadd" label="User">
             <template slot-scope="scope">
               <span :class="uinfo.user == scope.row.uadd_b ? 'ac':''">{{ scope.row.uadd }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="卖出">
+          <el-table-column label="Sell">
             <template slot-scope="scope">
               {{ scope.row.uoa }} {{ scope.row.pro }}
             </template>
           </el-table-column>
-          <el-table-column label="买入">
+          <el-table-column label="purchase">
             <template slot-scope="scope">
               {{ scope.row.wad }} {{ scope.row.swap }}
             </template>
           </el-table-column>
-          <el-table-column label="单价">
+          <el-table-column label="Unit price">
             <template slot-scope="scope">
               {{ scope.row.uni }} {{ scope.row.swap }}
             </template>
           </el-table-column>
-          <el-table-column label="手续费">
+          <el-table-column label="Handling fee">
             <template slot-scope="scope">
               {{ scope.row.free }} {{ scope.row.pro }}
             </template>
@@ -167,15 +167,15 @@ export default {
     var dq = this;
     //监测用户是否安装MASK
     if (typeof ethereum === "undefined") {
-      web3 =  new Web3(config['hyue'][config['key']]['Url']);
+      web3 = new Web3(config['hyue'][config['key']]['Url']);
     } else {
       //初始化
       webinit();
     }
-    if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
-        dq.isphone = true;
+    if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+      dq.isphone = true;
     } else {
-        dq.isphone = false;
+      dq.isphone = false;
     }
     async function webinit() {
       const providerOptions = {
@@ -190,19 +190,19 @@ export default {
       web3 = new Web3(provider);
       if (web3 && provider) {
         //其他钱包使用测试网络
-                // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-                //     var wlcode = window.ethereum.networkVersion;
-                //     //imtoken只能查看 无法操作 出发是ETF主网
-                //     if (window.ethereum.isImToken) {
-                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                //     }
-                //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-                //     if (window.ethereum.isMetaMask && wlcode != 4) {
-                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                //     }
-                // }else{
-                //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                // }
+        // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
+        //     var wlcode = window.ethereum.networkVersion;
+        //     //imtoken只能查看 无法操作 出发是ETF主网
+        //     if (window.ethereum.isImToken) {
+        //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+        //     }
+        //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
+        //     if (window.ethereum.isMetaMask && wlcode != 4) {
+        //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+        //     }
+        // }else{
+        //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+        // }
         Address = provider.selectedAddress;
         dq.getuinfo(Address);
         dq.getuser_list(Address);
@@ -211,7 +211,7 @@ export default {
   },
   data() {
     return {
-      loading:false,
+      loading: false,
       uinfo: {
         quan: "",
         user: "",
@@ -222,7 +222,7 @@ export default {
       list: [],
 
 
-      isphone:false,
+      isphone: false,
     };
   },
   methods: {
@@ -339,23 +339,23 @@ export default {
               }
             }
 
-            var uadd = addr[index][0].substr(0,5)+'....'+addr[index][0].substr(addr[index][0].length - 5 ,addr[index][0].length);
-            var madd = addr[index][1].substr(0,5)+'....'+addr[index][1].substr(addr[index][1].length - 5 ,addr[index][1].length);
+            var uadd = addr[index][0].substr(0, 5) + '....' + addr[index][0].substr(addr[index][0].length - 5, addr[index][0].length);
+            var madd = addr[index][1].substr(0, 5) + '....' + addr[index][1].substr(addr[index][1].length - 5, addr[index][1].length);
 
-            var obj  = {
-              did:order[index][0],
-              uoa:Number(order[index][1]) / (10**u_pro_num),
-              wad:Number(order[index][2]) / (10**m_pro_num),
-              uni:Number(order[index][3]) / (10**6),
-              free:Number(order[index][4]) / (10 ** u_pro_num),
+            var obj = {
+              did: order[index][0],
+              uoa: Number(order[index][1]) / (10 ** u_pro_num),
+              wad: Number(order[index][2]) / (10 ** m_pro_num),
+              uni: Number(order[index][3]) / (10 ** 6),
+              free: Number(order[index][4]) / (10 ** u_pro_num),
 
-              pro:u_pro_id,
-              swap:m_pro_id,
+              pro: u_pro_id,
+              swap: m_pro_id,
 
-              uadd:uadd,
-              uadd_b:addr[index][0].toLowerCase(),
-              madd:madd,
-              madd_b:addr[index][1].toLowerCase(),
+              uadd: uadd,
+              uadd_b: addr[index][0].toLowerCase(),
+              madd: madd,
+              madd_b: addr[index][1].toLowerCase(),
             };
             list.push(obj);
           }

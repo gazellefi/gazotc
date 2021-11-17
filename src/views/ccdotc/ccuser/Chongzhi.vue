@@ -89,44 +89,30 @@
 </style>
 <template>
   <div class="chongzhi">
-    <van-nav-bar
-      title="充值中心"
-      right-text=""
-      left-arrow
-      :fixed="true"
-      :placeholder="true"
-      z-index="99"
-      @click-left="goback"
-    />
+    <van-nav-bar title="Voucher Center" right-text="" left-arrow :fixed="true" :placeholder="true" z-index="99" @click-left="goback" />
 
     <div class="czhiview">
       <div class="czhiview_form">
         <div class="czhiview_form_hblist">
-          <div class="czhiview_form_hblist_t">选择货币</div>
+          <div class="czhiview_form_hblist_t">Select currency</div>
           <div class="czhiview_form_hblist_ul">
-            <div
-              class="czhiview_form_hblist_item"
-              v-for="(li, index) in hbilist"
-              :key="index"
-              @click="hbindex = index"
-              :class="hbindex == index ? 'ac' : ''"
-            >
+            <div class="czhiview_form_hblist_item" v-for="(li, index) in hbilist" :key="index" @click="hbindex = index" :class="hbindex == index ? 'ac' : ''">
               {{ li.id }}
             </div>
           </div>
         </div>
         <div class="czhiview_form_shurk">
-          <div class="czhiview_form_shurk_t">充值金额</div>
+          <div class="czhiview_form_shurk_t">Recharge amount</div>
           <div class="czhiview_form_shurk_input">
             <div class="czhiview_form_shurk_input_l">
               {{ hbilist[hbindex].id }}
             </div>
-            <el-input placeholder="请输入内容" v-model="je"></el-input>
+            <el-input placeholder="Please enter the content" v-model="je"></el-input>
           </div>
         </div>
 
         <div class="czhiview_form_czhi">
-          <van-button type="primary" block @click="chongzhi">充 值</van-button>
+          <van-button type="primary" block @click="chongzhi">Recharge</van-button>
         </div>
       </div>
     </div>
@@ -177,7 +163,7 @@ export default {
     }
     //监测用户是否安装MASK
     if (typeof ethereum === "undefined") {
-      alert("请先安装METAMASK插件");
+      alert("Please install the metamask plug-in first");
     } else {
       //初始化
       webinit();
@@ -193,22 +179,22 @@ export default {
       });
       var provider = await web3Modal.connect();
       web3 = new Web3(provider);
-      
+
       if (web3 && provider) {
         //其他钱包使用测试网络
-                // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-                //     var wlcode = window.ethereum.networkVersion;
-                //     //imtoken只能查看 无法操作 出发是ETF主网
-                //     if (window.ethereum.isImToken) {
-                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                //     }
-                //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-                //     if (window.ethereum.isMetaMask && wlcode != 4) {
-                //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                //     }
-                // }else{
-                //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
-                // }
+        // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
+        //     var wlcode = window.ethereum.networkVersion;
+        //     //imtoken只能查看 无法操作 出发是ETF主网
+        //     if (window.ethereum.isImToken) {
+        //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+        //     }
+        //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
+        //     if (window.ethereum.isMetaMask && wlcode != 4) {
+        //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+        //     }
+        // }else{
+        //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+        // }
         address = provider.selectedAddress;
         chaxunje();
       }
@@ -226,8 +212,8 @@ export default {
               config["hyue"][config["key"]]["Ccdotc"]["heyue"]
             )
             .call();
-            dq.hbilist[index]['je'] = dq.getFNum(Number(je) / (10**dq.hbilist[index]["num"]));
-            dq.hbilist[index]['sq_je'] = dq.getFNum(Number(sq_je / (10**dq.hbilist[index]["num"])));
+          dq.hbilist[index]['je'] = dq.getFNum(Number(je) / (10 ** dq.hbilist[index]["num"]));
+          dq.hbilist[index]['sq_je'] = dq.getFNum(Number(sq_je / (10 ** dq.hbilist[index]["num"])));
         }
       }
     }
@@ -302,146 +288,146 @@ export default {
       }
     },
     chongzhi() {
-      Toast.loading({message: '充值确定中...'});
+      Toast.loading({ message: 'Recharge determination in progress...' });
       var dq = this;
       //查询该授权余额 -》查询余额- >充值-》轮询 倍数18需要转换
       if (this.je <= 0) {
-          return;
+        return;
       }
 
-        var sqlconn = new web3.eth.Contract(
-            dq.hbilist[dq.hbindex]["abi"],
-            dq.hbilist[dq.hbindex]["heyue"]
-        );
+      var sqlconn = new web3.eth.Contract(
+        dq.hbilist[dq.hbindex]["abi"],
+        dq.hbilist[dq.hbindex]["heyue"]
+      );
 
       if (Number(this.hbilist[this.hbindex]['je']) > Number(this.je)) {
-          if (Number(this.hbilist[this.hbindex]['sq_je']) >= Number(this.je)) {
-            //充值
+        if (Number(this.hbilist[this.hbindex]['sq_je']) >= Number(this.je)) {
+          //充值
+          Toast.clear();
+          Toast.loading({ message: 'Recharging...' });
+          czhiajax();
+        } else {
+          //授权
+          if (this.hbilist[this.hbindex]['deling']) {
+            if (this.hbilist[this.hbindex]['sq_je'] > 0) {
+              //清除
+              Toast.clear();
+              Toast.loading({ message: 'Clearing of authorized balance...' });
+              shouquan(1);
+            } else {
+              Toast.clear();
+              Toast.loading({ message: 'In authorized balance...' });
+              //授权
+              shouquan(2);
+            }
+          } else {
+            //直接授权
             Toast.clear();
-            Toast.loading({message: '充值中...'});
+            Toast.loading({ message: 'In authorized balance...' });
+            shouquan(2);
+          }
+        }
+      } else {
+        //Insufficient funds
+        alert('Insufficient funds');
+      }
+
+      /*
+          code 零 2直接授权
+      */
+      function shouquan(code) {
+        var sqconn = new web3.eth.Contract(
+          dq.hbilist[dq.hbindex]["abi"],
+          dq.hbilist[dq.hbindex]["heyue"]
+        );
+        var num = code == 1 ? 0 + "" : ((Number(dq.je) * 100) * (10 ** dq.hbilist[dq.hbindex]["num"]));
+        //var num = code == 1 ? 0+"" : Number.MAX_VALUE * (10**dq.hbilist[dq.hbindex]["num"])
+        num = dq.getFNum(num);
+        sqconn.methods.approve(config["hyue"][config["key"]]["Ccdotc"]["heyue"], num).send({
+          from: address
+        }, (err, ret) => {
+          if (ret) {
+            sq_lunxun(code);
+          }
+        });
+      }
+
+
+      //轮询查询是否授权成功
+      async function sq_lunxun(code) {
+        var sq_je = await sqlconn.methods
+          .allowance(
+            address,
+            config["hyue"][config["key"]]["Ccdotc"]["heyue"]
+          )
+          .call();
+        sq_je = Number(sq_je) / (10 ** dq.hbilist[dq.hbindex]["num"]);
+        sq_je = dq.getFNum(Number(sq_je));
+        if (code == 1) {
+          if (sq_je == 1) {
+            //清除成功
+            shouquan(2);
+          } else {
+            setTimeout(() => {
+              sq_lunxun(code);
+            }, 3000);
+          }
+        } else {
+          if (sq_je >= dq.je) {
+            Toast.clear();
+            Toast.loading({ message: 'Recharging...' });
             czhiajax();
-          }else{
-            //授权
-            if (this.hbilist[this.hbindex]['deling']) {
-                if (this.hbilist[this.hbindex]['sq_je'] > 0) {
-                    //清除
-                    Toast.clear();
-                    Toast.loading({message: '授权余额清零中...'});
-                    shouquan(1);
-                }else{
-                    Toast.clear();
-                    Toast.loading({message: '授权余额中...'});
-                    //授权
-                    shouquan(2);
-                }
-            }else{
-                //直接授权
-                Toast.clear();
-                Toast.loading({message: '授权余额中...'});
-                shouquan(2);
+          } else {
+            setTimeout(() => {
+              sq_lunxun(code);
+            }, 3000);
+          }
+        }
+      }
+
+      //充值资产
+      var dq_je = 0;
+
+      function czhiajax() {
+        var czconn = new web3.eth.Contract(
+          config['hyue'][config['key']]['Ccdotc']['abi'],
+          config['hyue'][config['key']]['Ccdotc']['heyue']
+        );
+        var cznum = dq.getFNum(Number(dq.je) * (10 ** dq.hbilist[dq.hbindex]['num']));
+        czconn.methods.deposit(dq.hbilist[dq.hbindex]['heyue'], cznum).send({
+          from: address
+        }, (err, ret) => {
+          if (ret) {
+            //获取当前金额 并赋值
+            czconn.methods.balancepro(address, dq.hbilist[dq.hbindex]['heyue']).call((erra, reta) => {
+              if (reta) {
+                dq_je = Number(reta) + Number(cznum);
+              }
+            });
+            czhi_lunxun();
+          }
+        });
+      }
+
+      //充值轮询
+      function czhi_lunxun() {
+        var czconn = new web3.eth.Contract(
+          config['hyue'][config['key']]['Ccdotc']['abi'],
+          config['hyue'][config['key']]['Ccdotc']['heyue']
+        );
+        //查询当前的余额  
+        czconn.methods.balancepro(address, dq.hbilist[dq.hbindex]['heyue']).call((erra, reta) => {
+          if (reta) {
+            if (Number(reta) >= dq_je) {
+              Toast.success('Recharge succeeded!');
+            } else {
+              setTimeout(() => {
+                czhi_lunxun();
+              }, 3000);
             }
           }
-      }else{
-          //资金不足
-          alert('资金不足');
+        });
       }
-      
-        /*
-            code 零 2直接授权
-        */
-        function shouquan(code) {
-          var sqconn = new web3.eth.Contract(
-            dq.hbilist[dq.hbindex]["abi"],
-            dq.hbilist[dq.hbindex]["heyue"]
-          );
-          var num = code == 1 ? 0+"":((Number(dq.je) * 100) * (10**dq.hbilist[dq.hbindex]["num"]));
-          //var num = code == 1 ? 0+"" : Number.MAX_VALUE * (10**dq.hbilist[dq.hbindex]["num"])
-          num = dq.getFNum(num);
-          sqconn.methods.approve(config["hyue"][config["key"]]["Ccdotc"]["heyue"],num).send({
-              from:address
-          },(err,ret)=>{
-              if (ret) {
-                  sq_lunxun(code);
-              }
-          });
-        }
-
-
-        //轮询查询是否授权成功
-        async function sq_lunxun(code) {
-            var sq_je = await sqlconn.methods
-            .allowance(
-              address,
-              config["hyue"][config["key"]]["Ccdotc"]["heyue"]
-            )
-            .call();
-            sq_je = Number(sq_je) / (10**dq.hbilist[dq.hbindex]["num"]);
-            sq_je = dq.getFNum(Number(sq_je));
-            if (code == 1) {
-                if (sq_je == 1) {
-                    //清除成功
-                    shouquan(2);
-                }else{
-                    setTimeout(() => {
-                        sq_lunxun(code);
-                    }, 3000);
-                }
-            }else{
-                if (sq_je >= dq.je) {
-                    Toast.clear();
-                    Toast.loading({message: '充值中...'});
-                    czhiajax();
-                }else{
-                    setTimeout(() => {
-                        sq_lunxun(code);
-                    }, 3000);
-                }
-            }
-        }
-
-        //充值资产
-        var dq_je = 0;
-
-        function czhiajax() {
-          var czconn = new web3.eth.Contract(
-            config['hyue'][config['key']]['Ccdotc']['abi'],
-            config['hyue'][config['key']]['Ccdotc']['heyue']
-          );
-          var cznum = dq.getFNum(Number(dq.je) * (10**dq.hbilist[dq.hbindex]['num']));
-          czconn.methods.deposit(dq.hbilist[dq.hbindex]['heyue'],cznum).send({
-              from:address
-          },(err,ret)=>{
-              if (ret) {
-                //获取当前金额 并赋值
-                czconn.methods.balancepro(address,dq.hbilist[dq.hbindex]['heyue']).call((erra,reta)=>{
-                    if (reta) {
-                        dq_je = Number(reta) + Number(cznum);
-                    }
-                });
-                czhi_lunxun();
-              }
-          });
-        }
-
-        //充值轮询
-        function czhi_lunxun() {
-            var czconn = new web3.eth.Contract(
-                config['hyue'][config['key']]['Ccdotc']['abi'],
-                config['hyue'][config['key']]['Ccdotc']['heyue']
-            );
-            //查询当前的余额  
-            czconn.methods.balancepro(address,dq.hbilist[dq.hbindex]['heyue']).call((erra,reta)=>{
-                if (reta) {
-                    if (Number(reta) >= dq_je) {
-                        Toast.success('充值成功！');
-                    }else{
-                        setTimeout(() => {
-                            czhi_lunxun();
-                        }, 3000);
-                    }
-                }
-            });
-        }
     },
   },
 };
