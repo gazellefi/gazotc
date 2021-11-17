@@ -1,18 +1,4 @@
 npm run build
-
-scp -r ./dist ubuntu@43.129.10.55:/home/ubuntu/
-
-ssh ubuntu@43.129.10.55
-
-sudo su -
-
-rm -r /var/www/html/* && mv /home/ubuntu/dist/* /var/www/html/
-
-
-
-https://vant-contrib.gitee.io/vant/#/zh-CN/toast
-
-
 sudo su
 docker stop nginx
 docker rm nginx
