@@ -613,13 +613,15 @@ export default {
       this.enroll = this.enroll ? false : true;
     },
     ruleHideAuth() {
+		var that = this
 		Toast.loading({ message: "数据请求中..." });
-		api.RealName('address='+ address).then((res)=>{
+		axios.post('https://gazotc.com:8083/member/jnmioURL?address='+address).then((res)=>{
+			// that.msss = res
 			let url = res.result.redirectUrl
 			// console.log(code);
 			Toast.clear()
 			if(res.result.state== 'SUCCESS'){ // 已实名认证
-				this.$confirm('您已实名认证', '', {
+				that.$confirm('您已实名认证', '', {
 				  confirmButtonText: '确定',
 				  cancelButtonText: '取消',
 				  type: 'success',
@@ -633,18 +635,15 @@ export default {
 				  }
 				})
 			}else if(res.result.redirectUrl){ //未实名认证
-				this.$router.push({
-					name: 'RealName',
-					query: {
-					  url: url
-					}
-				})
+				window.location.href = url
+				// this.$router.push({
+				// 	name: 'RealName',
+				// 	query: {
+				// 	  url: url
+				// 	}
+				// })
 			}
 		})
-		
-      // console.dir(document.querySelector('#create-verification-session'));
-      // Toast.success(this.$t("message.activit.notOpen"));
-      //this.enauth = this.enauth ? false : true;
     },
     async register() {
 		var that = this
@@ -673,11 +672,11 @@ export default {
           Toast.clear();
           Toast.success("注册成功");
 		  let data = {
-			  idNo: this.regForm.identity, 
-			  name: this.regForm.name, 
-			  nickname: this.regForm.nickname, 
+			  idNo: that.regForm.identity, 
+			  name: that.regForm.name, 
+			  nickname: that.regForm.nickname, 
 			  address: address,
-			  parentAddress: this.$router.query.ref || 0
+			  parentAddress: that.recommender || 0
 		  }
 		  // 存数据库
 		  api.register(data).then((res)=>{

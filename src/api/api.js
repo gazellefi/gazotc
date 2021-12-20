@@ -1,5 +1,5 @@
 import axios from './index'
-
+var url = 'https://gazotc.com:8083'
 export default {
   // 获取USDT认领额度
   getCrowdInfo: (params) => axios.post('/common/getCrowdInfo', params),
@@ -21,11 +21,11 @@ export default {
   getData: (params) => axios.post('/common/getData', params),
   
   // 判断释放实名认证
-  RealName: (params) => axios.post('https://192.168.0.48:8083/member/jnmioURL?'+params),
+  RealName: (params) => axios.post(url + '/member/jnmioURL?'+params),
   //  实名认证成功后
-  RealNameAfter: (params) => axios.post('https://192.168.0.48:8083/member/result', params),
+  RealNameAfter: (params) => axios.post(url + '/member/result', params),
   // 注册 
-  register: (params) => axios.post('https://192.168.0.48:8083/member/register', params),
+  register: (params) => axios.post(url + '/member/register', params),
 
 
   // getCrowdInfo: (params) => axios.get('/getCrowdInfo', { params }),

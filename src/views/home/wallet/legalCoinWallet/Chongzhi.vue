@@ -11,6 +11,12 @@
 	  <el-form-item label="充值金额">
 	    <el-input v-model="je"></el-input>
 	  </el-form-item>
+	  <el-form-item label-width="0">
+	  	<span style="color: #DCDCDC;">{{ $t("message.activit.UseUSDT") }}:{{
+            Number(balance / 10 ** 18).toFixed(2)
+          }}</span>
+		  <!-- 你可提额度：{{ (hbilist[hbindex]['je']/ (10**hbilist[hbindex]['num'])).toFixed(2)  }} -->
+	  </el-form-item>
 
       <el-form-item class="chongzhiBtn" label-width="0">
         <van-button size='small' color="#fdc500" type="primary" block @click="chongzhi">充值</van-button>
@@ -43,6 +49,9 @@ for (const key in hbilist) {
 }
 var address = '';
 var web3 = '';
+var usdt;
+var u_abi = config["hbi"]["bian"]["USDT"]["abi"];
+var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 export default {
   data() {
     return {
@@ -52,7 +61,8 @@ export default {
       key: config['key'],
       form: {
 		  region: ''
-	  }
+	  },
+	  balance: ''
     }
   },
   props:['type'],
@@ -73,6 +83,7 @@ export default {
 	  }
   },
   mounted() {
+	  var dq = this
     Toast.setDefaultOptions('loading', {
       forbidClick: false,
       closeOnClickOverlay: false,
@@ -104,12 +115,13 @@ export default {
         providerOptions,
       });
       var provider = await web3Modal.connect();
-      console.log('aaaaaaaaaaaaa', provider)
       web3 = new Web3(provider);
       const accounts = await web3.eth.getAccounts();
-      console.log(accounts)
       if (web3 && provider) {
         address = provider.selectedAddress;
+		
+		usdt = new web3.eth.Contract(u_abi, u_key);
+		dq.balance = await usdt.methods.balanceOf(address).call();
       }
     }
   },
