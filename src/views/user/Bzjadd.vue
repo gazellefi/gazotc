@@ -106,7 +106,7 @@
           <div class="czhiview_form_shurk_t">bond</div>
           <div class="czhiview_form_shurk_input">
             <div class="czhiview_form_shurk_input_l">USDT</div>
-            <el-input placeholder="Please enter the content" v-model="je"></el-input>
+            <el-input :placeholder="$t('message.enterContent')" v-model="je"></el-input>
           </div>
           <span>Current margin balance:{{ balancemar_num }}</span>
           <span>Usdt balance:{{ usdt_num }}</span>

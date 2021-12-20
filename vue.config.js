@@ -7,21 +7,7 @@ const postcss = px2rem({
   remUnit: 16
 })
 module.exports = {
-  // 1.解决跨域 配置服务----------------------------------------------------------------------------------
-  // devServer: {
-  //   open: true, //是否自动弹出浏览器页面
-  //   https: false, //是否使用https协议
-  //   hotOnly: true, //是否开启热更新
-  //   proxy: {  //配置跨域
-  //     '/api': {
-  //       target: url,
-  //       changOrigin: true,  //允许跨域
-  //       pathRewrite: {
-  //         '^/api': ''
-  //       }
-  //     },
-  //   }
-  // },
+
   css: {
     loaderOptions: {
       postcss: {
@@ -33,10 +19,21 @@ module.exports = {
   },
   lintOnSave: false,
 
+  chainWebpack: config => {
+    config
+      .plugin('html')
+      .tap(args => {
+        args[0].STRIPE_PUBLISHABLE_KEY = process.env.STRIPE_PUBLISHABLE_KEY
+        return args
+      })
+  },
+
   configureWebpack: (config) => {
     if (process.env.NODE_ENV === 'production') {
       config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true
     }
+
+
   },
 
   productionSourceMap: false,
@@ -49,5 +46,20 @@ module.exports = {
     port: 8080, // CHANGE YOUR PORT HERE!
     https: true,
     hotOnly: false,
+    // 1.解决跨域 配置服务----------------------------------------------------------------------------------
+    // devServer: {
+    //   open: true, //是否自动弹出浏览器页面
+    //   https: false, //是否使用https协议
+    //   hotOnly: true, //是否开启热更新
+    //   proxy: {  //配置跨域
+    //     '/api': {
+    //       target: url,
+    //       changOrigin: true,  //允许跨域
+    //       pathRewrite: {
+    //         '^/api': ''
+    //       }
+    //     },
+    //   }
+    // },
   },
 };

@@ -1,14 +1,18 @@
 <template>
   <div class='index'>
     <!-- therefore -->
-    <div class="therefore">
+    <div class="therefore ">
       <div class="content">
-        <ul>
+        <div class="title "><span>The birth</span> of gazotc</div>
+        <div class="info">
+          Once, we thought that the world’s top centralized exchange was safe and trustworthy, and was the first choice for digital currency in and out of gold.Until one day, a world-famous Exchange suspended currency withdrawal… Now, the business sector of the centralized exchange is eroded step by step by the decentralized exchange, and only OTC trading is spared temporarily. For this reason, OTC trading involves assets under the chain, and the blockchain cannot actively identify it, so the transaction will be controversial. Other defi services are atomic exchange and will not be controversial. The dispute resolution mechanism of OTC business is a problem that every project team involved in decentralized OTC business must face. China is the most active region of digital currency trading in the world. Then, the Chinese government has not supported digital currency trading. When the three exchanges are about to withdraw from China, how should the problem of cash in and out of Chinese traders be solved? Small exchanges are unreliable and private trading is unsafe. The market urgently needs a decentralized OTC trading platform. In this context, GAZOTC — A completely decentralized OTC trading platform, will be launched into the market after one year of polishing.
+        </div>
+        <!-- <ul>
           <li v-for="v in thereforeList">
             <div class="title">{{v.title}}</div>
             <div class="cont">{{v.cont}}</div>
           </li>
-        </ul>
+        </ul> -->
       </div>
     </div>
     <!-- whiteInfo -->
@@ -43,10 +47,10 @@
           </div>
         </div>
         <div class="model">
-          Gazelle platform currency<br /> economic <span> model</span>
+          Gazotc platform currency<br /> economic <span> model</span>
         </div>
         <div class="total">
-          The total number of tokens is <span>6300W</span>，Token allocation
+          The total number of tokens is <span>63M</span>，Token allocation
         </div>
         <div class="img">
           <img src="@/assets/index/round.png" alt="">
@@ -56,17 +60,17 @@
     <!-- blackInfo -->
     <div class="blackInfo ">
       <div class="content">
-        <div class="title">Gazelle trading system <span>diagram</span></div>
-        <img src="@/assets/index/8.png" alt="">
+        <div class="title">Gazotc trading system <span>diagram</span></div>
+        <img src="@/assets/img/1111.png" alt="">
       </div>
     </div>
     <!-- grayInfo -->
-    <div class="grayInfo">
+    <!-- <div class="grayInfo">
       <div class="content">
-        <div class="title">Gazelle contract interaction <span>system diagram</span></div>
+        <div class="title">Gazotc contract interaction <span>system diagram</span></div>
         <img src="@/assets/index/7.png" alt="">
       </div>
-    </div>
+    </div> -->
 
   </div>
 </template>
@@ -81,7 +85,7 @@ export default {
         { title: 'Security rules', route: 'Security rules' },
         { title: 'Transaction rules', route: 'Transaction rules' },
         { title: 'Arbitration rules', route: 'Arbitration rules' },
-        { title: 'Exchange', route: 'Exchange' },
+        { title: 'DAPP', route: 'Exchange' },
         { title: 'Public sale', route: 'Public sale' },
       ],
       thereforeList: [
@@ -96,10 +100,10 @@ export default {
         { icon: require('@/assets/index/5.png'), title: 'Community autonomy', cont: 'In case of any dispute, it shall be decided by the centralized arbitration mechanism in the chain;Platform parameters are set by community voting.' },
       ],
       fourInfoList: [
-        'OTC is the channel for legal currency to enter and exit digital currency, and centralized exchange can not ensure the safety of assets.',
-        'In 2020, the defi market broke out, and the decentralized transactions between currencies were recognized by users',
-        'However, the market lacks a decentralized OTC.',
-        'Gazelle platform currency economic model'
+        'Decentralized OTC transactions and channels for digital currency in and out of cash.',
+        'The free exchange of global foreign exchange and the disappearance of underground banks',
+        'The portal of physical assets and assets on the chain, and the entrance of the meta universe.',
+        'Decentralized guarantee makes businesses no longer exploited by e-commerce platforms.'
       ],
       infosList: [
         { icon: require('@/assets/index/9.png'), icon2: require('@/assets/index/a.png'), i: '01', title: 'business', cont: 'The order issuer needs to mortgage the platform currency' },
@@ -190,30 +194,44 @@ export default {
     background: url('~@/assets/index/2.png') no-repeat;
     background-position: right;
     background-color: #ededed;
-    ul {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      justify-content: space-between;
-      padding: 30px;
-      li {
-        .title {
-          font-size: 24px;
-          font-family: SF Pro Display;
-          font-weight: bold;
-          color: #000000;
-          line-height: 36px;
-          text-transform: uppercase;
-        }
-        .cont {
-          max-width: 610px;
-          font-size: 20px;
-          font-family: SF Pro Display;
-          color: #333333;
-          line-height: 30px;
-        }
+    .title {
+      font-size: 32px;
+      padding: 10px 0;
+      font-weight: bold;
+      padding-top: 20px;
+      span {
+        color: #ffcc00;
+        font-weight: bold;
       }
     }
+    .info {
+      line-height: 40px;
+      letter-spacing: 1px;
+    }
+    // ul {
+    //   display: flex;
+    //   flex-direction: column;
+    //   height: 100%;
+    //   justify-content: space-between;
+    //   padding: 30px;
+    //   li {
+    //     .title {
+    //       font-size: 24px;
+    //       font-family: SF Pro Display;
+    //       font-weight: bold;
+    //       color: #000000;
+    //       line-height: 36px;
+    //       text-transform: uppercase;
+    //     }
+    //     .cont {
+    //       max-width: 610px;
+    //       font-size: 20px;
+    //       font-family: SF Pro Display;
+    //       color: #333333;
+    //       line-height: 30px;
+    //     }
+    //   }
+    // }
   }
   .whiteInfo {
     padding-top: 50px;
@@ -265,7 +283,7 @@ export default {
         border: 1px solid #999999;
         border-radius: 10px;
         width: 560px;
-        height: 124px;
+        // height: 124px;
         display: flex;
         // align-items: center;
         font-size: 16px;
@@ -273,13 +291,13 @@ export default {
         font-weight: 400;
         color: #333333;
         line-height: 36px;
-        padding: 25px 21px 33px 40px;
+        padding: 22px 21px 22px 40px;
         margin-bottom: 30px;
         letter-spacing: -1px;
         position: relative;
         &::before {
           position: absolute;
-          top: 40px;
+          top: 35px;
           content: '';
           display: block;
           width: 9px;
@@ -537,7 +555,7 @@ export default {
       padding: 20px;
     }
     .title {
-      font-size: 9px !important;
+      font-size: 18px !important;
       padding: 10px 0 !important;
     }
   }
@@ -645,6 +663,8 @@ export default {
         height: 88px !important;
         line-height: 20px !important;
         letter-spacing: 0 !important;
+        display: flex;
+        align-items: center;
         &::before {
           content: none !important;
         }
@@ -654,19 +674,30 @@ export default {
 
   .therefore {
     height: auto !important;
+    background: #ededed !important;
     .content {
-      ul {
-        padding: 10px 20px;
-        li {
-          .title {
-            font-size: 18px;
-          }
-          .cont {
-            font-size: 12px;
-            line-height: 16px;
-          }
-        }
+      padding: 10px 20px;
+      .title {
+        font-size: 22px;
+        padding-top: 0;
+        text-align: center;
       }
+      .info {
+        line-height: 22px;
+        letter-spacing: 0;
+      }
+      // ul {
+      //   padding: 10px 20px;
+      //   li {
+      //     .title {
+      //       font-size: 18px;
+      //     }
+      //     .cont {
+      //       font-size: 12px;
+      //       line-height: 16px;
+      //     }
+      //   }
+      // }
     }
   }
 }

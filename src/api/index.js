@@ -9,6 +9,8 @@ axios.interceptors.request.use(
         // if (token) {
         //   config.headers["authorization"] = "bearer " + token;
         // }
+		       // config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+		
         return config;
     },
     (err) => {

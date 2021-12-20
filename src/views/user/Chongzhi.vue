@@ -103,7 +103,7 @@
           <div class="czhiview_form_shurk_t">Recharge amount</div>
           <div class="czhiview_form_shurk_input">
             <div class="czhiview_form_shurk_input_l">{{ hbilist[hbindex].title }}</div>
-            <el-input placeholder="Please enter the content" v-model="je"></el-input>
+            <el-input :placeholder="$t('message.enterContent')" v-model="je"></el-input>
           </div>
         </div>
 

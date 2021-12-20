@@ -33,7 +33,7 @@ import btcabi from "./abi/bian/proabi/btcabi.json";
 import ethabi from "./abi/bian/proabi/ethabi.json";
 import gazabib from "./abi/bian/gaz.json";
 
-var mr_key = !localStorage.morenkey ? 'huobi':localStorage.morenkey; 
+var mr_key = !localStorage.morenkey ? 'bian':localStorage.morenkey; 
 /*
     hbi - deling是否需要清零
     hbi - show是否需要显示

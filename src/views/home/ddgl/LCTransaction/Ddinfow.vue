@@ -1,0 +1,882 @@
+<style lang="less" scoped>
+	.ddinfo_w{
+		background-color: #fff;
+		padding: 0px;
+		.title{
+			background-color: #ECF0F9;
+			padding: 20px 10px;
+			font-size: 18px;
+			color: #5BAEAC;
+		}
+		.item{
+			display: flex;
+			align-items: center;
+			padding: 20px 50px;
+		}
+		.item2{
+			padding: 20px 50px;
+			>div{
+				margin-bottom: 10px;
+			}
+		}
+		.item3{
+			display: flex;
+			justify-content: center;
+			margin-top: 20px;
+		}
+	}
+	.ddinfo_w_anarr {
+	  display: flex;
+	  flex-direction: column;
+	}
+	.ddinfo_w_anarr .van-button {
+	  margin-top: 15px;
+	}
+	.msg {
+	  padding: 5px 0;
+	  font-size: 14px;
+	  opacity: 0.8;
+	}
+	.btnStyle{
+		width: 90%; border: 1px solid #5BAEAC; color: #5BAEAC;
+		margin-top: 20px;
+	}
+	@media only screen and (max-width: 991px){
+		.itemb_r{
+			border: none;
+			border-bottom: 1px solid #CCCCCC;
+		}
+	}
+	@media only screen and (min-width: 991px){
+		.itemb_r{
+			border-right: 1px solid #CCCCCC;
+		}
+	}
+</style>
+<template>
+	<div class="ddinfo_w">
+		<el-row>
+			<el-col :span="24" class="title">
+				<span>{{$t('message.arbitration.orderDes')}}</span>
+			</el-col>
+			<el-col :sm="24" :md="8" :lg="6" class="item">
+				<span>{{$t('message.arbitration.orderId')}}：</span>
+				<span>{{ddifo.iorder}}</span>
+			</el-col>
+			<el-col :sm="24" :md="8" :lg="6" class="item">
+				<span>{{$t('message.arbitration.fromOrder')}}：</span>
+				<span>{{ddifo.faddid}}</span>
+				<!-- <el-button type="text" size="mini" @click="openddinfos(ddifo['faddid'])">详情</el-button> -->
+				 <el-link class="marl-10" type="primary">{{$t('message.details')}}</el-link>
+			</el-col>
+			<el-col :sm="24" :md="8" :lg="6" class="item">
+				<span>{{$t('message.dapp.orderType')}}：</span>
+				<span>{{ddifo.Umark_b}}</span>
+			</el-col>
+			<el-col :sm="24" :md="8" :lg="6" class="item">
+				<span>{{$t('message.arbitration.userAress')}}：</span>
+				<span>{{ddifo.Uadd_b}}</span>
+			</el-col>
+			<el-col :sm="24" :md="8" :lg="6" class="item">
+				<span>{{$t('message.arbitration.merchantAdress')}}：</span>
+				<span>{{ddifo.Madd_b}}</span>
+			</el-col>
+			<el-col :sm="24" :md="8" :lg="6" class="item">
+				<span>{{$t('message.arbitration.userMarginLock')}}：</span>
+				<span>{{ ddifo.uma.toFixed(2) }} USDT</span>
+			</el-col>
+			<el-col :sm="24" :md="8" :lg="6" class="item">
+				<span>{{$t('message.arbitration.merchantMarginLock')}}：</span>
+				<span>{{ ddifo.mma }} USDT</span>
+			</el-col>
+			<el-col :sm="24" :md="8" :lg="6" class="item">
+				<span>{{$t('message.dapp.transactionNum')}}：</span>
+				<span>{{ ddifo.Uoa }} {{ ddifo.pro_c }}</span>
+			</el-col>
+			<el-col :sm="24" :md="8" :lg="6" class="item">
+				<span>{{$t('message.dapp.orderTime')}}：</span>
+				<span>{{ ddifo.tima != 0 ? gettime_zh(ddifo.tima):'' }}</span>
+			</el-col>
+			<el-col :sm="24" :md="8" :lg="6" class="item">
+				<span>{{$t('message.dapp.assetRelease')}}：</span>
+				<span v-if="ddifo.timc == 0 && ddifo.release == 0">{{$t('message.dapp.notReleased')}}</span>
+				<span v-if="ddifo.timc != 0 && ddifo.release == 0">{{$t('message.dapp.released')}}</span>
+				<span v-if="ddifo.timc == 0 && ddifo.release != 0">{{$t('message.cancel')}}</span>
+			</el-col>
+			<el-col :sm="24" :md="8" :lg="6" class="item">
+				<span>{{$t('message.dapp.payTime')}}：</span>
+				<span>{{ ddifo.timb != 0 ? gettime_zh(ddifo.timb):'unknown' }}</span>
+			</el-col>
+			<el-col :sm="24" :md="8" :lg="6" class="item">
+				<span>{{$t('message.dapp.marginRelease')}}：</span>
+				<span v-if="ddifo.time != 0">{{$t('message.dapp.released')}}</span>
+				<span v-if="ddifo.time == 0">{{$t('message.dapp.notReleased')}}</span>
+			</el-col>
+			<el-col :sm="24" :md="8" :lg="6" class="item">
+				<span>{{$t('message.dapp.Arbitration')}}：</span>
+				<span>{{ ddifo.arb == 0 ? $t('message.arbitration.NotStart'):ddifo.arb == 1? $t('message.arbitration.userVictory'):$t('message.arbitration.MerchantsVictory') }}</span>
+			</el-col>
+		</el-row>
+		<el-row>
+			<el-col :span="24" class="title">
+				<span>{{$t('message.dapp.PrivateMessage')}}</span>
+			</el-col>
+			<el-col :sm="24" :md="12" class="item2 itemb_r">
+				<div>
+					<span>{{$t('message.arbitration.nick')}}：</span>
+					<span></span>
+				</div>
+				<div>
+					<span>{{$t('message.activit.addr')}}：</span>
+					<span></span>
+				</div>
+				<div class="f a_c">
+					<span>{{$t('message.dapp.message')}}：</span>
+					<el-input style="width: 30%;" :placeholder="$t('message.enterPrivateTips')" v-model="input" size="mini"></el-input>
+					<el-link type="primary" class="marl-10">{{$t('message.decrypt')}}</el-link>
+				</div>
+				<div class="f a_c">
+					<span class="hidden-sm-and-down" style="visibility: hidden;">{{$t('message.dapp.message')}}：</span>
+					<el-input :placeholder="$t('message.enterContent')" v-model="input1" size="mini" type="textarea" :rows="2"></el-input>
+				</div>
+			</el-col>
+			<el-col :sm="24" :md="12" class="item2">
+				<div>
+					<span>{{$t('message.arbitration.nick')}}：</span>
+					<span></span>
+				</div>
+				<div>
+					<span>{{$t('message.activit.addr')}}：</span>
+					<span></span>
+				</div>
+				<div class="f a_c">
+					<span>{{$t('message.dapp.message')}}：</span>
+					<el-input style="width: 30%;" :placeholder="$t('message.enterPrivateTips')" v-model="input" size="mini"></el-input>
+					<el-link type="primary" class="marl-10">{{$t('message.decrypt')}}</el-link>
+				</div>
+				<div class="f a_c">
+					<span class="hidden-sm-and-down" style="visibility: hidden;">{{$t('message.dapp.message')}}：</span>
+					<el-input :placeholder="$t('message.enterContent')" v-model="input1" size="mini" type="textarea" :rows="2"></el-input>
+				</div>
+			</el-col>
+		</el-row>
+		<el-row>
+			<el-col :span="24" class="title">
+				<span>{{$t('message.orderStateNow')}}</span>
+			</el-col>
+			<el-col :span="24" class="item">
+				<span>{{$t('message.arbitration.balandCountdown')}}：</span>
+				<van-count-down :time="ddifo['djs_val']" format="DD day HH hour mm minute ss second" v-if="ddifo['timc'] > 0 && ddifo['time'] == 0" />
+				<van-count-down time="0" format="DD day HH hour mm minute ss second" v-if="ddifo['timc'] > 0 && ddifo['time'] != 0" />
+				<div class="ddinfo_w_djs_msg_djs" v-if="ddifo['timc'] == 0 || !ddifo['timc']">
+				  <!-- 判断是否暂停 或者取消 -->
+				  <span v-if="ddifo['pau'] != 0">{{$t('message.dapp.orderSuspended')}}</span>
+				  <span v-if="ddifo['release'] != 0">{{$t('message.dapp.orederCancelled')}}</span>
+				</div>
+			</el-col>
+				<el-col :span="24">
+					<el-row v-if="ddifo['myuser'] == ddifo['Madd'] && ddifo['Umark_b'] == 'purchase' ">
+						<el-col :sm="8" :lg="24">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('qx_ddajax')" :disabled="anarr('qx_ddajax')">{{$t('message.cancel')}}</van-button>
+						</el-col>
+						<!-- <el-col :sm="8" :lg="24"><van-button plain type="primary" @click="setddcode('fk_ddajax')" :disabled="anarr('qx_ddajax')">已付款</van-button></el-col> -->
+						<el-col :sm="8" :lg="24">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('zt_ddajax',2)" :disabled="anarr('zt_ddajax')">{{$t('message.suspendBalad')}}</van-button>
+							<div class="msg">
+							  <span v-if="ddifo.pau == 1">{{$t('message.UserPause')}}</span>
+							  <span v-if="ddifo.pau == 2">{{$t('message.MerchantSuspension')}}</span>
+							</div>
+						</el-col>
+						<!-- <el-col :sm="8" :lg="24"><van-button plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">提前释放</van-button></el-col> -->
+						<el-col :sm="8" :lg="24">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax')">{{$t('message.earlyReleaseMargin')}}</van-button>
+							<div class="msg">
+							  <span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
+							  <span v-if="ddifo.agree == 2">{{$t('message.MerchantAgreesRelease')}}</span>
+							  <span v-if="ddifo.agree == 3">{{$t('message.allAgrees')}}</span>
+							</div>
+						</el-col>
+						<el-col :sm="8" :lg="24">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('sf_ddajax')" :disabled="anarr('sf_ddajax')">{{$t('message.ReleaseMargin')}}</van-button>
+						</el-col>
+						<el-col :sm="8" :lg="24">
+							<van-button class="btnStyle" plain type="primary" @click="openurl('./zhongcai')" :disabled="anarr('ss_ddajax')">{{$t('message.appeal')}}</van-button>
+						</el-col>
+					</el-row>
+				</el-col>
+				<el-col :span="24">
+					<el-row v-if=" ddifo['myuser'] == ddifo['Madd'] && ddifo['Umark_b'] == 'for sale'">
+						<el-col :sm="24" :lg="8">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('fb_ddajax')" :disabled="anarr('fb_ddajax')">{{$t('message.putMoney')}}</van-button>
+						</el-col>
+						<el-col :sm="24" :lg="8">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('zt_ddajax',2)" :disabled="anarr('zt_ddajax')">{{$t('message.pushMarginRelease')}}</van-button>
+							<div class="msg">
+							  <span v-if="ddifo.pau == 1">{{$t('message.UserPause')}}</span>
+							  <span v-if="ddifo.pau == 2">{{$t('message.MerchantSuspension')}}</span>
+							</div>
+						</el-col>
+						<el-col :sm="24" :lg="8">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">{{$t('message.earlyReleaseMargin')}}</van-button>
+							<div class="msg">
+							  <span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
+							  <span v-if="ddifo.agree == 2">{{$t('message.MerchantAgreesRelease')}}</span>
+							  <span v-if="ddifo.agree == 3">{{$t('message.allAgrees')}}</span>
+							</div>
+						</el-col>
+						<el-col :sm="24" :lg="8">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('sf_ddajax')" :disabled="anarr('sf_ddajax')">{{$t('message.ReleaseMargin')}}</van-button>
+						</el-col>
+						<el-col :sm="24" :lg="8">
+							<van-button class="btnStyle" plain type="primary" @click="openurl('./zhongcai')" :disabled="anarr('ss_ddajax')">{{$t('message.appeal')}}</van-button>
+						</el-col>
+					</el-row>
+				</el-col>
+				<el-col :span="24">
+					<el-row v-if="ddifo['myuser'] == ddifo['Madd'] && ddifo['Umark_b'] == 'purchase'">
+						<el-col :sm="24" :lg="8">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('qx_ddajax')" :disabled="anarr('qx_ddajax')">{{$t('message.cancel')}}</van-button>
+						</el-col>
+						<!-- <el-col :sm="24" :lg="8"><van-button plain type="primary" @click="setddcode('fk_ddajax')" :disabled="anarr('qx_ddajax')">已付款</van-button></el-col> -->
+						<el-col :sm="24" :lg="8">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('zt_ddajax',1)" :disabled="anarr('zt_ddajax')">{{$t('message.pushMarginRelease')}}</van-button>
+							<div class="msg">
+							  <span v-if="ddifo.pau == 1">{{$t('message.UserPause')}}</span>
+							  <span v-if="ddifo.pau == 2">{{$t('message.MerchantSuspension')}}</span>
+							</div>
+						</el-col>
+						<el-col :sm="24" :lg="8">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Uadd')">{{$t('message.earlyReleaseMargin')}}</van-button>
+							<div class="msg">
+							  <span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
+							  <span v-if="ddifo.agree == 2">{{$t('message.MerchantAgreesRelease')}}</span>
+							  <span v-if="ddifo.agree == 3">{{$t('message.allAgrees')}}</span>
+							</div>
+						</el-col>
+						<el-col :sm="24" :lg="8">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('sf_ddajax')" :disabled="anarr('sf_ddajax')">{{$t('message.ReleaseMargin')}}</van-button>
+						</el-col>
+						<el-col :sm="24" :lg="8">
+							<van-button class="btnStyle" plain type="primary" @click="openurl('./zhongcai')" :disabled="anarr('ss_ddajax')">{{$t('message.appeal')}}</van-button>
+						</el-col>
+					</el-row>
+				</el-col>
+				<el-col :span="24">
+					<el-row v-if=" ddifo['myuser'] == ddifo['Uadd'] && ddifo['Umark_b'] == 'purchase' " style="width: 100%;">
+						<el-col :sm="8" :lg="24">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('fb_ddajax')" :disabled="anarr('fb_ddajax')">{{$t('message.putMoney')}}</van-button>
+						</el-col>
+						<el-col :sm="8" :lg="24">
+							 <van-button class="btnStyle" plain type="primary" @click="setddcode('zt_ddajax',1)" :disabled="anarr('zt_ddajax')">{{$t('message.suspendBalad')}}</van-button>
+							 <div class="msg">
+							   <span v-if="ddifo.pau == 1">{{$t('message.UserPause')}}</span>
+							   <span v-if="ddifo.pau == 2">{{$t('message.MerchantSuspension')}}</span>
+							 </div>
+						</el-col>
+						<el-col :sm="8" :lg="24">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">{{$t('message.earlyReleaseMargin')}}</van-button>
+							<div class="msg">
+							  <span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
+							  <span v-if="ddifo.agree == 2">{{$t('message.MerchantAgreesRelease')}}</span>
+							  <span v-if="ddifo.agree == 3">{{$t('message.allAgrees')}}</span>
+							</div>
+						</el-col>
+						<el-col :sm="8" :lg="24">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('sf_ddajax')" :disabled="anarr('sf_ddajax')">{{$t('message.ReleaseMargin')}}</van-button>
+						</el-col>
+						<el-col :sm="8" :lg="24">
+							<van-button class="btnStyle" plain type="primary" @click="openurl('./zhongcai')" :disabled="anarr('ss_ddajax')">{{$t('message.appeal')}}</van-button>
+						</el-col>
+					</el-row>
+				</el-col>
+				<el-col :span="24">
+					<!-- 不是商家也不是卖家 -->
+					<el-row class="" v-if="ddifo['myuser'] != ddifo['Uadd'] && ddifo['myuser'] != ddifo['Madd']">
+						<el-col :sm="12" :md="8" class="item3">
+							<van-button plain type="primary" class="btnStyle" :disabled="true">
+							  <span v-if="ddifo.pau == 0">{{$t('message.suspendBalad')}}</span>
+							  <span v-if="ddifo.pau == 1">{{$t('message.UserPause')}}</span>
+							  <span v-if="ddifo.pau == 2">{{$t('message.MerchantSuspension')}}</span>
+							</van-button>
+						</el-col>
+						<el-col :sm="12" :md="8" class="item3">
+							<van-button plain type="primary" class="btnStyle" :disabled="true">
+							  <span v-if="ddifo.agree == 0">{{$t('message.earlyReleaseMargin')}}</span>
+							  <span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
+							  <span v-if="ddifo.agree == 2">{{$t('message.MerchantAgreesRelease')}}</span>
+							  <span v-if="ddifo.agree == 3">{{$t('message.allAgrees')}}</span>
+							</van-button>
+						</el-col>
+						<el-col :sm="12" :md="8" class="item3">
+							<van-button plain type="primary"  class="btnStyle" :disabled="true">{{$t('message.ReleaseMargin')}}</van-button>
+						</el-col>
+						<el-col :sm="12" :md="8" class="item3">
+							<van-button plain type="primary" class="btnStyle" :disabled="true">{{$t('message.appeal')}}</van-button>
+						</el-col>        
+					</el-row>
+				</el-col>
+			
+		</el-row>
+	</div>
+</template>
+<script>
+	import ddinfomodel from "./ddinfo.json";
+	import {
+		Toast
+	} from 'vant';
+
+	import config from "@/config";
+	var dotc_abi = config['hyue'][config['key']]['dotc']['abi'];
+	var dotc_key = config['hyue'][config['key']]['dotc']['heyue'];
+	var huobijson = {
+		huobi: [],
+		fabi: []
+	};
+	var harr = config['hbi'][config['key']];
+	var fbarr = config['fabi'][config['key']];
+	for (const key in harr) {
+		huobijson['huobi'].push({
+			key: harr[key]['key'],
+			num: harr[key]['num']
+		});
+	}
+	for (const key in fbarr) {
+		huobijson['fabi'].push({
+			id: fbarr[key]['id'],
+			key: fbarr[key]['key']
+		});
+	}
+
+
+	//全局变量
+	var web3 = "";
+	var address = "";
+	var ethereum = window.ethereum;
+	var bzj_num = config["hyue"][config["key"]]["Bzj"]["num"];
+	var uarm;
+
+	import Web3 from "web3"
+	import Web3Modal from "web3modal"
+	import moment from "moment";
+	import {
+		Dialog
+	} from 'vant';
+
+	export default {
+		data() {
+			return {
+				ddid: null,
+				ddidcode: true,
+				activeNames: ['1', '2', '3'],
+				input: '',
+				input1: '',
+
+				ddifo: ddinfomodel
+			}
+		},
+		watch: {
+			'ddifo'(e) {
+				console.log(e);
+			}
+		},
+		created() {
+			var dq = this;
+			var ddid = this.$route.query.ddid;
+			if (ddid) {
+				this.ddidcode = false;
+				this.ddid = ddid;
+			} else {
+				this.ddidcode = true;
+			}
+
+			if (typeof ethereum === 'undefined') {
+				alert('Please install the metamask plug-in first');
+			} else {
+				//初始化
+				webinit();
+			}
+			async function webinit() {
+				const providerOptions = {
+					/* See Provider Options Section */
+				};
+				const web3Modal = new Web3Modal({
+					network: "mainnet",
+					cacheProvider: true,
+					providerOptions
+				});
+				var provider = await web3Modal.connect();
+				web3 = new Web3(provider);
+				if (web3 && provider) {
+					//其他钱包使用测试网络
+					// if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
+					//     var wlcode = window.ethereum.networkVersion;
+					//     //imtoken只能查看 无法操作 出发是ETF主网
+					//     if (window.ethereum.isImToken) {
+					//         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+					//     }
+					//     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
+					//     if (window.ethereum.isMetaMask && wlcode != 4) {
+					//         web3.setProvider(config["hyue"][config["key"]]["Url"]);
+					//     }
+					// }else{
+					//     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+					// }
+					address = provider.selectedAddress;
+					dq.dquser = address;
+					if (dq.ddid) {
+						dq.getddinfo(dq.ddid);
+					}
+				}
+			}
+
+
+		},
+		methods: {
+			//如果过亿请转换
+			getFNum(num_str) {
+				num_str = num_str.toString();
+				if (num_str.indexOf("+") != -1) {
+					num_str = num_str.replace("+", "");
+				}
+				if (num_str.indexOf("E") != -1 || num_str.indexOf("e") != -1) {
+					var resValue = "",
+						power = "",
+						result = null,
+						dotIndex = 0,
+						resArr = [],
+						sym = "";
+					var numStr = num_str.toString();
+					if (numStr[0] == "-") {
+						// 如果为负数，转成正数处理，先去掉‘-’号，并保存‘-’.
+						numStr = numStr.substr(1);
+						sym = "-";
+					}
+					if (numStr.indexOf("E") != -1 || numStr.indexOf("e") != -1) {
+						var regExp = new RegExp(
+							"^(((\\d+.?\\d+)|(\\d+))[Ee]{1}((-(\\d+))|(\\d+)))$",
+							"ig"
+						);
+						result = regExp.exec(numStr);
+						if (result != null) {
+							resValue = result[2];
+							power = result[5];
+							result = null;
+						}
+						if (!resValue && !power) {
+							return false;
+						}
+						dotIndex = resValue.indexOf(".") == -1 ? 0 : resValue.indexOf(".");
+						resValue = resValue.replace(".", "");
+						resArr = resValue.split("");
+						if (Number(power) >= 0) {
+							var subres = resValue.substr(dotIndex);
+							var length = dotIndex == 0 ? 0 : subres.length;
+							power = Number(power);
+							//幂数大于小数点后面的数字位数时，后面加0
+							for (var i = 0; i < power - length; i++) {
+								resArr.push("0");
+							}
+							if (power - subres.length < 0) {
+								resArr.splice(dotIndex + power, 0, ".");
+							}
+						} else {
+							power = power.replace("-", "");
+							power = Number(power);
+							//幂数大于等于 小数点的index位置, 前面加0
+							for (let i = 0; i < power - dotIndex; i++) {
+								resArr.unshift("0");
+							}
+							var n = power - dotIndex >= 0 ? 1 : -(power - dotIndex);
+							resArr.splice(n, 0, ".");
+						}
+					}
+					resValue = resArr.join("");
+
+					return sym + resValue;
+				} else {
+					return num_str;
+				}
+			},
+			//时间转换
+			gettime_zh(e) {
+				if (e) {
+					var stime = moment.unix(Number(e)).format('YYYY-MM-DD  HH:mm:ss');
+					return stime;
+				} else {
+					return '';
+				}
+			},
+			openddinfos(e) {
+				this.$router.push({
+					path: './mairu',
+					query: {
+						did: e
+					}
+				});
+			},
+			getddinfo(ddid) {
+				//获取订单详情
+				var dq = this;
+				if (!dq.ddid) {
+					return;
+				} else {
+					ddid = dq.ddid;
+				}
+				dq.ddidcode = false;
+				var dotsconn = new web3.eth.Contract(dotc_abi, dotc_key);
+				dotsconn.methods.users(ddid).call(function(error, ret) {
+					console.log(ret);
+					if (ret) {
+						
+						dq.ddifo['iorder'] = ret['iorder'];
+						dq.ddifo['Umark'] = ret['Umark'];
+						dq.ddifo['pro'] = ret['pro'];
+						dq.ddifo['Uadd'] = ret['Uadd'].toLowerCase();
+						dq.ddifo['Madd'] = ret['Madd'].toLowerCase();
+						dq.ddifo['release'] = ret['release'];
+						dq.ddifo['timc'] = ret['timc'];
+						dq.ddifo['agree'] = Number(ret['agree']);
+						dq.ddifo['pau'] = ret['pau'];
+						dq.ddifo['uma'] = Number(ret['uma']) / (10 ** bzj_num);
+						dq.ddifo['mma'] = Number(ret['mma']) / (10 ** bzj_num);
+						//扩展数据
+						dq.ddifo['Umark_b'] = ret['Umark'] ==
+							'0x6275790000000000000000000000000000000000000000000000000000000000' ? 'purchase' :
+							'for sale';
+						dq.ddifo['pro_c'] = ret['pro'] ==
+							'0x7573647400000000000000000000000000000000000000000000000000000000' ? 'usdt' : 'Test';
+						for (let index = 0; index < huobijson['huobi'].length; index++) {
+							var num = 0;
+							if (huobijson['huobi'][index]['key'] == ret['pro']) {
+								dq.ddifo['pro_b'] = huobijson['huobi'][index]['id'];
+								num = Number(huobijson['huobi'][index]['num']);
+								//价格转换
+								dq.ddifo['Uoa'] = (Number(ret['Uoa']) / (10 ** num)).toFixed(2);
+								break;
+							}
+						}
+						dq.ddifo['Madd_b'] = ret['Madd'].substring(0, 5) + '.....' + ret['Madd'].substring(ret[
+							'Madd'].length - 5, ret['Madd'].length);
+						dq.ddifo['Uadd_b'] = ret['Uadd'].substring(0, 5) + '.....' + ret['Uadd'].substring(ret[
+							'Uadd'].length - 5, ret['Uadd'].length);
+						dq.ddifo['myuser'] = address;
+						ddifoget();
+					}
+				});
+
+				//获取附加时间
+				async function ddifoget() {
+					var timb = await dotsconn.methods.timb(dq.ddid).call(function(error, ret) {
+						return ret;
+					});
+					var tima = await dotsconn.methods.tima(dq.ddid).call(function(error, ret) {
+						return ret;
+					});
+					var time = await dotsconn.methods.time(dq.ddid).call(function(error, ret) {
+						return ret;
+					});
+					var Timc = await dotsconn.methods.Timc().call(function(error, ret) {
+						return ret;
+					});
+					var faddid = await dotsconn.methods.Morder(dq.ddid).call(function(error, ret) {
+						return Number(ret);
+					});
+
+
+					dq.ddifo['timb'] = Number(timb);
+					dq.ddifo['tima'] = Number(tima);
+					dq.ddifo['time'] = Number(time);
+
+					dq.ddifo['Timc'] = Number(Timc);
+					dq.ddifo['faddid'] = faddid;
+					//倒计时 tc + Tc - 当前时间  = 倒计时
+					var djs = (Number(dq.ddifo['timc']) + dq.ddifo['Timc']) - Math.round(new Date() / 1000);
+					dq.ddifo['djs_val'] = djs * 1000;
+				}
+			},
+
+			//订单操作 cancel 付款 放币等
+			setddcode(type, c = '') {
+				var dq = this;
+				var dotsconn = new web3.eth.Contract(dotc_abi, dotc_key);
+				if (JSON.stringify(dq.ddifo).indexOf(address) == -1) {
+					return;
+				}
+				if (type == 'qx_ddajax') {
+					//判断是否放币
+					// if (dq.ddifo['timb']) {
+					//     alert('The order cannot be cancelled');
+					//     return;
+					// }
+					console.log('The order cannot be cancelled')
+					qx_ddajax();
+				}
+				if (type == 'fk_ddajax') {
+					if (dq.ddifo['timb']) {
+						alert('This order cannot be paid');
+						return;
+					}
+					fk_ddajax();
+				}
+				if (type == 'zt_ddajax') {
+					zt_ddajax(c);
+				}
+				if (type == 'tq_ddajax') {
+					tq_ddajax();
+				}
+				if (type == 'sf_ddajax') {
+					if (dq.ddifo['agree'] == 3 || (dq.ddifo.pau == 0 && dq.ddifo.timc != 0)) {
+						sf_ddajax();
+					} else {
+						alert('Cannot click');
+					}
+				}
+				if (type == 'fb_ddajax') {
+					fb_ddajax();
+				}
+
+				function qx_ddajax() {
+					dotsconn.methods.releAss(dq.ddid + "").send({
+						from: address
+					}, (err, ret) => {
+						if (ret) {
+							Toast.clear();
+							Toast.success('The order has been cancelled, please check later');
+						} else {
+							Toast.clear();
+							Toast.fail('Please agree to authorize!');
+						}
+					});
+				}
+
+				function fk_ddajax() {
+					dotsconn.methods.paid(dq.ddid).send({
+						from: address
+					}, (err, ret) => {
+						if (ret) {
+							console.log(ret);
+						} else {
+							console.log('error');
+						}
+					});
+				}
+
+				function zt_ddajax(c) {
+					//有暂停不可点击
+					if (dq.ddifo['pau'] != 0) {
+						return;
+					}
+
+					function mul(x, y) {
+						var z = x * y;
+						return z;
+					}
+					//判断是否可以暂停 是否需要追加保证金
+					async function user_pan_is(ck) {
+						var uara = await dotsconn.methods.uara().call((err, ret) => {
+							return ret;
+						});
+						var pros = await dotsconn.methods.pros(dq.ddifo['pro'] + "").call((err, ret) => {
+							return ret;
+						});
+						var pri = await dotsconn.methods.pri().call((err, ret) => {
+							return ret;
+						});
+
+						var Uoa = 0;
+						for (let index = 0; index < huobijson['huobi'].length; index++) {
+							if (huobijson['huobi'][index]['key'] == dq.ddifo['pro']) {
+								Uoa = Number(dq.ddifo.Uoa) * (10 ** Number(huobijson['huobi'][index]['num']));
+								break;
+							}
+						}
+						uarm = mul((mul(Uoa, Number(pros.uni)) / mul(Number(pri), Number(pros.one))), Number(uara));
+						if (dq.ddifo['uma'] >= uarm / (10 ** bzj_num)) {
+							ck(true);
+						} else {
+							ck(false, uarm);
+						}
+					}
+
+					//判断是用户还是商家 买家需要判断
+					/*
+					    2不需要判断 
+					*/
+					if (c == 1) {
+						user_pan_is((e, uarm) => {
+							if (!e) {
+								Dialog.confirm({
+										title: 'warning',
+										message: 'Insufficient margin, minimum margin required‘' + (uarm / (
+												10 ** bzj_num)).toFixed(2) +
+											'’, please operate after adding margin!',
+										confirmButtonText: 'Margin call',
+										cancelButtonText: 'give up'
+									})
+									.then(() => {
+										mar_add();
+									})
+									.catch(() => {
+										// on cancel
+									});
+							} else {
+								user_pan();
+							}
+						});
+					} else {
+						user_pan();
+					}
+
+					//操作
+					function user_pan() {
+						dotsconn.methods.pauseMar(dq.ddid).send({
+							from: address
+						}, (err, ret) => {
+							if (ret) {
+								Toast.clear();
+								Toast.success('The order has been suspended, please check later');
+							} else {
+								Toast.clear();
+								Toast.fail('Please agree to authorize!');
+							}
+						});
+					}
+
+					function mar_add() {
+						dotsconn.methods.addMar(dq.ddid, dq.getFNum(uarm)).send({
+							from: address
+						}, (err, ret) => {
+							if (ret) {
+								Toast.clear();
+								Toast.success('The deposit has been added, please check later');
+							} else {
+								Toast.clear();
+								Toast.fail('Please agree to authorize!');
+							}
+						});
+					}
+				}
+
+				function tq_ddajax() {
+					dotsconn.methods.aheadMar(dq.ddid).send({
+						from: address
+					}, (err, ret) => {
+						if (ret) {
+							Toast.clear();
+							Toast.success('Agree to margin release, please check later');
+						} else {
+							Toast.clear();
+							Toast.fail('Please agree to authorize!');
+						}
+					});
+				}
+
+				function sf_ddajax() {
+					dotsconn.methods.releMar(dq.ddid).send({
+						from: address
+					}, (err, ret) => {
+						if (ret) {
+							Toast.clear();
+							Toast.success('The deposit has been released. Please check later');
+						} else {
+							Toast.clear();
+							Toast.fail('Please agree to authorize!');
+						}
+					});
+				}
+
+				function fb_ddajax() {
+					dotsconn.methods.releAss(dq.ddid + "").send({
+						from: address
+					}, (err, ret) => {
+						if (ret) {
+							Toast.clear();
+							Toast.success('The asset has been released. Please check later');
+						} else {
+							Toast.clear();
+							Toast.fail('Please agree to authorize!');
+						}
+					});
+				}
+			},
+
+			onClickLeft() {
+				this.$router.go(-1);
+			},
+			openurl(url) {
+				this.$router.push(url);
+			},
+
+			//按钮状态
+			anarr(tcode, code) {
+				var ddinfo = this.ddifo;
+				if (tcode == 'qx_ddajax') {
+					if (ddinfo['release'] == 0 && ddinfo['timc'] == 0) {
+						return false;
+					} else {
+						return true;
+					}
+				}
+				if (tcode == 'zt_ddajax') {
+					if (ddinfo['release'] != 0 || ddinfo['pau'] != 0 || ddinfo['agree'] == 3) {
+						return true;
+					} else {
+						//没有放币  并且 没有付款 显示 
+						return false;
+					}
+				}
+				if (tcode == 'fb_ddajax') {
+					if (ddinfo['release'] == 0 && ddinfo['timc'] == 0) {
+						return false;
+					} else {
+						return true;
+					}
+				}
+				if (tcode == 'tq_ddajax') {
+					console.log(ddinfo['time'])
+					if (ddinfo['time'] != 0) {
+						return true;
+					} else {
+						//我是否点击了 
+						if (code == 'Madd') {
+							//商家
+							if (ddinfo['agree'] == 2 || ddinfo['agree'] == 3) {
+								return true;
+							} else {
+								return false;
+							}
+						} else {
+							//用户
+							if (ddinfo['agree'] == 2 || ddinfo['agree'] == 3) {
+								return true;
+							} else {
+								return false;
+							}
+						}
+					}
+				}
+				if (tcode == 'sf_ddajax') {
+					//双方都没有点击
+					if (ddinfo['agree'] == 3) {
+						if (ddinfo['time'] != 0) {
+							return true;
+						} else {
+							return false;
+						}
+					} else {
+						return true;
+					}
+				}
+
+				if (tcode == 'ss_ddajax') {
+					if ((ddinfo['release'] == 0 && ddinfo['timc'] == 0) || ddinfo['time'] == 0) {
+						return false;
+					} else {
+						return true;
+					}
+				}
+			}
+		}
+	}
+</script>
+

@@ -31,19 +31,19 @@
             <div class="otc">Leader of decentralized OTC</div>
             <div class="trackInitiative">
               <div class="track">Defi new track</div>
-              <div class="Initiative">Global Initiative</div>
+              <!-- <div class="Initiative">Global Initiative</div> -->
             </div>
           </div>
         </el-carousel-item>
         <el-carousel-item>
           <img src="@/assets/index/nav2.png" alt="">
-          <div class="info content" style="margin-top:50px;margin-left:120px">
+          <div class="info content">
             <div class="top"><span>gazelle</span> = gain + zelle</div>
             <div class="mid">Zelle-American Express Transfer Network <br /> Gazelle implies financial attributes</div>
-            <div class="bot">
+            <!-- <div class="bot">
               Antelope is a very agile animal. It is not big, runs fast and jumps high, which means that the project can grow rapidly
               Compared with unicorn of uniswap, gazelle enterprise is a high growth enterprise, which can easily surpass more than one, ten, 100 and 1000 times (Baidu Encyclopedia's definition of gazelle enterprise).
-            </div>
+            </div> -->
           </div>
         </el-carousel-item>
       </el-carousel>
@@ -72,31 +72,20 @@
     <!-- contactUs -->
     <div class="contactUs">
       <div class="content">
-        <div class="left">
-          <div class="title">contact us</div>
-          <div class="info">Welcome to gazelle.fi global community!</div>
-          <input type="text" placeholder="name" v-model="text1"><br>
-          <input type="text" placeholder="E-mail" v-model="text2"><br>
-          <div class="tips">Please enter a valid email address.</div>
-          <div class="send">send out</div>
+        <div class="title">Get the latest news and updates</div>
+        <div class="info">
+          <div class="left">
+            <a class="item" @click="goLink(v)" v-for="v in linklist">
+              <img :src="v.img" alt="">
+              <div class="text">{{v.text}}</div>
+            </a>
+          </div>
+          <div class="right">Gazotc --- Gate of the meta universe</div>
         </div>
-        <div class="right">
-          <textarea rows="3" placeholder="mail" cols="20">
-
-         </textarea>
-          <br>
-          <div class="list">
-            <li>content</li>
-            <li>abyss</li>
-            <li>Antelope ferry</li>
-            <li>High spirited</li>
-          </div>
-          <div class="info">
-            Technical support provided by Godaddy
-          </div>
-          <div class="copyright">
-            copyright © 2020 gazelle - all rights reserved.
-          </div>
+        <div class="bot">
+          <span>©2021 UNITED KINGDOM GZELLE DEFI FOUNDATION,copyright</span>
+          <span>Address: 69, Aberdeen Avenue, Cambridge, England, CB2 8DL</span>
+          <span>Help: support@gazotc.com</span>
         </div>
       </div>
     </div>
@@ -108,6 +97,38 @@ export default {
   name: 'index',
   data() {
     return {
+      linklist: [
+        {
+          text: 'Github',
+          img: require('@/assets/link/2.png'),
+          href: 'https://github.com/gazellefi/gazotc'
+        },
+        {
+          text: 'Twitter',
+          img: require('@/assets/link/6.png'),
+          href: 'https://twitter.com/gazellefi'
+        },
+        {
+          text: 'Facebook',
+          img: require('@/assets/link/1.png'),
+          href: 'https://www.facebook.com/gazotc'
+        },
+        {
+          text: 'Medium',
+          img: require('@/assets/link/3.png'),
+          href: 'https://medium.com/@gazotc'
+        },
+        {
+          text: 'Telegram',
+          img: require('@/assets/link/4.png'),
+          href: 'https://t.me/gazotcfi'
+        },
+        {
+          text: 'Youtube',
+          img: require('@/assets/link/5.png'),
+          href: 'https://www.youtube.com/channel/UCv2XLAJZg5bge_hGMXoPFTg'
+        },
+      ],
       show: false,
       text1: '',
       text2: '',
@@ -119,7 +140,7 @@ export default {
         { title: 'Security rules', route: '/Securityrules' },
         { title: 'Transaction rules', route: '/Transactionrules' },
         { title: 'Arbitration rules', route: '/Arbitrationrules' },
-        { title: 'Exchange', route: '/Exchange' },
+        { title: 'DAPP', route: '/Exchange' },
         { title: 'Public sale', route: '/Activities' },
       ],
     };
@@ -131,6 +152,9 @@ export default {
   watch: {},
   computed: {},
   methods: {
+    goLink(v) {
+      window.open(v.href, '_blank')
+    },
 
     navClick(v) {
       this.show = false
@@ -162,6 +186,7 @@ export default {
 /deep/.el-carousel__button {
   height: 6px;
   border-radius: 2px;
+  opacity: 1;
 }
 /deep/.is-active {
   .el-carousel__button {
@@ -236,7 +261,7 @@ export default {
     }
     .mid {
       width: 310px;
-      border: 2px dotted #ffcc00;
+      // border: 2px dotted #ffcc00;
       border-radius: 8px;
       margin-top: 10px;
       font-size: 16px;
@@ -245,9 +270,10 @@ export default {
       color: #ffffff;
       line-height: 26px;
       letter-spacing: -1px;
-      padding: 5px;
+      // padding: 5px;
       text-align: left;
       margin-bottom: 10px;
+      margin-top: 30px;
     }
     .bot {
       width: 480px;
@@ -273,6 +299,7 @@ export default {
       color: #ffffff;
       line-height: 36px;
       margin-bottom: 52px;
+      letter-spacing: 2px;
     }
     .trackInitiative {
       display: flex;
@@ -280,16 +307,19 @@ export default {
     }
     .track {
       width: 149px;
-      height: 38px;
-      background: #ffcc00;
-      margin-right: 38px;
+      height: 28px;
+      padding: 10px;
+      // background: #ffcc00;
+      // margin-right: 38px;
       display: flex;
       justify-content: center;
       align-items: center;
+      border: 1px solid #ffcc00;
       font-size: 16px;
+      border-radius: 15px;
       font-family: SF Pro Display;
       font-weight: bold;
-      color: #000000;
+      color: #ffcc00;
       line-height: 36px;
     }
     .Initiative {
@@ -314,80 +344,46 @@ export default {
     }
   }
   .contactUs {
-    padding: 70px 0;
-    background: #eeeeee;
-    .content {
+    padding: 20px 0;
+    background-image: radial-gradient(#313131, #000);
+    color: #f5f5f5;
+    .title {
+      font-size: 16px;
+      margin-bottom: 30px;
+    }
+    .info {
       display: flex;
       justify-content: space-between;
+      margin-bottom: 20px;
+      align-items: center;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 30px;
+
       .left {
-        .title {
-          font-size: 24px;
-          font-family: SF Pro Display;
-          font-weight: 500;
-          color: #333333;
-          line-height: 48px;
-        }
-        .info {
-          font-size: 18px;
-          font-family: SF Pro Display;
-          font-weight: 400;
-          color: #333333;
-          line-height: 48px;
-        }
-        input {
-          width: 100%;
-          height: 41px;
-          border: 1px solid #999999;
-          margin-bottom: 25px;
-          background: transparent;
-          padding-left: 10px;
-        }
-        .tips {
-          font-size: 12px;
-          font-family: SF Pro Display;
-          font-weight: 400;
-          color: #ff3333;
-        }
-        .send {
-          width: 103px;
-          height: 29px;
-          background: #cccccc;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-top: 20px;
+        display: flex;
+        text-align: center;
+
+        .item {
+          margin-right: 30px;
           cursor: pointer;
-          color: #fff;
         }
-      }
-      .right {
-        textarea {
-          width: 100%;
-          height: 138px;
-          border: 1px solid #999999;
-          background: transparent;
-          margin-bottom: 25px;
-          line-height: 24px;
-          padding-left: 10px;
-          padding-top: 10px;
-        }
-        .list {
-          display: flex;
-          margin-bottom: 62px;
-          color: #999999;
-          li {
-            margin-right: 30px;
+        img {
+          width: 30px;
+          margin-bottom: 10px;
+          opacity: 0.5;
+          &:hover {
+            opacity: 1;
           }
         }
-        .info,
-        .copyright {
-          text-align: right;
-          font-size: 12px;
-          font-family: SF Pro Display;
-          font-weight: 400;
-          color: #666666;
-          line-height: 28px;
-        }
+      }
+    }
+    .bot {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      letter-spacing: 0;
+      span {
+        color: #f5f5f5 ;
       }
     }
   }
@@ -455,7 +451,7 @@ export default {
       .top {
         font-weight: 600 !important;
         font-size: 12px !important;
-        transform: translateX(95px);
+        // transform: translateX(95px);
         line-height: 16px;
 
         span {
@@ -468,8 +464,9 @@ export default {
         margin: 0;
         font-size: 12px;
         padding: 4px;
-        line-height: 12px;
-        transform: translateX(65px) scale(0.8);
+        line-height: 16px;
+        margin-top: 20px;
+        // transform: translateX(65px) scale(0.8);
       }
       .bot {
         font-size: 12px;
@@ -487,6 +484,7 @@ export default {
         line-height: 10px;
         margin-bottom: 10px;
         font-weight: normal;
+        letter-spacing: 1px;
       }
       .track {
         height: 20px;
@@ -509,23 +507,36 @@ export default {
     width: auto;
   }
   .contactUs {
-    padding-top: 0px !important;
-    .content {
-      padding: 20px;
-      padding-top: 0;
-      display: flex;
-      flex-direction: column;
+    padding: 20px !important;
+    color: #ccc !important;
+    .info {
+      display: block !important;
+      padding-bottom: 0 !important;
+      margin-bottom: 8px !important;
       .left {
-        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .item {
+        margin: 0px !important;
+        img {
+          opacity: 1 !important;
+        }
       }
       .right {
-        .list {
-          font-size: 12px;
-        }
-        .info,
-        .copyright {
-          text-align: center !important;
-        }
+        margin-top: 20px;
+        margin-bottom: 5px !important;
+      }
+    }
+    .bot {
+      display: block !important;
+      span {
+        display: inline-block;
+        line-height: 22px;
+        font-size: 12px !important;
+         color: #ccc !important;
+        //  white-space: nowrap;
+        //  word-break: break-all;
       }
     }
   }

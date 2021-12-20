@@ -1,339 +1,119 @@
-<style>
-.vhtml_head {
-  background-color: #000;
-  width: calc(100%);
-  float: left;
-  color: #fff;
-  height: 48px;
-  padding: 0 15px;
-}
-.vhtml_head_left {
-  width: 100%;
-  float: left;
-  display: flex;
-  flex-direction: row;
-  height: 48px;
-  align-items: center;
-  font-size: 14px;
-}
 
-.vhtml_head_left_logo {
-  /* max-width: 150px; */
-  /* margin-right: 15px; */
-}
-.vhtml_head_left_l {
-  height: 48px;
-  display: flex;
-  flex-direction: row;
-  margin-right: auto;
-  align-items: center;
-}
-.vhtml_head_left_l_item {
-  margin: 0 15px;
-}
-
-.vhtml_head_left_r {
-  display: flex;
-  align-items: center;
-}
-
-.vhtml_head_left_r_item {
-  margin: 0 15px;
-}
-
-.vhtml_head_left_r_item_view {
-  position: absolute;
-  top: 48px;
-  /* bottom: 0; */
-  left: 0;
-  right: 0;
-  background-color: #000;
-  z-index: 999;
-  margin-bottom: 50px;
-}
-.vhtml_head_left_r_item_view_item {
-  width: calc(100% - 30px);
-  margin: 0 15px;
-  float: left;
-}
-.vhtml_head_left_r_item_view_item_t {
-  width: 100%;
-  float: left;
-  font-size: 16px;
-  color: rgb(216, 213, 213);
-  padding: 25px 0;
-}
-.vhtml_head_left_r_item_view_item_ul {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.vhtml_head_left_r_item_view_item_ul_li {
-  height: 45px;
-  display: flex;
-  align-items: center;
-  opacity: 0.5;
-  padding-left: 15px;
-}
-.vhtml_head_left_r_item_view_item_ul_li.ac {
-  opacity: 1;
-}
-.vhtml_head_left_r_item_t i {
-  font-size: 18px;
-}
-.vhtml_head_left_l_item {
-  opacity: 0.5;
-}
-.vhtml_head_left_l_item.ac {
-  color: #fff;
-  opacity: 1;
-}
-.el-dropdown {
-  display: inline-block;
-  position: relative;
-  font-size: 14px;
-}
-.vhtml_head_left_r_item.guize {
-  position: relative;
-}
-.vhtml_head_left_r_item.guize .vhtml_head_left_r_item_ul {
-  display: none;
-}
-.vhtml_head_left_r_item.guize:hover .vhtml_head_left_r_item_ul {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 20px;
-  background-color: rgb(2, 2, 2);
-  min-width: 150px;
-
-  z-index: 60;
-}
-.vhtml_head_left_r_item_ul_li {
-  padding: 5px 15px;
-}
-.vhtml_head_left_r_item_ul_li_ul {
-  margin: 0 15px;
-}
-.vhtml_head_left_r_item_ul_li_ul_li {
-  padding: 5px 0;
-}
-.vhtml_head_left_r_item_ul_li_ul_li:hover {
-  color: rgba(255, 255, 255, 0.473);
-}
-.vhtml_head_left_r_item_ul_li.hover:hover {
-  color: rgba(255, 255, 255, 0.473);
-}
-
-.ddinfodialog {
-  display: flex;
-  flex-direction: column;
-}
-.ddinfodialog_item {
-  display: flex;
-  padding: 5px 0;
-  align-items: center;
-  flex-direction: row;
-}
-.ddinfodialog_itemcolumn {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-.ddinfodialog_itemcolumn_item {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 5px 15px;
-}
-.ddinfodialog_item_form {
-  display: flex;
-  margin: 5px 15px;
-}
-
-.bzj_fangan_ul {
-  display: flex;
-  flex-direction: column;
-}
-.bzj_fangan_ul_li {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 5px 0;
-}
-.bzj_fangan_ul_li span.bzj_fangan_ul_lia {
-  margin-right: 5px;
-  min-width: 100px;
-}
-.bzj_fangan_ul_li.title {
-  font-size: 26px;
-}
-.bzj_fangan_ul_li.ul {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-.bzj_fangan_ul_li_ul_li {
-  margin: 5px 15px;
-}
-
-/* Second round of arbitration management */
-.zcglul {
-  display: flex;
-  flex-direction: column;
-}
-.zcglul_li_l {
-  min-width: 90px;
-}
-.zcglul_li {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 5px 0;
-}
-.zcglul_li.title {
-  font-size: 20px;
-  opacity: 0.7;
-  padding: 5px 0;
-}
-.zcglul_li_r.maleftreft {
-  margin: 0 1px;
-}
-.zcglul_li.daojishi {
-  height: 70px;
-  align-items: center;
-  justify-content: center;
-}
-.zcglul_li.daojishi .zcglul_li_r {
-  margin-left: 15px;
-}
-
-.zcglul_li.coll {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.zcglul_li_item {
-  display: flex;
-  flex-direction: row;
-  margin: 5px 0;
-}
-.zcglul_li_r_item {
-  margin: 5px 0;
-}
-</style>
 <template>
   <div class="vhtml_head">
     <div class="vhtml_head_left">
-      <van-icon @click="$router.push('/')" style="margin-top:2px" name="arrow-left" />
-      <!-- <div class="vhtml_head_left_logo">GAZOTC</div> -->
-      <div class="vhtml_head_left_logo" @click="openurl">
-        <p> <img src="@/assets/title.png" alt="GAZOTC" width="48" height="45"></p>
-      </div>
-      <div class="vhtml_head_left_l">
-        <div class="vhtml_head_left_l_item hidden-xs-only ac anniucss" @click="openurl">
-          Official website
+      <!-- 返回和logo -->
+      <div class="logo">
+        <van-icon @click="$router.go(-1)" style="margin-top:2px" name="arrow-left" />
+        <div class="vhtml_head_left_logo" @click="openurl">
+          <p> <img src="@/assets/img/title.png" alt="GAZOTC" width="48" height="45"></p>
         </div>
-        <el-dropdown @command="wlxuanze" trigger="click" class="vhtml_head_left_logo">
-          <span class="el-dropdown-link anniucss" style="color: #fff">
-            <span v-if="morenkey == 'huobi'">Binance Smart Chain</span>
-            <span v-if="morenkey == 'huobi2'">Heco main network</span>
-            <span v-if="morenkey == 'etfcshi'">Ethereum rinkeby</span>
-            <span v-if="morenkey == 'etf'">Ethereum main network</span>
-            <span v-if="morenkey == 'tron'">Tron main network</span>
+      </div>
 
-            <i class="el-icon-arrow-down el-icon--right"></i>
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="huobi">Binance Smart Chain</el-dropdown-item>
-            <el-dropdown-item command="huobi">Heco main network</el-dropdown-item>
-            <el-dropdown-item command="etfcshi">Ethereum rinkeby</el-dropdown-item>
-            <el-dropdown-item command="etf">Ethereum main network</el-dropdown-item>
-            <el-dropdown-item command="tron">Tron main network</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-        <div class="vhtml_head_left_l_item hidden-xs-only ac anniucss" @click="openqb('./')">
-          French currency OTC
+      <!-- 导航部分 -->
+
+      <div class="navRight">
+        <div class="vhtml_head_left_l">
+          <div class="vhtml_head_left_l_item hidden-xs-only ac anniucss" @click="openurl">
+            {{ $t("message.dapp.website") }}
+          </div>
+          <el-dropdown @command="wlxuanze" trigger="click" class="vhtml_head_left_logo">
+            <span class="el-dropdown-link anniucss" style="color: #fff">
+              <span v-if="morenkey == 'huobi'"> {{ $t("message.dapp.二进制智能链") }}</span>
+              <span v-if="morenkey == 'huobi2'">{{ $t("message.dapp.HecoNet") }}</span>
+              <span v-if="morenkey == 'etfcshi'">{{ $t("message.dapp.EthereumRinkeby") }}</span>
+              <span v-if="morenkey == 'etf'">{{ $t("message.dapp.EthereumNet") }}</span>
+              <span v-if="morenkey == 'tron'">{{ $t("message.dapp.WaveNet") }}</span>
+
+              <i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="huobi"> {{ $t("message.dapp.二进制智能链") }}</el-dropdown-item>
+              <el-dropdown-item command="huobi">{{ $t("message.dapp.HecoNet") }}</el-dropdown-item>
+              <el-dropdown-item command="etfcshi">{{ $t("message.dapp.EthereumRinkeby") }}</el-dropdown-item>
+              <el-dropdown-item command="etf">{{ $t("message.dapp.EthereumNet") }}</el-dropdown-item>
+              <el-dropdown-item command="tron">{{ $t("message.dapp.WaveNet") }}</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+          <div class="vhtml_head_left_l_item hidden-xs-only ac anniucss" @click="openqb('./')">
+            {{ $t("message.dapp.CurrencyOTC") }}
+          </div>
+          <div class="vhtml_head_left_l_item hidden-xs-only ac anniucss" @click="openqb('./ccdotc')">
+            {{ $t("message.dapp.CoinOTC") }}
+          </div>
         </div>
-        <div class="vhtml_head_left_l_item hidden-xs-only ac anniucss" @click="openqb('./ccdotc')">
-          Currency OTC
-        </div>
-      </div>
-      <div class="vhtml_head_left_r">
-        <div class="vhtml_head_left_r_item hidden-sm-and-down url anniucss" @click="openqb('./lqcsb')">
-          Receive test currency
-        </div>
-        <div class="vhtml_head_left_r_item guize hidden-sm-and-down url anniucss">
-          <div class="vhtml_head_left_r_item_t">rule</div>
-          <div class="vhtml_head_left_r_item_ul">
-            <div class="vhtml_head_left_r_item_ul_li hover" @click="openguize('./guize/jygz')">
-              Transaction rules
-            </div>
-            <div class="vhtml_head_left_r_item_ul_li hover" @click="openguize('./guize/bzjgz')">
-              Margin rules
-            </div>
-            <div class="vhtml_head_left_r_item_ul_li">
-              <div class="vhtml_head_left_r_item_ul_li_t">arbitration rules</div>
-              <div class="vhtml_head_left_r_item_ul_li_ul">
-                <div class="vhtml_head_left_r_item_ul_li_ul_li" @click="openguize('./guize/zcygz')">
-                  Qualification of Arbitrators
-                </div>
-                <div class="vhtml_head_left_r_item_ul_li_ul_li" @click="openguize('./guize/dylgz')">
-                  Qualification of Arbitrators
-                </div>
-                <div class="vhtml_head_left_r_item_ul_li_ul_li" @click="openguize('./guize/derlgz')">
-                  Second round of arbitration
+        <div class="vhtml_head_left_r">
+          <div class="vhtml_head_left_r_item hidden-sm-and-down url anniucss" @click="openqb('./lqcsb')">
+            Receive test currency
+          </div>
+          <div class="vhtml_head_left_r_item guize hidden-sm-and-down url anniucss">
+            <div class="vhtml_head_left_r_item_t">rule</div>
+            <div class="vhtml_head_left_r_item_ul">
+              <div class="vhtml_head_left_r_item_ul_li hover" @click="openguize('./guize/jygz')">
+                Transaction rules
+              </div>
+              <div class="vhtml_head_left_r_item_ul_li hover" @click="openguize('./guize/bzjgz')">
+                Margin rules
+              </div>
+              <div class="vhtml_head_left_r_item_ul_li">
+                <div class="vhtml_head_left_r_item_ul_li_t">arbitration rules</div>
+                <div class="vhtml_head_left_r_item_ul_li_ul">
+                  <div class="vhtml_head_left_r_item_ul_li_ul_li" @click="openguize('./guize/zcygz')">
+                    Qualification of Arbitrators
+                  </div>
+                  <div class="vhtml_head_left_r_item_ul_li_ul_li" @click="openguize('./guize/dylgz')">
+                    Qualification of Arbitrators
+                  </div>
+                  <div class="vhtml_head_left_r_item_ul_li_ul_li" @click="openguize('./guize/derlgz')">
+                    Second round of arbitration
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <el-dropdown trigger="click" class="vhtml_head_left_r_item hidden-sm-and-down" @command="openqb">
-          <span class="el-dropdown-link anniucss" style="color: #fff">
-            arbitration <i class="el-icon-arrow-down el-icon--right"></i>
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="./zhongcai">Arbitration list</el-dropdown-item>
-            <el-dropdown-item command="openbzjwin">Margin distribution</el-dropdown-item>
-            <el-dropdown-item command="openbzcfanwin">Arbitration scheme</el-dropdown-item>
-            <el-dropdown-item command="openzcgl">Arbitration management</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+          <el-dropdown trigger="click" class="vhtml_head_left_r_item hidden-sm-and-down" @command="openqb">
+            <span class="el-dropdown-link anniucss" style="color: #fff">
+              arbitration <i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="./zhongcai">Arbitration list</el-dropdown-item>
+              <el-dropdown-item command="openbzjwin">Margin distribution</el-dropdown-item>
+              <el-dropdown-item command="openbzcfanwin">Arbitration scheme</el-dropdown-item>
+              <el-dropdown-item command="openzcgl">Arbitration management</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
 
-        <div class="vhtml_head_left_r_item hidden-sm-and-down url anniucss" @click="openqb('./ddguanli')">
-          Order center
-        </div>
-        <div class="vhtml_head_left_r_item hidden-sm-and-down url anniucss" @click="openqb('./beizhu')">
-          Contact information
-        </div>
-        <el-dropdown trigger="click" class="vhtml_head_left_r_item hidden-sm-and-down" @command="openqb">
-          <span class="el-dropdown-link anniucss" style="color: #fff">
-            wallet <i class="el-icon-arrow-down el-icon--right"></i>
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="./qianbao">Legal Coin Wallet</el-dropdown-item>
-            <el-dropdown-item command="./ccuser">Coin Wallet</el-dropdown-item>
-            <el-dropdown-item command="./simu">Lock Wallet</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-        <!-- <div @click="$router.push('/GAZ')">Public sale</div> -->
-        <div class="vhtml_head_left_r_item hidden-md-and-up" style="margin-right: 0">
-          <div class="vhtml_head_left_r_item_t" @click="wapcd = wapcd ? false : true">
-            <i :class="wapcd ? 'el-icon-close' : 'el-icon-s-operation'"></i>
-            menu
+          <div class="vhtml_head_left_r_item hidden-sm-and-down url anniucss" @click="openqb('./ddguanli')">
+            Order center
           </div>
-          <div class="vhtml_head_left_r_item_view" v-if="wapcd">
-            <div class="vhtml_head_left_r_item_view_item">
-              <!-- <div class="vhtml_head_left_r_item_view_item_t">网络选择</div>
+          <div class="vhtml_head_left_r_item hidden-sm-and-down url anniucss" @click="openqb('./beizhu')">
+            Contact information
+          </div>
+          <el-dropdown trigger="click" class="vhtml_head_left_r_item hidden-sm-and-down" @command="openqb">
+            <span class="el-dropdown-link anniucss" style="color: #fff">
+              wallet <i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="./qianbao">Legal Coin Wallet</el-dropdown-item>
+              <el-dropdown-item command="./ccuser">Coin Wallet</el-dropdown-item>
+              <el-dropdown-item command="./simu">Lock Wallet</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+          <!-- <div @click="$router.push('/GAZ')">Public sale</div> -->
+          <div class="vhtml_head_left_r_item hidden-md-and-up" style="margin-right: 0">
+            <div class="vhtml_head_left_r_item_t" @click="wapcd = wapcd ? false : true">
+              <i :class="wapcd ? 'el-icon-close' : 'el-icon-s-operation'"></i>
+              menu
+            </div>
+            <div class="vhtml_head_left_r_item_view" v-if="wapcd">
+              <div class="vhtml_head_left_r_item_view_item">
+                <!-- <div class="vhtml_head_left_r_item_view_item_t">网络选择</div>
               <div class="vhtml_head_left_r_item_view_item_ul">
                 <div
                   class="vhtml_head_left_r_item_view_item_ul_li anniucss"
                   @click="wlxuanze('huobi')"
                 >
-                  火币Heco主网
+                  {{$t("message.dapp.HecoNet")}}
                 </div>
                 <div
                   class="vhtml_head_left_r_item_view_item_ul_li anniucss"
@@ -354,79 +134,82 @@
                   波场主网
                 </div>
               </div> -->
-            </div>
-            <div class="vhtml_head_left_r_item_view_item">
-              <div class="vhtml_head_left_r_item_view_item_t">wallet</div>
-              <div class="vhtml_head_left_r_item_view_item_ul">
-                <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('./beizhu')">
-                  Contact information
-                </div>
-                <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('./qianbao')">
-                  Legal Coin Wallet
-                </div>
-                <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('./ccuser')">
-                  Coin Wallet
-                </div>
-                <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('./simu')">
-                  Lock Wallet
+              </div>
+              <div class="vhtml_head_left_r_item_view_item">
+                <div class="vhtml_head_left_r_item_view_item_t">wallet</div>
+                <div class="vhtml_head_left_r_item_view_item_ul">
+                  <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('./beizhu')">
+                    Contact information
+                  </div>
+                  <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('./qianbao')">
+                    Legal Coin Wallet
+                  </div>
+                  <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('./ccuser')">
+                    Coin Wallet
+                  </div>
+                  <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('./simu')">
+                    Lock Wallet
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="vhtml_head_left_r_item_view_item">
-              <div class="vhtml_head_left_r_item_view_item_t">Trading Center</div>
-              <div class="vhtml_head_left_r_item_view_item_ul">
-                <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('./lqcsb')">
-                  Receive test currency
-                </div>
-                <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('./')">
-                  French currency OTC
-                </div>
-                <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('./ccdotc')">
-                  Currency OTC
-                </div>
-                <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('./ddguanli')">
-                  My order
-                </div>
-              </div>
-            </div>
-            <div class="vhtml_head_left_r_item_view_item">
-              <div class="vhtml_head_left_r_item_view_item_t">arbitration</div>
-              <div class="vhtml_head_left_r_item_view_item_ul">
-                <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('./zhongcai')">
-                  Arbitration list
-                </div>
-                <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('openbzjwin')">
-                  Margin distribution
-                </div>
-                <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('openbzcfanwin')">
-                  Arbitration scheme
-                </div>
-                <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('openzcgl')">
-                  Arbitration management
+              <div class="vhtml_head_left_r_item_view_item">
+                <div class="vhtml_head_left_r_item_view_item_t">Trading Center</div>
+                <div class="vhtml_head_left_r_item_view_item_ul">
+                  <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('./lqcsb')">
+                    Receive test currency
+                  </div>
+                  <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('./')">
+                    {{ $t("message.dapp.CurrencyOTC") }}
+                  </div>
+                  <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('./ccdotc')">
+                    {{ $t("message.dapp.CoinOTC") }}
+                  </div>
+                  <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('./ddguanli')">
+                    My order
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="vhtml_head_left_r_item_view_item">
-              <div class="vhtml_head_left_r_item_view_item_t">rule</div>
-              <div class="vhtml_head_left_r_item_view_item_ul">
-                <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openguize('./guize/jygz')">
-                  Transaction rules
+              <div class="vhtml_head_left_r_item_view_item">
+                <div class="vhtml_head_left_r_item_view_item_t">arbitration</div>
+                <div class="vhtml_head_left_r_item_view_item_ul">
+                  <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('./zhongcai')">
+                    Arbitration list
+                  </div>
+                  <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('openbzjwin')">
+                    Margin distribution
+                  </div>
+                  <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('openbzcfanwin')">
+                    Arbitration scheme
+                  </div>
+                  <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openqb('openzcgl')">
+                    Arbitration management
+                  </div>
                 </div>
-                <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openguize('./guize/bzjgz')">
-                  Margin rules
-                </div>
-                <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openguize('./guize/zcygz')">
-                  Qualification of Arbitrators
-                </div>
-                <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openguize('./guize/dylgz')">
-                  Qualification of Arbitrators
-                </div>
-                <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openguize('./guize/derlgz')">
-                  Second round of arbitration
+              </div>
+              <div class="vhtml_head_left_r_item_view_item">
+                <div class="vhtml_head_left_r_item_view_item_t">rule</div>
+                <div class="vhtml_head_left_r_item_view_item_ul">
+                  <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openguize('./guize/jygz')">
+                    Transaction rules
+                  </div>
+                  <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openguize('./guize/bzjgz')">
+                    Margin rules
+                  </div>
+                  <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openguize('./guize/zcygz')">
+                    Qualification of Arbitrators
+                  </div>
+                  <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openguize('./guize/dylgz')">
+                    Qualification of Arbitrators
+                  </div>
+                  <div class="vhtml_head_left_r_item_view_item_ul_li anniucss" @click="openguize('./guize/derlgz')">
+                    Second round of arbitration
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <lang class="lang"></lang>
+
         </div>
       </div>
     </div>
@@ -756,6 +539,8 @@
   </div>
 </template>
 <script>
+import lang from "@/components/lang";
+
 import { Base64 } from "js-base64";
 import Web3 from "web3";
 import Web3Modal from "web3modal";
@@ -772,7 +557,7 @@ var bzj_num = config["hyue"][config["key"]]["Bzj"]["num"];
 export default {
   data() {
     return {
-      morenkey: localStorage.morenkey ? localStorage.morenkey : 'huobi',
+      morenkey: localStorage.morenkey ? localStorage.morenkey : 'bian',
       loading: false,
       wapcd: false,
 
@@ -1966,9 +1751,268 @@ export default {
       }
     }
   },
+  components: {
+    lang
+  }
 };
 
 function zmxiaoxie(da) {
   return da.toLowerCase();
 }
 </script>
+
+<style lang="less">
+.vhtml_head {
+  background-color: #000;
+  width: calc(100%);
+  color: #fff;
+  height: 48px;
+  padding: 0 15px;
+}
+.vhtml_head_left {
+  width: 100%;
+  display: flex;
+  height: 48px;
+  align-items: center;
+  font-size: 14px;
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+  .navRight {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.vhtml_head_left_logo {
+  /* max-width: 150px; */
+  /* margin-right: 15px; */
+}
+.vhtml_head_left_l {
+  display: flex;
+  flex: 2;
+  align-items: center;
+  justify-content: space-around;
+  margin-right: 10%;
+}
+.vhtml_head_left_l_item {
+  /* margin: 0 15px; */
+}
+
+.vhtml_head_left_r {
+  display: flex;
+  flex: 3;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.vhtml_head_left_r_item {
+  // margin: 0 15px;
+}
+
+.vhtml_head_left_r_item_view {
+  position: absolute;
+  top: 48px;
+  /* bottom: 0; */
+  left: 0;
+  right: 0;
+  background-color: #000;
+  z-index: 999;
+  margin-bottom: 50px;
+}
+.vhtml_head_left_r_item_view_item {
+  width: calc(100% - 30px);
+  margin: 0 15px;
+  float: left;
+}
+.vhtml_head_left_r_item_view_item_t {
+  width: 100%;
+  float: left;
+  font-size: 16px;
+  color: rgb(216, 213, 213);
+  padding: 25px 0;
+}
+.vhtml_head_left_r_item_view_item_ul {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.vhtml_head_left_r_item_view_item_ul_li {
+  height: 45px;
+  display: flex;
+  align-items: center;
+  opacity: 0.5;
+  padding-left: 15px;
+}
+.vhtml_head_left_r_item_view_item_ul_li.ac {
+  opacity: 1;
+}
+.vhtml_head_left_r_item_t i {
+  font-size: 18px;
+}
+.vhtml_head_left_l_item {
+  opacity: 0.5;
+}
+.vhtml_head_left_l_item.ac {
+  color: #fff;
+  opacity: 1;
+}
+.el-dropdown {
+  display: inline-block;
+  position: relative;
+  font-size: 14px;
+}
+.vhtml_head_left_r_item.guize {
+  position: relative;
+}
+.vhtml_head_left_r_item.guize .vhtml_head_left_r_item_ul {
+  display: none;
+}
+.vhtml_head_left_r_item.guize:hover .vhtml_head_left_r_item_ul {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 20px;
+  background-color: rgb(2, 2, 2);
+  min-width: 150px;
+
+  z-index: 60;
+}
+.vhtml_head_left_r_item_ul_li {
+  padding: 5px 15px;
+}
+.vhtml_head_left_r_item_ul_li_ul {
+  margin: 0 15px;
+}
+.vhtml_head_left_r_item_ul_li_ul_li {
+  padding: 5px 0;
+}
+.vhtml_head_left_r_item_ul_li_ul_li:hover {
+  color: rgba(255, 255, 255, 0.473);
+}
+.vhtml_head_left_r_item_ul_li.hover:hover {
+  color: rgba(255, 255, 255, 0.473);
+}
+
+.ddinfodialog {
+  display: flex;
+  flex-direction: column;
+}
+.ddinfodialog_item {
+  display: flex;
+  padding: 5px 0;
+  align-items: center;
+  flex-direction: row;
+}
+.ddinfodialog_itemcolumn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.ddinfodialog_itemcolumn_item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px 15px;
+}
+.ddinfodialog_item_form {
+  display: flex;
+  margin: 5px 15px;
+}
+
+.bzj_fangan_ul {
+  display: flex;
+  flex-direction: column;
+}
+.bzj_fangan_ul_li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 5px 0;
+}
+.bzj_fangan_ul_li span.bzj_fangan_ul_lia {
+  margin-right: 5px;
+  min-width: 100px;
+}
+.bzj_fangan_ul_li.title {
+  font-size: 26px;
+}
+.bzj_fangan_ul_li.ul {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.bzj_fangan_ul_li_ul_li {
+  margin: 5px 15px;
+}
+
+/* Second round of arbitration management */
+.zcglul {
+  display: flex;
+  flex-direction: column;
+}
+.zcglul_li_l {
+  min-width: 90px;
+}
+.zcglul_li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 5px 0;
+}
+.zcglul_li.title {
+  font-size: 20px;
+  opacity: 0.7;
+  padding: 5px 0;
+}
+.zcglul_li_r.maleftreft {
+  margin: 0 1px;
+}
+.zcglul_li.daojishi {
+  height: 70px;
+  align-items: center;
+  justify-content: center;
+}
+.zcglul_li.daojishi .zcglul_li_r {
+  margin-left: 15px;
+}
+
+.zcglul_li.coll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.zcglul_li_item {
+  display: flex;
+  flex-direction: row;
+  margin: 5px 0;
+}
+.zcglul_li_r_item {
+  margin: 5px 0;
+}
+
+@media screen and (max-width: 990px) {
+  .vhtml_head_left_r {
+    flex: 1;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .vhtml_head_left_r {
+    flex: 1.5;
+  }
+  .vhtml_head_left_l {
+    margin-right: auto;
+  }
+  .lang {
+    .el-dropdown {
+      padding: 0 5px;
+    }
+  }
+}
+</style>

@@ -21,6 +21,10 @@ export default {
   methods: {
     dropdownClickFn(e) {
       this.$i18n.locale = e === 'EN' ? "en" : 'zh'
+      localStorage.setItem('lang', this.$i18n.locale)
+
+
+
     },
   },
   components: {},

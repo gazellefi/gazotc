@@ -1,733 +1,249 @@
-<style lang="less" scoped>
-.awards {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  text-align: right;
-  line-height: 30px;
-  flex-wrap: wrap;
-  span {
-    font-size: 14px;
-  }
-  &:nth-of-type(2) {
-    border-bottom: 1px solid #000;
-    margin-bottom: 14px;
-  }
-}
-.urlContent {
-  padding: 20px;
-  .url {
-    word-break: break-all;
-    line-height: 24px;
-  }
-  .copy {
-    cursor: pointer;
-    margin-left: 10px;
-    transform: translateY(-5px);
-  }
-  .disc {
-    margin-top: 10px;
-    font-weight: bold;
-  }
-  /deep/ #qrCode {
-    text-align: center;
-    img {
-      display: inline-block;
-      margin: 10px auto;
-    }
-  }
-}
 
-.publicity {
-  line-height: 25px;
-  span {
-    font-size: 16px;
-    color: #000;
-  }
-  i {
-    font-size: 12px;
-    color: #333;
-  }
-}
-.Submit {
-  text-align: center;
-  background-color: #333;
-  span {
-    display: inline-block;
-    margin: 8px 0;
-    box-shadow: none !important;
-  }
-}
-.record {
-  border-top: 1px solid #000;
-  margin: 10px 0;
-  padding: 5px;
-  .record_title {
-    height: 30px;
-    display: flex;
-    align-items: center;
-    span {
-      font-size: 14px;
-    }
-  }
-  .record_list {
-    max-height: 200px;
-    overflow: auto;
-    li {
-      padding: 5px 8px;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: nowrap;
-      align-items: center;
-      // border-bottom: 1px solid #ccc;
-      span {
-        font-size: 14px;
-        text-align: center;
-        flex: 1;
-      }
-      .ecli {
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        word-break: break-all;
-        border-right: 1px solid #ccc;
-      }
-    }
-  }
-  &:nth-of-type(1) {
-    li {
-      span {
-        &:nth-of-type(1) {
-          flex: 0.6;
-        }
-        &:nth-of-type(2) {
-          flex: 1.3;
-        }
-        &:nth-of-type(3) {
-          flex: 1.4;
-        }
-        &:nth-of-type(4) {
-          flex: 2.2;
-        }
-      }
-    }
-  }
-  &:nth-of-type(2) {
-    background: #efefef;
-    border-top: 0;
-    li {
-      span {
-        &:nth-of-type(4) {
-          flex: 4;
-        }
-        &:nth-of-type(5) {
-          flex: 2;
-        }
-      }
-    }
-  }
-  &:nth-of-type(3) {
-    border-top: 0;
-    border-bottom: 1px solid #000;
-    li {
-      span {
-        &:nth-of-type(3) {
-          flex: 1.1;
-        }
-        &:nth-of-type(5) {
-          flex: 0.7;
-          background: #178cff;
-          color: #fff;
-          padding: 6px 0;
-          border-radius: 3px;
-          box-shadow: 0 0 2px 0 #ccc;
-        }
-      }
-    }
-  }
-}
-.shift {
-  display: flex;
-  padding: 15px;
-  flex-direction: column;
-  .shif_number {
-    font-size: 12px;
-    padding: 10px 0;
-  }
-}
-.shif_let {
-  display: flex;
-  span {
-    font-size: 14px;
-    display: inline-block;
-    width: 20%;
-    height: 30px;
-    line-height: 30px;
-  }
-}
-input {
-  display: inline-block;
-  line-height: 30px;
-  height: 30px;
-  font-size: 14px;
-  border: 1px solid #666;
-  border-radius: 5px;
-  padding: 0 4px;
-  flex: 1;
-}
-.details_wrap {
-  border-left: 1px solid #333;
-  border-right: 1px solid #333;
-  margin-top: 10px;
-  img {
-    width: 100%;
-  }
-}
-.banner {
-  display: flex;
-  justify-content: center;
-  width: 80%;
-  margin: 30px auto 8px auto;
-  text-align: center;
-  align-items: center;
-  flex-direction: column;
-  border: 1px solid #333;
-  border-radius: 5px;
-  height: 80px;
-  h6 {
-    margin-bottom: 10px;
-  }
-}
-.progress-x {
-  width: 100%;
-  display: flex;
-  // justify-content: center;
-  align-items: center;
-  color: #333;
-  flex-wrap: wrap;
-}
-.progress-x > div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.progress-x > div.zb-div {
-  border: 1px solid #666666;
-  border-radius: 5px;
-  font-size: 12px;
-  margin: 5px 0;
-  span {
-    padding: 4px;
-  }
-}
-.progress-x {
-  div.zb-line {
-    width: 7%;
-    height: 0.5px;
-    border: 1px solid #ddd;
-    margin-right: 12px;
-    position: relative;
-  }
-}
-.zb-line::after,
-.zb-line:before {
-  border: 10px solid transparent;
-  border-left: 10px solid #fff;
-  right: 10;
-  width: 0;
-  height: 0;
-  position: absolute;
-  top: -10px;
-  right: -20px;
-  content: ' ';
-}
-.zb-line::before {
-  border-left-color: #333;
-  right: -20px;
-}
-.progress-x > div.current-n {
-  border: 1px solid #178cff;
-  color: #fff;
-  background: #178cff;
-}
-table {
-  width: 100%;
-}
-th {
-  font-size: 16px;
-}
-td {
-  width: 33.3%;
-  height: 20px;
-  text-align: center;
-  line-height: 20px;
-  font-size: 14px;
-}
-.vhtml_head {
-  display: flex;
-  align-items: center;
-}
-.hindex {
-  width: 100%;
-  float: left;
-  height: 100%;
-}
-.hindex_view {
-  width: 100%;
-  height: 48px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-}
-.hindex_view_ul {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: 48px;
-}
-
-.hindex_view_ul_l {
-  margin: 0 15px;
-  font-size: 16px;
-  opacity: 0.5;
-}
-.hindex_view_ul_l.ac {
-  opacity: 1;
-  color: rgb(11, 108, 253);
-}
-
-.hindex_view_b {
-  width: 100%;
-  float: left;
-  background-color: rgb(245, 245, 245);
-  display: flex;
-  align-items: center;
-}
-
-.hindex_view_b_l {
-  margin-right: auto;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.hindex_view_b_l_t {
-  font-size: 36px;
-  opacity: 0.6;
-}
-.hindex_view_b_l_msg {
-  font-size: 14px;
-  opacity: 0.5;
-  padding-top: 15px;
-}
-
-.hindex_view_b_r {
-  margin-right: auto;
-  margin-left: auto;
-  height: calc(100vh - (48px * 2) - 60px);
-  overflow-y: scroll;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
-}
-.hindex_view_ul_r {
-  margin-left: auto;
-  padding-right: 15px;
-  font-size: 14px;
-  opacity: 0.5;
-}
-.hindex_view_ul_r:active {
-  opacity: 1;
-  color: rgb(1, 217, 255);
-}
-.my-swipe {
-  .van-swipe-item {
-    img {
-      width: 100%;
-    }
-  }
-}
-.main {
-  width: 100%;
-  float: left;
-  padding: 8px 15px;
-  .userName {
-    height: 20x;
-    line-height: 20px;
-    font-size: 12px;
-  }
-  .Invitation {
-    line-height: 24px;
-    height: 24px;
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    .rule {
-      i {
-        font-size: 12px;
-        display: inline-block;
-        text-align: center;
-        line-height: 15px;
-        width: 15px;
-        height: 15px;
-        border-radius: 50%;
-        border: 1px solid #333;
-      }
-    }
-  }
-  table {
-    td {
-      padding: 4px;
-    }
-  }
-  .currency {
-    text-align: right;
-    margin-right: 10px;
-    span {
-      font-size: 12px;
-    }
-  }
-}
-.shade {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100vh;
-  height: 100vh;
-  opacity: 0.5;
-  background: #000;
-}
-.hide_wrap,
-.dialogue {
-  position: fixed;
-  border-radius: 10px;
-  width: 80%;
-  background-color: #fff;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  transform: 0.6s;
-  padding: 20px 15px;
-  span {
-    font-size: 12px;
-    display: block;
-  }
-  li {
-    width: 100%;
-    display: flex;
-    align-items: flex-end;
-    span {
-      font-size: 16px;
-      // min-width: 23%;
-    }
-    > div {
-      flex: 1;
-    }
-    input {
-      width: 100%;
-      display: block;
-      border: 0;
-      border-bottom: 1px solid #666;
-      border-radius: 0;
-      padding: 0 8px;
-    }
-  }
-  .state {
-    span {
-      vertical-align: middle;
-      font-size: 12px;
-      margin-top: 10px;
-    }
-  }
-  .enrollBtn {
-    width: 100%;
-    justify-content: center;
-    margin-top: 20px;
-  }
-}
-.cssBtn {
-  background: #178cff;
-  color: #fff;
-  padding: 4px 4px;
-  border-radius: 3px;
-  box-shadow: 0 0 2px 0 #ccc;
-}
-.lang {
-  position: absolute;
-  right: 10px;
-  top: 20px;
-  z-index: 1001;
-  color: #fff;
-}
-</style>
 <template>
   <div class="activities">
     <div class="vhtml_head_left">
       <div class="vhtml_head">
-        <van-icon @click="$router.push('/')" style="margin-top: 2px" name="arrow-left" />
+        <van-icon @click="$router.push('/HomePage')" style="margin-top: 2px" name="arrow-left" />
         <div class="vhtml_head_left_logo">
           <p>
-            <img src="@/assets/title.png" alt="GAZOTC" width="48" height="45" />
+            <img src="@/assets/img/title.png" alt="GAZOTC" width="48" height="45" />
           </p>
         </div>
         <lang class="lang"></lang>
       </div>
     </div>
-    <div class="hindex">
-      <van-swipe class="my-swipe hidden-md-and-up" :autoplay="3000" indicator-color="white">
-        <van-swipe-item>
-          <img src="~@/assets/s1.png" alt="" />
-        </van-swipe-item>
-        <van-swipe-item>
-          <img src="~@/assets/s2.png" alt="" />
-        </van-swipe-item>
-        <van-swipe-item>
-          <img src="~@/assets/s3.png" alt="" />
-        </van-swipe-item>
-        <van-swipe-item>
-          <img src="~@/assets/s4.png" alt="" />
-        </van-swipe-item>
-      </van-swipe>
-    </div>
-    <div class="main">
-      <div class="awards">
-        <div class="userName" @click="showPopFn">
-          <span class="cssBtn">{{ $t("message.activit.title") }}</span>
+    <!-- 用户信息 -->
+    <div class="userInfo">
+      <div class="left">
+        <img src="~@/assets/img/avt.png" alt="" />
+        <div class="info">
+          <div class="nick">
+            {{ $t("message.activit.nickname") }}:{{
+              nickname ? nickname : this.$t("message.activit.unregistered")
+            }}
+          </div>
+          <div class="name fontS">
+            {{ $t("message.activit.name") }}:{{
+              name ? name : this.$t("message.activit.unregistered")
+            }}
+          </div>
+          <div class="idc fontS">
+            {{ $t("message.activit.IDnumber") }}:{{
+              identity ? identity : this.$t("message.activit.unregistered")
+            }}
+          </div>
         </div>
-        <span>{{ $t("message.activit.addr") }}:{{ user }}</span>
       </div>
-      <van-popup class="urlContent" v-model="showPop" round :style="{ height: '35%', width: '80%' }">
-        <span class="url">URL:{{ friendUrl }}</span>
-        <van-button type="primary" @click="copyFn" class="copy" size="mini">{{
-          $t("message.activit.copyURL")
-        }}</van-button>
-        <div class="disc">{{ $t("message.activit.share") }}</div>
-        <div id="qrCode" ref="qrCodeDiv"></div>
-      </van-popup>
-      <div class="awards">
-        <span>{{ $t("message.activit.nickname") }}:{{
-            nickname ? nickname : this.$t("message.activit.unregistered")
-          }}</span>
-        <span>{{ $t("message.activit.name") }}:{{
-            name ? name : this.$t("message.activit.unregistered")
-          }}</span>
-        <span>{{ $t("message.activit.IDnumber") }}:{{
-            identity ? identity : this.$t("message.activit.unregistered")
-          }}</span>
+      <div class="right">
+        <span @click="showPopFn" class="btn">{{
+          $t("message.activit.title")
+        }}</span>
+        <div class="addr fontS">
+          {{ $t("message.activit.addr") }}:{{ user }}
+        </div>
       </div>
+      <van-popup class="urlContent" v-model="showPop" round :style="{ height: '75%', width: '80%' }">
+        <div class="cont">
+          <div class="disc">{{ $t("message.activit.share") }}</div>
+          <div class="url">URL:{{ friendUrl }}</div>
 
-      <div class="Invitation">
-        <span>{{ $t("message.activit.First") }}:</span>
-        <div class="rule">
-          <span> {{ $t("message.activit.Airdroprules") }} </span>
-          <i @click="hideFull">i</i>
+          <div id="qrCode" ref="qrCodeDiv"></div>
+          <div class="copy">
+            <span @click="copyFn">
+              {{ $t("message.activit.copyURL") }}
+            </span>
+          </div>
+        </div>
+        <div class="close" @click="showPop = false">
+          <img src="~@/assets/img/close.png" alt="" />
+        </div>
+      </van-popup>
+      <van-popup class="urlContent2" v-model="showPop2" round :style="{ height: '80%', width: '73%' }">
+        <div class="title">{{ $t("message.activit.Airdroprules") }}</div>
+        <div class="cont">
+          <div class="item">
+            {{ $t("message.activit.51") }}
+          </div>
+          <div class="item">
+            {{ $t("message.activit.52") }}
+          </div>
+          <div class="item">
+            {{ $t("message.activit.53") }}
+          </div>
+          <div class="item">
+            {{ $t("message.activit.54") }}
+          </div>
+          <div class="item">
+            {{ $t("message.activit.55") }}
+          </div>
+          <div class="item">
+            {{ $t("message.activit.56") }}
+          </div>
+          <div class="item">
+            {{ $t("message.activit.57") }}
+          </div>
+          <div class="item">
+            {{ $t("message.activit.58") }}
+          </div>
+        </div>
+        <div class="close" @click="showPop2 = false">
+          <img src="~@/assets/img/close.png" alt="" />
+        </div>
+      </van-popup>
+    </div>
+    <!-- 注册 -->
+    <div class="reg">
+      <div class="item" :id="dongtaiId(i)" @click="clickFn(v, i)" v-for="(v, i) in regList">
+        <img :src="v.img" alt="" />
+        <div>{{ v.text }}</div>
+        <img v-if="i != 3" class="jt" src="~@/assets/img/jt.png" alt="" />
+      </div>
+      <van-popup class="urlContent3" v-model="showPop3" round :style="{ height: '53%', width: '80%' }">
+        <van-nav-bar :title="$t(`message.activit.register`)" fixed left-arrow @click-left="onClickLeft" />
+        <div class="cont">
+          <van-field v-model="regForm.nickname" :label="'*' + $t('message.activit.nickname')" :placeholder="$t('message.activit.enterNick')" />
+          <van-field v-model="regForm.name" :label="'**' + $t('message.activit.name')" :placeholder="$t('message.activit.enterName')" />
+          <van-field v-model="regForm.identity" :label="'**' + $t('message.activit.IDnumber')" :placeholder="$t('message.activit.enterIdCard')" />
+          <div class="tips">{{ $t("message.activit.61") }}</div>
+          <div @click="register" class="btn">
+            {{ $t("message.activit.register") }}
+          </div>
+        </div>
+      </van-popup>
+    </div>
+    <!-- 空头 -->
+    <div class="Airdrop">
+      <div class="top">
+        <div class="left">
+          <span class="t">{{ $t("message.activit.First") }}</span>
+          <span>{{ $t("message.activit.reg") }}</span>
+          <span class="guanzhu" @click="goTW">{{ $t("message.activit.followWeb")
+            }}<img src="~@/assets/img/t.png" alt="" />{{
+              $t("message.activit.save5")
+            }}</span>
+        </div>
+        <div class="right" @click="showPop2 = true">
+          {{ $t("message.activit.Airdroprules")
+          }}<img src="~@/assets/img/gz.png" alt="" />
         </div>
       </div>
-      <table class="reg" border="1">
-        <tr>
-          <th></th>
-          <th>{{ $t("message.activit.积分") }}</th>
-          <th>{{ $t("message.activit.已发放") }}</th>
-        </tr>
-        <tr>
-          <td>{{ $t("message.activit.空投奖励") }}</td>
-          <td>{{ air }}</td>
-          <td>0</td>
-        </tr>
-        <tr>
-          <td>{{ $t("message.activit.分享奖励") }}</td>
-          <td>{{ rec }}</td>
-          <td>0</td>
-        </tr>
-      </table>
-      <div class="step">
-        <div class="progress-x">
-          <div class="zb-div">
-            <span class="zb-title" @click="ruleHideFull">{{
-              $t("message.activit.一键注册")
-            }}</span>
-          </div>
-          <div class="zb-line"></div>
-          <div class="zb-div current-n">
-            <span class="zb-title" @click="getpoints">{{
-              $t("message.activit.领取积分")
-            }}</span>
-          </div>
-          <div class="zb-line"></div>
-          <div class="zb-div">
-            <span class="zb-title" @click="ruleHideAuth">{{
-              $t("message.activit.实名认证")
-            }}</span>
-          </div>
-          <div class="zb-line"></div>
-          <div class="zb-div">
-            <span class="zb-title">{{ $t("message.activit.空投发放") }}</span>
+      <div class="bot">
+        <div class="left">
+          <span class="t"> {{ $t("message.activit.AirdropReward") }} </span>
+          <div class="item">
+            <span>{{ $t("message.activit.BeIssued") }} <i>{{ air }}</i></span>
+            <span>{{ $t("message.activit.Issued") }} <i>{{ 0 }}</i></span>
           </div>
         </div>
-      </div>
-      <div class="details">
-        <div class="details_wrap">
-          <img src="@/assets/banner1.jpg" alt="" />
-          <div class="currency">
-            <span>{{ $t("message.activit.可用USDT") }}:{{
-                Number(numberHb / 10 ** 18).toFixed(2)
-              }}</span>
+        <div class="right">
+          <span class="t">{{ $t("message.activit.ShareRewards") }}</span>
+          <div class="item">
+            <span>{{ $t("message.activit.BeIssued") }} <i>{{ rec }}</i></span>
+            <span>{{ $t("message.activit.Issued") }} <i>{{ 0 }}</i></span>
           </div>
-          <div class="shift">
-            <div class="shif_let">
-              <span>USDT</span>
-              <input v-model="USTDVal" type="text" :placeholder="$t('message.activit.请输入数量')" />
-            </div>
-            <div class="shif_number">
-              <span>1GAZ = 0.5USDT</span>
-            </div>
-            <div class="shif_let">
-              <span>GAZ</span>
-              <input type="text" v-model="GAZVal" :placeholder="$t('message.activit.请输入数量')" />
-            </div>
-          </div>
-        </div>
-        <div class="Submit">
-          <span class="cssBtn" @click="exchange">{{
-            $t("message.activit.兑换")
-          }}</span>
-        </div>
-      </div>
-      <div class="record_panel">
-        <div class="record">
-          <div class="record_title">
-            <span>{{ $t("message.activit.兑换记录") }}</span>
-          </div>
-          <ul class="record_list">
-            <li>
-              <span>{{ $t("message.activit.序号") }}</span>
-              <span>{{ $t("message.activit.usdt") }}</span>
-              <span>{{ $t("message.activit.gaz") }}</span>
-              <span>{{ $t("message.activit.日期") }}</span>
-            </li>
-            <li v-for="v in duihuanjilu">
-              <span v-for="(v2, index) in v">{{ handleVal(v2, index) }}</span>
-            </li>
-          </ul>
-        </div>
-        <div class="record">
-          <div class="record_title">
-            <span>{{ $t("message.activit.返佣记录") }}</span>
-          </div>
-          <ul class="record_list">
-            <li>
-              <span>{{ $t("message.activit.日期") }}</span>
-              <span>usdt</span>
-              <span>gaz</span>
-              <span>{{ $t("message.activit.返佣记录") }}</span>
-              <span>{{ $t("message.activit.推荐地址") }}</span>
-            </li>
-            <li v-for="(v, index) in fanyongjilu">
-              <span :class="[index == 4 ? `ecli` : '']" v-for="(v2, index) in v">{{ handleVal2(v2, index) }}</span>
-            </li>
-          </ul>
-        </div>
-        <div class="record">
-          <div class="record_title">
-            <span>{{ $t("message.activit.锁仓数量") }}</span>
-          </div>
-          <ul class="record_list">
-            <li>
-              <span>{{ $t("message.activit.一次释放") }}:</span>
-              <span>{{ Number(gazone / 10 ** 18).toFixed(2) }} gaz</span>
-              <span></span>
-              <span></span>
-              <span @click="getone"> {{ $t("message.activit.提取") }}</span>
-            </li>
-            <li>
-              <span>{{ $t("message.activit.线性释放") }}:</span>
-              <span>{{ Number(gazlock / 10 ** 18).toFixed(2) }} gaz</span>
-              <span>{{ $t("message.activit.可提取数量") }}:</span>
-              <span>{{ Number(gazfree / 10 ** 18).toFixed(2) }} gaz</span>
-              <span @click="getfree"> {{ $t("message.activit.提取") }}</span>
-            </li>
-          </ul>
-        </div>
-        <div class="publicity">
-          <span>
-            {{ $t("message.activit.公开销售说明") }}:<br />
-            <i>
-              {{ $t("message.activit.1") }}<br />
-              {{ $t("message.activit.2") }}<br />
-              {{ $t("message.activit.3") }}<br />
-              {{ $t("message.activit.4") }}<br />
-            </i>
-          </span>
         </div>
       </div>
     </div>
-    <div class="hide" v-show="ruleHide">
-      <div class="shade" @click="hideFull"></div>
-      <div class="hide_wrap">
-        <span>
-          {{ $t("message.activit.5") }}:<br />
-          <i>
-            {{ $t("message.activit.51") }}<br />
-            {{ $t("message.activit.52") }}<br />
-            {{ $t("message.activit.53") }}<br />
-            {{ $t("message.activit.54") }}<br />
-            {{ $t("message.activit.55") }}<br />
-            {{ $t("message.activit.56") }}<br />
-            {{ $t("message.activit.57") }}<br />
-            {{ $t("message.activit.58") }}<br />
-          </i>
-        </span>
+    <!-- 预售 -->
+    <div class="yushou">
+      <div class="ysTop">
+        <div class="title">{{ $t("message.activit.partSale") }}</div>
+        <div class="info">{{ $t("message.activit.630") }}</div>
+        <van-field label-width="50" v-model="USTDVal" label="USDT：" :placeholder="$t('message.activit.enterQuant')" />
+        <div class="tt">
+          <span> 1GAZ = 0.5USDT</span>
+          {{ $t("message.activit.UseUSDT") }}:{{
+            Number(numberHb / 10 ** 18).toFixed(2)
+          }}
+        </div>
+        <van-field label-width="50" v-model="GAZVal" label="Gaz：" :placeholder="$t('message.activit.enterQuant')" />
+        <div @click="exchange" class="btn">
+          {{ $t("message.activit.exchange") }}
+        </div>
+      </div>
+      <div class="ysBot">
+        <div class="title">{{ $t("message.activit.publicDes") }}</div>
+        <div class="cont">
+          <div class="contItem">
+            {{ $t("message.activit.1") }}
+          </div>
+          <div class="contItem">
+            {{ $t("message.activit.2") }}
+          </div>
+          <div class="contItem">
+            {{ $t("message.activit.3") }}
+          </div>
+          <div class="contItem">
+            {{ $t("message.activit.4") }}
+          </div>
+        </div>
       </div>
     </div>
-    <div class="enroll" v-show="enroll">
-      <div class="shade" @click="ruleHideFull"></div>
-      <ul class="dialogue">
-        <li>
-          <span>* {{ $t("message.activit.nickname") }}</span>
-          <div>
-            <input type="text" v-model="regForm.nickname" />
+    <!-- 记录 -->
+    <div class="record">
+      <van-tabs v-model="active">
+        <van-tab :title="$t('message.activit.exchangeRecord')">
+          <div class="item2" v-for="v in duihuanjilu">
+            <span>{{ $t("message.activit.SerialNumbe") }}:<i>{{ v[0] }}</i></span>
+            <span>{{ $t("message.activit.usdt") }}:<i>{{
+                (v[1] / 100).toFixed(2)
+              }}</i></span>
+            <span>{{ $t("message.activit.gaz") }}:<i>{{
+                (v[2] / 10 ** 18).toFixed(2)
+              }}</i></span>
+            <span>{{ $t("message.activit.date") }}:<i>{{
+                $date(Number(v[3]) * 1000)
+              }}</i></span>
           </div>
-        </li>
-        <li>
-          <span>** {{ $t("message.activit.name") }} </span>
-          <div> <input type="text" v-model="regForm.name" /> </div>
-        </li>
-        <li>
-          <span>** {{ $t("message.activit.IDnumber") }}</span>
-          <div> <input type="text" v-model="regForm.identity" /></div>
-        </li>
-        <li class="state">
-          <span>{{ $t("message.activit.61") }} </span>
-        </li>
-        <li class="enrollBtn">
-          <el-button @click="register">
-            {{ $t("message.activit.注册") }}
-          </el-button>
-        </li>
-      </ul>
-    </div>
-    <div class="enauth" v-show="enauth">
-      <div class="shade" @click="ruleHideAuth"></div>
-      <ul class="dialogue">
-        <li>
-          <span> {{ $t("message.activit.name") }} </span>
-          <div> <input type="text" v-model="name" /></div>
-        </li>
-        <li>
-          <span> {{ $t("message.activit.IDnumber") }}</span>
-          <div> <input type="text" v-model="identity" /></div>
-        </li>
-        <li class="state">
-          <span>{{ $t("message.activit.62") }}</span>
-        </li>
-        <li class="enrollBtn">
-          <el-button @click="getauth(name.text, identity.text)">
-            {{ $t("message.activit.认证") }}
-          </el-button>
-        </li>
-      </ul>
+        </van-tab>
+        <van-tab :title="$t('message.activit.CommissionRecord')">
+          <div class="item2" v-for="v in fanyongjilu">
+            <span>{{ $t("message.activit.SerialNumbe") }}:<i>{{ v[0] }}</i></span>
+            <span>usdt:<i>{{ (v[1] / 10 ** 18).toFixed(2) }}</i></span>
+            <span>gaz:<i>{{ (v[2] / 10 ** 18).toFixed(2) }}</i></span>
+            <span>{{ $t("message.activit.date") }}:<i>{{
+                $date(Number(v[3]) * 1000)
+              }}</i></span>
+            <span class="tjdz">{{ $t("message.activit.RecommendedAddress") }}:<i>{{ v[4] }}</i></span>
+          </div>
+        </van-tab>
+        <van-tab :title="$t('message.activit.LockQuantity')">
+          <div class="item">
+            <div>
+              {{ $t("message.activit.PrimaryRelease") }}:{{
+                Number(gazone / 10 ** 18).toFixed(2)
+              }}
+              gaz
+            </div>
+            <span class="btn" @click="getone">
+              {{ $t("message.activit.extract") }}</span>
+          </div>
+          <div class="item">
+            <div>
+              <div class="line">
+                {{ $t("message.activit.LinearRelease") }}:{{
+                  Number(gazlock / 10 ** 18).toFixed(2)
+                }}
+                gaz
+              </div>
+              <div class="line">
+                {{ $t("message.activit.ExtractableQuantity") }}:{{
+                  Number(gazfree / 10 ** 18).toFixed(2)
+                }}
+                gaz
+              </div>
+            </div>
+            <span class="btn" @click="getfree">
+              {{ $t("message.activit.extract") }}</span>
+          </div>
+        </van-tab>
+      </van-tabs>
     </div>
   </div>
 </template>
 <script>
+
+import api from '@/api/api'
 import Web3 from "web3";
 import Web3Modal from "web3modal";
 import Sha256 from "crypto-js/sha256";
@@ -736,8 +252,9 @@ import config from "../../config";
 import { Toast } from "vant";
 import axios from "axios";
 import lang from "@/components/lang";
-import QRCode from 'qrcodejs2';
-// import WalletConnectProvider from "@walletconnect/web3-provider";
+import QRCode from "qrcodejs2";
+import WalletConnectProvider from "@walletconnect/web3-provider";
+import QRCodeModal from "@walletconnect/qrcode-modal";
 // import VConsole from "vconsole";
 // new VConsole();
 
@@ -758,10 +275,14 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 export default {
   data() {
     return {
+      showPop3: false,
+      showPop2: false,
+      value33: "",
+      active: 2,
       regForm: {
-        nickname: '',
-        name: '',
-        identity: '',
+        nickname: "",
+        name: "",
+        identity: "",
       },
       ymAddr: "https://gazotc.com",
       showPop: false,
@@ -789,9 +310,50 @@ export default {
       gazfree: "",
       recommend_er: "",
       str1: "",
+	  transactionStatus: '' // 实名认证 返回状态
     };
   },
   mounted() {
+	  // 判断  url 是否携带 实名认证返回参数
+	  this.transactionStatus = this.$route.query.transactionStatus
+	  if(this.transactionStatus && this.transactionStatus == "SUCCESS"){  //实名认证成功
+		  let result = {
+			  "customerInternalReference": this.$route.query.customerInternalReference,
+			  "errorCode": this.$route.query.errorCode,
+			  "transactionReference": this.$route.query.transactionReference,
+			  "transactionStatus": this.$route.query.transactionStatus
+			}
+		  api.RealNameAfter(result).then((res)=>{
+			  console.log(res);
+		  })
+	  }
+	  // else if(this.transactionStatus && this.transactionStatus == "ERROR"){  // 实名认证失败
+		 //  this.$confirm('实名认证失败', '', {
+			//   confirmButtonText: '确定',
+			//   cancelButtonText: '取消',
+			//   type: 'warning',
+			//   callback: action => {
+			// 	if (action === 'confirm') {
+			// 	  console.log('按下 确定')
+			// 	}
+			// 	else {
+			// 	  console.log('按下 取消')
+			// 	}
+			//   }
+			// })
+	  // }
+
+
+    // let startIdentityVerification = () => {
+    //   console.log(78979);
+    // }
+
+    // const startButton = document.querySelector('#create-verification-session');
+
+    // startButton.addEventListener('click', startIdentityVerification);
+
+
+
     var dq = this;
     let isGO = location.href.includes("?ref");
     if (isGO) {
@@ -809,10 +371,10 @@ export default {
 
     //监测用户是否安装MASK
     if (typeof ethereum === "undefined") {
-      alert(this.$t("message.activit.tips"));
+      webinit(false);
     } else {
       //初始化
-      webinit();
+      webinit(true);
     }
     Toast.setDefaultOptions("loading", {
       forbidClick: false,
@@ -821,27 +383,33 @@ export default {
       overlay: true,
     });
 
-    async function webinit() {
-      const providerOptions = {
-        /* See Provider Options Section */
-      };
+    async function webinit(use_metamask) {
       const web3Modal = new Web3Modal({
-        network: "mainnet",
-        cacheProvider: true,
-        providerOptions,
+        network: use_metamask ? "mainnet" : null,
+        cacheProvider: false,
+        providerOptions: use_metamask
+          ? {}
+          : {
+            walletconnect: {
+              package: WalletConnectProvider,
+              options: {
+                rpc: {
+                  56: "https://bsc-dataseed.binance.org/",
+                },
+                network: "binance",
+                qrcodeModal: QRCodeModal,
+              },
+            },
+          },
       });
       var provider = await web3Modal.connect();
-      // console.log("web3", provider)
-      // var provider = new WalletConnectProvider({
-      //   rpc: {
-      //     56: "https://bsc-dataseed1.binance.org"
-      //   },
-      // });
-      // await provider.enable();
       web3 = new Web3(provider);
-      console.log("walletcounnect", provider)
+      console.log("walletcounnect", provider);
       if (web3 && provider) {
         address = provider.selectedAddress;
+        if (!address) {
+          address = provider.accounts[0];
+        }
         dq.queryAddr = address;
         dotc = new web3.eth.Contract(dotc_abi, dotc_key);
         pri = new web3.eth.Contract(pri_abi, pri_key);
@@ -851,18 +419,42 @@ export default {
     }
   },
   methods: {
+    dongtaiId(i) {
+      return i == 2 && 'create-verification-session'
+    },
+    goTW() {
+      window.open("https://twitter.com/gazellefi", "_blank");
+    },
+    onClickLeft() {
+      this.showPop3 = false;
+    },
+    clickFn(v, i) {
+      console.log("i: ", i);
+      if (i == 0) {
+        // this.getpoints()
+        this.showPop3 = true;
+      }
+      if (i == 1) {
+        this.getpoints();
+      }
+      if (i == 2) {
+        this.ruleHideAuth();
+      }
+      if (i == 3) {
+        this.$router.push("/yjzhuce");
+      }
+    },
     async bindQRCode() {
-      await this.$nextTick(e => { })
-      this.$refs.qrCodeDiv.innerHTML = ''
+      await this.$nextTick((e) => { });
+      this.$refs.qrCodeDiv.innerHTML = "";
       new QRCode(this.$refs.qrCodeDiv, {
         text: this.friendUrl,
         width: 100,
         height: 100,
         colorDark: "#333333", //二维码颜色
         colorLight: "#ffffff", //二维码背景色
-        correctLevel: QRCode.CorrectLevel.L//容错率，L/M/H
-      })
-
+        correctLevel: QRCode.CorrectLevel.L, //容错率，L/M/H
+      });
     },
     showPopFn() {
       if (
@@ -871,8 +463,7 @@ export default {
       )
         return this.$toast("请先注册");
       this.showPop = true;
-      this.bindQRCode()
-
+      this.bindQRCode();
     },
     async copyFn() {
       await this.$nextTick((e) => { });
@@ -1022,26 +613,41 @@ export default {
       this.enroll = this.enroll ? false : true;
     },
     ruleHideAuth() {
-      Toast.success(this.$t("message.activit.还未开放"));
+		Toast.loading({ message: "数据请求中..." });
+		api.RealName('address='+ address).then((res)=>{
+			let url = res.result.redirectUrl
+			// console.log(code);
+			Toast.clear()
+			if(res.result.state== 'SUCCESS'){ // 已实名认证
+				this.$confirm('您已实名认证', '', {
+				  confirmButtonText: '确定',
+				  cancelButtonText: '取消',
+				  type: 'success',
+				  callback: action => {
+					if (action === 'confirm') {
+					  console.log('按下 确定')
+					}
+					else {
+					  console.log('按下 取消')
+					}
+				  }
+				})
+			}else if(res.result.redirectUrl){ //未实名认证
+				this.$router.push({
+					name: 'RealName',
+					query: {
+					  url: url
+					}
+				})
+			}
+		})
+		
+      // console.dir(document.querySelector('#create-verification-session'));
+      // Toast.success(this.$t("message.activit.notOpen"));
       //this.enauth = this.enauth ? false : true;
     },
     async register() {
-      // if(this.regForm.identity)
-      // this.regForm.Web3
-      // let arr = Object.values(this.regForm)
-      //
-      // if (arr.some(v => v == '')) return Toast.success(this.$t("message.activit.参数不完整"));
-      //
-      //
-      // let res = await axios({
-      //   method: "post",
-      //   url: "https://gazotc:8083/member/register",
-      //   data: {
-      //     idNo: this.regForm.identity, name: this.regForm.name, nickname: this.regForm.nickname, address: address,
-      //     parentAddress: this.queryAddr || 0
-      //   },
-      // })
-      // if (res.code != 0) return false
+		var that = this
       Toast.loading({ message: "注册中..." });
       let nickname = Base64.encode(this.regForm.nickname);
       let name = Sha256(this.regForm.name).toString().substring(0, 10);
@@ -1066,21 +672,51 @@ export default {
         setTimeout(() => {
           Toast.clear();
           Toast.success("注册成功");
+		  let data = {
+			  idNo: this.regForm.identity, 
+			  name: this.regForm.name, 
+			  nickname: this.regForm.nickname, 
+			  address: address,
+			  parentAddress: this.$router.query.ref || 0
+		  }
+		  // 存数据库
+		  api.register(data).then((res)=>{
+			  console.log('注册数据存储结果：'+res);
+			  if(res.code == 0){
+				  // 注册成功后 调用实名认证
+				  that.ruleHideAuth()
+			  }else{
+				  that.$confirm( res.result, '', {
+				    confirmButtonText: '确定',
+				    cancelButtonText: '取消',
+				    type: 'success',
+				    callback: action => {
+				  	if (action === 'confirm') {
+				  	  console.log('按下 确定')
+				  	}
+				  	else {
+				  	  console.log('按下 取消')
+				  	}
+				    }
+				  })
+			  }
+		  })
+		  
         }, 3000);
       }
-
     },
     async exchange() {
-      if (this.USTDVal < 100) return Toast.success("低于最低要求额度");
+      if (this.USTDVal < 1) return Toast.success("低于最低要求额度");
       if (this.USTDVal > this.numberHb / 10 ** 18)
         return Toast.success("usdt大于可用余额");
-      var recommer = this.recommend_er != "0x0000000000000000000000000000000000000000"
-        ? this.recommend_er
-        : this.recom
-          ? this.recom
-          : this.recommender
-            ? this.recommender
-            : "0x0000000000000000000000000000000000000000";
+      var recommer =
+        this.recommend_er != "0x0000000000000000000000000000000000000000"
+          ? this.recommend_er
+          : this.recom
+            ? this.recom
+            : this.recommender
+              ? this.recommender
+              : "0x0000000000000000000000000000000000000000";
       var number = this.getFNum(this.USTDVal * 10 ** 18);
       var allo = await usdt.methods.allowance(address, pri_key).call();
       var appve = this.getFNum(Number(number) * 100);
@@ -1168,25 +804,25 @@ export default {
       })
         .then((res) => {
           window.location.href = res;
-
         })
         .catch(function (error) {
           alert("error");
-
         });
     },
     getpoints() {
       if (!this.str1)
         return Toast.success(this.$t("message.activit.unregistered"));
-      if (this.air != 0) return Toast.success(this.$t("message.activit.已领取"));
-      Toast.loading({ message: this.$t("message.activit.领取中") });
-      var recommer = this.recommend_er != "0x0000000000000000000000000000000000000000"
-        ? this.recommend_er
-        : this.recom
-          ? this.recom
-          : this.recommender
-            ? this.recommender
-            : "0x0000000000000000000000000000000000000000";
+      if (this.air != 0)
+        return Toast.success(this.$t("message.activit.Received"));
+      Toast.loading({ message: this.$t("message.activit.Receiving") });
+      var recommer =
+        this.recommend_er != "0x0000000000000000000000000000000000000000"
+          ? this.recommend_er
+          : this.recom
+            ? this.recom
+            : this.recommender
+              ? this.recommender
+              : "0x0000000000000000000000000000000000000000";
       pri.methods.receiveair(recommer, 0).send(
         {
           from: address,
@@ -1212,7 +848,7 @@ export default {
     async getone() {
       var start = await pri.methods.onetime().call();
       if (start == 0) {
-        Toast.success(this.$t("message.activit.还未开放"));
+        Toast.success(this.$t("message.activit.notOpen"));
         return;
       }
       Toast.loading({ message: "提取中..." });
@@ -1243,7 +879,7 @@ export default {
     async getfree() {
       var start = await pri.methods.ltim().call();
       if (start == 0) {
-        Toast.success(this.$t("message.activit.还未开放"));
+        Toast.success(this.$t("message.activit.notOpen"));
         return;
       }
       Toast.loading({ message: "提取中..." });
@@ -1280,6 +916,26 @@ export default {
     },
   },
   computed: {
+    regList() {
+      return [
+        {
+          img: require("@/assets/img/1.png"),
+          text: this.$t("message.activit.QuickReg"),
+        },
+        {
+          img: require("@/assets/img/2.png"),
+          text: this.$t("message.activit.GetPoints"),
+        },
+        {
+          img: require("@/assets/img/3.png"),
+          text: this.$t("message.activit.authName"),
+        },
+        {
+          img: require("@/assets/img/4.png"),
+          text: this.$t("message.activit.AirDis"),
+        },
+      ];
+    },
     friendUrl() {
       return (
         this.ymAddr +
@@ -1296,3 +952,440 @@ export default {
   },
 };
 </script>
+<style lang="less" scoped>
+.activities {
+  height: 100%;
+  .vhtml_head {
+    display: flex;
+    align-items: center;
+    .lang {
+      position: absolute;
+      right: 10px;
+      top: 20px;
+      z-index: 1001;
+      color: #fff;
+    }
+  }
+  .userInfo {
+    background: #202634;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 10px 15px 10px;
+    color: #ffffff;
+    .left {
+      display: flex;
+      img {
+        width: 42px;
+        height: 42px;
+        margin-right: 10px;
+      }
+      .info {
+        .nick {
+          font-weight: bold;
+          margin-bottom: 15px;
+          margin-top: 10px;
+        }
+        .name {
+          margin: 8px 0;
+        }
+      }
+    }
+    .fontS {
+      color: #bcbec2;
+      font-size: 12px;
+    }
+    .right {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .btn {
+        display: inline-block;
+        border: 1px solid #fff;
+        padding: 4px 8px;
+        font-size: 12px;
+        align-self: flex-end;
+        border-radius: 10px;
+      }
+    }
+  }
+  .reg {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #333333;
+    .item {
+      // flex: 1;
+      text-align: center;
+      position: relative;
+      max-width: 60px;
+      img {
+        width: 42px;
+        margin-bottom: 12px;
+      }
+      .jt {
+        position: absolute;
+        right: -50px;
+        top: 15px;
+      }
+    }
+  }
+  .Airdrop {
+    padding: 0 20px;
+    padding-bottom: 8px;
+    color: #fff;
+    > .top {
+      min-height: 80px;
+      background: url('~@/assets/img/11.png') no-repeat;
+      background-size: 100% 100%;
+      padding: 10px 15px;
+      padding-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      > .left {
+        display: flex;
+        flex-direction: column;
+        span {
+          margin-bottom: 7px;
+          font-size: 16px;
+          &:last-child {
+            margin: 0;
+          }
+        }
+        .t {
+          font-size: 16px;
+          font-weight: bold;
+        }
+        img {
+          width: 15px;
+          vertical-align: middle;
+        }
+      }
+      > .right {
+        align-self: flex-start;
+        white-space: nowrap;
+        img {
+          width: 15px;
+          vertical-align: sub;
+          margin-left: 3px;
+        }
+      }
+    }
+    > .bot {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 3px;
+      > .left {
+        background: url('~@/assets/img/13.png') no-repeat;
+        background-size: 100% 100%;
+        padding: 15px;
+        flex: 1;
+        margin-right: 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .item {
+          margin-top: 12px;
+          display: flex;
+          flex-direction: column;
+          span {
+            line-height: 22px;
+          }
+          i {
+            font-size: 16px;
+            margin-right: 3px;
+          }
+        }
+      }
+      > .right {
+        background: url('~@/assets/img/12.png') no-repeat;
+        background-size: 100% 100%;
+        padding: 15px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .item {
+          margin-top: 12px;
+          display: flex;
+          flex-direction: column;
+          span {
+            line-height: 22px;
+          }
+          i {
+            font-size: 16px;
+            margin-right: 3px;
+          }
+        }
+      }
+    }
+  }
+  .yushou {
+    background: url('~@/assets/img/bg@2x.png') no-repeat;
+    background-size: cover;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .ysTop {
+      background: #fff;
+      flex: 3;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      text-align: center;
+      padding: 20px;
+
+      .title {
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .tt {
+        font-size: 12px;
+        color: #ccc;
+        text-align: left;
+        margin-left: 80px;
+        display: flex;
+        flex-direction: column;
+        span {
+          margin-right: 20px;
+          line-height: 22px;
+        }
+      }
+      .btn {
+        line-height: 40px;
+        color: #fff;
+        background: url('~@/assets/img/btn.png') no-repeat;
+        background-size: cover;
+      }
+      /deep/.van-field__value {
+        border: 1px solid #ccc;
+        padding-left: 5px;
+      }
+    }
+    .ysBot {
+      background: #fff;
+      flex: 5;
+      border-radius: 10px;
+      padding: 20px;
+      .title {
+        font-weight: bold;
+        font-size: 16px;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+      .cont {
+        .contItem {
+          line-height: 26px;
+          margin-bottom: 15px;
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+  .record {
+    padding: 10px;
+    min-height: 100px;
+    .item2 {
+      padding: 20px 0;
+      border-top: 1px solid #ccc;
+      display: flex;
+      flex-direction: column;
+      span {
+        line-height: 26px;
+        word-break: break-all;
+        color: #aaa;
+        i {
+          margin-left: 10px;
+          color: #333;
+        }
+      }
+    }
+    .item {
+      padding: 20px 0;
+      border-top: 1px solid #ccc;
+      display: flex;
+      color: #aaa;
+      justify-content: space-between;
+      align-items: center;
+      .line {
+        line-height: 22px;
+      }
+      .btn {
+        background: url('~@/assets/img/btn2.png') no-repeat;
+        background-size: 100% 100%;
+        padding: 10px;
+        color: #fff;
+        border-radius: 15px;
+      }
+    }
+    .tjdz {
+      font-size: 12px;
+    }
+  }
+}
+.urlContent {
+  top: 45%;
+  // padding: 20px;
+  background: transparent;
+  // background: url('~@/assets/img/bg3.png') no-repeat;
+  // background-color: #fff;
+  // background-size: 100%;
+  // background-position-y: -30px;
+  // padding-top: 180px;
+  color: #000 !important;
+  .cont {
+    background: url('~@/assets/img/bg3.png') no-repeat;
+    background-position-y: -30px;
+    background-size: 100%;
+    padding-top: 180px;
+    #qrCode,
+    .copy {
+      background-color: #fff;
+      padding: 10px 0;
+      text-align: center;
+      border-radius: 0 0 10px 10px;
+      transform: translateY(-1px);
+      span {
+        display: inline-block;
+        background: url('~@/assets/img/btn2.png') no-repeat;
+        background-size: 100% 100%;
+        // line-height: 38px;
+        color: #fff;
+        padding: 10px 10px;
+        border-radius: 15px;
+      }
+    }
+    #qrCode {
+      border-radius: 0;
+      transform: translateY(0px);
+    }
+  }
+  .url {
+    word-break: break-all;
+    line-height: 24px;
+    padding: 0 20px;
+  }
+  .copy {
+    // width: 50%;
+    //
+    // text-align: center;
+    // margin: 0 auto;
+    //
+
+    // margin-top: 20px;
+  }
+  .disc {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 16px;
+  }
+  /deep/ #qrCode {
+    text-align: center;
+    img {
+      display: inline-block;
+      margin: 10px auto;
+      margin-bottom: 0;
+    }
+  }
+  .close {
+    position: absolute;
+    z-index: 99999;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    img {
+      width: 50px;
+    }
+  }
+}
+
+.urlContent2 {
+  top: 50%;
+  padding: 20px;
+  background: url('~@/assets/img/bg4.png') no-repeat;
+  background-size: 100%;
+  color: #000;
+
+  .title {
+    color: #ffff !important;
+    text-align: center;
+    font-size: 34px;
+    font-weight: bold;
+    margin-bottom: 50px;
+  }
+  .cont {
+    margin-top: 10px;
+    height: 422px;
+    overflow: auto;
+    .item {
+      line-height: 22px;
+      margin-bottom: 5px;
+    }
+  }
+
+  .close {
+    position: absolute;
+    z-index: 99999;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    img {
+      width: 50px;
+    }
+  }
+}
+.urlContent3 {
+  padding: 20px;
+
+  padding-top: 80px;
+  .cont {
+    .tips {
+      margin-top: 30px;
+      font-size: 12px;
+      line-height: 24px;
+      color: #666666;
+    }
+    .btn {
+      width: 80%;
+      margin: 0 auto;
+      text-align: center;
+      line-height: 40px;
+      color: #fff;
+      margin-top: 30px;
+      background: url('~@/assets/img/btn.png') no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+}
+/deep/.van-nav-bar {
+  background: #202634;
+  .van-nav-bar__title {
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .van-tabs__content {
+    max-height: 400px;
+    overflow: auto;
+  }
+}
+/deep/.van-cell {
+  &::after {
+    border-bottom: 0;
+  }
+}
+.guanzhu {
+  display: inline-block;
+  white-space: nowrap;
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  transform: translateX(-50%);
+}
+</style>

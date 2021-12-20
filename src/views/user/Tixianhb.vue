@@ -109,7 +109,7 @@
           <div class="czhiview_form_shurk_t"> </div>
           <div class="czhiview_form_shurk_input">
             <div class="czhiview_form_shurk_input_l">{{ huobi[hbindex]['id'] }}</div>
-            <el-input placeholder="Please enter the content" v-model="je"></el-input>
+            <el-input :placeholder="$t('message.enterContent')" v-model="je"></el-input>
           </div>
           <div class="czhiview_form_shurk_msg">
             You can withdraw the amount {{ huobi[hbindex]['je']  }}
@@ -285,7 +285,7 @@ export default {
               Toast.clear();
               clearTimeout(lx_time);
               Dialog.alert({
-                title: 'prompt',
+                title: dq.$t('message.prompt'),
                 message: 'withdrawal succeeded!',
               }).then(() => {
                 window.location.reload();

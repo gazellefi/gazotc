@@ -19,6 +19,13 @@ export default {
   addSub: (params) => axios.post('/sub/add', params),
   //获取联合查询信息
   getData: (params) => axios.post('/common/getData', params),
+  
+  // 判断释放实名认证
+  RealName: (params) => axios.post('https://192.168.0.48:8083/member/jnmioURL?'+params),
+  //  实名认证成功后
+  RealNameAfter: (params) => axios.post('https://192.168.0.48:8083/member/result', params),
+  // 注册 
+  register: (params) => axios.post('https://192.168.0.48:8083/member/register', params),
 
 
   // getCrowdInfo: (params) => axios.get('/getCrowdInfo', { params }),
