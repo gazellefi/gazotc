@@ -15,7 +15,7 @@
 				<span style="color: #DCDCDC;">你可提额度：{{ (huobi[hbindex]['je']/ (10**huobi[hbindex]['num'])).toFixed(2)  }}</span>
 			</el-form-item>
 			<el-form-item class="chongzhiBtn" label-width="0">
-				<van-button size='small' color="#fdc500" type="primary" block @click="tixianajax">提币</van-button>
+				<van-button size='small' color="#fdc500" type="primary" block @click="tixianajax">{{$t('message.WithdrawMoney')}}</van-button>
 			</el-form-item>
 		</el-form>
 

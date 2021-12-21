@@ -12,12 +12,12 @@
 			</el-col>
 			<el-col :sm="24" :md="10" class="f c_r a_c">
 				<div class="right hidden-sm-and-down" style="margin-right: 20px;">
-					<div @click="isShowChongzhi=true" class="btn chongzhi">充币</div>
-					<div @click="isShowTixan=true" class="btn tixian">提币</div>
+					<div @click="isShowChongzhi=true" class="btn chongzhi">{{$t('message.ChargeMoney')}}</div>
+					<div @click="isShowTixan=true" class="btn tixian">{{$t('message.WithdrawMoney')}}</div>
 				</div>
 				<div class="right hidden-sm-and-up" style="margin-top: 10px;">
-					<div @click="isShowChongzhi=true" class="btn chongzhi">充币</div>
-					<div @click="isShowTixan=true" class="btn tixian">提币</div>
+					<div @click="isShowChongzhi=true" class="btn chongzhi">{{$t('message.ChargeMoney')}}</div>
+					<div @click="isShowTixan=true" class="btn tixian">{{$t('message.WithdrawMoney')}}</div>
 				</div>
 				
 			</el-col>
@@ -34,12 +34,12 @@
 			</el-col>
 			<el-col :sm="24" :md="10" class="f a_c">
 				<div class="right hidden-sm-and-down" style="margin-right: 20px;">
-					<div @click="isShowChongzhi=true" class="btn chongzhi">充币</div>
-					<div @click="isShowTixan=true" class="btn tixian">提币</div>
+					<div @click="isShowChongzhi=true" class="btn chongzhi">{{$t('message.ChargeMoney')}}</div>
+					<div @click="isShowTixan=true" class="btn tixian">{{$t('message.WithdrawMoney')}}</div>
 				</div>
 				<div class="right hidden-sm-and-up" style="margin-top: 10px;">
-					<div @click="isShowChongzhi=true" class="btn chongzhi">充币</div>
-					<div @click="isShowTixan=true" class="btn tixian">提币</div>
+					<div @click="isShowChongzhi=true" class="btn chongzhi">{{$t('message.ChargeMoney')}}</div>
+					<div @click="isShowTixan=true" class="btn tixian">{{$t('message.WithdrawMoney')}}</div>
 				</div>
 				
 			</el-col>
@@ -50,13 +50,13 @@
 				<div class="item_nav"><span class="fz16 fwb">{{ $t("message.dapp.currency")}}</span></div>
 			</el-col>
 			<el-col :span="6">
-				<div class="item_nav"><span class="fz16 fwb">可用</span></div>
+				<div class="item_nav"><span class="fz16 fwb">{{$t('message.available')}}</span></div>
 			</el-col>
 			<el-col :span="6">
-				<div class="item_nav"><span class="fz16 fwb">冻结</span></div>
+				<div class="item_nav"><span class="fz16 fwb">{{$t('message.arbitration.frozen')}}</span></div>
 			</el-col>
 			<el-col :span="6">
-				<div class="item_nav"><span class="fz16 fwb">操作</span></div>
+				<div class="item_nav"><span class="fz16 fwb">{{$t('message.operation')}}</span></div>
 			</el-col>
 		</el-row>
 		<el-row v-for="(item,index) in list" :key="index">
@@ -71,20 +71,20 @@
 			</el-col>
 			<el-col :span="6">
 				<div class="item_nav" v-if="item.key == 'baozhengjing'">
-					<span class="cba cursor" @click="showRu(item)">转入</span>
-					<span class="c935 cursor" @click="showOutPop(item)" style="margin-left: 20px;">转出</span>
+					<span class="cba cursor" @click="showRu(item)">{{$t('message.changeInto')}}</span>
+					<span class="c935 cursor" @click="showOutPop(item)" style="margin-left: 20px;">{{$t('message.changeOut')}}</span>
 				</div>
 				<div class="item_nav" v-else>
-					<span class="cba cursor" @click="showChongzhi(item)">充币</span>
-					<span class="c935 cursor" @click="showTixian(item)" style="margin-left: 20px;">提币</span>
+					<span class="cba cursor" @click="showChongzhi(item)">{{$t('message.ChargeMoney')}}</span>
+					<span class="c935 cursor" @click="showTixian(item)" style="margin-left: 20px;">{{$t('message.WithdrawMoney')}}</span>
 				</div>
 			</el-col>
 		</el-row>
-		<myDialog width="25%" :isShowFooter="false"  title="充值" :closeModal="false" :closePress="false"
+		<myDialog width="25%" :isShowFooter="false"  :title="$t('message.Recharge')" :closeModal="false" :closePress="false"
 			:visible.sync="isShowChongzhi">
 			<Chongzhi :type="type_c" @Recharge="Recharge"></Chongzhi>
 		</myDialog>
-		<myDialog width="25%" :isShowFooter="false" title="提币" :closeModal="false" :closePress="false"
+		<myDialog width="25%" :isShowFooter="false" :title="$t('message.WithdrawMoney')" :closeModal="false" :closePress="false"
 			:visible.sync="isShowTixan">
 			<Tixian :type="type_t" @drawal="drawal"></Tixian>
 		</myDialog>
@@ -225,7 +225,7 @@
 					var _this = this;
 					const h = _this.$createElement;
 					_this.$msgbox({
-					    title: '请输入'+_this.popoType == 4? '转出':_this.popoType == 3?'转入' : ''+'保证金金额',
+					    title: '请输入'+_this.popoType == 4? _this.$t('message.changeOut'):_this.popoType == 3?_this.$t('message.changeInto') : ''+'保证金金额',
 						message: h('div', null, [
 							h('input', {
 								attrs: {
@@ -247,7 +247,7 @@
 							])
 						  ]),
 					    showCancelButton: true,
-					    confirmButtonText: _this.popoType == 4? '转出':_this.popoType == 3?'转入' : '',
+					    confirmButtonText: _this.popoType == 4? _this.$t('message.changeOut'):_this.popoType == 3? _this.$t('message.changeInto') : '',
 					    cancelButtonText: '取消',
 					    beforeClose: (action, instance, done) => {
 					        if (action === 'confirm') {
@@ -284,13 +284,13 @@
 			  if (this.numRu <= 0) {
 			    Notify({ type: 'warning', message: '请输入正确的金额' });
 				instance.confirmButtonLoading = false;
-				instance.confirmButtonText = '转入';
+				instance.confirmButtonText = this.$t('message.changeInto');
 			    return;
 			  }
 			  if (this.numRu > this.usdt_num) {
 			    Notify({ type: 'warning', message: '转入金额不能大于usdt余额' });
 				instance.confirmButtonLoading = false;
-				instance.confirmButtonText = '转入';
+				instance.confirmButtonText = this.$t('message.changeInto');
 			    return;
 			  }
 			  var dq = this;
@@ -322,7 +322,7 @@
 			            message: 'Transferred in ' + dq.numRu + ' Usdt to deposit',
 			          }).then(() => {
 						instance.confirmButtonLoading = false;
-						instance.confirmButtonText = dq.popoType == 4? '转出':dq.popoType == 3?'转入' : ''
+						instance.confirmButtonText = dq.popoType == 4? dq.$t('message.changeOut'):dq.popoType == 3?dq.$t('message.changeInto') : ''
 						done()
 						dq.getqblist(true)
 			            dq.balancemarajax();
@@ -343,13 +343,13 @@
 			  if (this.numRu <= 0) {
 			    Notify({ type: 'warning', message: '请输入正确的金额' });
 			  				instance.confirmButtonLoading = false;
-			  				instance.confirmButtonText = '转出';
+			  				instance.confirmButtonText = dq.$t('message.changeOut');
 			    return;
 			  }
 			  if (this.numRu > this.balancemar_num) {
 			    Notify({ type: 'warning', message: '转出金额不能大于存款余额' });
 			  				instance.confirmButtonLoading = false;
-			  				instance.confirmButtonText = '转出';
+			  				instance.confirmButtonText = dq.$t('message.changeOut');
 			    return;
 			  }
 			  var dq = this;
@@ -381,10 +381,10 @@
 			          clearTimeout(lx_time);
 			          Dialog.alert({
 			            title: '转出成功',
-			            message: '转出' + dq.numRu,
+			            message: dq.$t('message.changeOut') + dq.numRu,
 			          }).then(() => {
 						  instance.confirmButtonLoading = false;
-						  instance.confirmButtonText = dq.popoType == 4? '转出':dq.popoType == 3?'转入' : ''
+						  instance.confirmButtonText = dq.popoType == 4? dq.$t('message.changeOut') :dq.popoType == 3?dq.$t('message.changeInto'): ''
 						  done()
 						  dq.getqblist(true)
 							dq.balancemarajax();

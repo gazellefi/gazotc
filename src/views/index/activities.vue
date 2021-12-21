@@ -9,7 +9,7 @@
             <img src="@/assets/img/title.png" alt="GAZOTC" width="48" height="45" />
           </p>
         </div>
-        <lang class="lang" style="color: #333;"></lang>
+        <lang class="lang"></lang>
       </div>
     </div>
     <!-- 用户信息 -->

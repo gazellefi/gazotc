@@ -355,15 +355,15 @@
 					Address.substr(0, 5) +
 					"...." +
 					Address.substr(Address.length - 5, Address.length);
-				var dq = this;
-				var contracts = new web3.eth.Contract(dotc_abi, dotc_key);
-				contracts.methods.message(Address + "", "0").call((err, result) => {
-					if (result) {
-						var jiename = Base64.decode(result);
-						dq.uinfo["quan"] = jiename.substr(0, 1);
-						dq.uinfo["username"] = jiename;
-					}
-				});
+				// var dq = this;
+				// var contracts = new web3.eth.Contract(dotc_abi, dotc_key);
+				// contracts.methods.message(Address + "", "0").call((err, result) => {
+				// 	if (result) {
+				// 		var jiename = Base64.decode(result);
+				// 		dq.uinfo["quan"] = jiename.substr(0, 1);
+				// 		dq.uinfo["username"] = jiename;
+				// 	}
+				// });
 			},
 
 			//获取列表

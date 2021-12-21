@@ -4,7 +4,7 @@
       <span>{{morenkey_lang}}</span>
 	  <img class="img" src="@/assets/img/option.png" >
       <div class="list" :class="{ishow:imgClick}">
-        <li v-for="(item,index) in option1" :key="index"  @click="wlxuanze(item.value)">{{item.text}}</li>
+        <li v-for="(item,index) in option1" :key="index"  @click="wlxuanze(item.value)">{{$t(`message.dapp.${item.text}`)}}</li>
       </div>
     </div>
     <el-menu unique-opened router mode="vertical" :show-timeout="200" :default-active="$route.path" class="el-menu-vertical-demo" :collapse="isCollapse">
@@ -24,11 +24,11 @@ export default {
       imgClick: false,
 	  morenkey: localStorage.morenkey ? localStorage.morenkey : 'bian',
 	  option1: [
-	    { text: this.$t("message.dapp.coinNet"), value: 'bian' },
-	    { text: this.$t("message.dapp.HecoNet"), value: 'huobi' },
-	    { text: this.$t("message.dapp.EthereumRinkeby"), value: 'etfcshi' },
-		{ text: this.$t("message.dapp.EthereumNet"), value: 'etf' },
-		{ text: this.$t("message.dapp.WaveNet"), value: 'tron' },
+	    { text: 'coinNet', value: 'bian' },
+	    { text: 'HecoNet', value: 'huobi' },
+	    { text: 'EthereumRinkeby', value: 'etfcshi' },
+		{ text: 'EthereumNet', value: 'etf' },
+		{ text: 'WaveNet', value: 'tron' },
 	  ],
     };
   },
@@ -40,7 +40,7 @@ export default {
 	morenkey_lang(){
 		for (let i = 0; i < this.option1.length; i++) {
 			if(this.option1[i].value == this.morenkey){
-				return this.option1[i].text
+				return this.$t(`message.dapp.${this.option1[i].text}`)
 			}
 		}
 	},

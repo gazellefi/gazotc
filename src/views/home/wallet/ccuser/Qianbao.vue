@@ -12,12 +12,12 @@
 			</el-col>
 			<el-col :sm="24" :md="10" class="f c_r a_c">
 				<div class="right hidden-sm-and-down" style="margin-right: 20px;">
-					<div @click="isShowChongzhi=true" class="btn chongzhi">充币</div>
-					<div @click="isShowTixan=true" class="btn tixian">提币</div>
+					<div @click="isShowChongzhi=true" class="btn chongzhi">{{$t('message.ChargeMoney')}}</div>
+					<div @click="isShowTixan=true" class="btn tixian">{{$t('message.WithdrawMoney')}}</div>
 				</div>
 				<div class="right hidden-sm-and-up" style="margin-top: 10px;">
-					<div @click="isShowChongzhi=true" class="btn chongzhi">充币</div>
-					<div @click="isShowTixan=true" class="btn tixian">提币</div>
+					<div @click="isShowChongzhi=true" class="btn chongzhi">{{$t('message.ChargeMoney')}}</div>
+					<div @click="isShowTixan=true" class="btn tixian">{{$t('message.WithdrawMoney')}}</div>
 				</div>
 				
 			</el-col>
@@ -34,12 +34,12 @@
 			</el-col>
 			<el-col :sm="24" :md="10" class="f a_c">
 				<div class="right hidden-sm-and-down" style="margin-right: 20px;">
-					<div @click="isShowChongzhi=true" class="btn chongzhi">充币</div>
-					<div @click="isShowTixan=true" class="btn tixian">提币</div>
+					<div @click="isShowChongzhi=true" class="btn chongzhi">{{$t('message.ChargeMoney')}}</div>
+					<div @click="isShowTixan=true" class="btn tixian">{{$t('message.WithdrawMoney')}}</div>
 				</div>
 				<div class="right hidden-sm-and-up" style="margin-top: 10px;">
-					<div @click="isShowChongzhi=true" class="btn chongzhi">充币</div>
-					<div @click="isShowTixan=true" class="btn tixian">提币</div>
+					<div @click="isShowChongzhi=true" class="btn chongzhi">{{$t('message.ChargeMoney')}}</div>
+					<div @click="isShowTixan=true" class="btn tixian">{{$t('message.WithdrawMoney')}}</div>
 				</div>
 				
 			</el-col>
@@ -49,13 +49,13 @@
 				<div class="item_nav"><span class="fz16 fwb">{{ $t("message.dapp.currency")}}</span></div>
 			</el-col>
 			<el-col :span="6">
-				<div class="item_nav"><span class="fz16 fwb">可用</span></div>
+				<div class="item_nav"><span class="fz16 fwb">{{$t('message.available')}}</span></div>
 			</el-col>
 			<el-col :span="6">
-				<div class="item_nav"><span class="fz16 fwb">冻结</span></div>
+				<div class="item_nav"><span class="fz16 fwb">{{$t('message.arbitration.frozen')}}</span></div>
 			</el-col>
 			<el-col :span="6">
-				<div class="item_nav"><span class="fz16 fwb">操作</span></div>
+				<div class="item_nav"><span class="fz16 fwb">{{$t('message.operation')}}</span></div>
 			</el-col>
 		</el-row>
 		<el-row v-for="(item,index) in list" :key="index">
@@ -70,21 +70,21 @@
 			</el-col>
 			<el-col :span="6">
 				<div class="item_nav" v-if="item.key == 'baozhengjing'">
-					<span class="cba cursor">转入</span>
-					<span class="c935 cursor" style="margin-left: 20px;">转出</span>
+					<span class="cba cursor">{{$t('message.changeInto')}}</span>
+					<span class="c935 cursor" style="margin-left: 20px;">{{$t('message.changeOut')}}</span>
 				</div>
 				<div class="item_nav" v-else>
-					<span class="cba cursor" @click="showChongzhi(item)">充币</span>
-					<span class="c935 cursor"  @click="showTixian(item)" style="margin-left: 20px;">提币</span>
+					<span class="cba cursor" @click="showChongzhi(item)">{{$t('message.ChargeMoney')}}</span>
+					<span class="c935 cursor"  @click="showTixian(item)" style="margin-left: 20px;">{{$t('message.WithdrawMoney')}}</span>
 				</div>
 			</el-col>
 		</el-row>
-		<myDialog width="25%" :isShowFooter="false" title="充值" :closeModal="false" :closePress="false"
+		<myDialog width="25%" :isShowFooter="false" :title="$t('message.Recharge')" :closeModal="false" :closePress="false"
 			:visible.sync="isShowChongzhi">
 			<Chongzhi :type="type_c" @Recharge="Recharge"></Chongzhi>
 		</myDialog>
 
-		<myDialog width="25%" :isShowFooter="false" title="提币" :closeModal="false" :closePress="false"
+		<myDialog width="25%" :isShowFooter="false" :title="$t('message.WithdrawMoney')" :closeModal="false" :closePress="false"
 			:visible.sync="isShowTixan">
 			<Tixian :type="type_t" @drawal="drawal"></Tixian>
 		</myDialog>

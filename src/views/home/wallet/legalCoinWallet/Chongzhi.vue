@@ -12,14 +12,14 @@
 	    <el-input v-model="je"></el-input>
 	  </el-form-item>
 	  <el-form-item label-width="0">
-	  	<span style="color: #DCDCDC;">可用{{hbilist[hbindex].title}}:{{
+	  	<span style="color: #DCDCDC;">{{$t('message.available')}}{{hbilist[hbindex].title}}:{{
             Number(balance / 10 ** 18).toFixed(2)
           }}</span>
 		  <!-- 你可提额度：{{ (hbilist[hbindex]['je']/ (10**hbilist[hbindex]['num'])).toFixed(2)  }} -->
 	  </el-form-item>
 
       <el-form-item class="chongzhiBtn" label-width="0">
-        <van-button size='small' color="#fdc500" type="primary" block @click="chongzhi">充值</van-button>
+        <van-button size='small' color="#fdc500" type="primary" block @click="chongzhi">{{$t('message.Recharge')}}</van-button>
       </el-form-item>
     </el-form>
 

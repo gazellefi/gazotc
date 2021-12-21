@@ -21,7 +21,7 @@
 			          <div class="add_form_item xz">
 			            <div class="add_form_item_input">
 			              <el-select v-model="prob" placeholder="Please select">
-			                <el-option v-for="item in fbarr" :key="item.id" :label="item.id" :value="item.id">
+			                <el-option v-for="item in proarr" :key="item.id" :label="item.id" :value="item.id">
 			                </el-option>
 			              </el-select>
 			            </div>
@@ -30,7 +30,7 @@
 			        <div class="add_form_item">
 			          <div class="add_form_item_t">{{$t('message.dapp.unitPrice')}}</div>
 			          <div class="add_form_item_input">
-			            <el-input :placeholder="$t('message.enterContent')" v-model="form['danj']">
+			            <el-input :placeholder="$t('message.enterUnitPrice')" v-model="form['danj']">
 			              <template slot="append">
 							  <div style="width: 40px;text-align: center;">
 								{{ prob }}
@@ -45,7 +45,7 @@
 			        <div class="add_form_item">
 			          <div class="add_form_item_t">{{$t('message.dapp.amount')}}</div>
 			          <div class="add_form_item_input">
-			            <el-input :placeholder="$t('message.enterContent')" v-model="form['num']">
+			            <el-input :placeholder="$t('message.enterAmount')" v-model="form['num']">
 			              <template slot="append">
 							  <div style="width: 40px;text-align: center;">
 							  	{{ pro }}
@@ -66,7 +66,7 @@
 			        <div class="add_form_item">
 			          <div class="add_form_item_t">{{$t('message.dapp.maxAmount')}}</div>
 			          <div class="add_form_item_input">
-			            <el-input :placeholder="$t('message.enterContent')" v-model="form['zdnum']">
+			            <el-input :placeholder="$t('message.enterMaxNum')" v-model="form['zdnum']">
 			              <template slot="append">
 							  <div style="width: 40px;text-align: center;">
 							  	{{ pro }}
@@ -108,10 +108,10 @@ export default {
     this.pro = this.proarr[0]["id"];
     this.prob =
       this.proarr.length >= 1 ? this.proarr[1]["id"] : this.proarr[0]["id"];
-	var fbarr = config["fabi"][config["key"]];
-	for (const key in fbarr) {
-	  this.fbarr.push(fbarr[key]);
-	}
+	// var fbarr = config["fabi"][config["key"]];
+	// for (const key in fbarr) {
+	//   this.fbarr.push(fbarr[key]);
+	// }
     //初始化WEB3
     //监测用户是否安装MASK
     if (typeof ethereum === "undefined") {

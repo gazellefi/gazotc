@@ -621,7 +621,7 @@ export default {
           title: 'warning',
           message: '押金不足，请先补足押金！',
           confirmButtonText: $t('message.cancel'),
-          cancelButtonText: '充值',
+          cancelButtonText: $t('message.Recharge'),
           cancelButtonColor: '',
           getContainer: 'body'
         })

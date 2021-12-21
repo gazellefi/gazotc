@@ -124,9 +124,15 @@
         </div>
 
       </div>
-
+	  <!-- 列表 -->
       <div class="ddlist_w_ddlist" v-loading="loading">
         <div class="ddlist_w_ddlist_ul">
+			<div v-if="dataList.length<1" class="fc a_c">
+				<div style="padding-top: 20px;" class="f a_c c_c">
+					<img src="@/assets/img/empty.png" alt="" width="130" height="85" />
+				</div>
+				<p style="margin-top: 20px; color: #DCDCDC;">暂无数据</p>
+			</div>
           <div class="ddlist_w_ddlist_ul_li" v-for="(li, index) in dataList" :key="index">
             <div class="ddlist_w_ddlist_ul_li_u">
               <div class="ddlist_w_ddlist_ul_li_u_username">

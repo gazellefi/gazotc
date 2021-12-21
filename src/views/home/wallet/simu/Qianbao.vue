@@ -8,12 +8,12 @@
 				<div class="item_content f">
 					<div class="item_left fc a_c c_c">
 						<img :src="item.icon" style="width: 30%;">
-						<span class="fz14">{{item.text}}</span>
+						<span class="fz14">{{$t(`message.${item.text}`)}}</span>
 						<div class="line"></div>
 					</div>
 					<div class="item_right" :class="[index != 1? 'a_e f c_r' : 'fc c_b a_e']">
 						<div class="withdrawalBtn" v-if="index == 1" @click="tixianajax">
-							<span>提现</span>
+							<span>{{$t('message.Withdrawal')}}</span>
 						</div>
 						<span class="cf">{{item.num}}</span>
 					</div>
@@ -54,19 +54,19 @@ export default {
 			  bg: require('@/assets/img/bg1.png'),
 			  icon: require('@/assets/img/money1.png'),
 			  num: '10.0000000000',
-			  text: '锁仓中的资产（Gaz）'
+			  text: 'AssetsLock'
 		  },
 		  {
 			  bg: require('@/assets/img/bg2.png'),
 			  icon: require('@/assets/img/money2.png'),
 			  num: 10.0000000000,
-			  text: '可提现资产（Gaz）'
+			  text: 'AssetsWith'
 		  },
   {
 			  bg: require('@/assets/img/bg5.png'),
 			  icon: require('@/assets/img/money3.png'),
 			  num: 10.0000000000,
-			  text: '一次性可释放资产（Gaz）'
+			  text: 'AssetsRelease'
 		  }
 	  ]
     }
@@ -255,8 +255,7 @@ export default {
 			height: 100%;
 			.withdrawalBtn{
 				cursor: pointer;
-				width: 70px;
-				height: 30px;
+				padding: 5px 20px;
 				display: flex;
 				justify-content: center;
 				align-items: center;
