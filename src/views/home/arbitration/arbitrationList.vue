@@ -162,9 +162,13 @@
 			<el-form-item :label="$t('message.arbitration.successNum')+':'" v-if="btnType == 2">
 			  <span>{{sq_zc_data.info.cg_zcddnum}}</span>
 			</el-form-item>
+			
+			<el-form-item :label="$t('message.arbitration.marginBalan')+':'" v-if="btnType == 2">
+			  <span>{{sq_zc_data.info.user_bzj.toFixed(2)+' GAZ'}}</span>
+			</el-form-item>
 			<el-form-item :label="$t('message.arbitration.payBalance')+':'"  v-if="btnType == 2">
 			  <div class="f c_b a_c sarch_nav">
-			  	<el-input v-model="sq_zc_data.info.payBalance" autocomplete="off" size="mini" class="search_input" :placeholder="$t('message.arbitration.enterAmount')"></el-input>
+			  	<el-input v-model="sq_zc_data.je" autocomplete="off" size="mini" class="search_input" :placeholder="$t('message.arbitration.enterAmount')"></el-input>
 			  </div>
 			</el-form-item>
 			
@@ -179,7 +183,7 @@
 			</el-form-item>
 			<el-form-item :label="$t('message.arbitration.withdrawalAmount')+':'"  v-if="btnType == 3">
 			  <div class="f c_b a_c sarch_nav">
-			  	<el-input v-model="sq_zc_data.info.withdrawalAmount" autocomplete="off" size="mini" class="search_input" :placeholder="$t('message.arbitration.enterAmount')"></el-input>
+			  	<el-input v-model="sq_zc_data.je" autocomplete="off" size="mini" class="search_input" :placeholder="$t('message.arbitration.enterAmount')"></el-input>
 			  </div>
 			</el-form-item>
 			
@@ -351,6 +355,7 @@
 				var list = [];
 				ArbOne.methods.list_arbitrators().call((err, ret) => {
 				  if (ret) {
+					  console.log(ret)
 				    if (ret[2].length > 0) {
 				      var userarr = ret[0];
 				      var namearr = ret[1];
@@ -372,11 +377,83 @@
 				        obj['appl'] = Number(infoarr[index][4]);
 				        list.push(obj);
 				      }
+					  console.log(list)
 				      dq.zc_list = list;
+					  console.log(dq.zc_list)
 				    }
 				  }
 				});
 			},
+    //如果过亿请转换
+    getFNum(num_str) {
+      num_str = num_str.toString();
+      if (num_str.indexOf("+") != -1) {
+        num_str = num_str.replace("+", "");
+      }
+      if (num_str.indexOf("E") != -1 || num_str.indexOf("e") != -1) {
+        var resValue = "",
+          power = "",
+          result = null,
+          dotIndex = 0,
+          resArr = [],
+          sym = "";
+        var numStr = num_str.toString();
+        if (numStr[0] == "-") {
+          // 如果为负数，转成正数处理，先去掉‘-’号，并保存‘-’.
+          numStr = numStr.substr(1);
+          sym = "-";
+        }
+        if (numStr.indexOf("E") != -1 || numStr.indexOf("e") != -1) {
+          var regExp = new RegExp(
+            "^(((\\d+.?\\d+)|(\\d+))[Ee]{1}((-(\\d+))|(\\d+)))$",
+            "ig"
+          );
+          result = regExp.exec(numStr);
+          console.log(1324)
+          console.log(result)
+          if (result != null) {
+            resValue = result[2];
+            power = result[5];
+            result = null;
+          }
+          console.log(!resValue)
+          console.log(!power)
+          if (!resValue && !power) {
+            return false;
+          }
+          dotIndex = resValue.indexOf(".") == -1 ? 0 : resValue.indexOf(".");
+          resValue = resValue.replace(".", "");
+          resArr = resValue.split("");
+          console.log(resArr)
+          if (Number(power) >= 0) {
+            var subres = resValue.substr(dotIndex);
+            var length = dotIndex == 0 ? 0 : subres.length;
+            power = Number(power);
+            //幂数大于小数点后面的数字位数时，后面加0
+            for (var i = 0; i < power - length; i++) {
+              resArr.push("0");
+            }
+            if (power - subres.length < 0) {
+              resArr.splice(dotIndex + power, 0, ".");
+            }
+          } else {
+            power = power.replace("-", "");
+            power = Number(power);
+            //幂数大于等于 小数点的index位置, 前面加0
+            for (let i = 0; i < power - dotIndex; i++) {
+              resArr.unshift("0");
+            }
+            var n = power - dotIndex >= 0 ? 1 : -(power - dotIndex);
+            resArr.splice(n, 0, ".");
+          }
+        }
+        resValue = resArr.join("");
+
+        return sym + resValue;
+      } else {
+        return num_str;
+      }
+    },
 			//邀请仲裁者
 			async yaoqingajax(row) {
 			  this.btnType = 1
@@ -397,6 +474,7 @@
 				  if (!this.zc_user_yq['form_user']) {
 				    return;
 				  }
+					  console.log(111)
 				  this.dialogFormVisible = false
 				  var dq = this;
 				  //查询授权状态与GAZ余额
@@ -438,8 +516,10 @@
 				    });
 				  }
 			  }else if(this.btnType == 2){ //申请
+			  console.log(this.sq_zc_data.info.payBalance)
 				  this.sq_zcy_ajax()
 			  }else{ // 退出
+				  this.sq_zc_data.signDefualt=1
 				  this.sq_zcy_ajax()
 			  }
 			},
@@ -455,7 +535,7 @@
 			    del_ddnum: 0,
 			    cg_zcddnum: 0,
 			    cg_zcid: 0,
-			    user_bzj: 0
+			    user_bzj: 0,
 			  });
 			  this.dialogFormVisible = true;
 			  ArbOne.methods.ownermess(address + "").call((err, ret) => {
@@ -492,7 +572,8 @@
 			      return;
 			    }
 			    var tk_je = dq.getFNum(this.sq_zc_data['je'] * (10 ** bzjnum));
-			    console.log(tk_je)
+				console.log(this.sq_zc_data['je'])
+			    console.log(tk_je,bzjnum)
 			    //执行提款AJAX exitArb
 			    ArbOne.methods.exitArb(address + "", tk_je + "").send({
 			      from: address
@@ -511,6 +592,7 @@
 			      return;
 			    }
 			    if (this.sq_zc_data['je'] <= 0) {
+					console.log(this.sq_zc_data)
 			      alert('Please fill in the amount correctly');
 			      return;
 			    }
@@ -523,6 +605,7 @@
 			    //查询授权状态与GAZ余额
 			    var gaz_sq = await GazConn.methods.allowance(address + "", config['hyue'][config['key']]['ArbOne']['heyue']).call();
 			    var gaz_sqa = Number(gaz_sq) / (10 ** bzjnum);
+				console.log(gaz_sqa)
 			    if (gaz_sqa < this.sq_zc_data['je']) {
 			      //需要先授权
 			      Dialog.confirm({

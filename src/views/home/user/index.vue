@@ -11,7 +11,7 @@
 						<div class="list">
 							<li>
 								<span class="label_nav">{{$t("message.arbitration.AccountNum")}}:</span>
-								<span class="cba">{{user?user:address}}</span>
+								<span class="cba">{{user?user:addressRm}}</span>
 							</li>
 							<li>
 								<span class="label_nav">
@@ -35,8 +35,43 @@
 							</li>
 						</div>
 					</div>
-					<div class="btn" style="margin-top: 50px;" @click="dialogVisible = true"><span>修改</span></div>
+					<div class="" style="display: flex;justify-content: space-around;">
+						<div class="btn" style="margin-top: 10px;" @click="dialogVisible = true"><span>修改</span></div>
+						<div class="btn" style="margin-top: 10px;" @click="ruleHideAuth"><span>{{btnText}}</span></div>
+						<div class="btn" style="margin-top: 10px;" @click="ruleHideAuth" v-if="false"><span>{{btnText}}</span></div>
+					</div>
 				</div>
+				<!-- 仲裁员昵称 -->
+				<div class="one item">
+					<div class="top">
+						<span class="fwb fz16">仲裁员昵称</span>
+					</div>
+					<div class="cont">
+						<div class="list">
+							<li>
+								<span class="label_nav">昵称:</span>
+								<span>{{beizhu_arr.zc_beizhu?beizhu_arr.zc_beizhu:'暂无昵称'}}</span>
+							</li>
+						</div>
+					</div>
+					<div class="btn" style="margin-top: 10px;" @click="dialogVisibleOne = true"><span>修改</span></div>
+				</div>
+				<!-- 节点 -->
+				<div class="one item">
+					<div class="top">
+						<span class="fwb fz16">节点</span>
+					</div>
+					<div class="cont">
+						<div class="list">
+							<li>
+								<span class="label_nav">节点:</span>
+								<span>{{beizhu_arr.team_beizhu?beizhu_arr.team_beizhu:'暂无节点'}}</span>
+							</li>
+						</div>
+					</div>
+					<div class="btn" style="margin-top: 10px;" @click="dialogVisibleTwo = true"><span>修改</span></div>
+				</div>
+				
 				<div class="two item">
 					<div class="top">
 						<span class="fwb fz16">交易备注</span>
@@ -94,8 +129,8 @@
 
 
 
-			<myDialog  :width="isphone ? '90%':'40%'" title="修改信息" :closeModal="false" :closePress="false" :visible.sync="dialogVisible"
-	@confirm="xiugaiajax(2)" @cancel="xiugaiajax(1)">
+	<myDialog  :width="isphone ? '90%':'40%'" title="修改信息" :closeModal="false" :closePress="false" :visible.sync="dialogVisible"
+		@confirm="xiugaiajax(2)" @cancel="xiugaiajax(1)">
 		<el-form label-width="110px" v-model="regForm" style="padding: 20px;">
 			<el-form-item  :label="$t('message.activit.nickname')+'*'">
 				<el-input  v-model="regForm.nickname" placeholder="请输入昵称"></el-input>
@@ -105,6 +140,28 @@
 			</el-form-item>
 			<el-form-item  :label="$t('message.activit.IDnumber')+'**'">
 				<el-input  v-model="regForm.identity" placeholder="请输入身份证号"></el-input>
+			</el-form-item>
+			<el-form>
+				<span class="c9">以上信息,均保存在智能合约中, * 为公开信息, ** 为不公开信息</span>
+			</el-form>
+		</el-form>
+	</myDialog>
+	<myDialog  :width="isphone ? '90%':'40%'" title="修改信息" :closeModal="false" :closePress="false" :visible.sync="dialogVisibleOne"
+		@confirm="setbeizhu('zc_beizhu')" @cancel="xiugaiajax(1)">
+		<el-form label-width="110px" v-model="regForm" style="padding: 20px;">
+			<el-form-item  :label="'昵称*'">
+				<el-input  v-model="regForm.zc_beizhu" placeholder="请输入仲裁员昵称"></el-input>
+			</el-form-item>
+			<el-form>
+				<span class="c9">以上信息,均保存在智能合约中, * 为公开信息, ** 为不公开信息</span>
+			</el-form>
+		</el-form>
+	</myDialog>
+	<myDialog  :width="isphone ? '90%':'40%'" title="修改信息" :closeModal="false" :closePress="false" :visible.sync="dialogVisibleTwo"
+		@confirm="setbeizhu('team_beizhu')" @cancel="xiugaiajax(1)">
+		<el-form label-width="110px" v-model="regForm" style="padding: 20px;">
+			<el-form-item  :label="'节点*'">
+				<el-input  v-model="regForm.team_beizhu" placeholder="请输入节点"></el-input>
 			</el-form-item>
 			<el-form>
 				<span class="c9">以上信息,均保存在智能合约中, * 为公开信息, ** 为不公开信息</span>
@@ -205,8 +262,42 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 					// }
 					address = provider.selectedAddress;
 					dq.address = address;
+					dq.address = address;
+					console.log(dq.address.length)
+					if(dq.address.length>20){
+						let stars='****';
+						dq.addressRm=dq.address.substr(0,4) + stars + dq.address.substr(dq.address.length-4);
+					}
+					//读取用户默认备注
+					var beizhucon = new web3.eth.Contract(config['hyue'][config['key']]['dotc']['abi'], config['hyue'][config['key']]['dotc']['heyue']);
+					for (let index = 0; index < Beizhujson.length; index++) {
+					    beizhucon.methods.message(dq.user ? dq.user:address+"",Beizhujson[index]['id']).call((err,ret)=>{
+					        if (ret) {
+					            ret = Base64.decode(ret)
+					            if (Beizhujson[index]["id"] == 5 || Beizhujson[index]["id"] == 9) {
+					                ret = Crypto.AES.decrypt(ret, "gazotc");
+					                ret = ret.toString(Crypto.enc.Utf8);
+					            }
+					            dq.beizhu_arr[Beizhujson[index]["key"]] = ret;
+					        }
+					    });
+					}
+					            
+					//查询仲裁备注
+					var zc_conn = new web3.eth.Contract(config['hyue'][config['key']]['ArbOne']['abi'], config['hyue'][config['key']]['ArbOne']['heyue']);
+					for (let index = 0; index < Beizhujson.length; index++) {
+					    if (Beizhujson[index]['id'] == 8) {
+					        zc_conn.methods.message(dq.user ? dq.user:address+"",0+"").call((err,ret)=>{
+					            if (ret) {
+					                dq.beizhu_arr[Beizhujson[index]["key"]] = Base64.decode(ret);
+					            }
+					        });
+					        break;
+					    }
+					}
 					dq.getsczc()
 					dq.getBz()
+					dq.ruleChangeHideAuth()
 					
 				}
 			}
@@ -215,16 +306,21 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 			return {
 				isshowNoteEdit: false,
 				dialogVisible:false,
+				dialogVisibleOne:false,
+				dialogVisibleTwo:false,
 				// textarea: '',
 				user: '',
+				zc_beizhu:'',
+				team_beizhu:'',
 				clist: [],
 				lxkey: 'team_beizhu',
 				isphone:false,
 				inputval: '',
 				name: '',
 				identity: '',
-
+				btnText:'身份认证',
 				address: '',
+				addressRm:'',
 				form: {
 					password: '',
 					passwordAggin: ''
@@ -233,6 +329,8 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 				  nickname: "",
 				  name: "",
 				  identity: "",
+					team_beizhu: '',
+					zc_beizhu: ''
 				},
 				nickname: '',
 				beizhu_arr: {
@@ -279,6 +377,7 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 					}
 				});
 			},
+			
 			// 获取 基本信息
 			async getsczc() {
 			  Toast.loading({ message: "查询中..." });
@@ -308,11 +407,11 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 			},
 			// 基本信息修改
 			xiugaiajax(num){
-					  if(num == 2){ //提交
-						  this.register()
-					  }else{
-						  this.dialogVisible = false
-					  }
+			  if(num == 2){ //提交
+				  this.register()
+			  }else{
+				  this.dialogVisible = false
+			  }
 			},
 			// 注册
 			async register() {
@@ -394,6 +493,15 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 			    }, 3000);
 			  }
 			},
+			ruleChangeHideAuth() {
+				var that = this
+				axios.post('https://gazotc.com:8083/member/jnmioURL?address='+address).then((res)=>{
+					if(res.result.state== 'SUCCESS'){ // 已实名认证
+						this.btnText='已认证'
+					}else{
+					}
+				})
+			},
 			// 实名认证
 			ruleHideAuth() {
 				Toast.loading({ message: "数据请求中..." });
@@ -416,12 +524,13 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 						  }
 						})
 					}else if(res.result.redirectUrl){ //未实名认证
-						this.$router.push({
-							name: 'RealName',
-							query: {
-							  url: url
-							}
-						})
+						window.location.href = url
+						// this.$router.push({
+						// 	name: 'RealName',
+						// 	query: {
+						// 	  url: url
+						// 	}
+						// })
 					}
 				})
 				
@@ -468,11 +577,95 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 			},
 			urlgo() {
 				this.$router.go(-1);
+			},
+			setbeizhu(e){
+				var loading = Toast.loading({
+					message: '修改中...',
+					closeOnClick: false,
+					closeOnClickOverlay:false,
+					loadingType: 'spinner',
+					getContainer:"body",
+					duration:0
+				});
+				this.lxkey=e;
+				if (this.lxkey == 'zc_beizhu') {
+					console.log(this.lxkey)
+				    var zcbeizhucon = new web3.eth.Contract(config['hyue'][config['key']]['ArbOne']['abi'], config['hyue'][config['key']]['ArbOne']['heyue']);
+				    zcbeizhucon.methods.commun(0+"",Base64.encode(this.regForm.zc_beizhu+"")).send({
+				        from:address
+				    },(err,ret)=>{
+				        if (ret && !err) {
+				            loading.clear();
+				            Dialog.alert({
+				                title: '提示',
+				                message: '资料修改成功！',
+				            }).then(() => {
+								this.dialogVisibleOne=false;
+				                // on close
+				            });
+				        }else{
+				            loading.clear();
+				            Dialog.alert({
+				                title: '提示',
+				                message: '资料修改失败！',
+				            }).then(() => {
+								this.dialogVisibleOne=false;
+				                // on close
+				            });
+				        }
+				        
+				    });
+				    return;
+				}
+				
+				//提交修改
+				var lxkey = 0;
+				for (let index = 0; index < this.clist.length; index++) {
+				    if (this.clist[index]['key'] == this.lxkey) {
+				        lxkey = this.clist[index]['id'];
+				        break;
+				    }
+				}
+				var beizhucon = new web3.eth.Contract(config['hyue'][config['key']]['dotc']['abi'], config['hyue'][config['key']]['dotc']['heyue']);
+				var inputval = this.inputval
+				if (lxkey == 5 || lxkey == 9) {
+				    console.log("encrypt 5,9 = ", inputval)
+				    inputval = Crypto.AES.encrypt(inputval, "gazotc");
+				}
+				beizhucon.methods.commun(lxkey+"",Base64.encode(this.regForm.team_beizhu+"")).send({
+				    from:address
+				},(err,ret)=>{
+				    if (ret && !err) {
+				        loading.clear();
+				        Dialog.alert({
+				            title: '提示',
+				            message: '资料修改成功！',
+				        }).then(() => {
+								this.dialogVisibleTwo=false;
+				            // on close
+				        });
+				    }else{
+				        loading.clear();
+				        Dialog.alert({
+				            title: '提示',
+				            message: '资料修改失败！',
+				        }).then(() => {
+								this.dialogVisibleTwo=false;
+				            // on close
+				        });
+				    }
+				    
+				});
 			}
 		}
 	}
 </script>
 <style lang='less' scoped='scoped'>
+	.list{
+		li{
+			display: flex;
+		}
+	}
 	.input_fied {
 		margin-top: 20px;
 		border: 1px solid #DCDCDC;
@@ -496,11 +689,14 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 
 	.label_nav {
 		display: inline-block;
-		width: 80px;
-		text-align: right;
+		width: 100px;
+		text-align: left;
 		margin-right: 10px;
 	}
-
+	.cba{
+		flex: 1;
+		max-width: 100px;
+	}
 	.user {
 		background: #fff;
 
