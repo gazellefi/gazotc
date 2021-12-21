@@ -9,7 +9,7 @@
             <img src="@/assets/img/title.png" alt="GAZOTC" width="48" height="45" />
           </p>
         </div>
-        <lang class="lang"></lang>
+        <lang class="lang" style="color: #333;"></lang>
       </div>
     </div>
     <!-- 用户信息 -->
@@ -315,6 +315,7 @@ export default {
   },
   mounted() {
 	  // 判断  url 是否携带 实名认证返回参数
+	  // this.ruleChangeHideAuth()
 	  this.transactionStatus = this.$route.query.transactionStatus
 	  if(this.transactionStatus && this.transactionStatus == "SUCCESS"){  //实名认证成功
 		  let result = {
@@ -415,6 +416,7 @@ export default {
         pri = new web3.eth.Contract(pri_abi, pri_key);
         usdt = new web3.eth.Contract(u_abi, u_key);
         dq.getsczc();
+		dq.ruleChangeHideAuth()
       }
     }
   },
@@ -612,6 +614,15 @@ export default {
     ruleHideFull() {
       this.enroll = this.enroll ? false : true;
     },
+	ruleChangeHideAuth() {
+		var that = this
+		axios.post('https://gazotc.com:8083/member/jnmioURL?address='+address).then((res)=>{
+			if(res.result.state== 'SUCCESS'){ // 已实名认证
+				this.regList[2].text='已认证'
+			}else{
+			}
+		})
+	},
     ruleHideAuth() {
 		var that = this
 		Toast.loading({ message: "数据请求中..." });
@@ -636,6 +647,7 @@ export default {
 				})
 			}else if(res.result.redirectUrl){ //未实名认证
 				window.location.href = url
+				
 				// this.$router.push({
 				// 	name: 'RealName',
 				// 	query: {
@@ -681,6 +693,7 @@ export default {
 		  // 存数据库
 		  api.register(data).then((res)=>{
 			  console.log('注册数据存储结果：'+res);
+			  console.log(res.code);
 			  if(res.code == 0){
 				  // 注册成功后 调用实名认证
 				  that.ruleHideAuth()

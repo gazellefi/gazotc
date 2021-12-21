@@ -293,16 +293,15 @@
 				var provider = await web3Modal.connect();
 				web3 = new Web3(provider);
 				if (web3 && provider) {
-					var wlcode = window.ethereum.networkVersion;
-					if (window.ethereum.isImToken && wlcode != 1) {
-					    web3.setProvider(config["hyue"][config["key"]]["Url"]);
-					}
-					if (window.ethereum.isMetaMask && wlcode != 4) {
-					    web3.setProvider(config["hyue"][config["key"]]["Url"]);
-					}
+					// var wlcode = window.ethereum.networkVersion;
+					// if (window.ethereum.isImToken && wlcode != 1) {
+					//     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+					// }
+					// if (window.ethereum.isMetaMask && wlcode != 4) {
+					//     web3.setProvider(config["hyue"][config["key"]]["Url"]);
+					// }
 					Address = provider.selectedAddress;
 					dq.getuinfo(Address);
-					console.log('bbbbbbbbbbbbbbbbb');
 					dq.getlist();
 				}
 			}

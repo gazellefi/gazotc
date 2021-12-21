@@ -69,13 +69,13 @@
 			<!-- 商家保证金 -->
       		<el-table-column align="center" :label="$t('message.arbitration.merchantMargin')">
       			<template slot-scope="scope">
-      				{{ scope.row.mma }} usdt
+      				{{ scope.row.mma }} Gaz
       			</template>
       		</el-table-column>
 			<!-- 用户保证金 -->
       		<el-table-column align="center" :label="$t('message.arbitration.userMargin')">
       			<template slot-scope="scope">
-      				{{ scope.row.uma }} usdt
+      				{{ scope.row.uma }} Gaz
       			</template>
       		</el-table-column>
 			<!-- 单价 -->
@@ -468,7 +468,7 @@ export default {
               } else {
                 bzj_msg = this.$t('message.dapp.notReleased')
               }
-    
+			  console.log(Number(result[0][index][2]));
               obj = {
                 ddid: result[0][index][0],
                 Uoa: Number(result[0][index][1]) / (10 ** h_num),
@@ -494,6 +494,7 @@ export default {
         }
       })
     },
+	
     
   }
 }

@@ -11,10 +11,12 @@
 		.item{
 			display: flex;
 			align-items: center;
-			padding: 20px 50px;
+			padding: 5px 10px 10px;
+			font-size: 14px;
 		}
 		.item2{
-			padding: 20px 50px;
+			padding: 5px 10px 10px;
+			font-size: 14px;
 			>div{
 				margin-bottom: 10px;
 			}
@@ -67,7 +69,7 @@
 				<span>{{$t('message.arbitration.fromOrder')}}：</span>
 				<span>{{ddifo.faddid}}</span>
 				<!-- <el-button type="text" size="mini" @click="openddinfos(ddifo['faddid'])">详情</el-button> -->
-				 <el-link class="marl-10" type="primary">{{$t('message.details')}}</el-link>
+				 <el-link class="marl-10" type="primary" @click="openddinfos(ddifo['faddid'])">{{$t('message.details')}}</el-link>
 			</el-col>
 			<el-col :sm="24" :md="8" :lg="6" class="item">
 				<span>{{$t('message.dapp.orderType')}}：</span>
@@ -83,11 +85,11 @@
 			</el-col>
 			<el-col :sm="24" :md="8" :lg="6" class="item">
 				<span>{{$t('message.arbitration.userMarginLock')}}：</span>
-				<span>{{ ddifo.uma.toFixed(2) }} USDT</span>
+				<span>{{ ddifo.uma.toFixed(2) }} Gaz</span>
 			</el-col>
 			<el-col :sm="24" :md="8" :lg="6" class="item">
 				<span>{{$t('message.arbitration.merchantMarginLock')}}：</span>
-				<span>{{ ddifo.mma }} USDT</span>
+				<span>{{ ddifo.mma }} Gaz</span>
 			</el-col>
 			<el-col :sm="24" :md="8" :lg="6" class="item">
 				<span>{{$t('message.dapp.transactionNum')}}：</span>
@@ -164,7 +166,7 @@
 			<el-col :span="24" class="title">
 				<span>{{$t('message.orderStateNow')}}</span>
 			</el-col>
-			<el-col :span="24" class="item">
+			<el-col :span="24" class="item mart-10">
 				<span>{{$t('message.arbitration.balandCountdown')}}：</span>
 				<van-count-down :time="ddifo['djs_val']" format="DD day HH hour mm minute ss second" v-if="ddifo['timc'] > 0 && ddifo['time'] == 0" />
 				<van-count-down time="0" format="DD day HH hour mm minute ss second" v-if="ddifo['timc'] > 0 && ddifo['time'] != 0" />
@@ -175,12 +177,13 @@
 				</div>
 			</el-col>
 				<el-col :span="24">
-					<el-row v-if="ddifo['myuser'] == ddifo['Madd'] && ddifo['Umark_b'] == 'purchase' ">
-						<el-col :sm="8" :lg="24">
+					<!-- 购买 -->
+					<el-row v-if="ddifo['myuser'] == ddifo['Madd'] && ddifo['Umark_b'] == 'purchase' "  style="padding-bottom: 20px;">
+						<el-col :sm="8" :lg="24" class="f c_c">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('qx_ddajax')" :disabled="anarr('qx_ddajax')">{{$t('message.cancel')}}</van-button>
 						</el-col>
 						<!-- <el-col :sm="8" :lg="24"><van-button plain type="primary" @click="setddcode('fk_ddajax')" :disabled="anarr('qx_ddajax')">已付款</van-button></el-col> -->
-						<el-col :sm="8" :lg="24">
+						<el-col :sm="8" :lg="24" class="f c_c">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('zt_ddajax',2)" :disabled="anarr('zt_ddajax')">{{$t('message.suspendBalad')}}</van-button>
 							<div class="msg">
 							  <span v-if="ddifo.pau == 1">{{$t('message.UserPause')}}</span>
@@ -188,7 +191,7 @@
 							</div>
 						</el-col>
 						<!-- <el-col :sm="8" :lg="24"><van-button plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">提前释放</van-button></el-col> -->
-						<el-col :sm="8" :lg="24">
+						<el-col :sm="8" :lg="24" class="f c_c">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax')">{{$t('message.earlyReleaseMargin')}}</van-button>
 							<div class="msg">
 							  <span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
@@ -196,27 +199,27 @@
 							  <span v-if="ddifo.agree == 3">{{$t('message.allAgrees')}}</span>
 							</div>
 						</el-col>
-						<el-col :sm="8" :lg="24">
+						<el-col :sm="8" :lg="24" class="f c_c">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('sf_ddajax')" :disabled="anarr('sf_ddajax')">{{$t('message.ReleaseMargin')}}</van-button>
 						</el-col>
-						<el-col :sm="8" :lg="24">
+						<el-col :sm="8" :lg="24" class="f c_c">
 							<van-button class="btnStyle" plain type="primary" @click="openurl('./zhongcai')" :disabled="anarr('ss_ddajax')">{{$t('message.appeal')}}</van-button>
 						</el-col>
 					</el-row>
 				</el-col>
 				<el-col :span="24">
-					<el-row v-if=" ddifo['myuser'] == ddifo['Madd'] && ddifo['Umark_b'] == 'for sale'">
-						<el-col :sm="24" :lg="8">
+					<el-row v-if=" ddifo['myuser'] == ddifo['Madd'] && ddifo['Umark_b'] == 'for sale'" style="padding-bottom: 20px;">
+						<el-col :sm="24" :lg="8" class="f c_c">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('fb_ddajax')" :disabled="anarr('fb_ddajax')">{{$t('message.putMoney')}}</van-button>
 						</el-col>
-						<el-col :sm="24" :lg="8">
+						<el-col :sm="24" :lg="8" class="f c_c">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('zt_ddajax',2)" :disabled="anarr('zt_ddajax')">{{$t('message.pushMarginRelease')}}</van-button>
 							<div class="msg">
 							  <span v-if="ddifo.pau == 1">{{$t('message.UserPause')}}</span>
 							  <span v-if="ddifo.pau == 2">{{$t('message.MerchantSuspension')}}</span>
 							</div>
 						</el-col>
-						<el-col :sm="24" :lg="8">
+						<el-col :sm="24" :lg="8" class="f c_c">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">{{$t('message.earlyReleaseMargin')}}</van-button>
 							<div class="msg">
 							  <span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
@@ -224,28 +227,28 @@
 							  <span v-if="ddifo.agree == 3">{{$t('message.allAgrees')}}</span>
 							</div>
 						</el-col>
-						<el-col :sm="24" :lg="8">
+						<el-col :sm="24" :lg="8" class="f c_c">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('sf_ddajax')" :disabled="anarr('sf_ddajax')">{{$t('message.ReleaseMargin')}}</van-button>
 						</el-col>
-						<el-col :sm="24" :lg="8">
+						<el-col :sm="24" :lg="8" class="f c_c">
 							<van-button class="btnStyle" plain type="primary" @click="openurl('./zhongcai')" :disabled="anarr('ss_ddajax')">{{$t('message.appeal')}}</van-button>
 						</el-col>
 					</el-row>
 				</el-col>
 				<el-col :span="24">
-					<el-row v-if="ddifo['myuser'] == ddifo['Madd'] && ddifo['Umark_b'] == 'purchase'">
-						<el-col :sm="24" :lg="8">
+					<el-row v-if="ddifo['myuser'] == ddifo['Uadd'] && ddifo['Umark_b'] == 'for sale'" style="padding-bottom: 20px;">
+						<el-col class="f c_c" :sm="24" :lg="8">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('qx_ddajax')" :disabled="anarr('qx_ddajax')">{{$t('message.cancel')}}</van-button>
 						</el-col>
 						<!-- <el-col :sm="24" :lg="8"><van-button plain type="primary" @click="setddcode('fk_ddajax')" :disabled="anarr('qx_ddajax')">已付款</van-button></el-col> -->
-						<el-col :sm="24" :lg="8">
+						<el-col class="f c_c" :sm="24" :lg="8">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('zt_ddajax',1)" :disabled="anarr('zt_ddajax')">{{$t('message.pushMarginRelease')}}</van-button>
 							<div class="msg">
 							  <span v-if="ddifo.pau == 1">{{$t('message.UserPause')}}</span>
 							  <span v-if="ddifo.pau == 2">{{$t('message.MerchantSuspension')}}</span>
 							</div>
 						</el-col>
-						<el-col :sm="24" :lg="8">
+						<el-col class="f c_c" :sm="24" :lg="8">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Uadd')">{{$t('message.earlyReleaseMargin')}}</van-button>
 							<div class="msg">
 							  <span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
@@ -253,27 +256,27 @@
 							  <span v-if="ddifo.agree == 3">{{$t('message.allAgrees')}}</span>
 							</div>
 						</el-col>
-						<el-col :sm="24" :lg="8">
+						<el-col class="f c_c" :sm="24" :lg="8">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('sf_ddajax')" :disabled="anarr('sf_ddajax')">{{$t('message.ReleaseMargin')}}</van-button>
 						</el-col>
-						<el-col :sm="24" :lg="8">
+						<el-col class="f c_c" :sm="24" :lg="8">
 							<van-button class="btnStyle" plain type="primary" @click="openurl('./zhongcai')" :disabled="anarr('ss_ddajax')">{{$t('message.appeal')}}</van-button>
 						</el-col>
 					</el-row>
 				</el-col>
 				<el-col :span="24">
-					<el-row v-if=" ddifo['myuser'] == ddifo['Uadd'] && ddifo['Umark_b'] == 'purchase' " style="width: 100%;">
-						<el-col :sm="8" :lg="24">
+					<el-row v-if=" ddifo['myuser'] == ddifo['Uadd'] && ddifo['Umark_b'] == 'purchase' "  style="padding-bottom: 20px;">
+						<el-col :sm="8" :lg="24" class="f c_c">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('fb_ddajax')" :disabled="anarr('fb_ddajax')">{{$t('message.putMoney')}}</van-button>
 						</el-col>
-						<el-col :sm="8" :lg="24">
+						<el-col :sm="8" :lg="24" class="f c_c">
 							 <van-button class="btnStyle" plain type="primary" @click="setddcode('zt_ddajax',1)" :disabled="anarr('zt_ddajax')">{{$t('message.suspendBalad')}}</van-button>
 							 <div class="msg">
 							   <span v-if="ddifo.pau == 1">{{$t('message.UserPause')}}</span>
 							   <span v-if="ddifo.pau == 2">{{$t('message.MerchantSuspension')}}</span>
 							 </div>
 						</el-col>
-						<el-col :sm="8" :lg="24">
+						<el-col :sm="8" :lg="24" class="f c_c">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">{{$t('message.earlyReleaseMargin')}}</van-button>
 							<div class="msg">
 							  <span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
@@ -281,17 +284,17 @@
 							  <span v-if="ddifo.agree == 3">{{$t('message.allAgrees')}}</span>
 							</div>
 						</el-col>
-						<el-col :sm="8" :lg="24">
+						<el-col :sm="8" :lg="24" class="f c_c">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('sf_ddajax')" :disabled="anarr('sf_ddajax')">{{$t('message.ReleaseMargin')}}</van-button>
 						</el-col>
-						<el-col :sm="8" :lg="24">
+						<el-col :sm="8" :lg="24" class="f c_c">
 							<van-button class="btnStyle" plain type="primary" @click="openurl('./zhongcai')" :disabled="anarr('ss_ddajax')">{{$t('message.appeal')}}</van-button>
 						</el-col>
 					</el-row>
 				</el-col>
 				<el-col :span="24">
 					<!-- 不是商家也不是卖家 -->
-					<el-row class="" v-if="ddifo['myuser'] != ddifo['Uadd'] && ddifo['myuser'] != ddifo['Madd']">
+					<el-row v-if="ddifo['myuser'] != ddifo['Uadd'] && ddifo['myuser'] != ddifo['Madd']" style="padding-bottom: 20px;">
 						<el-col :sm="12" :md="8" class="item3">
 							<van-button plain type="primary" class="btnStyle" :disabled="true">
 							  <span v-if="ddifo.pau == 0">{{$t('message.suspendBalad')}}</span>
@@ -508,7 +511,7 @@
 			},
 			openddinfos(e) {
 				this.$router.push({
-					path: './mairu',
+					name: 'mairu',
 					query: {
 						did: e
 					}

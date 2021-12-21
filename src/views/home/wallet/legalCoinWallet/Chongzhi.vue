@@ -12,7 +12,7 @@
 	    <el-input v-model="je"></el-input>
 	  </el-form-item>
 	  <el-form-item label-width="0">
-	  	<span style="color: #DCDCDC;">{{ $t("message.activit.UseUSDT") }}:{{
+	  	<span style="color: #DCDCDC;">可用{{hbilist[hbindex].title}}:{{
             Number(balance / 10 ** 18).toFixed(2)
           }}</span>
 		  <!-- 你可提额度：{{ (hbilist[hbindex]['je']/ (10**hbilist[hbindex]['num'])).toFixed(2)  }} -->
@@ -119,9 +119,6 @@ export default {
       const accounts = await web3.eth.getAccounts();
       if (web3 && provider) {
         address = provider.selectedAddress;
-		
-		usdt = new web3.eth.Contract(u_abi, u_key);
-		dq.balance = await usdt.methods.balanceOf(address).call();
       }
     }
   },
@@ -130,11 +127,31 @@ export default {
       this.$router.go(-1);
     },
 	changeSelect(e){
+		
 		for (let i = 0; i < this.hbilist.length; i++) {
 			if(this.hbilist[i].title == e){
 				this.hbindex = i
+				setTimeout(()=>{
+					this.getBalane()
+				},300)
 			}
 		}
+	},
+	async getBalane(){
+		var dq = this
+		const providerOptions = {
+		  /* See Provider Options Section */
+		};
+		const web3Modal = new Web3Modal({
+		  // network: "mainnet",
+		  // cacheProvider: true,
+		  providerOptions,
+		});
+		var provider = await web3Modal.connect();
+		web3 = new Web3(provider);
+		// console.log(web3);
+		var proconn = new web3.eth.Contract(config['hbi'][config['key']][dq.hbilist[dq.hbindex]['title']]['abi'],config['hbi'][config['key']][dq.hbilist[dq.hbindex]['title']]['heyue']);
+		dq.balance = await proconn.methods.balanceOf(address).call();
 	},
     //如果过亿请转换
     getFNum(num_str) {

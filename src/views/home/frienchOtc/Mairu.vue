@@ -1,23 +1,94 @@
 
 <template>
   <div class="viewaaaa">
-    <!-- <van-nav-bar :title="ddinfo['Mmark'] != '0x6275790000000000000000000000000000000000000000000000000000000000' ? 'purchase':'for sale'" left-text="return" left-arrow :fixed="true" :placeholder="true" z-index="99" @click-left="urlgo" /> -->
-
-    <div class="view">
-      <!-- <div class="view_head">
-        <div class="view_head_quan">{{ddinfo.username.substring(0,1)}}</div>
-        <div class="view_head_info">
-          <div class="view_head_info_title">{{ ddinfo.username }}</div>
-          <div class="view_head_info_user">
-            <span>{{ ddinfo.Mowner }}</span>
-          </div>
-        </div>
-      </div> -->
-
-      <!-- <div class="view_head_ddid">
-        order number:{{ ddid }}
-      </div> -->
-
+	  <!-- 作为页面时有返回上一级 -->
+	<el-row style="padding: 20px;" v-if="type == 2">
+		<el-col>
+			<el-link class="marl-10" type="primary" @click="back">返回上一级</el-link>
+		</el-col>
+	</el-row>
+	<el-row type="flex" justify="center" v-if="type == 2">
+		<el-col :sm="24" :md="12">
+			<div class="view">
+			  <div class="view_ul">
+			    <div class="view_ul_li">
+			      {{$t('message.arbitration.order')}}:{{ ddid }}
+			    </div>
+			    <div class="view_ul_li">
+			      <div class="view_ul_li_l">{{$t('message.dapp.unitPrice')}}</div>
+			      <div class="view_ul_li_r">{{ getnumsing(ddinfo.unit) }} {{ ddinfo.fabi }}</div>
+			    </div>
+			    <div class="view_ul_li">
+			      <div class="view_ul_li_l">{{$t('message.dapp.limit')}}</div>
+			      <div class="view_ul_li_r">{{ getnumsing(ddinfo.zer) }} - {{ getnumsing(ddinfo.mal) }} {{ddinfo.huobi}}</div>
+			    </div>
+			    <div class="view_ul_li">
+			      <div class="view_ul_li_l">{{$t('message.dapp.amount')}}</div>
+			      <div class="view_ul_li_r">{{ getnumsing(ddinfo.Moa) }} {{ddinfo.huobi}}</div>
+			    </div>
+			    <div class="view_ul_li">
+			      <div class="view_ul_li_l">{{$t('message.arbitration.merchantMargin')}}</div>
+			      <div class="view_ul_li_r">{{ getnumsing(ddinfo.bMar) }} Gaz</div>
+			    </div>
+			
+			    <div class="view_ul_li">
+			      <div class="view_ul_li_l">{{$t('message.dapp.MarginRatio')}}</div>
+			      <div class="view_ul_li_r">{{ getnumsing(ddinfo.mar) }} %</div>
+			    </div>
+			    <div class="view_ul_li">
+			      <div class="view_ul_li_l">{{$t('message.dapp.orderStatus')}}</div>
+			      <div class="view_ul_li_r">{{ ddinfo.mlive == 1 ? $t('message.dapp.ReceivingOrder'):$t('message.dapp.Resting') }}</div>
+			    </div>
+			    <div class="view_ul_li beizhu">
+			      <span>交易备注：{{ ddinfo.beizhu == 'No remarks are filled in' ? $t('message.notFill') : ddinfo.beizhu}}</span>
+			    </div>
+			   <!-- <div class="view_ul_li beizhu_conn">
+			      <el-button type="text" @click="openlxfs">{{$t('message.contactDes')}}</el-button>
+			    </div> -->
+			  </div>
+			
+			  <div class="view_form">
+			    <div class="view_form_item">
+			      <div class="view_form_item_t">
+			        {{ ddinfo['Mmark'] == '0x6275790000000000000000000000000000000000000000000000000000000000' ? $t('message.dapp.sell'):$t('message.dapp.buy')  }}
+			        <span v-if="form.num">手续费 {{ ddinfo['sxf_je'] }} {{ddinfo.huobi}}</span>
+			      </div>
+			      <div class="view_form_item_input">
+			        <div class="view_form_item_input_srk f c_c a_c" style="border: 1px solid #DCDCDC; width: 80%;height: 40px;">
+			          <van-field placeholder="0.00" v-model="form.num" :disabled="code"/>
+			        </div>
+			        <div class="view_form_item_input_msg">{{ddinfo.huobi}}</div>
+			      </div>
+			    </div>
+			    <div class="view_form_item">
+			      <div class="view_form_item_t">{{ ddinfo['Mmark'] == '0x6275790000000000000000000000000000000000000000000000000000000000' ? $t('message.dapp.received'):$t('message.dapp.buy') }}</div>
+			      <div class="view_form_item_input">
+			        <div class="view_form_item_input_srk">
+			          <van-field :placeholder="$t('message.dapp.getCurrency')" v-model="form.je" :disabled="true" />
+			        </div>
+			        <div class="view_form_item_input_msg">CNY</div>
+			      </div>
+			    </div>
+			    <div class="view_form_item">
+			      <div class="view_form_item_t">{{$t('message.arbitration.margin')}}</div>
+			      <div class="view_form_item_input">
+			        <div class="view_form_item_input_srk">
+			          <van-field :placeholder="$t('message.dapp.mortgageDes')" v-model="form.bzj" :disabled="true" />
+			        </div>
+			        <div class="view_form_item_input_msg">Gaz</div>
+			      </div>
+			    </div>
+			    <div class="view_form_item options">
+			      <van-button type="default" style="margin-right: auto;width: 40%;" @click="urlgo">{{$t('message.cancel')}}</van-button>
+			      <van-button type="warning" color="#fdc500" style="margin-left: auto;width: 40%;" :loading="ddcode"
+				   @click="adddingdan">{{ ddinfo['Mmark'] == '0x6275790000000000000000000000000000000000000000000000000000000000'? $t('message.dapp.sell'):$t('message.dapp.buy')}}{{ddinfo.huobi}}</van-button>
+			    </div>
+			  </div>
+			</div>
+		</el-col>
+		
+	</el-row>
+    <div class="view" v-else>
       <div class="view_ul">
         <div class="view_ul_li">
           {{$t('message.arbitration.order')}}:{{ ddid }}
@@ -36,9 +107,9 @@
         </div>
         <div class="view_ul_li">
           <div class="view_ul_li_l">{{$t('message.arbitration.merchantMargin')}}</div>
-          <div class="view_ul_li_r">{{ getnumsing(ddinfo.bMar) }} USDT</div>
+          <div class="view_ul_li_r">{{ getnumsing(ddinfo.bMar) }} Gaz</div>
         </div>
-
+    
         <div class="view_ul_li">
           <div class="view_ul_li_l">{{$t('message.dapp.MarginRatio')}}</div>
           <div class="view_ul_li_r">{{ getnumsing(ddinfo.mar) }} %</div>
@@ -54,16 +125,16 @@
           <el-button type="text" @click="openlxfs">{{$t('message.contactDes')}}</el-button>
         </div> -->
       </div>
-
+    
       <div class="view_form">
         <div class="view_form_item">
           <div class="view_form_item_t">
             {{ ddinfo['Mmark'] == '0x6275790000000000000000000000000000000000000000000000000000000000' ? $t('message.dapp.sell'):$t('message.dapp.buy')  }}
-            <span v-if="form.num">Service Charge {{ ddinfo['sxf_je'] }} {{ddinfo.huobi}}</span>
+            <span v-if="form.num">手续费 {{ ddinfo['sxf_je'] }} {{ddinfo.huobi}}</span>
           </div>
           <div class="view_form_item_input">
-            <div class="view_form_item_input_srk">
-              <van-field placeholder="0.00" v-model="form.num" :disabled="code" />
+            <div class="view_form_item_input_srk f c_c a_c" style="border: 1px solid #DCDCDC; width: 80%;height: 40px;">
+              <van-field placeholder="0.00" v-model="form.num" :disabled="code"/>
             </div>
             <div class="view_form_item_input_msg">{{ddinfo.huobi}}</div>
           </div>
@@ -83,13 +154,13 @@
             <div class="view_form_item_input_srk">
               <van-field :placeholder="$t('message.dapp.mortgageDes')" v-model="form.bzj" :disabled="true" />
             </div>
-            <div class="view_form_item_input_msg">USDT</div>
+            <div class="view_form_item_input_msg">Gaz</div>
           </div>
         </div>
         <div class="view_form_item options">
           <van-button type="default" style="margin-right: auto;width: 40%;" @click="urlgo">{{$t('message.cancel')}}</van-button>
           <van-button type="warning" color="#fdc500" style="margin-left: auto;width: 40%;" :loading="ddcode"
-		   @click="adddingdan">{{ ddinfo['Mmark'] == '0x6275790000000000000000000000000000000000000000000000000000000000'? $t('message.dapp.sell'):$t('message.dapp.buy')}}{{ddinfo.huobi}}</van-button>
+    	   @click="adddingdan">{{ ddinfo['Mmark'] == '0x6275790000000000000000000000000000000000000000000000000000000000'? $t('message.dapp.sell'):$t('message.dapp.buy')}}{{ddinfo.huobi}}</van-button>
         </div>
       </div>
     </div>
@@ -141,6 +212,7 @@ export default {
       ddid: "",
       ddshow: false,
       code: true,
+	  type: 1,  // 1: 作为弹框   2：订单详情页
 
 
       ddinfo: {
@@ -188,21 +260,21 @@ export default {
       }
 
       if (e < Number(this.ddinfo['zer'])) {
-        Notify({ type: 'warning', message: 'Quantity cannot be less than' + this.ddinfo['zer'] });
+        Notify({ type: 'warning', message: '数量不能少于' + this.ddinfo['zer'] });
         return;
       }
 
       if (e > Number(this.ddinfo['mal'])) {
-        Notify({ type: 'warning', message: 'Quantity cannot be greater than' + this.ddinfo['mal'] });
+        Notify({ type: 'warning', message: '数量不能少于' + this.ddinfo['mal'] });
         return;
       }
       if (e > Number(this.ddinfo['Moa'])) {
-        Notify({ type: 'warning', message: 'Quantity cannot be greater than' + this.ddinfo['Moa'] });
+        Notify({ type: 'warning', message: '数量不能少于' + this.ddinfo['Moa'] });
         return;
       }
       var sxf = 0;
       var shuere = (e * Number(this.pros['rati'])) / (10 ** 6);
-      var bilie = (3 / Number(this.pros['uni'])) * 10 ** 6;
+      var bilie = (1 / Number(this.pros['uni'])) * 10 ** 6;
       if (shuere >= bilie) {
         sxf = shuere;
       }
@@ -226,7 +298,7 @@ export default {
         var z = x * y;
         return z;
       }
-      this.form['bzj'] = Number(this.getnume(mul(mul(e, this.pros.uni), this.pros.mar) / mul(this.pros.pri, (10 ** 6)))).toFixed(2);
+      this.form['bzj'] = Number(this.getnume(mul(mul(e, this.pros.uni), this.pros.mar) / mul(this.pros.pri, (10 ** 18)))).toFixed(2);
     },
     'form.je'(e) {
       if (!e) {
@@ -236,10 +308,15 @@ export default {
     }
   },
   mounted() {
+	let strId =  this.$route.query.did
     if (this.did) {
       this.ddid = this.did;
       this.ddshow = false;
-    } else {
+    }else if(strId){
+		this.ddid = strId;
+		this.type = 2
+		this.ddshow = false;
+	} else {
       this.ddshow = true;
     }
     var dq = this;
@@ -415,22 +492,22 @@ export default {
                 }
               }
               dq.pros['mar'] = ret['mar'];
-              console.log(ret);
+              var pro_dec = 10**config['hbi'][config['key']][huobi]['num'];
               // 组装数据
               dq.ddinfo = {
-                username: '',
-                fabi: fabi,
-                Mowner: ret.Mowner,
-                unit: Number(ret.unit / 100),
-                mal: huobi == 'USDT' ? (Number(ret.mal) / (10 ** bzj_num)).toFixed(2) : (Number(ret.mal) / (10 ** 6)).toFixed(2),
-                zer: huobi == 'USDT' ? (Number(ret.zer) / (10 ** bzj_num)).toFixed(2) : (Number(ret.zer) / (10 ** 6)).toFixed(2),
-                Moa: huobi == 'USDT' ? (Number(ret.Moa) / (10 ** bzj_num)).toFixed(2) : (Number(ret.Moa) / (10 ** 6)).toFixed(2),
-                bMar: 0,
-                mar: (Number(ret.mar) / (10 ** 4)).toFixed(2),
-                mlive: ret.mlive,
-                beizhu: '',
-                huobi: huobi,
-                Mmark: ret.Mmark
+                  username:'',
+                  fabi:fabi,
+                  Mowner:ret.Mowner,
+                  unit:Number(ret.unit / 100),
+                  mal:(Number(ret.mal) / pro_dec).toFixed(2),
+                  zer:(Number(ret.zer) / pro_dec).toFixed(2),
+                  Moa:(Number(ret.Moa) / pro_dec).toFixed(2),
+                  bMar:0,
+                  mar:(Number(ret.mar) / (10**16)).toFixed(2),
+                  mlive:ret.mlive,
+                  beizhu:'',
+                  huobi:huobi,
+                  Mmark:ret.Mmark
               };
               dq.code = false;
               dotsconn.methods.balancemar(ret.Mowner).call((errb, bzj) => {
@@ -450,7 +527,7 @@ export default {
                 dq.user['balancemar'] = Number(balancemar);
               });
 
-              getddbeizhu(ret['Mowner']);
+              // getddbeizhu(ret['Mowner']);
               getddsjusername(ret['Mowner']);
               getpros();
             }
@@ -612,20 +689,12 @@ export default {
         });
 
       }
-    }
-    , openlxfs() {
-      var user = this.ddinfo['Mowner'];
-      this.$router.push({
-        path: './beizhu',
-        query: { user: user }
-      });
-    }
-  },
-  props: {
-    did: {
-
     },
-  }
+    back(){
+		this.$router.go(-1)
+	}
+  },
+  props: ['did']
 };
 </script>
 <style>
@@ -640,7 +709,8 @@ export default {
 
 .view {
   /* width: calc(100% - 40px); */
-  margin: 20px;
+  margin: 0 20px;
+  padding-bottom: 20px;
 }
 
 .view_head {
@@ -697,11 +767,11 @@ export default {
 .view_ul_li {
   display: flex;
   /* flex-direction: column; */
-  min-height: 50px;
+  min-height: 20px;
   align-items: center;
   background: #fff;
-  margin: 10px 0;
-  padding: 10px;
+  /* margin: 10px 0; */
+  padding: 10px 0;
 }
 .view_ul_li_l {
   margin-right: auto;
@@ -731,11 +801,11 @@ export default {
 }
 
 .view_form_item {
-  padding: 10px 0;
+  /* padding: 10px 0; */
   width: 100%;
   overflow: hidden;
   /* border: 1px solid rgba(160, 158, 158, 0.603); */
-  margin-top: 20px;
+  /* margin-top: 20px; */
   border-radius: 5px;
   align-items: center;
   background: #fff;
@@ -764,12 +834,13 @@ export default {
 .view_form_item_input {
   margin-right: auto;
   display: flex;
+  align-items: center;
   margin-bottom: 5px;
 }
 .view_form_item_input_msg {
   margin-left: auto;
   padding-right: 15px;
-  font-size: 16px;
+  font-size: 14px;
   opacity: 0.8;
 }
 .options {

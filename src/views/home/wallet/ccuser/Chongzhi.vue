@@ -11,7 +11,12 @@
 	  <el-form-item label="充值金额">
 	    <el-input v-model="je"></el-input>
 	  </el-form-item>
-
+	  <el-form-item label-width="0">
+	  	<span style="color: #DCDCDC;">可用{{hbilist[hbindex].title}}:{{
+	        Number(balance / 10 ** 18).toFixed(2)
+	      }}</span>
+	  		  <!-- 你可提额度：{{ (hbilist[hbindex]['je']/ (10**hbilist[hbindex]['num'])).toFixed(2)  }} -->
+	  </el-form-item>
       <el-form-item class="chongzhiBtn" label-width="0">
         <van-button size='small' color="#fdc500" type="primary" block @click="chongzhi">充值</van-button>
       </el-form-item>
@@ -35,8 +40,12 @@ for (const key in hbarr) {
   hbarr[key]["sq_je"] = 0;
   arr.push(hbarr[key]);
 }
+console.log(arr);
 var address = '';
 var web3 = '';
+var usdt;
+var u_abi = config["hbi"]["bian"]["USDT"]["abi"];
+var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 export default {
   data() {
     return {
@@ -46,7 +55,8 @@ export default {
       key: config['key'],
       form: {
 		  region: ''
-	  }
+	  },
+	  balance: ''
     }
   },
   props:['type'],
@@ -130,8 +140,26 @@ export default {
 		for (let i = 0; i < this.hbilist.length; i++) {
 			if(this.hbilist[i].id == e){
 				this.hbindex = i
+				setTimeout(()=>{
+					this.getBalane()
+				},300)
 			}
 		}
+	},
+	async getBalane(){
+		var dq = this
+		const providerOptions = {
+		  /* See Provider Options Section */
+		};
+		const web3Modal = new Web3Modal({
+		  // network: "mainnet",
+		  // cacheProvider: true,
+		  providerOptions,
+		});
+		var provider = await web3Modal.connect();
+		web3 = new Web3(provider);
+		var proconn = new web3.eth.Contract(config['hbi'][config['key']][dq.hbilist[dq.hbindex]['id']]['abi'],config['hbi'][config['key']][dq.hbilist[dq.hbindex]['id']]['heyue']);
+		dq.balance = await proconn.methods.balanceOf(address).call();
 	},
     //如果过亿请转换
     getFNum(num_str) {

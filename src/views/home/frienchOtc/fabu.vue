@@ -121,8 +121,13 @@
 		          <el-input type="textarea" :placeholder="form.beizhu?form.beizhu:$t('message.enterContent')" maxlength="30" :disabled="maskDis" v-model="form.beizhu" show-word-limit>
 		          </el-input>
 		        </div>
-		        <p class="add_form_item_input_p" @click="maskDis = false" v-if="maskDis">{{$t('message.editremarks')}}</p>
-				<p @click="setNote" class="add_form_item_input_p" v-else>{{$t('message.complete')}}</p>
+		        <p class="add_form_item_input_p" @click="maskDis = false" v-if="maskDis">
+					<span class="cursor">{{$t('message.editremarks')}}</span>
+				</p>
+				<p class="add_form_item_input_p" v-else>
+					<span class="cursor" @click="setNote">{{$t('message.complete')}}</span>
+					<span class="marl-10 cursor" @click="maskDis = true">返回</span>
+				</p>
 		      </div>
 		      <el-button type="primary" style="margin-top: 30px;background:#fdc500;border:0" @click="tijiao" :disabled="isform.zcye ? true:false">{{$t('message.sumbmit')}}</el-button>
 		      <br />
@@ -626,7 +631,7 @@ export default {
           dq.getFNum(postc) + "",
           postfi,
           postd + "",
-          (dq.form['user_bzj'] * (10 ** 4)) + ""
+          (dq.form['user_bzj'] * (10 ** 16)) + ""
         ).send({
           from: dq.user['user']
         }, (err, ret) => {

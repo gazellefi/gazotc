@@ -449,12 +449,12 @@ export default [
   //   component: () =>
   //     import('@/views/page/Beizhu')
   // },
-  // {
-  //   path: '/mairu',
-  //   name: 'mairu',
-  //   component: () =>
-  //     import('@/views/page/Mairu')
-  // },
+  {
+    path: '/mairu',
+    name: 'mairu',
+    component: () =>
+      import('@/views/home/frienchOtc/Mairu')
+  },
   // {
   //   path: '/jiaoyi',
   //   name: 'jiaoyi',

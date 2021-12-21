@@ -397,7 +397,7 @@ export default {
                 obj["bzj"] = (Number(ret[0][index][8]) / 10 ** bzj_num).toFixed(
                   2
                 );
-                obj["bzj_u"] = Number(ret[0][index][5]) / 10 ** 4;
+                obj["bzj_u"] = Number(ret[0][index][5]) / 10 ** 16;
                 dataList.push(obj);
               }
               dq.dataList = dataList;
@@ -496,7 +496,7 @@ export default {
                     Number(ret[0][index][8]) /
                     10 ** bzj_num
                   ).toFixed(2);
-                  obj["bzj_u"] = Number(ret[0][index][5]) / 10 ** 4;
+                  obj["bzj_u"] = Number(ret[0][index][5]) / 10 ** 16;
                   dq.dataList.push(obj);
                 }
               }
