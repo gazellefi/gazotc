@@ -67,10 +67,12 @@
               <div class="danjia">{{ scope.row.danjia }} {{ fabi }}</div>
             </template>
           </el-table-column>
-          <el-table-column align="center" :label="$t('message.arbitration.margin')">
+		  <!-- <el-table-column align="center" :label="$t('message.arbitration.margin')"> -->
+          <el-table-column align="center" :render-header="marginNav">
+			<!-- <template slot-scope="header">  </template> -->
             <template slot-scope="scope"> {{ scope.row.bzj }} Gaz </template>
           </el-table-column>
-          <el-table-column align="center" :label="$t('message.dapp.blandAsk')">
+          <el-table-column align="center" :render-header="asknNav">
             <template slot-scope="scope">
               <div class="danjia"> {{ scope.row.bzj_u }}%</div>
             </template>
@@ -511,6 +513,55 @@ export default {
           }
         });
     },
+	// 自定义表头 （保证金）
+	marginNav(h,{column,$index}){
+		let str = this.$t("message.arbitration.margin")
+		let str1 = this.$t("message.arbitration.marginBalance")
+		return h('div', [
+		                h('span', str),
+		                h(
+		                    'el-tooltip',
+		                    {
+		                        props: {
+		                            effect: 'dark',
+		                            content: str1,
+		                            placement: 'top',
+		                        },
+		                    },
+		                    [
+		                        h('i', {
+		                            class: 'el-icon-question',
+		                            style: 'color:#409eff;margin-left:5px;',
+		                        }),
+		                    ],
+		                ),
+		            ]);
+	},
+	// 自定义表头 （保证金比咧）
+	asknNav(h,{column,$index}){
+		let str = this.$t("message.dapp.blandAsk")
+		let str1 = this.$t("message.arbitration.payMar1")
+		return h('div', [
+		                h('span', str),
+		                h(
+		                    'el-tooltip',
+		                    {
+		                        props: {
+		                            effect: 'dark',
+		                            content: str1,
+		                            placement: 'top',
+		                        },
+		                    },
+		                    [
+		                        h('i', {
+		                            class: 'el-icon-question',
+		                            style: 'color:#409eff;margin-left:5px;',
+		                        }),
+		                    ],
+		                ),
+		            ]);
+	}
+	
   },
   components: {
     Mairu, myDialog
@@ -790,5 +841,11 @@ button.anniu {
   display: flex;
   margin: 15px 0;
   justify-content: center;
+}
+div{
+	/deep/ .tooltip_nav{
+		border: none;
+		padding: 0;
+	}
 }
 </style>

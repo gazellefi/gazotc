@@ -605,8 +605,8 @@ export default {
       if (dq.form['num'] > dq.user['balancepro']) {
         Dialog.confirm({
           title: 'warning',
-          message: this.$t('message.assetRchargeTips') ,
-          confirmButtonText: this.$t('message.cancel'),
+          message: dq.$t('message.assetRchargeTips') ,
+          confirmButtonText: dq.$t('message.cancel'),
           cancelButtonText: 'Recharge',
           cancelButtonColor: '',
           getContainer: 'body'
@@ -620,8 +620,8 @@ export default {
         Dialog.confirm({
           title: 'warning',
           message: '押金不足，请先补足押金！',
-          confirmButtonText: $t('message.cancel'),
-          cancelButtonText: $t('message.Recharge'),
+          confirmButtonText: dq.$t('message.cancel'),
+          cancelButtonText: dq.$t('message.Recharge'),
           cancelButtonColor: '',
           getContainer: 'body'
         })

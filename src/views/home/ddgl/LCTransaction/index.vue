@@ -432,6 +432,7 @@ export default {
       var contracts = new web3.eth.Contract(dotc_abi, dotc_key);
       contracts.methods.ownerDeal(Address + "", 10 + "").call((err, result) => {
         if (result) {
+			console.log(result);
           if (result[0].length > 0) {
             for (let index = 0; index < result[0].length; index++) {
               var obj = {};
@@ -445,10 +446,12 @@ export default {
                   break;
                 }
               }
-              if (result[1][index][0] == '0x73616c6500000000000000000000000000000000000000000000000000000000') {
-                ttype = this.$t('message.dapp.forSale')
+			  // console.log(result[2][index][0]);
+              if (result[2][index][0] == Address) {
+				  ttype = this.$t('message.dapp.buy')
+                
               } else {
-                ttype = this.$t('message.dapp.buy')
+                 ttype = this.$t('message.dapp.forSale')
               }
               var zcsf_msg = '';
               var bzj_msg = '...';
@@ -462,6 +465,7 @@ export default {
 				  // 取消
                 zcsf_msg = this.$t('message.cancel')
               }
+			  
     
               if (result[0][index][9] != 0) {
                 bzj_msg = this.$t('message.dapp.released')
@@ -488,6 +492,7 @@ export default {
               };
               list.push(obj);
             }
+			console.log(list);
             dq.list = list;
             dq.list_b = list;
           }

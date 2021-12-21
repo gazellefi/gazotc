@@ -566,7 +566,7 @@
 									zer: (Number(result[0][index][2]) / (10 ** h_num)).toFixed(2),
 									mal: (Number(result[0][index][3]) / (10 ** h_num)).toFixed(2),
 									unit: (Number(result[0][index][4]) / 100).toFixed(2),
-									mar: (Number(result[0][index][5]) / (10 ** 4)).toFixed(2),
+									mar: (Number(result[0][index][5]) / (10 ** 16)).toFixed(2),
 									mlive: Number(result[0][index][6]),
 
 									Mmark: result[1][index][0],
