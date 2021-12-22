@@ -44,7 +44,7 @@
 					<div style="padding-top: 20px;" class="f a_c c_c">
 						<img src="@/assets/img/empty.png" alt="" width="130" height="85" />
 					</div>
-					<p>{{$t('message.NoData')}}</p>
+					<p>暂无数据</p>
 				</div>
 			  </el-table>
 			</el-container>
@@ -63,7 +63,7 @@
 				</div>
 			</div>
 			<!-- 列表 -->
-			<div class="list_nav">
+			<!-- <div class="list_nav">
 				<div class="list_item f c_b" v-for="(item,index) in zc_list" :key="index">
 					<div class="fc a_c c_b" style="padding:0 10px 20px">
 						<span class="fwb">{{$t('message.arbitration.serial')}}</span>
@@ -109,6 +109,51 @@
 						</div>
 					</div>
 				</div>
+			</div> -->
+			<div class="listWap">
+				<div class="listItem" v-for="(item,index) in zc_list" :key="index">
+					<div class="topWap">
+						<span class="topLabel fwb">{{$t('message.arbitration.arbitrator')}}:</span>
+						<!-- {{ item.username }} -->
+						<div class="topMain">
+							<div class="topUser">{{ item.username }}</div>
+							<div class="topUsername">{{ item.user_b }}</div>
+						</div>
+					</div>
+					<div class="mainWap" style="margin-top: 10px;">
+						<div class="mainLeft">
+							<div class="mainItem">
+								<span class="fwb">{{$t('message.arbitration.serial')}}：</span>
+								<span class="">{{item.index}}</span>
+							</div>
+							<div class="mainItem">
+								<span class="fwb">{{$t('message.arbitration.balance')}}：</span>
+								<span>{{item.balanceMar}} GAZ</span>
+							</div>
+							<div class="mainItem">
+								<span class="fwb">{{$t('message.arbitration.frozenState')}}：</span>
+								<span :class="[item.lock == 0 ? 'normal_style':'frozen_style']">{{item.lock == 0 ? $t('message.arbitration.normal'):$t('message.arbitration.frozen')  }}</span>
+							</div>
+						</div>
+						<div class="mainRight">
+							<div class="mainItem">
+								<span class="fwb">{{$t('message.arbitration.inviteNumber')}}：</span>
+								<span>{{item.invite}}</span>
+							</div>
+							<div class="mainItem">
+								<span class="fwb">{{$t('message.arbitration.singular')}}：</span>
+								<span>{{item.succeed}}</span>
+							</div>
+							<div class="mainItem">
+								<span class="fwb">{{$t('message.arbitration.regNumber')}}：</span>
+								<span>{{item.appl}}</span>
+							</div>
+						</div>
+					</div>
+					<div class="footerWap" style="margin-top: 10px;">
+						<el-button round class="invitationBnt invitationBnt_wap" style="width: 100%;" size="normal" :loading="item.jiazai" :disabled="item.lock == 1 ? true:false" @click="yaoqingajax(item)">{{$t('message.arbitration.invite')}}</el-button>
+					</div>
+				</div>
 			</div>
 		</div>
 		<!-- 邀请弹框 -->
@@ -121,10 +166,19 @@
 				<span>{{zc_user_yq.my_name == 'Not filled in yet' ? $t('message.notFill') : zc_user_yq.my_name}}</span>
 			</el-form-item>
 			<el-form-item :label="$t('message.arbitration.order')+':'" v-if="btnType == 1">
-			  <div class="f c_b a_c sarch_nav">
+			   <div class="f c_b a_c sarch_nav">
 			  	<el-input v-model="zc_user_yq.did" autocomplete="off" size="mini" class="search_input" :placeholder="$t('message.arbitration.enterOrderNum')"></el-input>
 				<el-button icon="el-icon-search" circle @click="sousou_dd" :loading="loadingsoudd"></el-button>
-			  </div>
+			  </div> 
+				<!-- <el-input v-model="zc_user_yq.did"style="
+    padding: 1px;
+    border: 1px solid;
+    border-radius: 30px;" autocomplete="off" size="mini" class="search_input" :placeholder="$t('message.arbitration.enterOrderNum')"></el-input>
+				<el-button icon="el-icon-search" style="
+    position: absolute;
+    right: 1px;
+    bottom: 2px;
+" circle @click="sousou_dd" :loading="loadingsoudd"></el-button> -->
 			</el-form-item>
 			<el-form-item :label="$t('message.arbitration.character')+':'" v-if="btnType == 1">
 			  <span>{{zc_user_yq.juese}}</span>
@@ -166,6 +220,11 @@
 			<el-form-item :label="$t('message.arbitration.marginBalan')+':'" v-if="btnType == 2">
 			  <span>{{sq_zc_data.info.user_bzj.toFixed(2)+' GAZ'}}</span>
 			</el-form-item>
+			
+			<el-form-item :label="$t('message.available')+':'" v-if="btnType == 1 || btnType == 2">
+			  <span>{{Number(balance / 10 ** 18).toFixed(2)+'GAZ'}}</span>
+			</el-form-item>
+			
 			<el-form-item :label="$t('message.arbitration.payBalance')+':'"  v-if="btnType == 2">
 			  <div class="f c_b a_c sarch_nav">
 			  	<el-input v-model="sq_zc_data.je" autocomplete="off" size="mini" class="search_input" :placeholder="$t('message.arbitration.enterAmount')"></el-input>
@@ -181,6 +240,7 @@
 			<el-form-item :label="$t('message.arbitration.marginBalan')+':'" v-if="btnType == 3">
 			  <span>{{sq_zc_data.info.user_bzj.toFixed(2)+' GAZ'}}</span>
 			</el-form-item>
+			
 			<el-form-item :label="$t('message.arbitration.withdrawalAmount')+':'"  v-if="btnType == 3">
 			  <div class="f c_b a_c sarch_nav">
 			  	<el-input v-model="sq_zc_data.je" autocomplete="off" size="mini" class="search_input" :placeholder="$t('message.arbitration.enterAmount')"></el-input>
@@ -211,9 +271,24 @@
 	import Web3Modal from "web3modal";
 	var address, web3, ArbOne, ArbTwo, GazConn, Dotc, Arbdate;
 	import { Dialog, Toast } from 'vant';
+	var hbilist = config['hbi'][config['key']];
+	var hbarr = [];
+	var i = 1;
+	for (const key in hbilist) {
+	  i++;
+	  hbarr.push({
+	    id: i,
+	    key: hbilist[key]['heyue'],
+	    abi: hbilist[key]['abi'],
+	    title: hbilist[key]['id'],
+	    num: hbilist[key]['num']
+	  });
+	}
 	export default{
 		data(){
 			return {
+			    hbilist: hbarr,
+			    hbindex: 0,
 				loadingsoudd:false,
 				isphone: false,
 				zc_list: [],
@@ -240,6 +315,7 @@
 				  index: 0,
 				  jiazai: false
 				},
+				balance:'',
 				dialogFormVisible: false,
 				formLabelWidth: '210px',
 				searchIcon: require('@/assets/img/search.png'),
@@ -289,6 +365,15 @@
 		  } else {
 		    dq.isphone = false;
 		  }
+		  if (this.$route.query.title) {
+		    for (let index = 0; index < this.hbilist.length; index++) {
+		  	  if (this.hbilist[index]['title'] == this.$route.query.title) {
+		  	    this.hbindex = index;
+		  	    break;
+		  	  }
+		    }
+		  }
+		  
 		  //监测用户是否安装MASK
 		  if (typeof ethereum === "undefined") {
 		    web3 = new Web3(config['hyue'][config['key']]['Url']);
@@ -345,6 +430,7 @@
 		      );
 		      dq.getList()
 		      dq.user = address.toLowerCase();
+			  dq.getBalane()
 		      dq.tabindex = "3";
 		    }
 		  }
@@ -383,6 +469,24 @@
 				    }
 				  }
 				});
+			},
+			
+			async getBalane(){
+				var dq = this
+				const providerOptions = {
+				  /* See Provider Options Section */
+				};
+				const web3Modal = new Web3Modal({
+				  // network: "mainnet",
+				  // cacheProvider: true,
+				  providerOptions,
+				});
+				var provider = await web3Modal.connect();
+				web3 = new Web3(provider);
+				// console.log(web3);
+				var proconn = new web3.eth.Contract(config['hbi'][config['key']][dq.hbilist[3]['title']]['abi'],config['hbi'][config['key']][dq.hbilist[3]['title']]['heyue']);
+				dq.balance = await proconn.methods.balanceOf(address).call();
+				console.log(dq.balance)
 			},
     //如果过亿请转换
     getFNum(num_str) {
@@ -516,7 +620,6 @@
 				    });
 				  }
 			  }else if(this.btnType == 2){ //申请
-			  console.log(this.sq_zc_data.info.payBalance)
 				  this.sq_zcy_ajax()
 			  }else{ // 退出
 				  this.sq_zc_data.signDefualt=1
@@ -550,6 +653,14 @@
 			      user_bzj: Number(ret[1][0]) / (10 ** bzjnum),
 			      suo: ret[1][6]
 			    };
+				  let sq=this.sq_zc_data.info.user;
+				  console.log(sq.length)
+				  if(sq.length>12){
+					let stars='****';
+					let str=''
+					str=sq.substr(0,4) + stars + sq.substr(sq.length-4);
+					this.sq_zc_data.info.user=str
+				  }
 			  });
 			},
 			//申请仲裁员或者提款
@@ -581,6 +692,8 @@
 			      if (ret) {
 			        Toast.clear();
 			        Toast.success('Withdrawal succeeded. Please check later');
+					this.dialogFormVisible=false
+					this.sq_zc_data.je=0
 			      } else {
 			        Toast.clear();
 			        Toast.fail('Please agree to authorize!');
@@ -656,6 +769,8 @@
 			      if (ret) {
 			        Toast.clear();
 			        Toast.success('Registration succeeded, please check later');
+					this.dialogFormVisible=false
+					this.sq_zc_data.je=0
 			      } else {
 			        Toast.clear();
 			        Toast.fail('Please agree to authorize!');
@@ -818,12 +933,14 @@
 		font-size: 28px;
 	}
 	.sarch_nav{
-		background-color: #DCDCDC;
+		background-color: #fff;
 		padding: 0px 30px;
 		border-radius: 30px;
+		border: 1px solid #333;
 	}
 	.search_input >>> .el-input__inner{
-		background-color: #DCDCDC;
+		background-color: #fff;
+		border: none;
 		/* color: #fff; */
 	}
 	.search_input >>> .el-input__inner:focus{
@@ -905,5 +1022,41 @@
     }
 	.center_top>div{
 		width: 50%;
+	}
+	.maxWidth{
+		max-width: 700px !important;
+	}
+	.listWap{
+		padding: 10px 4px 5px 10px;
+		box-shadow: 0 0 5px 0.1rem #dcdcdc;
+		margin-top: 10px;
+		border-radius: 4px;
+	}
+	.topWap{
+		display: flex;
+	}
+	.topMain{
+		display: flex;
+		flex: 1;
+	}
+	.topUser{
+		flex: 1;
+	}
+	.topUsername{
+		flex: 6;
+	}
+	.mainWap{
+		display: flex;
+		line-height: 30px;
+	}
+	.mainLeft{
+		flex: 2;
+		text-align: left !important;
+	}
+	.mainRight{
+		flex: 1;
+	}
+	.mainItem{
+		display: flex;
 	}
 </style>

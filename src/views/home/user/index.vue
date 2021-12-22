@@ -44,12 +44,12 @@
 				<!-- 仲裁员昵称 -->
 				<div class="one item">
 					<div class="top">
-						<span class="fwb fz16">{{$t('message.arbitration.arbitratorNick')}}</span>
+						<!-- <span class="fwb fz16">{{$t('message.arbitration.arbitratorNick')}}</span> -->
 					</div>
 					<div class="cont">
 						<div class="list">
 							<li>
-								<span class="label_nav">{{$t('message.arbitration.nick')}}:</span>
+								<span class="label_nav">{{$t('message.arbitration.arbitratorNick')}}:</span>
 								<span>{{beizhu_arr.zc_beizhu?beizhu_arr.zc_beizhu:$t('message.arbitration.NoNickname')}}</span>
 							</li>
 						</div>
@@ -59,7 +59,7 @@
 				<!-- 节点 -->
 				<div class="one item">
 					<div class="top">
-						<span class="fwb fz16">节点</span>
+						<!-- <span class="fwb fz16">节点</span> -->
 					</div>
 					<div class="cont">
 						<div class="list">
