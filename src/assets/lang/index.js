@@ -509,7 +509,7 @@ export default {
 	  suspendBalad:'暂停释放保证金',
 	  all: '全部',
 	  UserPause: '用户暂停',
-	  MerchantSuspension:'商家停牌',
+	  MerchantSuspension:'商家暂停',
 	  earlyReleaseMargin: '提前释放保证金',
 	  UserAgreesRelease: '用户同意发布',
 	  MerchantAgreesRelease: '商家同意释放',
