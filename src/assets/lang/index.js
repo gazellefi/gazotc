@@ -578,7 +578,7 @@ export default {
 			  successNum: '我成功仲裁订单数',
 			  payBalance: '缴纳保证金额',
 			  Serial: '仲裁员编号',
-			  partOrderNum: '我参与第二轮仲裁订单的订单数',
+			  partOrderNum: '我参与第二轮仲裁订单数',
 			  marginBalan: '保证金余额',
 			  withdrawalAmount: '提现金额',
 			  fromOrder: '来自发布订单',
