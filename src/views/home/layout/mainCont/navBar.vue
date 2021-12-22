@@ -35,7 +35,7 @@
         <div>{{queryAddr}}</div>
       </div>
 
-      <!-- <div class="menu hidden-sm-and-up" @click="show=true">菜单</div> -->
+      <div class="menu hidden-sm-and-up" @click="show=true" style="width: 30px;">菜单</div>
 
       <van-popup class="nav2" v-model="show" position="right" :style="{ width: '50%' ,height:'100%'}">
         <sidebar></sidebar>
@@ -278,7 +278,7 @@ export default {
   }
 }
 .select_nav {
-	width: 80%;
+	width: 100%;
 	/deep/ .el-input__inner{
 		border: none;
 		width: 100%;

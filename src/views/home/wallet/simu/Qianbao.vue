@@ -53,19 +53,19 @@ export default {
 		  {
 			  bg: require('@/assets/img/bg1.png'),
 			  icon: require('@/assets/img/money1.png'),
-			  num: '10.0000000000',
+			  num: 0,
 			  text: 'AssetsLock'
 		  },
 		  {
 			  bg: require('@/assets/img/bg2.png'),
 			  icon: require('@/assets/img/money2.png'),
-			  num: 10.0000000000,
+			  num: 0,
 			  text: 'AssetsWith'
 		  },
   {
 			  bg: require('@/assets/img/bg5.png'),
 			  icon: require('@/assets/img/money3.png'),
-			  num: 10.0000000000,
+			  num: 0,
 			  text: 'AssetsRelease'
 		  }
 	  ]

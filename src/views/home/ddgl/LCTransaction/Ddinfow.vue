@@ -73,7 +73,7 @@
 			</el-col>
 			<el-col :sm="24" :md="8" :lg="6" class="item">
 				<span>{{$t('message.dapp.orderType')}}：</span>
-				<span>{{ddifo.Umark_b}}</span>
+				<span>{{$t(`message.dapp.${ddifo.Umark_b}`)}}</span>
 			</el-col>
 			<el-col :sm="24" :md="8" :lg="6" class="item">
 				<span>{{$t('message.arbitration.userAress')}}：</span>
@@ -178,7 +178,7 @@
 			</el-col>
 				<el-col :span="24">
 					<!-- 购买 -->
-					<el-row v-if="ddifo['myuser'] == ddifo['Madd'] && ddifo['Umark_b'] == $t('message.dapp.buy') "  style="padding-bottom: 20px;">
+					<el-row v-if="ddifo['myuser'] == ddifo['Madd'] && ddifo['Umark_b'] == 'buy' "  style="padding-bottom: 20px;">
 						<el-col :sm="24" :lg="8" class="f c_c">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('qx_ddajax')" :disabled="anarr('qx_ddajax')">{{$t('message.cancel')}}</van-button>
 						</el-col>
@@ -208,7 +208,7 @@
 					</el-row>
 				</el-col>
 				<el-col :span="24">
-					<el-row v-if=" ddifo['myuser'] == ddifo['Madd'] && ddifo['Umark_b'] == $t('message.dapp.sell')" style="padding-bottom: 20px;">
+					<el-row v-if=" ddifo['myuser'] == ddifo['Madd'] && ddifo['Umark_b'] == 'sell'" style="padding-bottom: 20px;">
 						<el-col :sm="24" :lg="8" class="f c_c">
 							<van-button class="btnStyle" plain type="pr	imary" @click="setddcode('fb_ddajax')" :disabled="anarr('fb_ddajax')">{{$t('message.putMoney')}}</van-button>
 						</el-col>
@@ -236,7 +236,7 @@
 					</el-row>
 				</el-col>
 				<el-col :span="24">
-					<el-row v-if="ddifo['myuser'] == ddifo['Uadd'] && ddifo['Umark_b'] == $t('message.dapp.sell')" style="padding-bottom: 20px;">
+					<el-row v-if="ddifo['myuser'] == ddifo['Uadd'] && ddifo['Umark_b'] == 'sell'" style="padding-bottom: 20px;">
 						<el-col class="f c_c" :sm="24" :lg="8">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('qx_ddajax')" :disabled="anarr('qx_ddajax')">{{$t('message.cancel')}}</van-button>
 						</el-col>
@@ -265,7 +265,7 @@
 					</el-row>
 				</el-col>
 				<el-col :span="24">
-					<el-row v-if=" ddifo['myuser'] == ddifo['Uadd'] && ddifo['Umark_b'] == $t('message.dapp.buy') "  style="padding-bottom: 20px;">
+					<el-row v-if=" ddifo['myuser'] == ddifo['Uadd'] && ddifo['Umark_b'] == 'buy' "  style="padding-bottom: 20px;">
 						<el-col :sm="24" :lg="8" class="f c_c">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('fb_ddajax')" :disabled="anarr('fb_ddajax')">{{$t('message.putMoney')}}</van-button>
 						</el-col>
@@ -544,7 +544,7 @@
 						dq.ddifo['mma'] = Number(ret['mma']) / (10 ** bzj_num);
 						//扩展数据
 						// console.log(ret['Uadd']);
-						dq.ddifo['Umark_b'] = ret['Uadd'] == dq.dquser ? dq.$t('message.dapp.buy') : dq.$t('message.dapp.sell')
+						dq.ddifo['Umark_b'] = ret['Uadd'] == dq.dquser ? 'buy' : 'sell'
 						dq.ddifo['pro_c'] = ret['pro'] == '0x7573647400000000000000000000000000000000000000000000000000000000' ? 'usdt' : 'Test';
 						for (let index = 0; index < huobijson['huobi'].length; index++) {
 							var num = 0;

@@ -81,11 +81,12 @@
 							<van-field v-if="isshowNoteEdit" :autosize="{ maxHeight: 200, minHeight: 100 }"
 								type="textarea" v-model="beizhu_arr.beizhu" placeholder="请输入内容" class="input_fied">
 								<template #button>
+									<span class="fz12 cba cursor marr-10" @click="isshowNoteEdit = false">返回</span>
 									<span class="fz12 cba cursor" @click="setNote">{{$t('message.complete')}}</span>
 								</template>
 							</van-field>
 							<span v-else style="padding: 20px 0;display: inline-block;font-size: 16px;">
-								{{beizhu_arr.beizhu?beizhu_arr.beizhu:$t("message.activit.unregistered")}}
+								{{beizhu_arr.beizhu?beizhu_arr.beizhu:$t("message.notFill")}}
 							</span>
 						</div>
 						<div @click="isshowNoteEdit = true" v-if="!isshowNoteEdit" class="fz12 cba mart-10 cursor">
@@ -370,9 +371,7 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 				beizhucon.methods.message(dq.user ? dq.user : address + "", 6).call((err,
 					ret) => {
 					if (ret) {
-						console.log(ret);
 						let str = Base64.decode(ret)
-						console.log(str);
 						dq.beizhu_arr.beizhu = str
 					}
 				});

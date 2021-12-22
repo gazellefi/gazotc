@@ -23,7 +23,7 @@
       
       			<el-dropdown class="ddlistaa_head_item" @command="saixuantcode">
       				<span class="el-dropdown-link">
-      					{{ sxarr['tcode'] == "ALL"? $t('message.all'):sxarr['tcode'] == "C" ? 'for sale':'purchase' }} <i
+      					{{ sxarr['tcode'] == "ALL"? $t('message.all'):sxarr['tcode'] == "C" ? $t('message.dapp.sell'):$t('message.dapp.buy') }} <i
       						class="el-icon-arrow-down el-icon--right"></i>
       				</span>
       				<el-dropdown-menu slot="dropdown">
@@ -196,7 +196,7 @@
       					
       			<el-dropdown class="ddlistaa_head_item" @command="saixuantcode">
       				<span class="el-dropdown-link">
-      					{{ sxarr['tcode'] == "ALL"? $t('message.all'):sxarr['tcode'] == "C" ? 'for sale':'purchase' }} <i
+      					{{ sxarr['tcode'] == "ALL"? $t('message.all'):sxarr['tcode'] == "C" ? $t('message.dapp.sell'):$t('message.dapp.buy') }} <i
       						class="el-icon-arrow-down el-icon--right"></i>
       				</span>
       				<el-dropdown-menu slot="dropdown">
@@ -391,13 +391,13 @@ export default {
   },
   watch: {
   	'sxarr.pro'(e) {
-  		this.getsxlist(e, this.sxarr['fli'], this.sxarr['tcode']);
+  		// this.getsxlist(e, this.sxarr['fli'], this.sxarr['tcode']);
   	},
   	'sxarr.fli'(e) {
-  		this.getsxlist(this.sxarr['pro'], e, this.sxarr['tcode']);
+  		// this.getsxlist(this.sxarr['pro'], e, this.sxarr['tcode']);
   	},
   	'sxarr.tcode'(e) {
-  		this.getsxlist(this.sxarr['pro'], this.sxarr['fli'], e);
+  		// this.getsxlist(this.sxarr['pro'], this.sxarr['fli'], e);
   	}
   },
   methods: {

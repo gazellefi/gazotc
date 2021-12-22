@@ -22,7 +22,7 @@
 
 						<el-dropdown class="ddlistaa_head_item" @command="saixuantcode">
 							<span class="el-dropdown-link">
-								{{ sxarr['tcode'] == "ALL"? $t('message.all'):sxarr['tcode'] == "C" ? 'for sale':$t('message.dapp.buy') }} <i
+								{{ sxarr['tcode'] == "ALL"? $t('message.all'):sxarr['tcode'] == "C" ? $t('message.dapp.sell'):$t('message.dapp.buy') }} <i
 									class="el-icon-arrow-down el-icon--right"></i>
 							</span>
 							<el-dropdown-menu slot="dropdown">
@@ -124,7 +124,7 @@
 								
 						<el-dropdown class="ddlistaa_head_item" @command="saixuantcode">
 							<span class="el-dropdown-link">
-								{{ sxarr['tcode'] == "ALL"? $t('message.all'):sxarr['tcode'] == "C" ? 'for sale':$t('message.dapp.buy') }} <i
+								{{ sxarr['tcode'] == "ALL"? $t('message.all'):sxarr['tcode'] == "C" ? $t('message.dapp.sell'):$t('message.dapp.buy') }} <i
 									class="el-icon-arrow-down el-icon--right"></i>
 							</span>
 							<el-dropdown-menu slot="dropdown">
