@@ -196,7 +196,7 @@
 			  <span>{{zc_user_yq.form_user}}</span>
 			</el-form-item>
 			<el-form-item :label="$t('message.arbitration.invited')+':'" v-if="btnType == 1">
-			  <span class="cf0">{{zc_user_yq.form_user}}</span>
+			  <span class="c9">{{zc_user_yq.form_user}}</span>
 			</el-form-item>
 			
 			<el-form-item :label="$t('message.arbitration.account')+':'" v-if="btnType == 2 || btnType == 3">
