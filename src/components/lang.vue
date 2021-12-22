@@ -22,9 +22,8 @@ export default {
     dropdownClickFn(e) {
       this.$i18n.locale = e === 'EN' ? "en" : 'zh'
       localStorage.setItem('lang', this.$i18n.locale)
-
-
-
+	  //  传值给父组件
+	  this.$emit('changeLang',this.$i18n.locale)
     },
   },
   components: {},

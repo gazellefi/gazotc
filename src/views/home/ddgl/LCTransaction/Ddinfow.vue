@@ -107,7 +107,7 @@
 			</el-col>
 			<el-col :sm="24" :md="8" :lg="6" class="item">
 				<span>{{$t('message.dapp.payTime')}}：</span>
-				<span>{{ ddifo.timb != 0 ? gettime_zh(ddifo.timb):'unknown' }}</span>
+				<span>{{ ddifo.timb != 0 ? gettime_zh(ddifo.timb):$t('message.unknown') }}</span>
 			</el-col>
 			<el-col :sm="24" :md="8" :lg="6" class="item">
 				<span>{{$t('message.dapp.marginRelease')}}：</span>
@@ -544,7 +544,8 @@
 						dq.ddifo['mma'] = Number(ret['mma']) / (10 ** bzj_num);
 						//扩展数据
 						// console.log(ret['Uadd']);
-						dq.ddifo['Umark_b'] = ret['Uadd'] == dq.dquser ? 'buy' : 'sell'
+						dq.ddifo['Umark_b'] =  ret['Umark'] == '0x6275790000000000000000000000000000000000000000000000000000000000' ? 'buy':'sell';
+						// dq.ddifo['Umark_b'] = ret['Uadd'] == dq.dquser ? 'sell' : 'buy'
 						dq.ddifo['pro_c'] = ret['pro'] == '0x7573647400000000000000000000000000000000000000000000000000000000' ? 'usdt' : 'Test';
 						for (let index = 0; index < huobijson['huobi'].length; index++) {
 							var num = 0;

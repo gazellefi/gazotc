@@ -87,7 +87,7 @@
 		  	<div style="padding-top: 20px;" class="f a_c c_c">
 		  		<img src="@/assets/img/empty.png" alt="" width="130" height="85" />
 		  	</div>
-		  	<p>暂无数据</p>
+		  	<p>{{$t('message.NoData')}}</p>
 		  </div>
         </el-table>
 
@@ -133,7 +133,7 @@
 				<div style="padding-top: 20px;" class="f a_c c_c">
 					<img src="@/assets/img/empty.png" alt="" width="130" height="85" />
 				</div>
-				<p style="margin-top: 20px; color: #DCDCDC;">暂无数据</p>
+				<p style="margin-top: 20px; color: #DCDCDC;">{{$t('message.NoData')}}</p>
 			</div>
           <div class="ddlist_w_ddlist_ul_li" v-for="(li, index) in dataList" :key="index">
             <div class="ddlist_w_ddlist_ul_li_u">

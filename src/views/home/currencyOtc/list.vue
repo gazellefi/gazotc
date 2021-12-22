@@ -38,7 +38,7 @@
 						<div style="padding-top: 20px;" class="f a_c c_c">
 							<img src="@/assets/img/empty.png" alt="" width="130" height="85" />
 						</div>
-						<p>暂无数据</p>
+						<p>{{$t('message.NoData')}}</p>
 					</div>
 				</el-table>
 			</div>
@@ -77,7 +77,7 @@
 					<div style="padding-top: 20px;" class="f a_c c_c">
 						<img src="@/assets/img/empty.png" alt="" width="130" height="85" />
 					</div>
-					<p style="margin-top: 20px; color: #DCDCDC;">暂无数据</p>
+					<p style="margin-top: 20px; color: #DCDCDC;">{{$t('message.NoData')}}</p>
 				</div>
 				<div class="list_item f a_e c_b" v-for="(item,index) in list" :key="index">
 					<div class="fc">
@@ -339,6 +339,7 @@
 								};
 								list.push(obj);
 							}
+							console.log(list);
 							dq.list = list;
 						}
 					});

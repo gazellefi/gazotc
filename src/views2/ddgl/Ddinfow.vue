@@ -48,7 +48,7 @@
 </style>
 <template>
   <div class="ddinfo_w">
-    <van-nav-bar title="Order details" left-text="返回" @click-left="onClickLeft" left-arrow :fixed="true" :placeholder="true" />
+    <van-nav-bar title="Order details" :left-text="$t('message.return')" @click-left="onClickLeft" left-arrow :fixed="true" :placeholder="true" />
 
     <div class="ddinfo_w_v">
       <van-collapse v-model="activeNames">

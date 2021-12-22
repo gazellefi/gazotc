@@ -2,10 +2,10 @@
 	<div>
 		<el-row type="flex" justify="center" class="in_nav">
 			<el-col :sm="24" :md="12" class="user">
-				<div class="head">个人信息</div>
+				<div class="head">{{$t('message.personalInformation')}}</div>
 				<div class="one item">
 					<div class="top">
-						<span class="fwb fz16">基本信息</span>
+						<span class="fwb fz16">{{$t('message.essentialInformation')}}</span>
 					</div>
 					<div class="cont">
 						<div class="list">
@@ -36,7 +36,7 @@
 						</div>
 					</div>
 					<div class="" style="display: flex;justify-content: space-around;">
-						<div class="btn" style="margin-top: 10px;" @click="dialogVisible = true"><span>修改</span></div>
+						<div class="btn" style="margin-top: 10px;" @click="dialogVisible = true"><span>{{$t('message.modify')}}</span></div>
 						<div class="btn" style="margin-top: 10px;" @click="ruleHideAuth"><span>{{btnText}}</span></div>
 						<div class="btn" style="margin-top: 10px;" @click="ruleHideAuth" v-if="false"><span>{{btnText}}</span></div>
 					</div>
@@ -44,17 +44,17 @@
 				<!-- 仲裁员昵称 -->
 				<div class="one item">
 					<div class="top">
-						<span class="fwb fz16">仲裁员昵称</span>
+						<span class="fwb fz16">{{$t('message.arbitration.arbitratorNick')}}</span>
 					</div>
 					<div class="cont">
 						<div class="list">
 							<li>
-								<span class="label_nav">昵称:</span>
-								<span>{{beizhu_arr.zc_beizhu?beizhu_arr.zc_beizhu:'暂无昵称'}}</span>
+								<span class="label_nav">{{$t('message.arbitration.nick')}}:</span>
+								<span>{{beizhu_arr.zc_beizhu?beizhu_arr.zc_beizhu:$t('message.arbitration.NoNickname')}}</span>
 							</li>
 						</div>
 					</div>
-					<div class="btn" style="margin-top: 10px;" @click="dialogVisibleOne = true"><span>修改</span></div>
+					<div class="btn" style="margin-top: 10px;" @click="dialogVisibleOne = true"><span>{{$t('message.modify')}}</span></div>
 				</div>
 				<!-- 节点 -->
 				<div class="one item">
@@ -69,19 +69,19 @@
 							</li>
 						</div>
 					</div>
-					<div class="btn" style="margin-top: 10px;" @click="dialogVisibleTwo = true"><span>修改</span></div>
+					<div class="btn" style="margin-top: 10px;" @click="dialogVisibleTwo = true"><span>{{$t('message.modify')}}</span></div>
 				</div>
 				
 				<div class="two item">
 					<div class="top">
-						<span class="fwb fz16">交易备注</span>
+						<span class="fwb fz16">{{$t('message.remarks')}}</span>
 					</div>
 					<div style="padding-left: 30px;">
 						<div class="cont">
 							<van-field v-if="isshowNoteEdit" :autosize="{ maxHeight: 200, minHeight: 100 }"
-								type="textarea" v-model="beizhu_arr.beizhu" placeholder="请输入内容" class="input_fied">
+								type="textarea" v-model="beizhu_arr.beizhu" :placeholder="$t('message.enterContent')" class="input_fied">
 								<template #button>
-									<span class="fz12 cba cursor marr-10" @click="isshowNoteEdit = false">返回</span>
+									<span class="fz12 cba cursor marr-10" @click="isshowNoteEdit = false">{{$t('message.return')}}</span>
 									<span class="fz12 cba cursor" @click="setNote">{{$t('message.complete')}}</span>
 								</template>
 							</van-field>
@@ -95,33 +95,33 @@
 				</div>
 				<div class="thr item">
 					<div class="top">
-						<span class="fwb fz16">私信公钥</span>
+						<span class="fwb fz16">{{$t('message.publicKey')}}</span>
 					</div>
 					<div style="padding-left: 30px;">
 						<div class="cont">
-							<p style="padding: 20px 0;">公钥</p>
+							<p style="padding: 20px 0;">{{$t('message.keyp')}}</p>
 							<div
 								style="padding-bottom: 20px;max-width: 100%;text-align: justify;text-justify: newspaper;word-wrap: break-word">
 								<span>484be4a2ea8e9940d924d38da61a7ff7c89f4882bd27a6547d5845637f1c40d8</span>
 							</div>
 							<el-form ref="form" :model="form" label-width="80px" class="form_nav">
-								<el-form-item label="设置密码">
+								<el-form-item :label="$t('message.setPas')">
 									<div style="border: 1px solid #DCDCDC;">
-										<van-field v-model="form.password" type="password" placeholder="请输入密码"/>
+										<van-field v-model="form.password" type="password" :placeholder="$t('message.enterPas')"/>
 									</div>
 								</el-form-item>
-								<el-form-item label="确认密码" class="aaa">
+								<el-form-item :label="$t('message.ConfirmPassword')" class="aaa">
 									<div style="border: 1px solid #DCDCDC;">
-										<van-field v-model="form.passwordAggin" type="password" placeholder="请再次输入密码"/>
+										<van-field v-model="form.passwordAggin" type="password" :placeholder="$t('message.enterPasAggin')"/>
 									</div>
 								</el-form-item>
 								<el-form-item>
-									<span class="c6 fz12">*请设置8个以上字符至少包含字母数字，请备份好你的密码遗忘无法找回</span>
+									<span class="c6 fz12">{{$t('message.pasTips')}}</span>
 								</el-form-item>
 							</el-form>
 						</div>
 						<div class="btn">
-							<span>设置</span>
+							<span>{{$t('message.set')}}</span>
 						</div>
 					</div>
 				</div>
@@ -150,7 +150,7 @@
 	<myDialog  :width="isphone ? '90%':'40%'" title="修改信息" :closeModal="false" :closePress="false" :visible.sync="dialogVisibleOne"
 		@confirm="setbeizhu('zc_beizhu')" @cancel="xiugaiajax(1)">
 		<el-form label-width="110px" v-model="regForm" style="padding: 20px;">
-			<el-form-item  :label="'昵称*'">
+			<el-form-item  :label="$t('message.arbitration.nick')+'*'">
 				<el-input  v-model="regForm.zc_beizhu" placeholder="请输入仲裁员昵称"></el-input>
 			</el-form-item>
 			<el-form>
@@ -579,7 +579,7 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 			},
 			setbeizhu(e){
 				var loading = Toast.loading({
-					message: '修改中...',
+					message: this.$t('message.Modifying'),
 					closeOnClick: false,
 					closeOnClickOverlay:false,
 					loadingType: 'spinner',
@@ -596,8 +596,8 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 				        if (ret && !err) {
 				            loading.clear();
 				            Dialog.alert({
-				                title: '提示',
-				                message: '资料修改成功！',
+				                title: this.$t('message.prompt'),
+				                message: this.$t('message.DataSucceeded'),
 				            }).then(() => {
 								this.dialogVisibleOne=false;
 				                // on close
@@ -605,8 +605,8 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 				        }else{
 				            loading.clear();
 				            Dialog.alert({
-				                title: '提示',
-				                message: '资料修改失败！',
+				                title: this.$t('message.prompt'),
+				                message: this.$t('message.Datafailed'),
 				            }).then(() => {
 								this.dialogVisibleOne=false;
 				                // on close
@@ -637,8 +637,8 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 				    if (ret && !err) {
 				        loading.clear();
 				        Dialog.alert({
-				            title: '提示',
-				            message: '资料修改成功！',
+				            title: this.$t('message.prompt'),
+				            message: this.$t('message.DataSucceeded'),
 				        }).then(() => {
 								this.dialogVisibleTwo=false;
 				            // on close
@@ -646,8 +646,8 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 				    }else{
 				        loading.clear();
 				        Dialog.alert({
-				            title: '提示',
-				            message: '资料修改失败！',
+				            title: this.$t('message.prompt'),
+				            message: this.$t('message.Datafailed'),
 				        }).then(() => {
 								this.dialogVisibleTwo=false;
 				            // on close
