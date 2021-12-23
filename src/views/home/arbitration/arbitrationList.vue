@@ -21,27 +21,27 @@
 			<el-container class="fc table_nav">
 			 
 			  <el-table :data="zc_list" style="width: 100%">
-			    <el-table-column fixed prop="index" :label="$t('message.arbitration.serial')"></el-table-column>
-			    <el-table-column prop="store" :label="$t('message.arbitration.arbitrator')">
+			    <el-table-column align="center" fixed prop="index" :label="$t('message.arbitration.serial')"></el-table-column>
+			    <el-table-column align="center" prop="store" :label="$t('message.arbitration.arbitrator')">
 			      <template slot-scope="scope">
 			        <div class="zcy_list_user">{{ scope.row.username }}</div>
 			        <div class="zcy_list_username">{{ scope.row.user_b }}</div>
 			      </template>
 			    </el-table-column>
-			    <el-table-column prop="invite" :label="$t('message.arbitration.inviteNumber')"></el-table-column>
-			    <el-table-column prop="succeed" :label="$t('message.arbitration.singular')"></el-table-column>
-			    <el-table-column prop="appl" :label="$t('message.arbitration.regNumber')"></el-table-column>
-			    <el-table-column prop="balanceMar" :label="$t('message.arbitration.balance')">
+			    <el-table-column align="center" prop="invite" :label="$t('message.arbitration.inviteNumber')"></el-table-column>
+			    <el-table-column align="center" prop="succeed" :label="$t('message.arbitration.singular')"></el-table-column>
+			    <el-table-column align="center" prop="appl" :label="$t('message.arbitration.regNumber')"></el-table-column>
+			    <el-table-column align="center" prop="balanceMar" :label="$t('message.arbitration.balance')">
 			      <template slot-scope="scope">
 			        {{scope.row.balanceMar  }} GAZ
 			      </template>
 			    </el-table-column>
-			    <el-table-column prop="lock" :label="$t('message.state')">
+			    <el-table-column  align="center" prop="lock" :label="$t('message.state')">
 			      <template slot-scope="scope">
 			        <span :class="[scope.row.lock == 0 ? 'normal_style':'frozen_style']">{{scope.row.lock == 0 ? $t('message.arbitration.normal'):$t('message.arbitration.frozen')  }}</span>
 			      </template>
 			    </el-table-column>
-			    <el-table-column :label="$t('message.operation')">
+			    <el-table-column align="center" :label="$t('message.operation')">
 			      <template slot-scope="scope">
 			        <el-button round class="invitationBnt" size="mini" :loading="scope.row.jiazai" :disabled="scope.row.lock == 1 ? true:false" @click="yaoqingajax(scope.row)">{{$t('message.arbitration.invite')}}</el-button>
 			      </template>
@@ -779,8 +779,8 @@
 			      Dialog.confirm({
 			        title: '提升',
 			        message: '订单未初始化，请单击“确定”！',
-			        confirmButtonText: 'determine',
-			        cancelButtonText: 'cancel',
+			        confirmButtonText: '确定',
+			        cancelButtonText: '取消',
 			        cancelButtonColor: '',
 			        getContainer: 'body'
 			      })

@@ -430,11 +430,11 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 				  this.$message.error('请输入身份证号码');
 				  return
 			  }
-			  var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;  
-			  if(reg.test(this.regForm.identity) === false) {
-				  this.$message.error('请输入正确的身份证号码');
-				  return
-			  }
+			  // var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;  
+			  // if(reg.test(this.regForm.identity) === false) {
+				 //  this.$message.error('请输入正确的身份证号码');
+				 //  return
+			  // }
 			  Toast.loading({ message: "注册中..." });
 			  let nickname = Base64.encode(this.regForm.nickname);
 			  let name = Sha256(this.regForm.name).toString().substring(0, 10);
