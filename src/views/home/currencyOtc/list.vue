@@ -5,30 +5,30 @@
 			<div class="bblist_table">
 				<div class="bblist_table_left">
 					<span class="typeSelect">{{ $t("message.dapp.currency")}}：</span>
-					<el-select size="mini" v-model="huobi" placeholder="Please select">
+					<el-select size="mini" v-model="huobi" placeholder="Please select" @change="changeH">
 						<el-option v-for="item in hbarr" :key="item.key" :label="item.id" :value="item.key">
 						</el-option>
 					</el-select>
 					<span class="typeSelect">{{ $t("message.dapp.unit")}}：</span>
-					<el-select size="mini" v-model="fabi" placeholder="Please select">
+					<el-select size="mini" v-model="fabi" placeholder="Please select" @change="changeH">
 						<el-option v-for="item in hbarr" :key="item.key" :label="item.id" :value="item.key">
 						</el-option>
 					</el-select>
 
-					<el-input size="mini" v-model="form.zdnum" :placeholder="$t('message.enterOrderId')"
-						style="margin-left: 15px; max-width: 150px"></el-input>
+					<!-- <el-input size="mini" v-model="form.zdnum" placeholder="请输入数量"
+						style="margin-left: 15px; max-width: 150px"></el-input> -->
 
 					<el-button size="mini" type="primary" icon="el-icon-search" circle style="margin-left: 15px"
 						@click="listajax"></el-button>
 				</div>
 				<el-table v-loading="jiazai" :data="list">
-					<el-table-column align=center width=80px prop="iorder" :label="$t('message.arbitration.order')">
+					<el-table-column align=center prop="iorder" :label="$t('message.arbitration.order')">
 					</el-table-column>
 					<el-table-column align=center prop="moa" :label="$t('message.dapp.amount')"> </el-table-column>
-					<el-table-column align=center prop="zer" :label="$t('message.dapp.minAmount')"> </el-table-column>
-					<el-table-column align=center width=80px prop="uni" :label="$t('message.dapp.unitPrice')">
+					<!-- <el-table-column align=center prop="zer" :label="$t('message.dapp.minAmount')"> </el-table-column> -->
+					<el-table-column align=center prop="uni" :label="$t('message.dapp.unitPrice')">
 					</el-table-column>
-					<el-table-column width=250px :label="$t('message.operation')">
+					<el-table-column :label="$t('message.operation')">
 						<template slot-scope="scope">
 							<el-button type="text" size="small" @click="opengoumai(scope.row)">
 								{{ $t("message.dapp.buy")}}</el-button>
@@ -64,10 +64,10 @@
 				</el-col>
 				<el-col :span="12" style="margin-top: 20px;padding-bottom: 10px;">
 					<div class="ddgl_fabu_p_head_sxan_i">
-						<el-input size="mini" v-model="form.zdnum" :placeholder="$t('message.enterOrderId')"
-							style="max-width: 150px"></el-input>
-						<el-button size="mini" type="primary" icon="el-icon-search" circle style="margin-left: 15px;"
-							@click="listajax"></el-button>
+						<!-- <el-input size="mini" v-model="form.zdnum" :placeholder="$t('message.enterOrderId')"
+							style="max-width: 150px"></el-input> -->
+						<!-- <el-button size="mini" type="primary" icon="el-icon-search" circle style="margin-left: 15px;"
+							@click="listajax"></el-button> -->
 					</div>
 				</el-col>
 			</el-row>
@@ -144,7 +144,7 @@
 	var ccdotconn, web3, address;
 
 	export default {
-		mounted() {
+		created() {
 			if (document.body.clientWidth >= 1000) {
 				this.type = "pc";
 			} else {
@@ -156,9 +156,9 @@
 				dq.hbarr.push(huoarr[key]);
 			}
 
-			dq.form["type_b"] = dq.hbarr[0]["key"];
-			dq.form["type"] = dq.hbarr.length >= 1 ? dq.hbarr[2]["key"] : dq.hbarr[0]["key"];
-			console.log(dq.form["type_b"] );
+			dq.fabi = dq.hbarr[0]["key"];
+			dq.huobi = dq.hbarr.length >= 1 ? dq.hbarr[3]["key"] : dq.hbarr[0]["key"];
+			console.log(dq.huobi);
 			//初始化WEB3
 			//监测用户是否安装MASK
 			if (typeof ethereum === "undefined") {
@@ -204,8 +204,8 @@
 			return {
 				type: "pc",
 				list: [],
-				huobi: "USDT",
-				fabi: "USDT",
+				huobi: "",
+				fabi: "",
 				mairucode: false,
 				isLoading: false,
 
@@ -218,25 +218,25 @@
 				form: {
 					type: "",
 					type_b: "",
-					zdnum: null,
+					zdnum: 0,
 				},
 
 				jiazai: false,
 			};
 		},
 		watch: {
-			huobi(e) {
-				this.count = 20;
-				this.listajax(this.tcode, e, this.fabi);
-			},
-			fabi(e) {
-				this.count = 20;
-				this.listajax(this.tcode, this.huobi, e);
-			},
+			// huobi(e) {
+			// 	this.count = 20;
+			// 	this.listajax(this.tcode, e, this.fabi);
+			// },
+			// fabi(e) {
+			// 	this.count = 20;
+			// 	this.listajax(this.tcode, this.huobi, e);
+			// },
 		},
 		methods: {
-			handleClick(row) {
-				console.log(row);
+			changeH(e) {
+				this.listajax()
 			},
 			//如果过亿请转换
 			getFNum(num_str) {
@@ -308,7 +308,7 @@
 				dq.jiazai = true;
 				var js_num = 0;
 				for (let index = 0; index < dq.hbarr.length; index++) {
-					if (dq.form["type"] == dq.hbarr[index]["key"]) {
+					if (dq.huobi == dq.hbarr[index]["key"]) {
 						js_num = Number(dq.hbarr[index]["num"]);
 						break;
 					}
@@ -318,10 +318,9 @@
 				if (dq.form["zdnum"]) {
 					sounum = dq.getFNum(dq.form["zdnum"] * 10 ** js_num);
 				}
-
+				console.log(dq.huobi)
 				//加载列表数据
-				ccdotconn.methods
-					.sort(this.form["type"], this.form["type_b"], 30, 30, sounum + "")
+				ccdotconn.methods.sort(dq.huobi, dq.fabi, 30, 30, sounum + "")
 					.call((error, ret) => {
 						dq.jiazai = false;
 						if (ret) {

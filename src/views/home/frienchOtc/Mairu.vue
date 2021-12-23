@@ -256,7 +256,12 @@ export default {
       }
     };
   },
+  props:['did'],
   watch: {
+	ddid(){
+		console.log('1111')
+		this.getddinfo()
+	},
     'form.num'(e) {
       if (!e) {
         return;

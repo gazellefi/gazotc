@@ -10,7 +10,7 @@
 		  <van-tab :title="$t('message.dapp.QualificationArbitrators')">
 			  <rulesOfArbitratorsItem header="message.dapp.QualificationArbitrators" :listData="listData1"></rulesOfArbitratorsItem>
 		  </van-tab>
-		  <van-tab :title="$t('message.dapp.firstRule')">
+		  <van-tab :title="$t('message.dapp.firstRules')">
 			  <rulesOfArbitratorsItem header="message.dapp.firstRules" :listData="listData2"></rulesOfArbitratorsItem>
 		  </van-tab>
 		  <van-tab :title="$t('message.dapp.twoRules')">

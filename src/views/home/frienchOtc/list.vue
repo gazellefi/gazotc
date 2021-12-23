@@ -316,8 +316,9 @@ export default {
     },
     openmairu(e) {
       // this.$router.push({ path: "./mairu", query: { did: e } });
-      this.visibleDialogShow = true
-      this.did = e
+	  this.$router.push({ name: 'mairu', query: { did: e } })
+      // this.visibleDialogShow = true
+      // this.did = e
     },
 
     /*
