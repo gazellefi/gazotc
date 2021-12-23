@@ -140,7 +140,42 @@
 				</div>
 			</div>
 		</div>
-
+		
+		<el-dialog title="第二轮仲裁报名" class="listType" :visible.sync="deldata['dialogcode']" width=350px>
+		  <div>
+		    <p>
+		      我的账号：<span>{{  deldata.myuser.user }}</span>
+		    </p>
+		    <p>
+		      我的昵称：<span>{{  deldata.myuser.name }}</span>
+		    </p>
+		    <p>
+		      订单号：<span>{{ deldata.data.did }}</span>
+		    </p>
+		    <div>
+		      <p>订单详情</p>
+		      <ul class="list-number">
+		        <li>商家地址：{{deldata.data.mad_b}}</li>	
+		        <li>用户地址：{{deldata.data.uad_b}}</li>
+		        <li>资产总数：{{deldata.data.uoa}} {{ deldata.data.pro }}</li>
+		        <li>商家保证金：{{deldata.data.mma}} USDT</li>
+		        <li>用户保证金：{{deldata.data.uma}} USDT</li>
+		      </ul>
+		    </div>
+		    <p>报名人数：<span>{{deldata.Arbs.aid}} / {{deldata.renshunum}}</span></p>
+		    <p>报名倒计时：<span><van-count-down :time="deldata.data.djs_val" format="DD 天 HH 时 mm 分 ss 秒" /></span></p>
+		    <div>
+		      <p>入选者账号</p>
+		      <ul class="list-number">
+		        <li v-for="(li,index) in deldata['Uarr']" :key="index">{{li}}</li>
+		      </ul>
+		    </div>
+		    <p v-if="deldata.ubmcode">你已报名，并入选</p>
+		  </div>
+		  <span slot="footer" class="dialog-footer">
+		    <el-button type="primary" @click="kaishibaomingajax" :disabled="deldata.ubmcode" :loading="deldata.loading">报名</el-button>
+		  </span>
+		</el-dialog>
 
 	</el-container>
 </template>
@@ -532,21 +567,40 @@
 					var 总人数 = await ArbTwo.methods.neg().call();
 					this.deldata['renshunum'] = 总人数;
 					//查询我的昵称
-					this.deldata['myuser']['user'] = address;
+					var add=address
+					if(address.length>15){
+						let star='****';
+						let str=''
+						str=address.substr(0,5) + star + address.substr(address.length-5);
+						add=str
+					}
+					this.deldata['myuser']['user'] = add;
+					
 					var 我的名字 = await ArbOne.methods.message(address, "0").call();
 					this.deldata['myuser']['name'] = 我的名字 ? Base64.decode(我的名字) : '暂未设置';
+					console.log(仲裁详情)
 					this.deldata['Arbs'] = 仲裁详情;
 					var 人员列表 = [];
 					for (let index = 0; index < 报名人数列表[0].length; index++) {
 						if (报名人数列表[0][index] != '0x0000000000000000000000000000000000000000') {
-							人员列表.push(报名人数列表[0][index]);
+							if(报名人数列表[0][index].length>15){
+								let star='****';
+								let str=''
+								str=报名人数列表[0][index].substr(0,5) + star + 报名人数列表[0][index].substr(报名人数列表[0][index].length-5);
+								人员列表.push(str);
+							}else{
+								人员列表.push(报名人数列表[0][index]);
+							}
 						}
 					}
 					var 查询我是否报名 = Lettertolowercase(JSON.stringify(人员列表));
+							console.log(人员列表)
 					if (查询我是否报名.indexOf(address) != -1) {
 						this.deldata['ubmcode'] = true;
 					}
 					this.deldata['Uarr'] = 人员列表;
+						console.log(this.deldata['Uarr'])
+					
 				} else {
 					this.deldata['dialogcode'] = false;
 				}
@@ -565,6 +619,63 @@
 					});
 				}
 			},
+			
+			//第二轮报名提交
+			async kaishibaomingajax(){
+			  var dq = this;
+			  dq.deldata.loading = true;
+			  var arber = await ArbOne.methods.arber(address).call();
+			  var peg = await ArbOne.methods.peg().call();
+			  var lock = await ArbOne.methods.lock(address).call();
+			  var balanceMar = await ArbOne.methods.balanceMar(address).call();
+			  var user = await ArbOne.methods.user(dq.deldata['data']['did']).call();
+			  console.log(user)
+			  if (this.deldata['Arbs']['arb'] == 3 && this.deldata['Arbs']['timd'] == 0) {
+			    if (Number(arber) <= Number(peg) && lock == 0 &&  Number(balanceMar) >= Number(user.mma)) {
+			      //获取加密字符串
+			      var arbTwoApply = await Arbdate.methods.arbTwoApply(address,this.deldata['Arbs']['timc']).call();
+			      //查询是否存在
+			      var slot = await ArbTwo.methods.slot(arbTwoApply).call();
+			      if (slot != 0) {
+			        dq.$message.error('你已成功报名！');
+			        return;
+			      }
+			
+			      ArbTwo.methods.arbTwoApply(this.deldata['data']['did']).send({from:address},(err,ret)=>{
+			        if (ret) {
+			          bmlxsql();
+			        }else{
+			          dq.deldata.loading = false;
+			          dq.$message.error('请点击确定！');
+			        }
+			      });
+			    }else{
+			      dq.deldata.loading = false;
+			      this.$message.error('报名失败');
+			    }
+			    
+			  }else{
+			    dq.deldata.loading = false;
+			    this.$message.error('已停止报名');
+			  }
+			  //轮询查询是否报名成功
+			  async function bmlxsql() {
+			     var bmarr = await ArbTwo.methods.applySuceed(dq.deldata['data']['did']).call();
+			     var JSONS = 字母转小写(JSON.stringify(bmarr));
+			     if (JSONS.indexOf(address) != -1) {
+			        dq.$message({
+			          showClose: true,
+			          message: '你已成功报名'
+			        });
+			        dq.deldata.loading = false;
+			        dq.deldata['ubmcode'] = true;
+			     }else{
+			       setTimeout(() => {
+			         bmlxsql();
+			       }, 3000);
+			     }
+			  }
+			}
 		}
 	}
 </script>
@@ -648,5 +759,8 @@
 		width: 2px;
 		height: 50%;
 		background-color: #DCDCDC
+	}
+	.listType{
+		line-height: 1.5625rem;
 	}
 </style>

@@ -600,4 +600,7 @@
 	        height: 50%;
 	        background-color: #DCDCDC
 	}
+	.el-form-item{
+		margin-bottom: 0px;
+	}
 </style>

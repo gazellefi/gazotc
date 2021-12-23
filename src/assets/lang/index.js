@@ -574,7 +574,7 @@ export default {
 			  margin: '保证金',
 			  marginBalance:'商家保证金余额',
 			  payMar1: '商家要求用户交纳的保证金比例',
-			  orderNum: '我的申述的订单数',
+			  orderNum: '订单号',
 			  invitedNum: '我被邀请的订单数',
 			  successNum: '我成功仲裁订单数',
 			  payBalance: '缴纳保证金额',
