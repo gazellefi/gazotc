@@ -37,7 +37,7 @@
       <!-- 表格 -->
       <div class="listul" v-loading="loading">
         <el-table :fixed="true" :data="dataList" style="width: 100%; overflow: auto">
-          <el-table-column align="center" :label="$t('message.dapp.Merchant')" width="180">
+          <el-table-column align="center" :label="$t('message.dapp.Merchant')">
             <template slot-scope="scope">
               <div class="listul_user">
                 <div class="listul_user_name">{{ scope.row.username }}</div>
@@ -50,19 +50,19 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column align="center" prop="ddid" :label="$t('message.arbitration.order')" width="130">
+          <el-table-column align="center" prop="ddid" :label="$t('message.arbitration.order')">
           </el-table-column>
           <el-table-column align="center" prop="num" :label="$t('message.dapp.amount')">
             <template slot-scope="scope">
               {{ scope.row.num }} {{ huobi }}
             </template>
           </el-table-column>
-          <el-table-column align="center" width="200" :label="$t('message.dapp.limit')">
+          <el-table-column align="center" :label="$t('message.dapp.limit')">
             <template slot-scope="scope">
               {{ scope.row.zd_mun }} - {{ scope.row.zg_mun }} {{ huobi }}
             </template>
           </el-table-column>
-          <el-table-column align="center" :label="$t('message.dapp.unitPrice')" width="180">
+          <el-table-column align="center" :label="$t('message.dapp.unitPrice')">
             <template slot-scope="scope">
               <div class="danjia">{{ scope.row.danjia }} {{ fabi }}</div>
             </template>
@@ -143,16 +143,19 @@
               <span>({{ li.jd_num }}{{$t("message.dapp.Unit")}}/{{ li.bfb }}%)</span>
               <span class="price-lab" style="margin-left: auto">{{$t('message.arbitration.order')}}:{{ li.ddid }}</span>
             </div>
+			<div class="listul_user_zh mart-10">
+			  {{ li.user }}
+			</div>
             <div class="ddlist_w_ddlist_ul_li_conn">
-              <div class="ddlist_w_ddlist_ul_li_conn_li">
+              <div class="ddlist_w_ddlist_ul_li_conn_li mart-5">
                 <span>{{$t('message.dapp.amount')}}:&nbsp;{{ li.num }} {{ huobi }}</span>
                 <span class="price-lab" style="opacity: 0.7">{{$t('message.dapp.unitPrice')}}</span>
               </div>
-              <div class="ddlist_w_ddlist_ul_li_conn_li">
+              <div class="ddlist_w_ddlist_ul_li_conn_li mart-5">
                 <span>{{$t('message.dapp.limit')}}:&nbsp;{{ li.zd_mun }}-{{ li.zg_mun }} {{ huobi }}</span>
                 <span class="price-lab jiage">{{ li.danjia }} {{ fabi }}</span>
               </div>
-              <div class="ddlist_w_ddlist_ul_li_conn_lit">
+              <div class="ddlist_w_ddlist_ul_li_conn_lit mart-5">
                 <span>{{$t('message.dapp.blandAsk')}}:&nbsp;{{ li.bzj_u }}%</span>
                 <span style="margin-left: auto">
                   <div class="ddlist_w_ddlist_ul_li_conn_li">
@@ -782,7 +785,7 @@ button.anniu {
 .ddlist_w_ddlist_ul_li_u {
   display: flex;
   flex-direction: row;
-  height: 50px;
+  /* height: 50px; */
   align-items: center;
 }
 .ddlist_w_ddlist_ul_li_u_username {
