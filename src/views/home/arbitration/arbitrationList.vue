@@ -110,8 +110,8 @@
 					</div>
 				</div>
 			</div> -->
-			<div class="listWap">
-				<div class="listItem" v-for="(item,index) in zc_list" :key="index">
+			<div class="listWap" v-for="(item,index) in zc_list" :key="index">
+				<div class="listItem">
 					<div class="topWap">
 						<span class="topLabel fwb">{{$t('message.arbitration.arbitrator')}}:</span>
 						<!-- {{ item.username }} -->
@@ -151,7 +151,7 @@
 						</div>
 					</div>
 					<div class="footerWap" style="margin-top: 10px;">
-						<el-button round class="invitationBnt invitationBnt_wap" style="width: 100%;" size="normal" :loading="item.jiazai" :disabled="item.lock == 1 ? true:false" @click="yaoqingajax(item)">{{$t('message.arbitration.invite')}}</el-button>
+						<el-button round class="invitationBnt invitationBnt_wap"  size="normal" :loading="item.jiazai" :disabled="item.lock == 1 ? true:false" @click="yaoqingajax(item)">{{$t('message.arbitration.invite')}}</el-button>
 					</div>
 				</div>
 			</div>
@@ -166,19 +166,12 @@
 				<span>{{zc_user_yq.my_name == 'Not filled in yet' ? $t('message.notFill') : zc_user_yq.my_name}}</span>
 			</el-form-item>
 			<el-form-item :label="$t('message.arbitration.order')+':'" v-if="btnType == 1">
-			   <div class="f c_b a_c sarch_nav">
+			   <div class="f c_b a_c sarch_nav" style="width: 20%;margin-left: 30%;">
 			  	<el-input v-model="zc_user_yq.did" autocomplete="off" size="mini" class="search_input" :placeholder="$t('message.arbitration.enterOrderNum')"></el-input>
 				<el-button icon="el-icon-search" circle @click="sousou_dd" :loading="loadingsoudd"></el-button>
-			  </div> 
-				<!-- <el-input v-model="zc_user_yq.did"style="
-    padding: 1px;
-    border: 1px solid;
-    border-radius: 30px;" autocomplete="off" size="mini" class="search_input" :placeholder="$t('message.arbitration.enterOrderNum')"></el-input>
-				<el-button icon="el-icon-search" style="
-    position: absolute;
-    right: 1px;
-    bottom: 2px;
-" circle @click="sousou_dd" :loading="loadingsoudd"></el-button> -->
+			  </div>
+				<!-- <el-input v-model="zc_user_yq.did"style="padding: 1px;border: 1px solid;border-radius: 30px; width: 15%;" autocomplete="off" size="mini" class="search_input" :placeholder="$t('message.arbitration.enterOrderNum')"></el-input>
+				<el-button icon="el-icon-search" style="position: absolute; bottom: 2px;" circle @click="sousou_dd" :loading="loadingsoudd"></el-button> -->
 			</el-form-item>
 			<el-form-item :label="$t('message.arbitration.character')+':'" v-if="btnType == 1">
 			  <span>{{zc_user_yq.juese}}</span>
@@ -196,7 +189,10 @@
 			  <span>{{zc_user_yq.form_user}}</span>
 			</el-form-item>
 			<el-form-item :label="$t('message.arbitration.invited')+':'" v-if="btnType == 1">
-			  <span class="cf0">{{zc_user_yq.form_user}}</span>
+			  <div class=""  v-for="(li,index) in zc_user_yq.u_array" :key="index">
+			  	<span>{{ index+1 }}.{{ li.username }}</span>
+				<span class="cf0">{{li.user}}</span>
+			  </div>
 			</el-form-item>
 			
 			<el-form-item :label="$t('message.arbitration.account')+':'" v-if="btnType == 2 || btnType == 3">
@@ -880,6 +876,7 @@
 			        user: zc_user_list[0][index],
 			        username: zc_user_list[1][index] ? Base64.decode(zc_user_list[1][index]) : '未填写'
 			      });
+				  console.log(dq.zc_user_yq)
 			    }
 			    for (let index = 0; index < dq.zc_user_yq.u_array.length; index++) {
 			      if (dq.zc_user_yq.u_array[index]['user'] == dq.zc_user_yq['form_user']) {
@@ -934,7 +931,7 @@
 	}
 	.sarch_nav{
 		background-color: #fff;
-		padding: 0px 30px;
+		padding: 0px 0 0 5px;
 		border-radius: 30px;
 		border: 1px solid #333;
 	}
@@ -1058,5 +1055,9 @@
 	}
 	.mainItem{
 		display: flex;
+	}
+	.listItem{
+		font-size: 13px;
+		/* margin-top: 20px; */
 	}
 </style>
