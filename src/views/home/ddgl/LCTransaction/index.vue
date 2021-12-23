@@ -239,7 +239,7 @@
       				<div class="f c_c">
       					<span class="fwb">{{item.type}}</span>
       					<span class="fwb">USDT</span>
-      					<div class="f c_c marty_nav">
+      					<div class="f c_c marty_nav marl-5">
       						<span>{{$t('message.arbitration.merchantMargin')}}{{ item.mma }}USDT</span>
       					</div>
       				</div>
@@ -514,7 +514,8 @@ export default {
 	},
 	//  商家时候改变 table row 颜色
 	addClass({row, column, rowIndex, columnIndex }) {
-	  if(row.type == this.$t('message.dapp.buy')) {
+	  // console.log(columnIndex)
+	  if(row.type == this.$t('message.dapp.buy') && columnIndex == 4) {
 		return 'weightCell';
 	  }
 	},
@@ -755,7 +756,7 @@ div{
 }
 div {
 	/deep/ .weightCell{
-		background-color: #d0e2f5 !important
+		color: #0D86FE;
 	}
 }
 </style>

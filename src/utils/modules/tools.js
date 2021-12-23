@@ -23,6 +23,11 @@ Vue.prototype.$date = (date) => {
 import myDialog from '@/components/myDialog.vue'
 Vue.component('myDialog', myDialog)
 
+// 格式化长id
+Vue.prototype.$getStr = (str) => {
+  return str.substring(0, 5) + "····" + str.substring(str.length - 5, str.length);
+
+}
 
 //全局监听
 var $Jt = new Vue();

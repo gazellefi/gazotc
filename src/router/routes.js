@@ -159,34 +159,6 @@ export default [
 
       },
       {
-        path: '/home/rule',
-        name: 'rule',
-        component: () => import('@/views/home/rule/index'),
-        meta: {
-          name: 'message.dapp.rule',
-          icon: require('@/assets/dappImg/3.png')
-          // isHideChild: true
-        },
-        redirect: '/home/rule/transactionRules',
-        children: [
-          {
-            path: "/home/rule/transactionRules",
-            meta: { name: 'message.dapp.TransactionRules' },
-            component: () => import('@/views/home/rule/transactionRules'),
-          },
-          {
-            path: "/home/rule/marginRules",
-            meta: { name: 'message.dapp.MarginRules' },
-            component: () => import('@/views/home/rule/marginRules'),
-          },
-          {
-            path: "/home/rule/rulesOfArbitrators",
-            meta: { name: 'message.dapp.ArbitratorsRules' },
-            component: () => import('@/views/home/rule/rulesOfArbitrators'),
-          },
-        ]
-      },
-      {
         path: '/home/orderCenter',
         name: 'orderCenter',
         component: () => import('@/views/home/ddgl/index.vue'),
@@ -354,7 +326,106 @@ export default [
 		  },
 
         ]
-      }
+      },
+	  {
+	    path: '/home/nft',
+	    name: 'rule',
+	    component: () => import('@/views/home/vipNft/index'),
+	    meta: {
+	      name: '会员NFT',
+	      icon: require('@/assets/dappImg/3.png')
+	      // isHideChild: true
+	    },
+	    redirect: '/home/vipNft/compose/index',
+	    children: [
+	      {
+	        path: "/home/vipNft/compose/index",
+	        meta: { name: '合成NFT' },
+	        component: () => import('@/views/home/vipNft/compose/index'),
+	      },
+	      {
+	        path: "/home/vipNft/turn/index",
+	        meta: { name: 'NFT转让' },
+	        component: () => import('@/views/home/vipNft/turn/index'),
+	      },
+		  {
+		    path: "/home/vipNft/my/index",
+		    meta: { name: '我的NFT' },
+		    component: () => import('@/views/home/vipNft/my/index'),
+		  },
+	    ]
+	  },
+	  {
+	    path: '/home/Mining',
+	    name: 'rule',
+	    component: () => import('@/views/home/mining/index'),
+	    meta: {
+	      name: '挖矿',
+	      icon: require('@/assets/dappImg/3.png')
+	      // isHideChild: true
+	    },
+	    redirect: '/home/mining/abrMine/index',
+	    children: [
+	      {
+	        path: "/home/mining/abrMine/index",
+	        meta: { name: '仲裁挖矿' },
+	        component: () => import('@/views/home/mining/abrMine/index'),
+	      },
+	      {
+	        path: "/home/mining/orederMine/index",
+	        meta: { name: '订单挖矿' },
+	        component: () => import('@/views/home/mining/orederMine/index'),
+	      },
+		  {
+			path: "/home/mining/traMine/index",
+			meta: { name: '交易挖矿' },
+			component: () => import('@/views/home/mining/traMine/index'),
+		  },
+		  {
+		    path: "/home/mining/safeMine/index",
+		    meta: { name: '保险挖矿' },
+		    component: () => import('@/views/home/mining/safeMine/index'),
+		  },
+		  {
+		    path: "/home/mining/runMine/index",
+		    meta: { name: '流动性挖矿' },
+		    component: () => import('@/views/home/mining/runMine/index'),
+		  },
+		  {
+			path: "/home/mining/extend/index",
+			meta: { name: '推广挖矿' },
+			component: () => import('@/views/home/mining/extend/index'),
+		  },
+	    ]
+	  },
+	  {
+	    path: '/home/rule',
+	    name: 'rule',
+	    component: () => import('@/views/home/rule/index'),
+	    meta: {
+	      name: 'message.dapp.rule',
+	      icon: require('@/assets/dappImg/3.png')
+	      // isHideChild: true
+	    },
+	    redirect: '/home/rule/transactionRules',
+	    children: [
+	      {
+	        path: "/home/rule/transactionRules",
+	        meta: { name: 'message.dapp.TransactionRules' },
+	        component: () => import('@/views/home/rule/transactionRules'),
+	      },
+	      {
+	        path: "/home/rule/marginRules",
+	        meta: { name: 'message.dapp.MarginRules' },
+	        component: () => import('@/views/home/rule/marginRules'),
+	      },
+	      {
+	        path: "/home/rule/rulesOfArbitrators",
+	        meta: { name: 'message.dapp.ArbitratorsRules' },
+	        component: () => import('@/views/home/rule/rulesOfArbitrators'),
+	      },
+	    ]
+	  },
     ]
   },
   // {

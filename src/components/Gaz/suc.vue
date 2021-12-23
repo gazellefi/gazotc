@@ -65,7 +65,7 @@ export default {
       input.select();
       if (document.execCommand('copy')) {
         document.execCommand('copy');
-        this.$toast('TRC20地址复制成功')
+        this.$toast('复制成功')
       }
       document.body.removeChild(input);
     },

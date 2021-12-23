@@ -130,11 +130,11 @@
 					</div>
 					<div class="mart-10">
 						<span class="marr-10">{{$t('message.arbitration.merchant')}}</span>
-						<span :class="uinfo.user == item.madd_b ? 'ac':''">{{ item.madd }}</span>
+						<span class="fz14" :class="uinfo.user == item.madd_b ? 'ac':''">{{ item.madd }}</span>
 					</div>
 					<div class="mart-10">
 						<span class="marr-10">{{$t('message.arbitration.user')}}</span>
-						 <span :class="uinfo.user == item.uadd_b ? 'ac':''">{{ item.uadd }}</span>
+						 <span class="fz14" :class="uinfo.user == item.uadd_b ? 'ac':''">{{ item.uadd }}</span>
 					</div>
 					<div class="mart-10">
 						<span class="asBtn marr-5">{{'卖出 '}}{{ item.uoa }} {{ item.pro }}</span>

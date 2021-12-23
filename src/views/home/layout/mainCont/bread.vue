@@ -1,7 +1,16 @@
 <template>
-  <el-breadcrumb id="breadcrumb" separator=">">
-    <el-breadcrumb-item v-for="(v,i) in breadcrumbList" :to="{ path:i==0? v.path=v.redirect:v.path }">{{$t(v.meta.name)}}</el-breadcrumb-item>
-  </el-breadcrumb>
+  <div class="f c_b">
+  	<el-breadcrumb id="breadcrumb" separator=">">
+  	  <el-breadcrumb-item v-for="(v,i) in breadcrumbList" :to="{ path:i==0? v.path=v.redirect:v.path }">{{$t(v.meta.name)}}</el-breadcrumb-item>
+  	</el-breadcrumb>
+	<div class="fc a_e c_a fz14" style="padding-right: 15px;">
+		<div class="f a_c">
+			<i class="el-icon-s-promotion" style="color: #333;font-size: 16px;margin-top: -4px;margin-right: 5px;"></i>
+			<span >联系客服</span>
+		</div>
+		<span >+447536334816</span>
+	</div>
+  </div>
 </template>
 <script>
 export default {

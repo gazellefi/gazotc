@@ -2,14 +2,20 @@
 	<div>
 		<!-- pc -->
 		<div class="hidden-sm-and-down">
-			<div class="f c_r top_nav">
-				<div class="f c_c a_c cursor" @click="sq_zcy_dialog(2)">
-					<img :src="addIcon" width="22px" height="21px" style="margin-top: -2px;">
-					<span class="top_text">{{$t("message.arbitration.applyArbitration")}}</span>
+			<div class="f c_b top_nav">
+				<div class="f a_c c935 cursor fz14"  @click="toDiscard">
+					<span>请先加入discard仲裁频道联系仲裁员</span>
+					<img src="../../../assets/img/discard.png" style="width: 24px;">
 				</div>
-				<div class="f c_c a_c cursor"  @click="sq_zcy_dialog(3)" style="margin-left: 50px;">
-					<img :src="exitlIcon" width="24px" height="21px">
-					<span class="top_text">{{$t("message.arbitration.exitArbitration")}}</span>
+				<div class="f">
+					<div class="f c_c a_c cursor" @click="sq_zcy_dialog(2)">
+						<img :src="addIcon" width="22px" height="21px" style="margin-top: -2px;">
+						<span class="top_text">{{$t("message.arbitration.applyArbitration")}}</span>
+					</div>
+					<div class="f c_c a_c cursor"  @click="sq_zcy_dialog(3)" style="margin-left: 50px;">
+						<img :src="exitlIcon" width="24px" height="21px">
+						<span class="top_text">{{$t("message.arbitration.exitArbitration")}}</span>
+					</div>
 				</div>
 			</div>
 			<el-container class="fc table_nav">
@@ -52,64 +58,22 @@
 		<!-- wap -->
 		<div class="hidden-sm-and-up">
 			<!-- 申请   退出 -->
-			<div class="f">
-				<div class="f c_c a_c cursor" @click="sq_zcy_dialog(2)">
-					<img :src="addIcon" width="22px" height="21px" style="margin-top: -2px;">
-					<span class="top_text">{{$t("message.arbitration.applyArbitration")}}</span>
+			<div class="fc">
+				<div class="f">
+					<div class="f c_c a_c cursor" @click="sq_zcy_dialog(2)">
+						<img :src="addIcon" width="22px" height="21px" style="margin-top: -2px;">
+						<span class="top_text">{{$t("message.arbitration.applyArbitration")}}</span>
+					</div>
+					<div class="f c_c a_c cursor"  @click="sq_zcy_dialog(3)" style="margin-left: 50px;">
+						<img :src="exitlIcon" width="24px" height="21px">
+						<span class="top_text">{{$t("message.arbitration.exitArbitration")}}</span>
+					</div>
 				</div>
-				<div class="f c_c a_c cursor"  @click="sq_zcy_dialog(3)" style="margin-left: 50px;">
-					<img :src="exitlIcon" width="24px" height="21px">
-					<span class="top_text">{{$t("message.arbitration.exitArbitration")}}</span>
+				<div class="f a_c c935 cursor mart-10" >
+					<span>仲裁前请先加入</span>
+					<img src="../../../assets/img/discard.png" style="width: 24px;">
 				</div>
 			</div>
-			<!-- 列表 -->
-			<!-- <div class="list_nav">
-				<div class="list_item f c_b" v-for="(item,index) in zc_list" :key="index">
-					<div class="fc a_c c_b" style="padding:0 10px 20px">
-						<span class="fwb">{{$t('message.arbitration.serial')}}</span>
-						<span class="fwb fz18" style="margin-top: 10px;">{{item.index}}</span>
-						<span></span>
-					</div>
-					<div class="fc ">
-						<div class="f center_top" style="padding-bottom: 10px;border-bottom: 2px solid #DCDCDC;padding-top: 6px;">
-							<div class="fc c_b a_c">
-								<span class="fwb">{{$t('message.arbitration.arbitrator')}}</span>
-								<div class="fc a_c" style="margin-top: 10px;">
-									<div class="zcy_list_user">{{ item.username }}</div>
-									<div class="zcy_list_username">{{ item.user_b }}</div>
-								</div>
-							</div>
-							<div class="fc c_b a_c">
-								<span class="fwb">{{$t('message.arbitration.balance')}}</span>
-								<span style="margin-top: 10px;">{{item.balanceMar}} GAZ</span>
-							</div>
-						</div>
-						<div class="f c_b center_bottmom" style="padding: 10px;">
-							<div class="fc a_c">
-								<span class="fwb">{{$t('message.arbitration.inviteNumber')}}</span>
-								<span style="margin-top: 10px;">{{item.invite}}</span>
-							</div>
-							<div class="fc a_c">
-								<span class="fwb">{{$t('message.arbitration.singular')}}</span>
-								<span style="margin-top: 10px;">{{item.succeed}}</span>
-							</div>
-							<div class="fc a_c">
-								<span class="fwb">{{$t('message.arbitration.regNumber')}}</span>
-								<span style="margin-top: 10px;">{{item.appl}}</span>
-							</div>
-						</div>
-					</div>
-					<div class="f a_c c_a" style="padding-left: 10px;">
-						<div class="fc a_c">
-							<span class="fwb">{{$t('message.state')}}</span>
-							<span style="margin-top: 10px;" :class="[item.lock == 0 ? 'normal_style':'frozen_style']">{{item.lock == 0 ? $t('message.arbitration.normal'):$t('message.arbitration.frozen')  }}</span>
-						</div>
-						<div class="f a_c c_c marl-10" style="height: 100%;">
-							<el-button round class="invitationBnt invitationBnt_wap" size="mini" :loading="item.jiazai" :disabled="item.lock == 1 ? true:false" @click="yaoqingajax(item)">{{$t('message.arbitration.invite')}}</el-button>
-						</div>
-					</div>
-				</div>
-			</div> -->
 			<div class="listWap" v-for="(item,index) in zc_list" :key="index">
 				<div class="listItem">
 					<div class="topWap">
@@ -160,18 +124,16 @@
 		<el-dialog :title="tetle" :visible.sync="dialogFormVisible" center :width="isphone ? '90%':'50%'" :show-close="false">
 		  <el-form :model="zc_user_yq" label-position="left" :label-width="formLabelWidth">
 		    <el-form-item :label="$t('message.arbitration.account')+':'"   v-if="btnType == 1">
-		      <span>{{zc_user_yq.my_user}}</span>
+		      <span @click="copy(zc_user_yq.my_user)">{{isphone ? $getStr(zc_user_yq.my_user) : zc_user_yq.my_user}}</span>
 		    </el-form-item>
 			<el-form-item :label="$t('message.arbitration.nickname')+':'" v-if="btnType == 1">
 				<span>{{zc_user_yq.my_name == 'Not filled in yet' ? $t('message.notFill') : zc_user_yq.my_name}}</span>
 			</el-form-item>
-			<el-form-item :label="$t('message.arbitration.order')+':'" v-if="btnType == 1">
-			   <div class="f c_b a_c sarch_nav" style="width: 20%;margin-left: 30%;">
+			<el-form-item :label="$t('message.arbitration.order')+':'" v-if="btnType == 1" class="input_nav">
+			   <div class="f c_b a_c sarch_nav">
 			  	<el-input v-model="zc_user_yq.did" autocomplete="off" size="mini" class="search_input" :placeholder="$t('message.arbitration.enterOrderNum')"></el-input>
 				<el-button icon="el-icon-search" circle @click="sousou_dd" :loading="loadingsoudd"></el-button>
 			  </div>
-				<!-- <el-input v-model="zc_user_yq.did"style="padding: 1px;border: 1px solid;border-radius: 30px; width: 15%;" autocomplete="off" size="mini" class="search_input" :placeholder="$t('message.arbitration.enterOrderNum')"></el-input>
-				<el-button icon="el-icon-search" style="position: absolute; bottom: 2px;" circle @click="sousou_dd" :loading="loadingsoudd"></el-button> -->
 			</el-form-item>
 			<el-form-item :label="$t('message.arbitration.character')+':'" v-if="btnType == 1">
 			  <span>{{zc_user_yq.juese}}</span>
@@ -186,7 +148,7 @@
 			    </el-radio-group>
 			</el-form-item>
 			<el-form-item :label="$t('message.arbitration.invite')+':'" v-if="btnType == 1">
-			  <span>{{zc_user_yq.form_user}}</span>
+			  <span  @click="copy(zc_user_yq.form_user)">{{isphone ? $getStr(zc_user_yq.form_user) : zc_user_yq.form_user}}</span>
 			</el-form-item>
 			<el-form-item :label="$t('message.arbitration.invited')+':'" v-if="btnType == 1">
 			  <div class=""  v-for="(li,index) in zc_user_yq.u_array" :key="index">
@@ -432,6 +394,23 @@
 		  }
 		},
 		methods:{
+			async copy(value) {
+			  await this.$nextTick(e => { })
+			  // var Url2 = document.querySelector(".copy .van-field__control");
+			  if (!value) return
+			  const input = document.createElement('input');
+			  document.body.appendChild(input);
+			  input.setAttribute('value', value);
+			  input.select();
+			  if (document.execCommand('copy')) {
+			    document.execCommand('copy');
+			    this.$toast('复制成功')
+			  }
+			  document.body.removeChild(input);
+			},
+			toDiscard(){
+				window.open("https://discord.gg/8r3fsN4shk")
+			},
 			getList(){
 				var dq = this;
 				var list = [];
@@ -949,9 +928,7 @@
 	div >>> .el-form-item{
 		margin-bottom: 0;
 	}
-	div >>> .el-dialog--center .el-dialog__body{
-		padding: 25px 50px 0;
-	}
+	
 	div >>> .el-form-item__content{
 		text-align: center;
 	}
@@ -1026,7 +1003,7 @@
 	.listWap{
 		padding: 10px 4px 5px 10px;
 		box-shadow: 0 0 5px 0.1rem #dcdcdc;
-		margin-top: 10px;
+		margin-top: 20px;
 		border-radius: 4px;
 	}
 	.topWap{
@@ -1059,5 +1036,21 @@
 	.listItem{
 		font-size: 13px;
 		/* margin-top: 20px; */
+	}
+	
+	@media only screen and (max-width: 991px){
+			
+		}
+	@media only screen and (min-width: 991px){
+		div >>> .el-dialog--center .el-dialog__body{
+			padding: 25px 50px 0;
+		}
+		.input_nav >>> .el-form-item__content{
+			display: flex;
+			justify-content: center;
+		}
+		.sarch_nav{
+			width: 50%
+		}
 	}
 </style>
