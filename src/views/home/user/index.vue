@@ -102,7 +102,7 @@
 							<p style="padding: 20px 0;">{{$t('message.keyp')}}</p>
 							<div
 								style="padding-bottom: 20px;max-width: 100%;text-align: justify;text-justify: newspaper;word-wrap: break-word">
-								<span>484be4a2ea8e9940d924d38da61a7ff7c89f4882bd27a6547d5845637f1c40d8</span>
+								<span>{{form.publickey}}</span>
 							</div>
 							<el-form ref="form" :model="form" label-width="80px" class="form_nav">
 								<el-form-item :label="$t('message.setPas')">
@@ -120,7 +120,7 @@
 								</el-form-item>
 							</el-form>
 						</div>
-						<div class="btn">
+						<div class="btn" @click="apply_password">
 							<span>{{$t('message.set')}}</span>
 						</div>
 					</div>
@@ -176,6 +176,8 @@
 	import Sha256 from "crypto-js/sha256";
 	import { Base64 } from "js-base64";
 	import axios from "axios";
+	import SeededRSA from "./seededrsa/rsa.js"
+	// import Crypto from 'crypto'
 	import lang from "@/components/lang";
 	import QRCode from "qrcodejs2";
 	import WalletConnectProvider from "@walletconnect/web3-provider";
@@ -324,7 +326,8 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 				addressRm:'',
 				form: {
 					password: '',
-					passwordAggin: ''
+					passwordAggin: '',
+					publickey: '',
 				},
 				regForm: {
 				  nickname: "",
@@ -655,6 +658,17 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 				    }
 				    
 				});
+			},
+			async apply_password(){
+				if (this.form.password != this.form.passwordAggin) {
+					alert("password mismatched")
+				} else {
+					const key = new SeededRSA(this.form.password);
+					console.log(key)
+					const value = await key.generate(2048).catch(console.log)
+					console.log(value.publicKey)
+					this.form.publickey = value.publicKey
+				}
 			}
 		}
 	}
