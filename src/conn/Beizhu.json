@@ -1,0 +1,52 @@
+[
+  {
+    "id": 7,
+    "title": "Recommender",
+    "key": "team_beizhu"
+  },
+  {
+    "id": 0,
+    "title": "Trader",
+    "key": "nc"
+  },
+  {
+    "id": 8,
+    "title": "Arbitrators",
+    "key": "zc_beizhu"
+  },
+  {
+    "id": 5,
+    "title": "full name",
+    "key": "name"
+  },
+  {
+    "id": 9,
+    "title": "ID number",
+    "key": "id"
+  },
+  {
+    "id": 1,
+    "title": "Telephone",
+    "key": "dh"
+  },
+  {
+    "id": 2,
+    "title": "WeChat",
+    "key": "wx"
+  },
+  {
+    "id": 3,
+    "title": "mailbox",
+    "key": "em"
+  },
+  {
+    "id": 4,
+    "title": "other",
+    "key": "qt"
+  },
+  {
+    "id": 6,
+    "title": "Merchant remarks",
+    "key": "beizhu"
+  }
+]

@@ -1,0 +1,58 @@
+{
+  "Umark": {
+    "title": "Order marking",
+    "data": ""
+  },
+  "pro": {
+    "title": "assets",
+    "data": ""
+  },
+  "Uadd": {
+    "title": "User address",
+    "data": ""
+  },
+  "Madd": {
+    "title": "Merchant address",
+    "data": ""
+  },
+  "Morder": {
+    "title": "Merchant order number",
+    "data": ""
+  },
+  "uma": {
+    "title": "User locked deposit",
+    "data": ""
+  },
+  "mma": {
+    "title": "Margin locked by merchants",
+    "data": ""
+  },
+  "Uoa": {
+    "title": "Number of transactions",
+    "data": ""
+  },
+  "tima": {
+    "title": "Order time",
+    "data": ""
+  },
+  "timb": {
+    "title": "Payment time",
+    "data": ""
+  },
+  "timc": {
+    "title": "Asset release time",
+    "data": ""
+  },
+  "timo": {
+    "title": "Early release of margin",
+    "data": ""
+  },
+  "comp": {
+    "title": "Margin adjustment",
+    "data": ""
+  },
+  "arb": {
+    "title": "Asset arbitration mark",
+    "data": ""
+  }
+}
