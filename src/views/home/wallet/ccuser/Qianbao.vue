@@ -207,7 +207,7 @@
 		    this.$router.push(url);
 		  },
 		  async getqblist(flag) {
-		    Toast.loading({ message: 'In query' });
+		    Toast.loading({ message: '请求中...' });
 		    var list = [];
 		    var binum = config['hyue'][config['key']]['Bzj']['num'];
 		    if(flag){

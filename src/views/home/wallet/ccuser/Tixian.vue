@@ -250,7 +250,7 @@
 			        if (ret == tk_je) {
 			          Toast.clear();
 			          // Toast.success('Successful withdrawal');
-					  Toast.success('提醒成功');
+					  Toast.success('提现成功');
 			          dq.huobi[dq.hbindex]['je'] = tk_je;
 					  dq.je = 0
 					  dq.$emit('drawal')

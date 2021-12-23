@@ -541,7 +541,7 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 			setNote(){
 				  var that = this
 				  var loading = Toast.loading({
-					message: 'modifying... ',
+					message: this.$t('message.Modifying'),
 					closeOnClick: false,
 					closeOnClickOverlay: false,
 					loadingType: 'spinner',

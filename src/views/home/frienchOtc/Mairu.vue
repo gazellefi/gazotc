@@ -470,7 +470,7 @@ export default {
       var dq = this;
       if (this.ddid) {
         var jiazai = Toast.loading({
-          message: 'In query',
+          message: '请求中...',
           closeOnClick: false,
           closeOnClickOverlay: false,
           loadingType: 'spinner',
@@ -679,7 +679,7 @@ export default {
                 if (address == event.returnValues['Madd'].toLowerCase()) {
                   Dialog.alert({
                     title: 'success',
-                    message: msg.indexOf('On sale') != -1 ? 'Sold successfully! The order number is:' + +event['returnValues']['uorder'] + '' : 'Purchase succeeded! The order number is:' + +event['returnValues']['uorder'] + '',
+                    message: msg.indexOf('On sale') != -1 ? '出售成功！订单号为：' + +event['returnValues']['uorder'] + '' : '购买成功！订单号为：' + +event['returnValues']['uorder'] + '',
                   }).then(() => {
                     window.location.reload();
                   });

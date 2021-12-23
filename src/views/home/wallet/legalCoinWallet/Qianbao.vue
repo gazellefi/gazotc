@@ -296,7 +296,7 @@
 			  var dq = this;
 			
 			  Toast.loading({
-			    message: 'Transfer in'
+			    message: '转入中...'
 			  });
 			  var lx_time = "";
 			  //开始转入保证金
@@ -355,7 +355,7 @@
 			  var dq = this;
 			  			
 			  Toast.loading({
-			    message: 'Transfer in'
+			    message: '转入中...'
 			  });
 			  var lx_time = "";
 			  //开始转出保证金
@@ -421,7 +421,7 @@
 				//新版查询
 				function gethuobi() {
 					Toast.loading({
-						message: 'In query'
+						message: '数据请求中...'
 					});
 					var sqllist = [];
 					for (let index = 0; index < dq.huobi.length; index++) {

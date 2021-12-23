@@ -273,12 +273,12 @@ export default {
       await this.getproyue();
       //判断资产余额是否足够
       if (this.form.num > this.balancepro) {
-        Notify({ type: 'warning', message: 'Insufficient asset balance!' });
+        Notify({ type: 'warning', message: '资产余额不足！' });
         return;
       }
 
       Toast.loading({
-        message: "In release...",
+        message: "数据请求中...",
         forbidClick: true,
         loadingType: "spinner",
       });
@@ -330,8 +330,8 @@ export default {
               dq.balanceprob = balanceprob;
               Toast.clear();
               Dialog.alert({
-                title: "Published successfully",
-                message: "Published successfully! Can be viewed or modified in my order",
+                title: "提交成",
+                message: "发布成功！可以按我的顺序查看或修改",
               }).then(() => {
                 dq.form = {
                   danj: null,

@@ -593,10 +593,10 @@
 			  }, (err, ret) => {
 			    if (ret) {
 			      Toast.clear();
-			      Toast.success('Arbitration has been executed, please check later');
+			      Toast.success('仲裁已经执行，请稍后查看');
 			    } else {
 			      Toast.clear();
-			      Toast.fail('Please agree to authorize!');
+			      Toast.fail('请同意授权！');
 			    }
 			  });
 			},

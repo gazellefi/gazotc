@@ -580,7 +580,7 @@ export default {
         	});
         };
         Toast.loading({
-          message: 'Submitting...',
+          message: '提交中。。。',
           forbidClick: true,
           loadingType: 'spinner',
         });
@@ -589,7 +589,7 @@ export default {
       //Release order
       function addajax() {
         Toast.loading({
-          message: 'Please confirm the submission...',
+          message: '请确认提交内容。。。',
           forbidClick: true,
           loadingType: 'spinner',
         });
@@ -639,7 +639,7 @@ export default {
           if (!ret) {
             Toast.clear();
             Toast({
-              message: 'Please click authorization!',
+              message: '请点击授权！',
               icon: 'cross',
               duration: 2000
             });
@@ -775,7 +775,7 @@ export default {
 	setNote(){
 			  var that = this
 			  var loading = Toast.loading({
-			    message: 'modifying... ',
+			    message: '修改中... ',
 			    closeOnClick: false,
 			    closeOnClickOverlay: false,
 			    loadingType: 'spinner',

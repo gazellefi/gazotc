@@ -185,7 +185,7 @@ export default {
       this.$router.push(url);
     },
     async getsczc() {
-      Toast.loading({ message: 'In query' });
+      Toast.loading({ message: '请求中...' });
       var scze = await simuonn.methods.balanceOf(address).call();
       this.items[0].num = scze / (10 ** 18);
       free = await simuonn.methods.callfree(address).call();
@@ -194,7 +194,7 @@ export default {
 
     },
     tixianajax() {
-      Toast.loading({ message: 'Withdrawal in progress...' });
+      Toast.loading({ message: '正在撤回。。。' });
       var tkje = this.getFNum(free);
       simuonn.methods.withdraw(tkje).send({
         from: address
@@ -203,7 +203,7 @@ export default {
           tikchaxun();
         } else {
           Toast.clear();
-          Toast.fail('Please agree to authorize!');
+          Toast.fail('请同意授权！');
         }
       }
       );
@@ -212,7 +212,7 @@ export default {
       function tikchaxun() {
         setTimeout(() => {
           Toast.clear();
-          Toast.success('Successful withdrawal');
+          Toast.success('提现成功');
         }, 3000);
       }
     }

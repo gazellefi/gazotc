@@ -676,9 +676,9 @@ export default {
       if (dq.form['num'] > dq.user['balancepro']) {
         Dialog.confirm({
           title: 'warning',
-          message: 'Insufficient asset balance, please recharge first!',
-          confirmButtonText: 'cancel',
-          cancelButtonText: 'Recharge',
+          message: '资产余额不足，请先充值！',
+          confirmButtonText: '取消',
+          cancelButtonText: '充值',
           cancelButtonColor: '',
           getContainer: 'body'
         })

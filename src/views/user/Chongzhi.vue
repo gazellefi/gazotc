@@ -278,7 +278,7 @@ export default {
       console.log("Recharge location")
       //火币充值专用
       Toast.loading({
-        message: 'Loading'
+        message: '等待中...'
       });
       var dqyue = 0;
       var dq = this;
@@ -287,13 +287,13 @@ export default {
       //判断充值wth或者test
       if (this.hbilist[this.hbindex]['title'] == 'WHT') {
         Toast.clear();
-        Notify({ type: 'warning', message: 'Wht does not support recharging temporarily!' });
+        Notify({ type: 'warning', message: 'Wht暂时不支持充值！' });
         return;
       } else if (this.hbilist[this.hbindex]['title'] == 'Test') {
         var balanceOf = await Testconn.methods.balanceOf(address).call();
         if (Number(balanceOf) < this.getFNum(Number(this.je) * (10 ** 6))) {
           Toast.clear();
-          Notify({ type: 'warning', message: 'Insufficient asset balance!' });
+          Notify({ type: 'warning', message: '资产余额不足！' });
           return;
         }
         //获取当前余额
@@ -317,7 +317,7 @@ export default {
               Testconnlx(cznum);
             } else {
               Toast.clear();
-              Notify({ type: 'warning', message: 'Please click agree!' });
+              Notify({ type: 'warning', message: '请点击同意！' });
             }
           });
         }
@@ -345,8 +345,8 @@ export default {
             if (Number(ret) >= isje) {
               Toast.clear();
               Dialog.alert({
-                title: 'Recharge succeeded',
-                message: 'Hello, you have successfully recharged' + dq.je + ' ' + dq.hbilist[dq.hbindex]['title'] + '',
+                title: '充值成功',
+                message: '您好，您已成功充值' + dq.je + ' ' + dq.hbilist[dq.hbindex]['title'] + '',
               }).then(() => {
 
               });
@@ -373,7 +373,7 @@ export default {
             Testconnczlx();
           } else {
             Toast.clear();
-            Notify({ type: 'warning', message: 'Please click agree!' });
+            Notify({ type: 'warning', message: '请点击同意！' });
           }
         });
       }
@@ -381,7 +381,7 @@ export default {
     },
     chongzhi() {
       if (this.je <= 0) {
-        Notify({ type: 'warning', message: 'Amount cannot be less than 1' });
+        Notify({ type: 'warning', message: '金额不能小于1' });
         return;
       }
       if (this.key == 'huobi' && this.hbilist[this.hbindex]['title'] == 'WHT' || this.hbilist[this.hbindex]['title'] == 'Test' || this.hbilist[this.hbindex]['title'] == 'WETH') {
@@ -394,7 +394,7 @@ export default {
       // }
 
       Toast.loading({
-        message: 'Loading'
+        message: '等待中。。。'
       });
       var usdtconn = new web3.eth.Contract(config['hbi'][config['key']]['USDT']['abi'], config['hbi'][config['key']]['USDT']['heyue']);
       var wethconn = this.key == 'huobi' ? '' : new web3.eth.Contract(config['hbi'][config['key']]['WETH']['abi'], config['hbi'][config['key']]['WETH']['heyue']);
@@ -415,7 +415,7 @@ export default {
                   Toast.clear();
                   Dialog.alert({
                     title: 'warning',
-                    message: 'Insufficient usdt balance!',
+                    message: 'usdt余额不足！',
                   }).then(() => {
                     // on close
                   });
@@ -439,7 +439,7 @@ export default {
                   Toast.clear();
                   Dialog.alert({
                     title: 'warning',
-                    message: 'Insufficient weth balance!',
+                    message: 'usdt余额不足！',
                   }).then(() => {
                     // on close
                   });
@@ -456,7 +456,7 @@ export default {
       //提交充值
       function chongzhiajax() {
         Toast.loading({
-          message: 'Recharging'
+          message: '提交中...'
         });
         var zictype = dq.hbilist[dq.hbindex]['title'] == 'USDT' ? '0xa71EdC38d189767582C38A3145b5873052c3e47a' : '0xf537270EdB6B5792c20D204bdc9Eb9735c6A790F';
 
@@ -482,8 +482,8 @@ export default {
               Toast.clear();
               clearTimeout(usdtlxtime);
               Dialog.alert({
-                title: 'Recharge succeeded',
-                message: 'Hello, you have successfully recharged' + dq.je + ' ' + dq.hbilist[dq.hbindex]['title'] + '',
+                title: '充值成功',
+                message: '您好，您已成功充值' + dq.je + ' ' + dq.hbilist[dq.hbindex]['title'] + '',
               }).then(() => {
 
               });
@@ -514,7 +514,7 @@ export default {
       }
       function set_weth_shouquan() {
         Toast.loading({
-          message: 'Weth balance authorization....',
+          message: '余额授权。。。。',
         });
         var cznum = dq.getFNum(((Number(dq.je) * 100) * (10 ** 18)));
         console.log("Authorization in progress")
@@ -568,7 +568,7 @@ export default {
       //USDT清除0
       function dede_usdt_shouquan() {
         Toast.loading({
-          message: 'Usdt authorization balance is insufficient, clearing, please wait',
+          message: 'Usdt授权余额不足，正在清除，请稍候',
         });
         usdtconn.methods.approve("0x23D58bd73136888ffAa3fDE672FC41870E928AA3", 0 + "").send({
           from: address
@@ -584,7 +584,7 @@ export default {
       //USDT设置
       function set_usdt_shouquan() {
         Toast.loading({
-          message: 'Usdt balance reauthorization in progress....',
+          message: 'Usdt余额重新授权正在进行中。。。。',
         });
         usdtconn.methods.approve("0x23D58bd73136888ffAa3fDE672FC41870E928AA3", dq.getFNum((Number(dq.je) * 100) * (10 ** 18)) + "").send({
           from: address

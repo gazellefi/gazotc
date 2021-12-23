@@ -687,12 +687,12 @@
 			    }, (err, ret) => {
 			      if (ret) {
 			        Toast.clear();
-			        Toast.success('Withdrawal succeeded. Please check later');
+			        Toast.success('提现成功。请稍后再查');
 					this.dialogFormVisible=false
 					this.sq_zc_data.je=0
 			      } else {
 			        Toast.clear();
-			        Toast.fail('Please agree to authorize!');
+			        Toast.fail('请同意授权！');
 			      }
 			    });
 			  } else {
@@ -718,14 +718,14 @@
 			    if (gaz_sqa < this.sq_zc_data['je']) {
 			      //需要先授权
 			      Dialog.confirm({
-			        message: 'Gaz is not authorized. Is it authorized?',
+			        message: 'Gaz未经授权。它是授权的吗？',
 			        confirmButtonText: 'determine',
 			        cancelButtonText: 'cancel',
 			        cancelButtonColor: '',
 			        getContainer: 'body'
 			      }).then(() => {
 			        Toast.loading({
-			          message: 'Gaz is authorizing...',
+			          message: 'Gaz授权。。。',
 			          forbidClick: true,
 			          loadingType: 'spinner',
 			        });
@@ -764,12 +764,12 @@
 			    }, (err, ret) => {
 			      if (ret) {
 			        Toast.clear();
-			        Toast.success('Registration succeeded, please check later');
+			        Toast.success('提交成功，请稍后检查');
 					this.dialogFormVisible=false
 					this.sq_zc_data.je=0
 			      } else {
 			        Toast.clear();
-			        Toast.fail('Please agree to authorize!');
+			        Toast.fail('请同意授权！');
 			      }
 			    });
 			  }
@@ -798,8 +798,8 @@
 			    } else {
 			      dq.loadingsoudd = false;
 			      Dialog.confirm({
-			        title: 'Tip 3',
-			        message: 'The order is not initialized, please click OK!',
+			        title: '提升',
+			        message: '订单未初始化，请单击“确定”！',
 			        confirmButtonText: 'determine',
 			        cancelButtonText: 'cancel',
 			        cancelButtonColor: '',

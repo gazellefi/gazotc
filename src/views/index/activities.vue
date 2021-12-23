@@ -476,7 +476,7 @@ export default {
       input.select();
       if (document.execCommand("copy")) {
         document.execCommand("copy");
-        this.$toast("URL copied successfully");
+        this.$toast("URL复制成功");
       }
       document.body.removeChild(input);
       this.showPop = false;
