@@ -330,7 +330,7 @@ export default {
               dq.balanceprob = balanceprob;
               Toast.clear();
               Dialog.alert({
-                title: "提交成",
+                title: "提交成功",
                 message: "发布成功！可以按我的顺序查看或修改",
               }).then(() => {
                 dq.form = {
