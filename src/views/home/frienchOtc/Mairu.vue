@@ -40,7 +40,7 @@
 			      <div class="view_ul_li_r">{{ ddinfo.mlive == 1 ? $t('message.dapp.ReceivingOrder'):$t('message.dapp.Resting') }}</div>
 			    </div>
 			    <div class="view_ul_li beizhu">
-			      <span>交易备注：{{ ddinfo.beizhu == 'No remarks are filled in' ? $t('message.notFill') : ddinfo.beizhu}}</span>
+			      <span>{{$t('message.remarks')}}：{{ ddinfo.beizhu == 'No remarks are filled in' ? $t('message.notFill') : ddinfo.beizhu}}</span>
 			    </div>
 			   <!-- <div class="view_ul_li beizhu_conn">
 			      <el-button type="text" @click="openlxfs">{{$t('message.contactDes')}}</el-button>
@@ -119,7 +119,7 @@
           <div class="view_ul_li_r">{{ ddinfo.mlive == 1 ? $t('message.dapp.ReceivingOrder'):$t('message.dapp.Resting') }}</div>
         </div>
         <div class="view_ul_li beizhu">
-          <span>交易备注：{{ ddinfo.beizhu == 'No remarks are filled in' ? $t('message.notFill') : ddinfo.beizhu}}</span>
+          <span>{{$t('message.remarks')}}：{{ ddinfo.beizhu == 'No remarks are filled in' ? $t('message.notFill') : ddinfo.beizhu}}</span>
         </div>
        <!-- <div class="view_ul_li beizhu_conn">
           <el-button type="text" @click="openlxfs">{{$t('message.contactDes')}}</el-button>

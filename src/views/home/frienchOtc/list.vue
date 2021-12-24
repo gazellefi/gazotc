@@ -5,10 +5,10 @@
       <!-- 订单列表 -->
       <div class="ddlistaa_head">
         <div class="left">
-          <div class="ddlistaa_head_item_a sell anniucss" :class="tcode == 1 ? 'ac' : ''" @click="tcode = 1">
+          <div class="ddlistaa_head_item_a sell anniucss" :class="tcode == 1 ? 'bg' : ''" @click="tcode = 1">
             {{ $t("message.dapp.sell")}}
           </div>
-          <div class="ddlistaa_head_item_a purchase anniucss" :class="tcode == 2 ? 'ac' : ''" @click="tcode = 2">
+          <div class="ddlistaa_head_item_a purchase anniucss" :class="tcode == 2 ? 'bg' : ''" @click="tcode = 2">
             {{ $t("message.dapp.buy")}}
           </div>
         </div>
@@ -87,7 +87,7 @@
 		  	<div style="padding-top: 20px;" class="f a_c c_c">
 		  		<img src="@/assets/img/empty.png" alt="" width="130" height="85" />
 		  	</div>
-		  	<p>暂无数据</p>
+		  	<p>{{$t('message.NoData')}}</p>
 		  </div>
         </el-table>
 
@@ -133,7 +133,7 @@
 				<div style="padding-top: 20px;" class="f a_c c_c">
 					<img src="@/assets/img/empty.png" alt="" width="130" height="85" />
 				</div>
-				<p style="margin-top: 20px; color: #DCDCDC;">暂无数据</p>
+				<p style="margin-top: 20px; color: #DCDCDC;">{{$t('message.NoData')}}</p>
 			</div>
           <div class="ddlist_w_ddlist_ul_li" v-for="(li, index) in dataList" :key="index">
             <div class="ddlist_w_ddlist_ul_li_u">
@@ -359,7 +359,6 @@ export default {
         .call((err, ret) => {
           dq.loading = false;
           if (ret) {
-			  console.log(ret);
             if (ret[0].length > 0) {
               for (let index = 0; index < ret[0].length; index++) {
                 var obj = {};
@@ -593,11 +592,18 @@ export default {
   .left {
     display: flex;
     .sell {
-      background: linear-gradient(#82bcfc, #0f79f1);
+      background: #FFFFFF;
+	  border: 1px solid #DCDCDC;
     }
     .purchase {
-      background: linear-gradient(#7571f8, #5334f6);
+      background: #FFFFFF;
+	  border: 1px solid #DCDCDC;
     }
+	.bg{
+		background: #0f79f1;
+		color: #fff;
+		border: none;
+	}
   }
   .right {
     display: flex;
@@ -653,7 +659,7 @@ button.anniu {
   text-align: center;
   line-height: 30px;
   border-radius: 4px;
-  opacity: 0.5;
+  /* opacity: 0.5; */
   margin-right: 10px;
   color: #ccc;
 }

@@ -22,7 +22,7 @@
 
 						<el-dropdown class="ddlistaa_head_item" @command="saixuantcode">
 							<span class="el-dropdown-link">
-								{{ sxarr['tcode'] == "ALL"? $t('message.all'):sxarr['tcode'] == "C" ? 'for sale':$t('message.dapp.buy') }} <i
+								{{ sxarr['tcode'] == "ALL"? $t('message.all'):sxarr['tcode'] == "C" ? $t('message.dapp.sell'):$t('message.dapp.buy') }} <i
 									class="el-icon-arrow-down el-icon--right"></i>
 							</span>
 							<el-dropdown-menu slot="dropdown">
@@ -94,7 +94,7 @@
 						<div style="padding-top: 20px;" class="f a_c c_c">
 							<img src="@/assets/img/empty.png" alt="" width="130" height="85" />
 						</div>
-						<p>暂无数据</p>
+						<p>{{$t('message.NoData')}}</p>
 					</div>
 				</el-table>
 			</div>
@@ -124,7 +124,7 @@
 								
 						<el-dropdown class="ddlistaa_head_item" @command="saixuantcode">
 							<span class="el-dropdown-link">
-								{{ sxarr['tcode'] == "ALL"? $t('message.all'):sxarr['tcode'] == "C" ? 'for sale':$t('message.dapp.buy') }} <i
+								{{ sxarr['tcode'] == "ALL"? $t('message.all'):sxarr['tcode'] == "C" ? $t('message.dapp.sell'):$t('message.dapp.buy') }} <i
 									class="el-icon-arrow-down el-icon--right"></i>
 							</span>
 							<el-dropdown-menu slot="dropdown">
@@ -158,7 +158,7 @@
 					<div style="padding-top: 20px;">
 						<img src="@/assets/img/empty.png" alt="" width="130" height="85" />
 					</div>
-					<p :style="{'marginTop': '23px'}">暂无数据</p>
+					<p :style="{'marginTop': '23px'}">{{$t('message.NoData')}}</p>
 				</div>
 				<el-col :span="24" v-for="(item,index) in list" :key="index">
 					<div class="fc">

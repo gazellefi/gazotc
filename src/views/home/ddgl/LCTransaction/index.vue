@@ -23,7 +23,7 @@
       
       			<el-dropdown class="ddlistaa_head_item" @command="saixuantcode">
       				<span class="el-dropdown-link">
-      					{{ sxarr['tcode'] == "ALL"? $t('message.all'):sxarr['tcode'] == "C" ? 'for sale':'purchase' }} <i
+      					{{ sxarr['tcode'] == "ALL"? $t('message.all'):sxarr['tcode'] == "C" ? $t('message.dapp.sell'):$t('message.dapp.buy') }} <i
       						class="el-icon-arrow-down el-icon--right"></i>
       				</span>
       				<el-dropdown-menu slot="dropdown">
@@ -117,7 +117,7 @@
       			<div style="padding-top: 20px;" class="f a_c c_c">
       				<img src="@/assets/img/empty.png" alt="" width="130" height="85" />
       			</div>
-      			<p>暂无数据</p>
+      			<p>{{$t('message.NoData')}}</p>
       		</div>
       	</el-table>
       </div>
@@ -196,7 +196,7 @@
       					
       			<el-dropdown class="ddlistaa_head_item" @command="saixuantcode">
       				<span class="el-dropdown-link">
-      					{{ sxarr['tcode'] == "ALL"? $t('message.all'):sxarr['tcode'] == "C" ? 'for sale':'purchase' }} <i
+      					{{ sxarr['tcode'] == "ALL"? $t('message.all'):sxarr['tcode'] == "C" ? $t('message.dapp.sell'):$t('message.dapp.buy') }} <i
       						class="el-icon-arrow-down el-icon--right"></i>
       				</span>
       				<el-dropdown-menu slot="dropdown">
@@ -231,7 +231,7 @@
       		<div style="padding-top: 20px;">
       			<img src="@/assets/img/empty.png" alt="" width="130" height="85" />
       		</div>
-      		<p :style="{'marginTop': '23px'}">暂无数据</p>
+      		<p :style="{'marginTop': '23px'}">{{$t('message.NoData')}}</p>
       	</div>
       	<el-col :span="24" v-for="(item,index) in list" :key="index" class="list_item f c_b">
       		<div class="fc">
@@ -391,13 +391,13 @@ export default {
   },
   watch: {
   	'sxarr.pro'(e) {
-  		this.getsxlist(e, this.sxarr['fli'], this.sxarr['tcode']);
+  		// this.getsxlist(e, this.sxarr['fli'], this.sxarr['tcode']);
   	},
   	'sxarr.fli'(e) {
-  		this.getsxlist(this.sxarr['pro'], e, this.sxarr['tcode']);
+  		// this.getsxlist(this.sxarr['pro'], e, this.sxarr['tcode']);
   	},
   	'sxarr.tcode'(e) {
-  		this.getsxlist(this.sxarr['pro'], this.sxarr['fli'], e);
+  		// this.getsxlist(this.sxarr['pro'], this.sxarr['fli'], e);
   	}
   },
   methods: {
@@ -447,12 +447,17 @@ export default {
                 }
               }
 			  // console.log(result[2][index][0]);
-              if (result[2][index][0] == Address) {
-				  ttype = this.$t('message.dapp.buy')
+			  if (result[1][index][0] == '0x73616c6500000000000000000000000000000000000000000000000000000000') {
+			      ttype = this.$t('message.dapp.forSale')
+			  }else{
+			      ttype = this.$t('message.dapp.buy')
+			  }
+      //         if (result[2][index][0] == Address) {
+				  // ttype = this.$t('message.dapp.buy')
                 
-              } else {
-                 ttype = this.$t('message.dapp.forSale')
-              }
+      //         } else {
+      //            ttype = this.$t('message.dapp.forSale')
+      //         }
               var zcsf_msg = '';
               var bzj_msg = '...';
               if (result[0][index][5] == 0 && result[0][index][4] == 0) {

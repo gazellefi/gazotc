@@ -54,7 +54,7 @@
 			  <el-table-column align="center" :label="$t('message.operation')">
 				  <template slot-scope="scope">
 					<div>
-					  <el-button size="mini"  @click="open_dylzc(scope.row)">{{$t('message.details')}}</el-button>
+					  <el-button size="mini"  @click="openqb('openzcgl')">{{$t('message.details')}}</el-button>
 					</div>
 				  </template>
 			  </el-table-column>
@@ -62,7 +62,7 @@
 			  	<div style="padding-top: 20px;" class="f a_c c_c">
 			  		<img src="@/assets/img/empty.png" alt="" width="130" height="85" />
 			  	</div>
-			  	<p>暂无数据</p>
+			  	<p>{{$t('message.NoData')}}</p>
 			  </div>
 			</el-table>
 		</div>	
@@ -74,7 +74,7 @@
 					<div style="padding-top: 20px;">
 						<img src="@/assets/img/empty.png" alt="" width="130" height="85" />
 					</div>
-					<p :style="{'marginTop': '23px'}">暂无数据</p>
+					<p :style="{'marginTop': '23px'}">{{$t('message.NoData')}}</p>
 				</div>
 				<div class="list_item" v-for="(item,index) in del_list" :key="index">
 					<div class="f" style="width: 100%;">
@@ -126,7 +126,7 @@
 					</div>
 					<div class="f c_b a_c" style="padding: 10px 20px;">
 						<van-count-down :time="item.djs_val" format="DD 天 HH 时 mm 分 ss 秒" />
-						<div class="f a_c" @click="open_dylzc(item)">
+						<div class="f a_c" @click="openqb('openzcgl')">
 							<span class="marr-10">查看详情</span>
 							<i class="el-icon-arrow-right"></i>
 						</div>
@@ -228,7 +228,7 @@
 				formLabelWidth: '150px',
 				isphone:false,
 				dyl_zc: {
-				  code: false,
+				  code: true,
 				  my_user: '',
 				  my_name: '',
 				  did: '',
@@ -264,7 +264,7 @@
 		},
 		methods:{
 			openqb(e) {
-			  // this.wapcd = false;
+			  this.wapcd = false;
 			  this.$router.push(e);
 			},
 			//第二轮我参与的
@@ -377,6 +377,7 @@
 			
 			// 获取详情
 			async open_dylzc(rows, openc) {
+				console.log(rows)
 			  var row = {};
 			  for (const key in rows) {
 			    row[key] = rows[key];

@@ -75,7 +75,7 @@
 			  	<div style="padding-top: 20px;" class="f a_c c_c">
 			  		<img src="@/assets/img/empty.png" alt="" width="130" height="85" />
 			  	</div>
-			  	<p>暂无数据</p>
+			  	<p>{{$t('message.NoData')}}</p>
 			  </div>
 			</el-table>
 		</div>
@@ -599,5 +599,8 @@
 	        width: 2px;
 	        height: 50%;
 	        background-color: #DCDCDC
+	}
+	.el-form-item{
+		margin-bottom: 0px;
 	}
 </style>

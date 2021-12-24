@@ -9,14 +9,14 @@
       <!-- <van-dropdown-menu @change="changeDrop">
         <van-dropdown-item v-model="morenkey" :options="option1" />
       </van-dropdown-menu> -->
-	  <el-select v-model="morenkey" placeholder="Please select" class="select_nav"  @change="changeDrop">
+	  <el-select v-model="morenkey_text" placeholder="Please select" class="select_nav"  @change="changeDrop">
 	    <el-option v-for="item in option1" :key="item.value" :label="$t(`message.dapp.${item.text}`)" :value="item.text">
 	    </el-option>
 	  </el-select>
     </div>
     <div class="right">
       <!-- 语言 -->
-      <lang class="lang" style="width: 50px;"></lang>
+      <lang class="lang" style="width: 50px;" @changeLang="changeLang"></lang>
       <!-- 下拉选项 -->
 	  <div class="el-dropdown-link marr-10">
 	    <img src="@/assets/dappImg/avt.png" alt="">
@@ -35,7 +35,7 @@
         <div>{{queryAddr}}</div>
       </div>
 
-      <!-- <div class="menu hidden-sm-and-up" @click="show=true">菜单</div> -->
+      <div class="menu hidden-sm-and-up" @click="show=true" style="width: 30px;">{{$t('message.menu')}}</div>
 
       <van-popup class="nav2" v-model="show" position="right" :style="{ width: '50%' ,height:'100%'}">
         <sidebar></sidebar>
@@ -79,6 +79,7 @@ export default {
   data() {
     return {
       morenkey: localStorage.morenkey ? localStorage.morenkey : 'bian',
+	  morenkey_text: '',
       option1: [
         { text: 'coinNet', value: 'bian' },
         { text: 'HecoNet', value: 'huobi' },
@@ -146,10 +147,14 @@ export default {
 	changeDrop(e){
 		for (let i = 0; i < this.option1.length; i++) {
 			if(this.option1[i].value == e){
-				this.morenkey = this.$t(`message.dapp.${this.option1[i].text}`)
-				// console.log(this.morenkey);
+				this.morenkey = this.option1[i].text
+				this.morenkey_text = this.$t(`message.dapp.${this.option1[i].text}`)
 			}
 		}
+	},
+	// 监听 语言修改
+	changeLang(e){
+		this.morenkey_text = this.$t(`message.dapp.${this.morenkey}`)
 	},
     async getsczc() {
       Toast.loading({ message: "查询中..." });
@@ -278,7 +283,7 @@ export default {
   }
 }
 .select_nav {
-	width: 80%;
+	width: 100%;
 	/deep/ .el-input__inner{
 		border: none;
 		width: 100%;

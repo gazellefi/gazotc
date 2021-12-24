@@ -292,8 +292,8 @@ export default {
                             message: '您已成功充值'+ dq.je +' '+ dq.hbilist[dq.hbindex]['title'] +'',
                         }).then(() => {
 							dq.je = 0
-                            // dq.$emit('Recharge')
-							window.location.reload();
+                            dq.$emit('Recharge')
+							// window.location.reload();
                         });
     
                     }else{

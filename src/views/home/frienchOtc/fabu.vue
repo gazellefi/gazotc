@@ -126,7 +126,7 @@
 				</p>
 				<p class="add_form_item_input_p" v-else>
 					<span class="cursor" @click="setNote">{{$t('message.complete')}}</span>
-					<span class="marl-10 cursor" @click="maskDis = true">返回</span>
+					<span class="marl-10 cursor" @click="maskDis = true">{{$t('message.return')}}</span>
 				</p>
 		      </div>
 		      <el-button type="primary" style="margin-top: 30px;background:#fdc500;border:0" @click="tijiao" :disabled="isform.zcye ? true:false">{{$t('message.sumbmit')}}</el-button>

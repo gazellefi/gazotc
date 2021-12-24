@@ -18,7 +18,8 @@
 	  		  <!-- 你可提额度：{{ (hbilist[hbindex]['je']/ (10**hbilist[hbindex]['num'])).toFixed(2)  }} -->
 	  </el-form-item>
       <el-form-item class="chongzhiBtn" label-width="0">
-        <van-button size='small' color="#fdc500" type="primary" block @click="chongzhi">{{$t('message.Recharge')}}</van-button>
+		  <span @click="chongzhi" class="f c_c a_c fz14 cursor" style="width: 100%;height: 30px;background-color: #fdc500;color: #fff;">{{$t('message.Recharge')}}</span>
+        <!-- <van-button size='small' color="#fdc500" type="primary" block @click="chongzhi">{{$t('message.Recharge')}}</van-button> -->
       </el-form-item>
     </el-form>
 
