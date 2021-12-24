@@ -77,8 +77,16 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+@media only screen and (max-width: 991px){
+			
+		}
+@media only screen and (min-width: 991px){
+	.sideBar{
+		width: 240px !important;
+	}
+}
 .sideBar {
-  width: 300px !important;
+  width: 300px;
   height: 100%;
   background: #062855;
   display: flex;
@@ -143,7 +151,7 @@ export default {
     }
 
     span {
-      font-size: 26px;
+      font-size: 20px;
       font-weight: bold;
       // &:hover + .list {
       //

@@ -56,11 +56,6 @@ var ethereum = window.ethereum;
 			}
 		},
 		watch: {
-			'form.region'() {
-				setTimeout(()=>{
-					this.gethuobizichan();
-				},500)
-			},
 			type(){
 				this.form.region = this.type
 				this.je = 0
@@ -124,6 +119,9 @@ var ethereum = window.ethereum;
 					if (this.huobi[i].id == e) {
 						this.hbindex = i
 					}
+					setTimeout(()=>{
+						this.gethuobizichan();
+					},500)
 				}
 			},
 			//如果过亿请转换

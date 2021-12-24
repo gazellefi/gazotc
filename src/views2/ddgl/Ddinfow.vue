@@ -612,7 +612,7 @@ export default {
           user_pan_is((e, uarm) => {
             if (!e) {
               Dialog.confirm({
-                title: 'warning',
+                title: dq.$('message.prompt'),
                 message: '保证金不足，要求最低保证金‘' + (uarm / (10 ** bzj_num)).toFixed(2) + '’, 请在添加保证金后操作！',
                 confirmButtonText: '追加保证金',
                 cancelButtonText: '放弃'

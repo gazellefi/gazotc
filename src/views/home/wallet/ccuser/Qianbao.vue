@@ -1,7 +1,7 @@
 <template>
 	<div class="qianbao">
 		<el-row class="head hidden-sm-and-down" type="flex" justify="space-between" >
-			<el-col :sm="24" :md="5">
+			<el-col :sm="24" :md="8" :lg="5">
 				<div class="left c_b">
 					<div class="f a_c">
 						<img src="@/assets/img/money1.png" style="width: 20px;" class="marr-10">
@@ -75,16 +75,16 @@
 				</div>
 				<div class="item_nav" v-else>
 					<span class="cba cursor" @click="showChongzhi(item)">{{$t('message.ChargeMoney')}}</span>
-					<span class="c935 cursor"  @click="showTixian(item)" style="margin-left: 20px;">{{$t('message.WithdrawMoney')}}</span>
+					<span class="c935 cursor"  @click="showTixian(item)" style="margin-left: 5px;">{{$t('message.WithdrawMoney')}}</span>
 				</div>
 			</el-col>
 		</el-row>
-		<myDialog width="25%" :isShowFooter="false" :title="$t('message.Recharge')" :closeModal="false" :closePress="false"
+		<myDialog width="320px" :isShowFooter="false" :title="$t('message.Recharge')" :closeModal="false" :closePress="false"
 			:visible.sync="isShowChongzhi">
 			<Chongzhi :type="type_c" @Recharge="Recharge"></Chongzhi>
 		</myDialog>
 
-		<myDialog width="25%" :isShowFooter="false" :title="$t('message.WithdrawMoney')" :closeModal="false" :closePress="false"
+		<myDialog width="320px" :isShowFooter="false" :title="$t('message.WithdrawMoney')" :closeModal="false" :closePress="false"
 			:visible.sync="isShowTixan">
 			<Tixian :type="type_t" @drawal="drawal"></Tixian>
 		</myDialog>

@@ -52,7 +52,7 @@
 			<!-- table -->
 			<div class="">
 				<el-table :data="list" stripe style="width: 100%">
-					<el-table-column align="center" prop="ddid" :label="$t('message.arbitration.orderId')" width="100px"> </el-table-column>
+					<el-table-column align="center" prop="ddid" :label="$t('message.arbitration.orderId')"> </el-table-column>
 					<el-table-column align="center" prop="pro" :label="$t('message.dapp.type')"></el-table-column>
 					<el-table-column align="center" prop="Mmark" :label="$t('message.dapp.orderType')">
 						<template slot-scope="scope">
@@ -66,7 +66,10 @@
 					</el-table-column>
 					<el-table-column align="center" :label="$t('message.dapp.limit')">
 						<template slot-scope="scope">
-							{{ scope.row.zer }} - {{ scope.row.mal }} {{ scope.row.pro }}
+							{{ scope.row.zer }} - {{ scope.row.mal }} 
+							<div>
+								{{ scope.row.pro }}
+							</div>
 						</template>
 					</el-table-column>
 					<el-table-column align="center" :label="$t('message.dapp.unitPrice')">

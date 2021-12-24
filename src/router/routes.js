@@ -18,7 +18,7 @@ export default [
     name: 'Index',
     component: () =>
       import('@/views/index/layout'),
-    redirect: '/Activities',
+    redirect: '/home/frienchOtc',
     children: [
       {
         path: '/Homepage',

@@ -727,7 +727,7 @@ export default {
 		ModifyOrderStatus: '修改订单状态',
 		preiceDes: '单价为0表示双方线下协商！',
 		forSale: '出售',
-		blandAsk: '保证金比咧',
+		blandAsk: '保证金比例',
 		assetRelease: '资产释放',
 		marginRelease: '保证金释放',
 		privateLetter: '私信',

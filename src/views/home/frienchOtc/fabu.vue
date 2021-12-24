@@ -507,7 +507,7 @@ export default {
       var dq = this;
       if (dq.isform.sjbzj) {
         Dialog.confirm({
-          title: 'warning',
+          title: dq.$t('message.prompt'),
           message: this.$t('message.MarginLowTips'),
           confirmButtonText: this.$t('message.SupMargin'),
           cancelButtonText: this.$t('message.dapp.ReleaseOrder'),

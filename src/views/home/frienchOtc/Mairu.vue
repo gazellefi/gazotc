@@ -612,10 +612,10 @@ export default {
       //判断User deposit 与 资产
       if (dq.form['num'] > dq.user['balancepro']) {
         Dialog.confirm({
-          title: 'warning',
+          title: dq.$t('message.prompt'),
           message: dq.$t('message.assetRchargeTips') ,
           confirmButtonText: dq.$t('message.cancel'),
-          cancelButtonText: 'Recharge',
+          cancelButtonText: dq.$t('message.Recharge'),
           cancelButtonColor: '',
           getContainer: 'body'
         })
@@ -626,7 +626,7 @@ export default {
       }
       if (dq.form['bzj'] > dq.user['balancemar']) {
         Dialog.confirm({
-          title: 'warning',
+          title: dq.$t('message.prompt'),
           message: '押金不足，请先补足押金！',
           confirmButtonText: dq.$t('message.cancel'),
           cancelButtonText: dq.$t('message.Recharge'),

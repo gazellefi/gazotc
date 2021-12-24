@@ -60,11 +60,6 @@
 			}
 		},
 		watch: {
-			'form.region'() {
-				setTimeout(()=>{
-					this.gethuobizichan();
-				},500)
-			},
 			type(){
 				this.form.region = this.type
 				this.je = 0
@@ -138,6 +133,9 @@
 						this.hbindex = i
 					}
 				}
+				setTimeout(()=>{
+					this.gethuobizichan();
+				},500)
 			},
 			//如果过亿请转换
 			getFNum(num_str) {

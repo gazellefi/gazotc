@@ -414,7 +414,7 @@ export default {
                 if (balanceOf < Number(dq.je)) {
                   Toast.clear();
                   Dialog.alert({
-                    title: 'warning',
+                    title: dq.$t('message.prompt'),
                     message: 'usdt余额不足！',
                   }).then(() => {
                     // on close
@@ -438,7 +438,7 @@ export default {
                 if (balanceOf < Number(dq.je)) {
                   Toast.clear();
                   Dialog.alert({
-                    title: 'warning',
+                    title: dq.$('message.prompt'),
                     message: 'usdt余额不足！',
                   }).then(() => {
                     // on close

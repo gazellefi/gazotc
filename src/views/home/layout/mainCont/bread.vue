@@ -8,7 +8,7 @@
 			<i class="el-icon-s-promotion" style="color: #333;font-size: 16px;margin-top: -4px;margin-right: 5px;"></i>
 			<span >联系客服</span>
 		</div>
-		<span >+447536334816</span>
+		<span > 电报群：+447536334816</span>
 	</div>
   </div>
 </template>

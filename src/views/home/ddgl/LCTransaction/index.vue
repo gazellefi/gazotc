@@ -102,7 +102,7 @@
 					no
 				</template>
 			</el-table-column>
-			<el-table-column align="center" :label="$t('message.operation')">
+			<el-table-column align="center" :label="$t('message.operation')" width="120px">
 				<template slot-scope="scope">
 					<!-- 私信 -->
 					<div style="margin-right: 10px; display: inline-block;">
@@ -271,7 +271,7 @@
 					<!-- 私信 -->
 					<van-button plain type="info"  class="marr-10" color="#FDC500" size="small"  @click="pcxiugaidd(2,index)">{{$t('message.dapp.privateLetter')}}</van-button>
 					<!-- 详情 -->
-					<van-button plain type="info" color="#FDC500" size="small"  @click="openinfo(scope.row.ddid)">{{$t('message.details')}}</van-button>
+					<van-button plain type="info" color="#FDC500" size="small"  @click="openinfo(item,ddid)">{{$t('message.details')}}</van-button>
 				</div>
       		</div>
       	</el-col>
@@ -448,7 +448,7 @@ export default {
                 }
               }
 			  let mid = this.lowerCase(result[2][index][0])
-              if (mid == Address) {
+              if (mid != Address) {
 				  ttype = this.$t('message.dapp.forSale')
               } else {
                  ttype = this.$t('message.dapp.buy')
@@ -515,7 +515,7 @@ export default {
 	//  商家时候改变 table row 颜色
 	addClass({row, column, rowIndex, columnIndex }) {
 	  // console.log(columnIndex)
-	  if(row.type == this.$t('message.dapp.buy') && columnIndex == 4) {
+	  if(row.type == this.$t('message.dapp.forSale') && columnIndex == 4) {
 		return 'weightCell';
 	  }
 	},

@@ -554,7 +554,7 @@
 						
 						let udd = dq.lowerCase(ret['Uadd'])
 						console.log(ret['pro'])
-						dq.ddifo['Umark_b'] = udd == dq.dquser ? 'sell' : 'buy'
+						dq.ddifo['Umark_b'] = udd != dq.dquser ? 'sell' : 'buy'
 						for (let index = 0; index < huobijson['huobi'].length; index++) {
 							
 						  if (huobijson['huobi'][index]['key'] == ret['pro']) {
@@ -724,7 +724,7 @@
 						user_pan_is((e, uarm) => {
 							if (!e) {
 								Dialog.confirm({
-										title: 'warning',
+										title: '提升',
 										message: '保证金不足，要求最低保证金‘' + (uarm / (
 												10 ** bzj_num)).toFixed(2) +
 											'’, 请在添加保证金后操作！',

@@ -161,6 +161,7 @@ export default {
 		web3 = new Web3(provider);
 		var proconn = new web3.eth.Contract(config['hbi'][config['key']][dq.hbilist[dq.hbindex]['id']]['abi'],config['hbi'][config['key']][dq.hbilist[dq.hbindex]['id']]['heyue']);
 		dq.balance = await proconn.methods.balanceOf(address).call();
+		this.$forceUpdate()
 	},
     //如果过亿请转换
     getFNum(num_str) {
