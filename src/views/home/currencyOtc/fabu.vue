@@ -331,7 +331,7 @@ export default {
               Toast.clear();
               Dialog.alert({
                 title: "提交成功",
-                message: "发布成功！可以按我的顺序查看或修改",
+                message: "请到订单中心查看！",
               }).then(() => {
                 dq.form = {
                   danj: null,
