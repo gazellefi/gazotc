@@ -6,11 +6,18 @@
 			<div class="logo">
 				<img src="../../assets/img/navLogo.png" >
 			</div>
-			<li :class="[currentRoute==v.route?'currentRoute':'']" @click="navClick(v)" v-for="v in navRoutes">{{v.title}}</li>
+			<!-- <li :class="[currentRoute==v.route?'currentRoute':'']" @click="navClick(v)" v-for="v in navRoutes">{{v.title}}</li> -->
+			<li @click="navClick(v)" v-for="v in navRoutes">{{v.title}}</li>
+			<div class="langBox">
+				
+				<lang class="lang"></lang>
+				EN
+			</div>
 		</div>
     </ul>
     <van-popup class="nav2" v-model="show" position="left" :style="{ width: '50%' ,height:'100%'}">
-      <li :class="[currentRoute==v.route?'currentRoute':'']" @click="navClick(v)" v-for="v in $t('message.navRoutes')">
+      <!-- <li :class="[currentRoute==v.route?'currentRoute':'']" @click="navClick(v)" v-for="v in navRoutes"> -->
+      <li @click="navClick(v)" v-for="v in navRoutes">
         {{v.title}}
         <van-icon name="arrow" style="float:right" />
       </li>
@@ -76,7 +83,7 @@
         <div class="info">
           <div class="left">
             <a class="item" @click="goLink(v)" v-for="v in linklist">
-              <img :src="v.img" alt=""><span v-if="v.lang=='EN'" style="font-size: 9px;">EN</span><span  v-if="v.lang=='CN'" style="font-size: 9px;">中</span>
+              <img :src="v.img" alt="">
               <div class="text">{{v.text}}</div>
             </a>
           </div>
@@ -89,7 +96,7 @@
 		</div>
         <div class="bot">
           <!-- <span>2021 Vimeo.com, Inc. All rights reserved.</span> -->
-          <span>Terms Privacy CA Privacy Copyright Cookies</span>
+		  Terms Privacy CA Privacy Copyright Cookies
           <!-- <span>Help: support@gazotc.com</span> -->
         </div>
       </div>
@@ -108,52 +115,44 @@ export default {
       linklist: [
         {
           text: 'Github',
-          img: require('@/assets/link/2.png'),
+          img: require('@/assets/link/1.png'),
           href: 'https://github.com/gazellefi/gazotc',
-		  lang:'',
         },
         {
           text: 'Twitter',
-          img: require('@/assets/link/6.png'),
+          img: require('@/assets/link/2.png'),
           href: 'https://twitter.com/gazellefi',
-		  lang:'',
         },
         {
           text: 'Facebook',
-          img: require('@/assets/link/1.png'),
+          img: require('@/assets/link/3.png'),
           href: 'https://www.facebook.com/gazotc',
-		  lang:'',
         },
         {
           text: 'Medium',
-          img: require('@/assets/link/3.png'),
+          img: require('@/assets/link/4.png'),
           href: 'https://medium.com/@gazotc',
-		  lang:'',
         },
         {
           text: 'Youtube',
           img: require('@/assets/link/5.png'),
           href: 'https://www.youtube.com/channel/UCv2XLAJZg5bge_hGMXoPFTg',
-		  lang:'',
         },
         {
           text: 'Telegram',
-          img: require('@/assets/link/4.png'),
+          img: require('@/assets/link/6.png'),
           href: 'https://t.me/gaztwo',
-		  lang:'EN',
         },
         {
           text: 'Telegram',
-          img: require('@/assets/link/4.png'),
+          img: require('@/assets/link/7.png'),
           href: 'https://t.me/gazotcCN',
-		  lang:'CN',
         },
         {
           text: 'discord',
-          img: require('../../assets/img/discord-line.png'),
+          img: require('@/assets/link/8.png'),
           href: 'https://discord.com/invite/mhfdVHNx',
-		  lang:'',
-        },
+        }
       ],
       show: false,
       text1: '',
@@ -170,12 +169,12 @@ export default {
         // { title: 'DAPP', route: '/Exchange' },
         // { title: 'Public sale', route: '/Activities' },
 		{ title: 'Home', route: '/Homepage' },
-		{ title: 'About', route: '/Coremechanism' },
-		{ title: 'Document', route: '/Transactionrules' },
-		{ title: 'Rule', route: '/Securityrules' },
-		{ title: 'New', route: '/Securityrules' },
+		{ title: 'About', route: '/Homepage' },
+		{ title: 'Document', route: '/Homepage' },
+		{ title: 'Rule', route: '/Homepage' },
+		{ title: 'News', route: '/Homepage' },
 		{ title: 'Dapp', route: '/Exchange' },
-		{ title: 'Contact', route: '/Activities' },
+		{ title: 'Contact', route: '/Homepage' },
       ],
     };
   },
@@ -239,7 +238,7 @@ export default {
 		justify-content: center;
 		align-items: center;
 		img{
-			width: 10%;
+			width: 25%;
 		}
 	}
 /deep/.el-carousel__button {
@@ -280,6 +279,9 @@ export default {
   .content {
 	display: flex;
     justify-content: space-between;
+	  .langBox{
+		  font-size: 12px;
+	  }
   }
   li {
     cursor: pointer;
@@ -410,6 +412,7 @@ export default {
       top: 20px;
       color: #333;
       z-index: 1001;
+	  display: none;
     }
   }
   .contactUs {
@@ -440,7 +443,7 @@ export default {
           width: 30px;
 		  height: 30px;
           margin-bottom: 10px;
-          opacity: 0.5;
+          opacity: 0.7;
           &:hover {
             opacity: 1;
           }
@@ -537,7 +540,7 @@ export default {
       right: 10px !important;
       z-index: 1000;
       color: #fff;
-      display: flex;
+      display: flex !important;
       justify-content: center;
       align-items: center;
     }
@@ -634,10 +637,13 @@ export default {
       .right {
         margin-top: 20px;
         margin-bottom: 5px !important;
+		text-align: center;
       }
     }
 	.botTop{
+		text-align: center;
 		display: block !important;
+		margin-bottom: 0px !important;
 		span {
 		  display: inline-block;
 		  line-height: 22px;
@@ -648,15 +654,18 @@ export default {
 		}
 	}
     .bot {
-      display: block !important;
-      span {
-        display: inline-block;
+		text-align: center;
+		display: block !important;
         line-height: 22px;
         font-size: 12px !important;
+      /* span {
+        line-height: 22px;
+        font-size: 12px !important;
+        display: inline-block;
          color: #ccc !important;
         //  white-space: nowrap;
         //  word-break: break-all;
-      }
+      } */
     }
   }
 }
