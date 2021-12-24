@@ -107,13 +107,6 @@ export default [
             component: () => import("@/views/home/frienchOtc/fabu.vue"),
 
           },
-		  {
-		    path: '/mairu',
-		    name: 'mairu',
-			meta: { name: '订单详情',isHideChild: true },
-		    component: () =>
-		      import('@/views/home/frienchOtc/Mairu')
-		  },
         ]
       },
       {
@@ -527,7 +520,12 @@ export default [
   //   component: () =>
   //     import('@/views/page/Beizhu')
   // },
-  
+  {
+    path: '/mairu',
+    name: 'mairu',
+    component: () =>
+      import('@/views/home/frienchOtc/Mairu')
+  },
   // {
   //   path: '/jiaoyi',
   //   name: 'jiaoyi',

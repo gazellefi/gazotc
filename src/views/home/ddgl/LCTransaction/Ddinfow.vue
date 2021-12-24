@@ -180,8 +180,8 @@
 				  <span v-if="ddifo['release'] != 0">{{$t('message.dapp.orederCancelled')}}</span>
 				</div>
 			</el-col>
-			   <!-- 当前登录为商家   订单类型为购买 -->
 				<el-col :span="24" v-if="ddifo['myuser'] == ddifo['Madd'] && ddifo['Umark_b'] == 'buy' " >
+					<!-- 购买 -->
 					<el-row style="padding-bottom: 20px;">
 						<el-col :sm="24" :lg="8" class="f c_c">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('qx_ddajax')" :disabled="anarr('qx_ddajax')">{{$t('message.cancel')}}</van-button>
@@ -211,8 +211,7 @@
 						</el-col>
 					</el-row>
 				</el-col>
-				<!-- 当前登录为商家   订单类型为出售 -->
-				<el-col :span="24" v-if=" ddifo['myuser'] == ddifo['Madd'] && ddifo['Umark_b'] == 'sell'">
+				<el-col :span="24" v-if=" ddifo['myuser'] == ddifo['Uadd'] && ddifo['Umark_b'] == 'sell'">
 					<el-row style="padding-bottom: 20px;">
 						<el-col :sm="24" :lg="8" class="f c_c">
 							<van-button class="btnStyle" plain type="pr	imary" @click="setddcode('fb_ddajax')" :disabled="anarr('fb_ddajax')">{{$t('message.putMoney')}}</van-button>
@@ -225,7 +224,7 @@
 							</div>
 						</el-col>
 						<el-col :sm="24" :lg="8" class="fc c_c a_c">
-							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd',1)">{{$t('message.earlyReleaseMargin')}}</van-button>
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Uadd',1)">{{$t('message.earlyReleaseMargin')}}</van-button>
 							<div class="msg">
 							  <span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
 							  <span v-if="ddifo.agree == 2">{{$t('message.MerchantAgreesRelease')}}</span>
@@ -240,8 +239,7 @@
 						</el-col>
 					</el-row>
 				</el-col>
-				<!-- 当前登录为用户   订单类型为出售 -->
-				<el-col :span="24" v-if="ddifo['myuser'] == ddifo['Uadd'] && ddifo['Umark_b'] == 'buy'">
+				<el-col :span="24" v-if="ddifo['myuser'] == ddifo['Madd'] && ddifo['Umark_b'] == 'sell'">
 					<el-row style="padding-bottom: 20px;">
 						<el-col class="f c_c" :sm="24" :lg="8">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('qx_ddajax')" :disabled="anarr('qx_ddajax')">{{$t('message.cancel')}}</van-button>
@@ -255,7 +253,7 @@
 							</div>
 						</el-col>
 						<el-col class="fc c_c a_c" :sm="24" :lg="8">
-							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Uadd',2)">{{$t('message.earlyReleaseMargin')}}</van-button>
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd',2)">{{$t('message.earlyReleaseMargin')}}</van-button>
 							<div class="msg">
 							  <span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
 							  <span v-if="ddifo.agree == 2">{{$t('message.MerchantAgreesRelease')}}</span>
@@ -270,8 +268,7 @@
 						</el-col>
 					</el-row>
 				</el-col>
-				<!-- 当前登录为用户  订单类型为购买 -->
-				<el-col :span="24" v-if=" ddifo['myuser'] == ddifo['Uadd'] && ddifo['Umark_b'] == 'sell' ">
+				<el-col :span="24" v-if=" ddifo['myuser'] == ddifo['Uadd'] && ddifo['Umark_b'] == 'buy' ">
 					<el-row  style="padding-bottom: 20px;">
 						<el-col :sm="24" :lg="8" class="f c_c">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('fb_ddajax')" :disabled="anarr('fb_ddajax')">{{$t('message.putMoney')}}</van-button>
@@ -284,7 +281,7 @@
 							 </div>
 						</el-col>
 						<el-col :sm="24" :lg="8" class="f c_c a_c">
-							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Uadd')">{{$t('message.earlyReleaseMargin')}}</van-button>
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">{{$t('message.earlyReleaseMargin')}}</van-button>
 							<div class="msg">
 							  <span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
 							  <span v-if="ddifo.agree == 2">{{$t('message.MerchantAgreesRelease')}}</span>
@@ -383,8 +380,7 @@
 				input: '',
 				input1: '',
 				dquser:'',
-				ddifo: ddinfomodel,
-				traState: 0,  //  1:当前登录为商家   订单类型为购买  2:当前登录为商家   订单类型为出售   3:当前登录为用户  订单类型为购买   4: 当前登录为用户   订单类型为出售   5:不是商家也不是卖家
+				ddifo: ddinfomodel
 			}
 		},
 		watch: {
@@ -557,7 +553,7 @@
 						// dq.ddifo['Umark_b'] =  ret['Umark'] == '0x6275790000000000000000000000000000000000000000000000000000000000' ? 'buy':'sell';
 						
 						let udd = dq.lowerCase(ret['Uadd'])
-						// console.log(ret['pro'])
+						console.log(ret['pro'])
 						dq.ddifo['Umark_b'] = udd != dq.dquser ? 'sell' : 'buy'
 						for (let index = 0; index < huobijson['huobi'].length; index++) {
 							
@@ -630,12 +626,12 @@
 					//     alert('The order cannot be cancelled');
 					//     return;
 					// }
-					// console.log('订单不能取消')
+					console.log('The order cannot be cancelled')
 					qx_ddajax();
 				}
 				if (type == 'fk_ddajax') {
 					if (dq.ddifo['timb']) {
-						alert('此订单无法付款');
+						alert('This order cannot be paid');
 						return;
 					}
 					fk_ddajax();

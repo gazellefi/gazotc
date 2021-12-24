@@ -2,7 +2,7 @@
   <el-dropdown @command="dropdownClickFn" trigger="click">
 	<img style="width: 1.125rem;height: 1.125rem;" src="../assets/img/earth.png" >
     <!-- <span class="el-dropdown-link">
-      {{ $t('message.lang')}}
+      {{ $t('message.lang')}}EN
     </span> -->
     <el-dropdown-menu slot="dropdown">
       <el-dropdown-item command="EN"> {{$t('message.lang1')}}</el-dropdown-item>

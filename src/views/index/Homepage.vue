@@ -42,15 +42,9 @@
 					<div>{{v.title}}</div>
 				</div>
 				<div class="cont">{{v.cont}}</div>
-<<<<<<< HEAD
 				<!-- <div class="bgBox" style="position: absolute;">
 					<img :src="v.background" >
 				</div> -->
-=======
-				<div class="bgBox" style="position: absolute;">
-					<img :src="v.background" >
-				</div>
->>>>>>> a792e39bc38a4df02333cd5c3e6917fd97707553
 			</li>
         </div>
         <div class="fourInfo">
@@ -74,11 +68,7 @@
                 </div>
               </div>
               <div class="right">
-<<<<<<< HEAD
                 <div class="title"> {{v.title}} <img :src="v.icon3" ></div>
-=======
-                <div class="title"> {{v.title}} <img src="../../assets/img/addCopy.png" ></div>
->>>>>>> a792e39bc38a4df02333cd5c3e6917fd97707553
                 <div class="cont"> {{v.cont}}</div>
               </div>
             </li>
@@ -112,11 +102,7 @@
 			<div class="title">Associated Media</div>
 			<div class="mainBox">
 				<div class="mediaItem" v-for="(v,i) in mediaList" :key="i" :style="{backgroundColor:v.color}">
-<<<<<<< HEAD
 					<img :src="v.background" >
-=======
-					
->>>>>>> a792e39bc38a4df02333cd5c3e6917fd97707553
 				</div>
 			</div>
 		</div>
@@ -176,15 +162,9 @@ export default {
         'Decentralized guarantee makes businesses no longer exploited by e-commerce platforms'
       ],
       infosList: [
-<<<<<<< HEAD
         { icon: require('../../assets/img/business_2.jpg'), icon2: require('@/assets/index/a.png'),icon3:require('../../assets/img/Business.png'), i: '01', title: 'Business', cont: 'The order issuer needs to mortgage the platform currency' },
         { icon: require('../../assets/img/user_2.jpg'), icon2: require('@/assets/index/b.png'),icon3:require('../../assets/img/User.png'), i: '02', title: 'User', cont: 'The order issuer needs to mortgage the platform currency' },
         { icon: require('../../assets/img/arbiter_2.jpg'), icon2: require('@/assets/index/c.png'),icon3:require('../../assets/img/Arbiter.png'), i: '03', title: 'Arbiter', cont: 'Arbitration of disputes requires the mortgage of platform currency' }
-=======
-        { icon: require('../../assets/img/info_1.png'), icon2: require('@/assets/index/a.png'), i: '01', title: 'Business', cont: 'The order issuer needs to mortgage the platform currency' },
-        { icon: require('../../assets/img/info_2.png'), icon2: require('@/assets/index/b.png'), i: '02', title: 'User', cont: 'The order issuer needs to mortgage the platform currency' },
-        { icon: require('../../assets/img/info_3.png'), icon2: require('@/assets/index/c.png'), i: '03', title: 'Arbiter', cont: 'Arbitration of disputes requires the mortgage of platform currency' }
->>>>>>> a792e39bc38a4df02333cd5c3e6917fd97707553
       ],
 	  loadingList: [
 		  {title:'Reward',sliderNum:'65%'},
@@ -196,7 +176,6 @@ export default {
 		  {title:'Previous contributor',sliderNum:'1%'}
 	  ],
 	  mediaList:[
-<<<<<<< HEAD
 		  {color:'#fff',background:require('../../assets/img/logo1.jpg')},
 		  {color:'#fff',background:require('../../assets/img/logo2.jpg')},
 		  {color:'#fff',background:require('../../assets/img/logo3.jpg')},
@@ -205,16 +184,6 @@ export default {
 		  {color:'#fff',background:require('../../assets/img/logo6.jpg')},
 		  {color:'#fff',background:require('../../assets/img/logo7.jpg')},
 		  {color:'#fff',background:require('../../assets/img/logo8.jpg')},
-=======
-		  {color:'#9AB1F9'},
-		  {color:'#9AB1F9'},
-		  {color:'#9AB1F9'},
-		  {color:'#9AB1F9'},
-		  {color:'#9AB1F9'},
-		  {color:'#9AB1F9'},
-		  {color:'#9AB1F9'},
-		  {color:'#9AB1F9'},
->>>>>>> a792e39bc38a4df02333cd5c3e6917fd97707553
 	  ]
     };
   },
@@ -319,13 +288,10 @@ export default {
       line-height: 40px;
       letter-spacing: 1px;
 	  margin-left: 110px;
-<<<<<<< HEAD
 	  display: flex;
 	  flex-direction: column;
 	  justify-content: space-between;
 	  height: 70%;
-=======
->>>>>>> a792e39bc38a4df02333cd5c3e6917fd97707553
     }
 	.readMore{
 		width: 8.625rem;
@@ -476,10 +442,7 @@ export default {
           display: block;
           width: 9px;
           height: 9px;
-<<<<<<< HEAD
 		  border-radius: 50%;
-=======
->>>>>>> a792e39bc38a4df02333cd5c3e6917fd97707553
           background: #FF7361;
           transform: translateX(-20px);
         }
@@ -534,11 +497,7 @@ export default {
                 left: -80px;
               }
               .imgTop {
-<<<<<<< HEAD
                 /* box-shadow: 0 0 20px 0 #ccc; */
-=======
-                box-shadow: 0 0 20px 0 #ccc;
->>>>>>> a792e39bc38a4df02333cd5c3e6917fd97707553
                 width: 385px;
                 height: 265px;
 				
@@ -556,28 +515,17 @@ export default {
             }
           }
           .right {
-<<<<<<< HEAD
 			  text-align: center;
 				height: 128px;
 			  box-shadow: -10px 10px 5px #eee;
             .title {
 				padding-top: 28px;
-=======
-			  box-shadow: -10px 10px 5px #eee;
-            .title {
-				margin-top: 28px;
->>>>>>> a792e39bc38a4df02333cd5c3e6917fd97707553
               font-size: 24px;
               font-family: SF Pro Display;
               font-weight: bold;
               color: #333333;
               line-height: 36px;
-<<<<<<< HEAD
 			  text-align: center;
-=======
-              text-align: left;
-              margin-bottom: 20px;
->>>>>>> a792e39bc38a4df02333cd5c3e6917fd97707553
 			  img{
 				  width: 20px;
 				  height: 20px;
@@ -674,25 +622,19 @@ export default {
 			justify-content: center;
 			margin-top: 64px;
 			.mediaItem{
-<<<<<<< HEAD
 				display: flex;
 				flex-direction: column;
 				justify-content: center;
 				align-items: center;
-=======
->>>>>>> a792e39bc38a4df02333cd5c3e6917fd97707553
 				width: 234px;
 				height: 148px;
 				margin: 7px;
 			}
-<<<<<<< HEAD
 			.mediaItem:first-of-type{
 				img{
 					width: 80%;
 				}
 			}
-=======
->>>>>>> a792e39bc38a4df02333cd5c3e6917fd97707553
 		}
 	}
     
@@ -892,7 +834,7 @@ export default {
             .title {
 			margin-top: 10px !important;
               font-size: 18px !important;
-              /* text-align: center !important; */
+              text-align: center !important;
               margin-bottom: 5px !important;
               font-weight: 600 !important;
 			  img{
@@ -901,11 +843,7 @@ export default {
 			  }
             }
             .cont {
-<<<<<<< HEAD
 				/* text-align: left; */
-=======
-				text-align: left;
->>>>>>> a792e39bc38a4df02333cd5c3e6917fd97707553
               font-size: 14px !important;
               width: 100% !important;
 			  padding-bottom: 20px;
