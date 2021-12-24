@@ -3,10 +3,24 @@
     <!-- therefore -->
     <div class="therefore ">
       <div class="content">
-        <div class="title "><span>The birth</span> of gazotc</div>
+        <!-- <div class="title "><span>The birth</span> of gazotc</div>
         <div class="info">
           Once, we thought that the world’s top centralized exchange was safe and trustworthy, and was the first choice for digital currency in and out of gold.Until one day, a world-famous Exchange suspended currency withdrawal… Now, the business sector of the centralized exchange is eroded step by step by the decentralized exchange, and only OTC trading is spared temporarily. For this reason, OTC trading involves assets under the chain, and the blockchain cannot actively identify it, so the transaction will be controversial. Other defi services are atomic exchange and will not be controversial. The dispute resolution mechanism of OTC business is a problem that every project team involved in decentralized OTC business must face. China is the most active region of digital currency trading in the world. Then, the Chinese government has not supported digital currency trading. When the three exchanges are about to withdraw from China, how should the problem of cash in and out of Chinese traders be solved? Small exchanges are unreliable and private trading is unsafe. The market urgently needs a decentralized OTC trading platform. In this context, GAZOTC — A completely decentralized OTC trading platform, will be launched into the market after one year of polishing.
-        </div>
+        </div> -->
+		<div class="leftImg">
+			<img src="../../assets/img/titleLeft.png" style="width: 31.25rem;height: 26.875rem;">
+		</div>
+		<div class="rightText">
+			<div class="title">
+				About GAZOTC
+			</div>
+			<div class="info">
+				<div class="">
+					GAZOTC is committed to providing users with small and sophisticated DOTC services, creating a safe, convenient,and DAO decentralized OTC platfor.
+				</div>
+				<button class="readMore" type="button">BUY IT NOW</button>
+			</div>
+		</div>
         <!-- <ul>
           <li v-for="v in thereforeList">
             <div class="title">{{v.title}}</div>
@@ -18,52 +32,89 @@
     <!-- whiteInfo -->
     <div class="whiteInfo">
       <div class="content">
+		<div class="safeTitle">
+			How Does GAZOTC Work
+		</div>
         <div class="safety">
-          <li v-for="v in safetyList">
-            <div class="title"> <img :src="v.icon" alt=""><span>{{v.title}}</span></div>
-            <div class="cont">{{v.cont}}</div>
-          </li>
+			<li v-for="v in safetyList" :class="v.title=='Safety'?'safe':v.title=='No License'?'nolicense':'autonomy'">
+				<div class="title" align="center">
+					<img :src="v.icon" alt="">
+					<div>{{v.title}}</div>
+				</div>
+				<div class="cont">{{v.cont}}</div>
+				<!-- <div class="bgBox" style="position: absolute;">
+					<img :src="v.background" >
+				</div> -->
+			</li>
         </div>
         <div class="fourInfo">
-          <li v-for="v in fourInfoList">{{v}}</li>
+			<div class="infoTitle">
+				Market Participants
+			</div>
+			<div class="infoItem" style="display: flex;">
+				<li v-for="v in fourInfoList">{{v}}</li>
+			</div>
         </div>
         <div class="Market">
-          <div class="title">Market <span>participants</span></div>
+          <div class="title">Market Participants</div>
           <div class="infos">
             <li v-for="(v,i) in infosList" :class="[(i+1)%2==0?'Odd':'even']">
               <div class="left">
                 <!-- <div class="title"> {{v.title}}</div> -->
                 <div class="info">
-                  <div class="i">{{v.i}}</div>
-                  <img class="imgTop" :src="v.icon2" alt="">
-                  <img class="imgBot" :src="v.icon" alt="">
+                  <!-- <div class="i">{{v.i}}</div> -->
+                  <img class="imgTop" :src="v.icon" alt="">
+                  <!-- <img class="imgBot" :src="v.icon" alt=""> -->
                 </div>
               </div>
               <div class="right">
-                <div class="title"> {{v.title}}</div>
+                <div class="title"> {{v.title}} <img :src="v.icon3" ></div>
                 <div class="cont"> {{v.cont}}</div>
               </div>
             </li>
           </div>
         </div>
-        <div class="model">
-          Gazotc platform currency<br /> economic <span> model</span>
-        </div>
-        <div class="total">
-          The total number of tokens is <span>63M</span>，Token allocation
-        </div>
-        <div class="img">
-          <img src="@/assets/index/round.png" alt="">
-        </div>
+		<div class="modelBox">
+			<div class="left">
+				<div class="model"> Economic Model
+				</div>
+				<div class="total">
+				  The total number of tokens is 63M，Token allocation
+				</div>
+				<div class="img">
+				  <img src="../../assets/img/model.png" alt="">
+				</div>
+			</div>
+			<div class="right">
+				<div class="loadingList" v-for="(v,i) in loadingList" :key="i">
+					<div class="loadingTitle">
+						<div class="">
+							 {{v.title}}
+						</div>
+						<span>{{v.sliderNum}}</span></div>
+					<div class="loadingBar">
+						<div class="sliderBar" :style="{width:v.sliderNum}"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="mediaBox">
+			<div class="title">Associated Media</div>
+			<div class="mainBox">
+				<div class="mediaItem" v-for="(v,i) in mediaList" :key="i" :style="{backgroundColor:v.color}">
+					<img :src="v.background" >
+				</div>
+			</div>
+		</div>
       </div>
     </div>
     <!-- blackInfo -->
-    <div class="blackInfo ">
+    <!-- <div class="blackInfo ">
       <div class="content">
         <div class="title">Gazotc trading system <span>diagram</span></div>
         <img src="@/assets/img/1111.png" alt="">
       </div>
-    </div>
+    </div> -->
     <!-- grayInfo -->
     <!-- <div class="grayInfo">
       <div class="content">
@@ -71,7 +122,6 @@
         <img src="@/assets/index/7.png" alt="">
       </div>
     </div> -->
-
   </div>
 </template>
 <script>
@@ -87,29 +137,54 @@ export default {
         { title: 'Arbitration rules', route: 'Arbitration rules' },
         { title: 'DAPP', route: 'Exchange' },
         { title: 'Public sale', route: 'Public sale' },
+		// { title: 'Home', route: 'Home page' },
+		// { title: 'About', route: 'Core mechanism' },
+		// { title: 'RULE', route: 'Security rules' },
+		// { title: 'DOCUMENT', route: 'Arbitration rules' },
+		// { title: 'DAPP', route: 'Exchange' },
+		// { title: 'CONTACT', route: 'Public sale' },
       ],
       thereforeList: [
-        { title: 'At one time', cont: 'we thought that the centralized exchange was safe and trustworthy, and it was the first choice for legal tender trading.' },
-        { title: 'Until one day', cont: 'one of the three suspended the withdrawal of money.Defi believers believe that asset freedom should depend on technology, not people.' },
+        { title: 'At one time', cont: 'we thought that the centralized exchange was safe and trustworthy, and it was the first choice for legal tender trading' },
+        { title: 'Until one day', cont: 'one of the three suspended the withdrawal of money.Defi believers believe that asset freedom should depend on technology, not people' },
         { title: 'Therefore', cont: 'The gateway to the world of defi decentralized legal currency transactions Born!' },
 
       ],
       safetyList: [
-        { icon: require('@/assets/index/3.png'), title: 'safety', cont: 'Assets are managed by smart contracts and can only be transferred between trading parties, The platform has no right to use and lock user assets.' },
-        { icon: require('@/assets/index/4.png'), title: 'No license', cont: 'Traders through third-party social software and verification interfaces,Mutual KYC, personal retained information' },
-        { icon: require('@/assets/index/5.png'), title: 'Community autonomy', cont: 'In case of any dispute, it shall be decided by the centralized arbitration mechanism in the chain;Platform parameters are set by community voting.' },
+        { icon: require('../../assets/img/safe.png'),background:require('../../assets/img/safebg.png'), title: 'Safety', cont: 'Assets are managed by smart contracts and can only be transferred between trading parties, The platform has no right to use and lock user assets' },
+        { icon: require('../../assets/img/noLicense.png'),background:require('../../assets/img/licensebg.png'), title: 'No License', cont: 'Traders through third-party social software and verification interfaces,Mutual KYC, personal retained information' },
+        { icon: require('../../assets/img/daoAutonomy.png'),background:require('../../assets/img/autonomybg.png'), title: 'Dao Autonomy', cont: 'In case of any dispute, it shall be decided by the centralized arbitration mechanism in the chain;Platform parameters are set by community voting' },
       ],
       fourInfoList: [
-        'Decentralized OTC transactions and channels for digital currency in and out of cash.',
+        'Decentralized OTC transactions and channels for digital currency in and out of cash',
         'The free exchange of global foreign exchange and the disappearance of underground banks',
-        'The portal of physical assets and assets on the chain, and the entrance of the meta universe.',
-        'Decentralized guarantee makes businesses no longer exploited by e-commerce platforms.'
+        'The portal of physical assets and assets on the chain, and the entrance of the meta universe',
+        'Decentralized guarantee makes businesses no longer exploited by e-commerce platforms'
       ],
       infosList: [
-        { icon: require('@/assets/index/9.png'), icon2: require('@/assets/index/a.png'), i: '01', title: 'business', cont: 'The order issuer needs to mortgage the platform currency' },
-        { icon: require('@/assets/index/10.png'), icon2: require('@/assets/index/b.png'), i: '02', title: 'user', cont: 'The order issuer needs to mortgage the platform currency' },
-        { icon: require('@/assets/index/11.png'), icon2: require('@/assets/index/c.png'), i: '03', title: 'arbiter', cont: 'Arbitration of disputes requires the mortgage of platform currency' }
-      ]
+        { icon: require('../../assets/img/business_2.jpg'), icon2: require('@/assets/index/a.png'),icon3:require('../../assets/img/Business.png'), i: '01', title: 'Business', cont: 'The order issuer needs to mortgage the platform currency' },
+        { icon: require('../../assets/img/user_2.jpg'), icon2: require('@/assets/index/b.png'),icon3:require('../../assets/img/User.png'), i: '02', title: 'User', cont: 'The order issuer needs to mortgage the platform currency' },
+        { icon: require('../../assets/img/arbiter_2.jpg'), icon2: require('@/assets/index/c.png'),icon3:require('../../assets/img/Arbiter.png'), i: '03', title: 'Arbiter', cont: 'Arbitration of disputes requires the mortgage of platform currency' }
+      ],
+	  loadingList: [
+		  {title:'Reward',sliderNum:'65%'},
+		  {title:'Gazelle foundation',sliderNum:'12%'},
+		  {title:'Private placement',sliderNum:'10%'},
+		  {title:'Technical team',sliderNum:'8%'},
+		  {title:'Safe pool',sliderNum:'2%'},
+		  {title:'Airdrop',sliderNum:'2%'},
+		  {title:'Previous contributor',sliderNum:'1%'}
+	  ],
+	  mediaList:[
+		  {color:'#fff',background:require('../../assets/img/logo1.jpg')},
+		  {color:'#fff',background:require('../../assets/img/logo2.jpg')},
+		  {color:'#fff',background:require('../../assets/img/logo3.jpg')},
+		  {color:'#fff',background:require('../../assets/img/logo4.jpg')},
+		  {color:'#fff',background:require('../../assets/img/logo5.jpg')},
+		  {color:'#fff',background:require('../../assets/img/logo6.jpg')},
+		  {color:'#fff',background:require('../../assets/img/logo7.jpg')},
+		  {color:'#fff',background:require('../../assets/img/logo8.jpg')},
+	  ]
     };
   },
   mounted() { },
@@ -191,13 +266,18 @@ export default {
   }
   .therefore {
     height: 472px;
-    background: url('~@/assets/index/2.png') no-repeat;
+    /* background: url('~@/assets/index/2.png') no-repeat; */
     background-position: right;
-    background-color: #ededed;
+    background-color: #fff;
+	margin-top: 4.5625rem;
+	.content{
+		display: flex;
+	}
     .title {
       font-size: 32px;
       padding: 10px 0;
-      font-weight: bold;
+	  margin-left: 110px;
+      font-weight: bolder;
       padding-top: 20px;
       span {
         color: #ffcc00;
@@ -207,7 +287,18 @@ export default {
     .info {
       line-height: 40px;
       letter-spacing: 1px;
+	  margin-left: 110px;
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: space-between;
+	  height: 70%;
     }
+	.readMore{
+		width: 8.625rem;
+		height: 2.9375rem;
+		background-color: #FF7361;
+		color: #fff;
+	}
     // ul {
     //   display: flex;
     //   flex-direction: column;
@@ -221,7 +312,7 @@ export default {
     //       font-weight: bold;
     //       color: #000000;
     //       line-height: 36px;
-    //       text-transform: uppercase;
+    /* //       text-transform: uppercase; */
     //     }
     //     .cont {
     //       max-width: 610px;
@@ -236,17 +327,58 @@ export default {
   .whiteInfo {
     padding-top: 50px;
     padding-bottom: 100px;
+	.safeTitle{
+		font-size: 36px;
+		text-align: center;
+		margin-bottom:66px ;
+	}
     .safety {
       display: flex;
       justify-content: center;
+	  .safe,.nolicense,.autonomy{
+		  .bgBox{
+				position: absolute;
+				opacity: 0.2;
+		  }
+	  }
+	  .safe{
+		  .bgBox{
+			  right: -40px;
+			  top: 28px;
+			  img{
+				  width: 190px;
+				  height: 220px;
+			  }
+		  }
+	  }
+	  .nolicense{
+		  .bgBox{
+			  right: -40px;
+			  top: 0px;
+			  img{
+				  width: 171px;
+				  height: 254px;
+			  }
+		  }
+	  }
+	  .autonomy{
+		  .bgBox{
+		  right: -12px;
+		  top: 15px;
+			  img{
+				  width: 229px;
+				  height: 220px;
+			  }
+		  }
+		  
+	  }
       li {
         margin-right: 20px;
-
+		position: relative;
         .title {
-          display: flex;
           align-items: center;
           margin-bottom: 10px;
-          text-transform: uppercase;
+          /* text-transform: uppercase; */
           font-size: 26px;
           font-family: SF Pro Display;
           font-weight: 600;
@@ -268,6 +400,7 @@ export default {
           font-size: 14px;
           font-family: SF Pro Display;
           font-weight: 400;
+		  text-align: center;
           color: #666666;
           letter-spacing: -1px;
           line-height: 18px;
@@ -275,10 +408,17 @@ export default {
       }
     }
     .fourInfo {
-      margin-top: 77px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      margin-top: 140px;
+	  .infoTitle{
+		  font-size: 36px;
+		  text-align: center;
+		  margin-bottom: 66px;
+	  }
+	  .infoItem{
+		  display: flex;
+		  flex-wrap: wrap;
+		  justify-content: space-between;
+	  }
       li {
         border: 1px solid #999999;
         border-radius: 10px;
@@ -302,20 +442,21 @@ export default {
           display: block;
           width: 9px;
           height: 9px;
-          background: #fdc000;
-          border-radius: 50%;
+		  border-radius: 50%;
+          background: #FF7361;
           transform: translateX(-20px);
         }
       }
     }
     .Market {
+		margin-top: 187px;
       .title {
         font-size: 36px;
         font-family: SF Pro Display;
         font-weight: 500;
         color: #333333;
         line-height: 36px;
-        text-transform: uppercase;
+        /* text-transform: uppercase; */
         text-align: center;
         span {
           color: #fdc100;
@@ -323,14 +464,16 @@ export default {
       }
       .infos {
         margin-top: 60px;
+		display: flex;
+		justify-content: space-around;
         li {
-          display: flex;
+         /* display: flex;
           align-items: center;
-          justify-content: space-around;
+          justify-content: space-around; */
           margin-bottom: 120px;
           .left {
             .title {
-              font-size: 30px;
+              font-size: 36px;
               font-family: SF Pro Display;
               font-weight: 400;
               color: #333333;
@@ -354,10 +497,10 @@ export default {
                 left: -80px;
               }
               .imgTop {
-                box-shadow: 0 0 20px 0 #ccc;
-                width: 220px;
-                height: 220px;
-                border-radius: 50%;
+                /* box-shadow: 0 0 20px 0 #ccc; */
+                width: 385px;
+                height: 265px;
+				
               }
 
               .imgBot {
@@ -372,57 +515,129 @@ export default {
             }
           }
           .right {
+			  text-align: center;
+				height: 128px;
+			  box-shadow: -10px 10px 5px #eee;
             .title {
-              font-size: 30px;
+				padding-top: 28px;
+              font-size: 24px;
               font-family: SF Pro Display;
-              font-weight: 400;
+              font-weight: bold;
               color: #333333;
               line-height: 36px;
-              text-align: left;
-              margin-bottom: 20px;
+			  text-align: center;
+			  img{
+				  width: 20px;
+				  height: 20px;
+			  }
             }
             .cont {
               width: 385px;
-              font-size: 24px;
+              font-size: 16px;
               font-family: SF Pro Display;
               font-weight: 400;
               color: #666666;
-              line-height: 36px;
+              line-height: 24px;
               letter-spacing: -1px;
             }
           }
         }
       }
     }
-    .model {
-      font-size: 36px;
-      font-family: SF Pro Display;
-      font-weight: 500;
-      color: #333333;
-      line-height: 48px;
-      text-transform: uppercase;
-      text-align: center;
-      margin-bottom: 20px;
-      span {
-        color: #fdc100;
-      }
-    }
-    .total {
-      text-align: center;
-      font-size: 24px;
-      font-family: SF Pro Display;
-      font-weight: 500;
-      color: #666666;
-      line-height: 36px;
-      margin-bottom: 67px;
-      span {
-        color: #fdc100;
-      }
-    }
+	.modelBox{
+		display: flex;
+		.model {
+		  font-size: 36px;
+		  font-family: SF Pro Display;
+		  font-weight: 500;
+		  color: #333333;
+		  line-height: 48px;
+		  /* text-transform: uppercase; */
+		  margin-bottom: 20px;
+		}
+		.total {
+		  text-align: center;
+		  font-size: 24px;
+		  font-family: SF Pro Display;
+		  font-weight: 500;
+		  color: #FF7361;
+		  line-height: 36px;
+		  margin-bottom: 67px;
+		  span {
+			color: #fdc100;
+		  }
+		}
 
-    .img {
-      text-align: center;
-    }
+		.img {
+			img{
+				width: 583px;
+				height: 409px;
+				text-align: center;
+			}
+		}
+		.left{
+			flex: 1;
+		}
+		.right{
+			flex: 1;
+			margin-top: 109px;
+			margin-left: 49px;
+			display: flex;
+			flex-direction: column;
+			.loadingList{
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-end;
+				flex: 1;
+				line-height: 36px;
+				.loadingTitle{
+					display: flex;
+					justify-content: space-between;
+					font-size: 24px;
+					font-weight: bold;
+				}
+				.loadingBar{
+					width: 100%;
+					height: 19px;
+					background-color: #E6E6E6;
+					
+					.sliderBar{
+						height: 100%;
+						background-color: #FF7361;
+					}
+				}
+			}
+		}
+	}
+	.mediaBox{
+		margin-top: 191px;
+		.title{
+			font-size: 36px;
+			font-weight: bold;
+			text-align: center;
+		}
+		.mainBox{
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			margin-top: 64px;
+			.mediaItem{
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				width: 234px;
+				height: 148px;
+				margin: 7px;
+			}
+			.mediaItem:first-of-type{
+				img{
+					width: 80%;
+				}
+			}
+		}
+	}
+    
   }
   .blackInfo {
     // height: 860px;
@@ -559,6 +774,27 @@ export default {
       padding: 10px 0 !important;
     }
   }
+  .rightText{
+	  .title{
+			font-weight: bolder !important;
+		    font-size: 24px !important;
+		    line-height: 28px !important;
+	  }
+  }
+  .safeTitle,.infoTitle{
+		font-weight: bolder !important;
+		font-size: 24px !important;
+		line-height: 28px !important;
+  }
+  .modelBox{
+	  .left{
+		  .model{	  
+			font-weight: bolder !important;
+			font-size: 24px !important;
+			line-height: 28px !important;
+		  }
+	  }
+  }
   .whiteInfo {
     padding-bottom: 20px !important;
     padding-top: 20px !important;
@@ -569,11 +805,16 @@ export default {
       }
     }
     .Market {
+		margin-top: 0px !important;
       .title {
+		font-weight: bolder !important;
         font-size: 24px !important;
         line-height: 28px !important;
       }
       .infos {
+		  display: flex;
+		  flex-direction: column;
+				text-align: center;
         margin-top: 40px !important;
         .Odd {
           justify-content: center !important;
@@ -581,21 +822,31 @@ export default {
             order: -1 !important;
           }
         }
+		.even{
+			margin-bottom: 30px !important;
+		}
         li {
           display: flex;
           flex-direction: column;
           margin-bottom: 60px !important;
           .right {
-            margin-top: 30px;
+			  padding: 0 10px;
             .title {
+			margin-top: 10px !important;
               font-size: 18px !important;
               text-align: center !important;
               margin-bottom: 5px !important;
               font-weight: 600 !important;
+			  img{
+				  width: 13px !important;
+				  height: 13px !important;
+			  }
             }
             .cont {
+				/* text-align: left; */
               font-size: 14px !important;
-              width: 230px !important;
+              width: 100% !important;
+			  padding-bottom: 20px;
               line-height: 18px !important;
               letter-spacing: 0 !important;
             }
@@ -614,8 +865,9 @@ export default {
               }
               img {
                 top: 40px !important;
-                width: 160px !important;
-                height: 160px !important;
+                /* width: 160px !important;
+                height: 160px !important; */
+				width: 80%;
               }
             }
           }
@@ -634,6 +886,16 @@ export default {
     .safety {
       display: flex;
       flex-direction: column;
+	  .safe,.nolicense,.autonomy{
+		  .bgBox{
+			  display: none;
+			img{
+				transform: scale(0.8);
+			}  
+		  }
+	  }
+	  .title{
+	  }
       li {
         margin-bottom: 20px;
         .title {
@@ -657,24 +919,44 @@ export default {
       margin-top: 0px !important;
       padding: 20px;
       li {
+		  display: block !important;
+		text-indent: 1em;
         padding: 10px !important;
         margin-bottom: 15px !important;
         font-size: 14px !important;
-        height: 88px !important;
+        /* height: 88px !important; */
         line-height: 20px !important;
         letter-spacing: 0 !important;
-        display: flex;
+        /* display: flex; */
         align-items: center;
-        &::before {
+        /* &::before {
           content: none !important;
+        } */
+        &::before {
+          position: absolute;
+          top: 16px !important;
+		  left: 30px !important;
+          content: '';
+          display: block;
+          width: 9px;
+          height: 9px;
+          background: #FF7361;
+          transform: translateX(-20px);
         }
       }
     }
   }
+	.infoTitle{
+		width: 100%;
+		font-size: 27px;
+		text-align: center;
+		margin-bottom: 30px !important;
+	}
 
   .therefore {
     height: auto !important;
-    background: #ededed !important;
+    /* background: #ededed !important; */
+    background: #fff !important;
     .content {
       padding: 10px 20px;
       .title {
@@ -682,9 +964,21 @@ export default {
         padding-top: 0;
         text-align: center;
       }
+	  .leftImg{
+		  display:none;
+	  }
+	  .rightText{
+		  text-align: center;
+		  .title,.info{
+			  margin-left: 0;
+		  }
+	  }
       .info {
         line-height: 22px;
         letter-spacing: 0;
+		.readMore{
+			margin-top: 20px;
+		}
       }
       // ul {
       //   padding: 10px 20px;
@@ -699,6 +993,88 @@ export default {
       //   }
       // }
     }
+  }
+  
+  .modelBox{
+  	text-align: center;
+  	display: flex;
+	flex-direction: column;
+  	.model {
+  	  font-size: 36px;
+  	  font-family: SF Pro Display;
+  	  font-weight: 500;
+  	  color: #333333;
+  	  line-height: 48px;
+  	  /* text-transform: uppercase; */
+  	  margin-bottom: 20px;
+  	}
+  	.total {
+  	  text-align: center;
+  	  font-size: 24px;
+  	  font-family: SF Pro Display;
+  	  font-weight: 500;
+  	  color: #FF7361;
+  	  line-height: 36px;
+  	  margin-bottom: 67px;
+  	  span {
+  		color: #fdc100;
+  	  }
+  	}
+  
+  	.img {
+  		img{
+  			width: 100% !important;
+  			height: auto !important;
+  			text-align: center;
+  		}
+  	}
+  	.left{
+  		flex: 1;
+  	}
+  	.right{
+  		flex: 1;
+  		margin-top: 0px !important;
+  		margin-left: 0px !important;
+		padding: 10px;
+  		display: flex;
+  		flex-direction: column;
+  		.loadingList{
+  			display: flex;
+  			flex-direction: column;
+  			justify-content: flex-end;
+  			flex: 1;
+  			line-height: 36px;
+  			.loadingTitle{
+  				display: flex;
+  				justify-content: space-between;
+  				font-size: 15px !important;
+  				font-weight: bold;
+  			}
+  			.loadingBar{
+  				width: 100%;
+  				height: 10px !important;
+  				background-color: #E6E6E6;
+  				
+  				.sliderBar{
+  					height: 100%;
+  					background-color: #FF7361;
+  				}
+  			}
+  		}
+  	}
+  }
+  .mediaBox{
+	  margin-top: 40px !important;
+	  overflow: hidden;
+	  max-height: 538px !important;
+	.title{
+		font-weight: bolder;
+		font-size: 24px !important;
+		line-height: 28px !important;
+	}
+	  .mainBox{
+		  margin-top: 20px !important;
+	  }
   }
 }
 </style>

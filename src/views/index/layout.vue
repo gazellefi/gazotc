@@ -2,14 +2,18 @@
   <div class='index' ref="index">
     <!-- topNav -->
     <ul class="nav" :class="[isScorll?'isScorll':'']">
-      <div class="content">
-        <li :class="[currentRoute==v.route?'currentRoute':'']" @click="navClick(v)" v-for="v in navRoutes">{{v.title}}</li>
-        <li><a target="_blank" href="/GazOTC.pdf">WhitePaper</a></li>
-
-      </div>
+		<div class="content">
+			<div class="logo">
+				<img src="../../assets/img/navLogo.png" >
+			</div>
+			<!-- <li :class="[currentRoute==v.route?'currentRoute':'']" @click="navClick(v)" v-for="v in navRoutes">{{v.title}}</li> -->
+			<li @click="navClick(v)" v-for="v in navRoutes">{{v.title}}</li>
+			<lang class="lang"></lang>
+		</div>
     </ul>
     <van-popup class="nav2" v-model="show" position="left" :style="{ width: '50%' ,height:'100%'}">
-      <li :class="[currentRoute==v.route?'currentRoute':'']" @click="navClick(v)" v-for="v in $t('message.navRoutes')">
+      <!-- <li :class="[currentRoute==v.route?'currentRoute':'']" @click="navClick(v)" v-for="v in navRoutes"> -->
+      <li @click="navClick(v)" v-for="v in navRoutes">
         {{v.title}}
         <van-icon name="arrow" style="float:right" />
       </li>
@@ -22,30 +26,29 @@
         <div class="item" v-for="v in 3"></div>
       </div>
       <lang class="lang"></lang>
-
-      <el-carousel :autoplay="false" height="100%">
+      <el-carousel :autoplay="false"  arrow="nerver"  indicator-position="none" height="100%">
         <el-carousel-item style="position:relative">
-          <img src="@/assets/index/nav.png" alt="">
-          <div class="info content">
+          <img src="../../assets/img/giphy.gif" alt="">
+          <!-- <div class="info content">
             <div class="Gazotc">Gazotc</div>
             <div class="otc">Leader of decentralized OTC</div>
             <div class="trackInitiative">
               <div class="track">Defi new track</div>
-              <!-- <div class="Initiative">Global Initiative</div> -->
+              <div class="Initiative">Global Initiative</div>
             </div>
-          </div>
+          </div> -->
         </el-carousel-item>
-        <el-carousel-item>
+        <!-- <el-carousel-item>
           <img src="@/assets/index/nav2.png" alt="">
           <div class="info content">
             <div class="top"><span>gazelle</span> = gain + zelle</div>
             <div class="mid">Zelle-American Express Transfer Network <br /> Gazelle implies financial attributes</div>
-            <!-- <div class="bot">
+            <div class="bot">
               Antelope is a very agile animal. It is not big, runs fast and jumps high, which means that the project can grow rapidly
               Compared with unicorn of uniswap, gazelle enterprise is a high growth enterprise, which can easily surpass more than one, ten, 100 and 1000 times (Baidu Encyclopedia's definition of gazelle enterprise).
-            </div> -->
+            </div>
           </div>
-        </el-carousel-item>
+        </el-carousel-item> -->
       </el-carousel>
     </div>
     <!-- <div class="topNav">
@@ -72,7 +75,7 @@
     <!-- contactUs -->
     <div class="contactUs">
       <div class="content">
-        <div class="title">Get the latest news and updates</div>
+        <!-- <div class="title">Get the latest news and updates</div> -->
         <div class="info">
           <div class="left">
             <a class="item" @click="goLink(v)" v-for="v in linklist">
@@ -80,15 +83,23 @@
               <div class="text">{{v.text}}</div>
             </a>
           </div>
-          <div class="right">Gazotc --- Gate of the meta universe</div>
+          <div class="right">GAZOTC   Leader Of Decentralized OTC</div>
         </div>
+		<div class="botTop">
+			<span>2021 UNITED KINGDOM GZELLE DEFI FOUNDATION,Copyright</span>
+			<span>Company Number 13702258 </span>
+			<span>Address: 69, Aberdeen Avenue, Cambridge, England, CB2 8DL</span>
+		</div>
         <div class="bot">
-          <span>©2021 UNITED KINGDOM GZELLE DEFI FOUNDATION,copyright</span>
-          <span>Address: 69, Aberdeen Avenue, Cambridge, England, CB2 8DL</span>
-          <span>Help: support@gazotc.com</span>
+          <!-- <span>2021 Vimeo.com, Inc. All rights reserved.</span> -->
+		  Terms Privacy CA Privacy Copyright Cookies
+          <!-- <span>Help: support@gazotc.com</span> -->
         </div>
       </div>
     </div>
+	<div class="mask" v-show="maskShow==true">
+		<img src="../../assets/img/giphy.gif" >
+	</div>
   </div>
 </template>
 <script>
@@ -100,52 +111,75 @@ export default {
       linklist: [
         {
           text: 'Github',
-          img: require('@/assets/link/2.png'),
-          href: 'https://github.com/gazellefi/gazotc'
+          img: require('@/assets/link/1.png'),
+          href: 'https://github.com/gazellefi/gazotc',
         },
         {
           text: 'Twitter',
-          img: require('@/assets/link/6.png'),
-          href: 'https://twitter.com/gazellefi'
+          img: require('@/assets/link/2.png'),
+          href: 'https://twitter.com/gazellefi',
         },
         {
           text: 'Facebook',
-          img: require('@/assets/link/1.png'),
-          href: 'https://www.facebook.com/gazotc'
+          img: require('@/assets/link/3.png'),
+          href: 'https://www.facebook.com/gazotc',
         },
         {
           text: 'Medium',
-          img: require('@/assets/link/3.png'),
-          href: 'https://medium.com/@gazotc'
-        },
-        {
-          text: 'Telegram',
           img: require('@/assets/link/4.png'),
-          href: 'https://t.me/gazotcfi'
+          href: 'https://medium.com/@gazotc',
         },
         {
           text: 'Youtube',
           img: require('@/assets/link/5.png'),
-          href: 'https://www.youtube.com/channel/UCv2XLAJZg5bge_hGMXoPFTg'
+          href: 'https://www.youtube.com/channel/UCv2XLAJZg5bge_hGMXoPFTg',
         },
+        {
+          text: 'Telegram',
+          img: require('@/assets/link/6.png'),
+          href: 'https://t.me/gaztwo',
+        },
+        {
+          text: 'Telegram',
+          img: require('@/assets/link/7.png'),
+          href: 'https://t.me/gazotcCN',
+        },
+        {
+          text: 'discord',
+          img: require('@/assets/link/8.png'),
+          href: 'https://discord.com/invite/mhfdVHNx',
+        }
       ],
       show: false,
       text1: '',
       text2: '',
       currentRoute: '',
       isScorll: '',
+	  maskShow:true,
       navRoutes: [
-        { title: 'Home page', route: '/Homepage' },
-        { title: 'Core mechanism', route: '/Coremechanism' },
-        { title: 'Security rules', route: '/Securityrules' },
-        { title: 'Transaction rules', route: '/Transactionrules' },
-        { title: 'Arbitration rules', route: '/Arbitrationrules' },
-        { title: 'DAPP', route: '/Exchange' },
-        { title: 'Public sale', route: '/Activities' },
+        // { title: 'Home page', route: '/Homepage' },
+        // { title: 'Core mechanism', route: '/Coremechanism' },
+        // { title: 'Security rules', route: '/Securityrules' },
+        // { title: 'Transaction rules', route: '/Transactionrules' },
+        // { title: 'Arbitration rules', route: '/Arbitrationrules' },
+        // { title: 'DAPP', route: '/Exchange' },
+        // { title: 'Public sale', route: '/Activities' },
+		{ title: 'Home', route: '/Homepage' },
+		{ title: 'About', route: '/Homepage' },
+		{ title: 'Document', route: '/Homepage' },
+		{ title: 'Rule', route: '/Homepage' },
+		{ title: 'News', route: '/Homepage' },
+		{ title: 'Dapp', route: '/Exchange' },
+		{ title: 'Contact', route: '/Homepage' },
       ],
     };
   },
+  created() {
+	  this.loading()
+	// setTimeout(this.maskShow=false,2000000)
+  },
   mounted() {
+	  // console.log(this.maskShow)
     this.currentRoute = '/' + location.hash.split('/')[1]
     window.addEventListener('scroll', this.handleScroll, true);
   },
@@ -178,11 +212,31 @@ export default {
       let scrollTop = document.documentElement.scrollTop
       this.isScorll = scrollTop > 20 ? true : false
     },
+	loading() {
+		setTimeout(()=>{
+			this.maskShow=false
+			},2000)
+	}
   },
   components: { lang }
 };
 </script>
 <style lang='less' scoped='scoped'>
+	.mask{
+		background: #fff;
+		width: 100%;
+		height: 100%;
+		z-index: 10000;
+		position: fixed;
+		top: 0;
+		/* opacity: 0.8; */
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		img{
+			width: 25%;
+		}
+	}
 /deep/.el-carousel__button {
   height: 6px;
   border-radius: 2px;
@@ -194,7 +248,7 @@ export default {
   }
 }
 .isScorll {
-  background: #000;
+  background: #fff
   // transition: 1s;
 }
 .currentRoute {
@@ -204,13 +258,22 @@ export default {
   position: fixed;
   line-height: 60px;
   height: 60px;
-  color: #fff;
+  color: #333;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 999;
-  .content {
+  .contentMain{
     display: flex;
+  }
+  .logo{
+	  img{
+		  width: 4.125rem;
+		  height: 3.5rem;
+	  }
+  }
+  .content {
+	display: flex;
     justify-content: space-between;
   }
   li {
@@ -224,7 +287,7 @@ export default {
       font-family: SF Pro Display;
       font-weight: bold;
       line-height: 60px;
-      color: #fff;
+      color: #333;
     }
   }
 }
@@ -232,6 +295,7 @@ export default {
   .topNav {
     .el-carousel {
       height: 100%;
+	  margin-top: 4.1875rem;
     }
     height: 460px;
     text-align: center;
@@ -330,7 +394,7 @@ export default {
       line-height: 36px;
     }
     img {
-      width: 100%;
+      /* width: 100%; */
       height: 100%;
     }
   }
@@ -339,8 +403,9 @@ export default {
       position: fixed;
       right: 30px;
       top: 20px;
-      color: #fff;
+      color: #333;
       z-index: 1001;
+	  display: none;
     }
   }
   .contactUs {
@@ -362,38 +427,57 @@ export default {
       .left {
         display: flex;
         text-align: center;
-
+		/* flex-wrap: wrap; */
         .item {
           margin-right: 30px;
           cursor: pointer;
         }
         img {
           width: 30px;
+		  height: 30px;
           margin-bottom: 10px;
-          opacity: 0.5;
+          opacity: 0.7;
           &:hover {
             opacity: 1;
           }
         }
       }
     }
-    .bot {
+	.botTop{
       display: flex;
       justify-content: space-between;
       font-size: 14px;
       letter-spacing: 0;
+	  margin-bottom: 20px;
       span {
         color: #f5f5f5 ;
+      }
+	}
+    .bot {
+      display: flex;
+      justify-content: center;
+      font-size: 14px;
+      letter-spacing: 0;
+      span {
+        color: #f5f5f5 ;
+		margin-right: 200px;
       }
     }
   }
 }
 @media screen and (max-width: 1200px) {
+	
   .index {
     .nav {
       display: none;
     }
   }
+  
+	.mask{
+		img{
+			width: 40% !important;
+		}
+	}
   .nav2 {
     padding-top: 100px;
     li {
@@ -414,9 +498,16 @@ export default {
     }
   }
   .topNav {
+	  
     height: 140px !important;
     position: relative;
+	
+	.el-carousel {
+		height: 100%;
+		margin-top: 0px !important;
+	}
     .fold {
+		color: #000;
       position: absolute;
       // background: red;
       width: 40px;
@@ -428,11 +519,12 @@ export default {
         width: 20px;
         height: 3px;
         border-radius: 2px;
-        background: #fff;
+        background: #000;
         margin: 3px;
       }
     }
     .lang {
+		margin-right: 10px;
       position: absolute !important;
       // background: red;
       width: 40px;
@@ -441,7 +533,7 @@ export default {
       right: 10px !important;
       z-index: 1000;
       color: #fff;
-      display: flex;
+      display: flex !important;
       justify-content: center;
       align-items: center;
     }
@@ -507,7 +599,7 @@ export default {
     width: auto;
   }
   .contactUs {
-    padding: 20px !important;
+    padding:5px 20px 20px 20px!important;
     color: #ccc !important;
     .info {
       display: block !important;
@@ -515,29 +607,58 @@ export default {
       margin-bottom: 8px !important;
       .left {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
+		flex-wrap: wrap;
       }
       .item {
+		position: relative;
+		width: 20%;
         margin: 0px !important;
+		margin-top: 8px !important;
         img {
           opacity: 1 !important;
+		  transform: scale(0.9);
+		  margin-bottom: 4px !important;
         }
+		span{
+			position: absolute;
+			bottom: 16px;
+			right: 10px;
+			transform: scale(0.8);
+		}
       }
       .right {
         margin-top: 20px;
         margin-bottom: 5px !important;
+		text-align: center;
       }
     }
+	.botTop{
+		text-align: center;
+		display: block !important;
+		margin-bottom: 0px !important;
+		span {
+		  display: inline-block;
+		  line-height: 22px;
+		  font-size: 12px !important;
+		   color: #ccc !important;
+		  //  white-space: nowrap;
+		  //  word-break: break-all;
+		}
+	}
     .bot {
-      display: block !important;
-      span {
-        display: inline-block;
+		text-align: center;
+		display: block !important;
         line-height: 22px;
         font-size: 12px !important;
+      /* span {
+        line-height: 22px;
+        font-size: 12px !important;
+        display: inline-block;
          color: #ccc !important;
         //  white-space: nowrap;
         //  word-break: break-all;
-      }
+      } */
     }
   }
 }
