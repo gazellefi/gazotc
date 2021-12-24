@@ -91,11 +91,11 @@
 		  </div>
         </el-table>
 
-        <div class="listul_load" v-if="dataList.length > 0">
+        <!-- <div class="listul_load" v-if="dataList.length > 0">
           <div class="listul_load_an">
             <el-button @click="loadajax">{{$t('message.loadMore')}}</el-button>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -166,9 +166,9 @@
               </div>
             </div>
           </div>
-          <div class="ddlist_w_ddlist_ul_append" v-if="dataList.length > 0">
+          <!-- <div class="ddlist_w_ddlist_ul_append" v-if="dataList.length > 0">
             <van-button plain type="primary" :disabled="load" @click="loadajax">{{$t('message.loadMore')}}</van-button>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

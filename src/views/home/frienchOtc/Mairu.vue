@@ -8,10 +8,10 @@
 		</el-col>
 	</el-row>
 	<el-row type="flex" justify="center" v-if="type == 2">
-		<el-col :sm="24" :md="12">
+		<el-col :sm="24" :md="14" style="padding: 20px;background-color: #fff;">
 			<div class="view">
 				<div class="f c_c">
-					<span class="fwb fz18">{{ddinfo['Mmark'] != '0x6275790000000000000000000000000000000000000000000000000000000000' ? '买入':'出售'}}</span>
+					<span class="fwb fz18">{{ddinfo['Mmark'] != '0x6275790000000000000000000000000000000000000000000000000000000000' ? $t('message.dapp.buy'):$t('message.dapp.sell')}}</span>
 				</div>
 			  <div class="view_ul padt-10">
 			    <div class="view_ul_li bordd">
@@ -259,8 +259,7 @@ export default {
   props:['did'],
   watch: {
 	ddid(){
-		console.log('1111')
-		this.getddinfo()
+		// this.getddinfo()
 	},
     'form.num'(e) {
       if (!e) {
@@ -517,6 +516,8 @@ export default {
                   huobi:huobi,
                   Mmark:ret.Mmark
               };
+			  // let udd = dq.lowerCase(ret['Uadd'])
+			  // dq.ddifo['Umark_b'] = udd != dq.dquser ? 'sell' : 'buy'
               dq.code = false;
               dotsconn.methods.balancemar(ret.Mowner).call((errb, bzj) => {
                 if (bzj) {
