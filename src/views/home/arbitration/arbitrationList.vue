@@ -118,6 +118,51 @@
 						<el-button round class="invitationBnt invitationBnt_wap"  size="normal" :loading="item.jiazai" :disabled="item.lock == 1 ? true:false" @click="yaoqingajax(item)">{{$t('message.arbitration.invite')}}</el-button>
 					</div>
 				</div>
+			</div> -->
+			<div class="listWap" v-for="(item,index) in zc_list" :key="index">
+				<div class="listItem">
+					<div class="topWap">
+						<span class="topLabel fwb">{{$t('message.arbitration.arbitrator')}}:</span>
+						<!-- {{ item.username }} -->
+						<div class="topMain">
+							<div class="topUser">{{ item.username }}</div>
+							<div class="topUsername">{{ item.user_b }}</div>
+						</div>
+					</div>
+					<div class="mainWap" style="margin-top: 10px;">
+						<div class="mainLeft">
+							<div class="mainItem">
+								<span class="fwb">{{$t('message.arbitration.serial')}}：</span>
+								<span class="">{{item.index}}</span>
+							</div>
+							<div class="mainItem">
+								<span class="fwb">{{$t('message.arbitration.balance')}}：</span>
+								<span>{{item.balanceMar}} GAZ</span>
+							</div>
+							<div class="mainItem">
+								<span class="fwb">{{$t('message.arbitration.frozenState')}}：</span>
+								<span :class="[item.lock == 0 ? 'normal_style':'frozen_style']">{{item.lock == 0 ? $t('message.arbitration.normal'):$t('message.arbitration.frozen')  }}</span>
+							</div>
+						</div>
+						<div class="mainRight">
+							<div class="mainItem">
+								<span class="fwb">{{$t('message.arbitration.inviteNumber')}}：</span>
+								<span>{{item.invite}}</span>
+							</div>
+							<div class="mainItem">
+								<span class="fwb">{{$t('message.arbitration.singular')}}：</span>
+								<span>{{item.succeed}}</span>
+							</div>
+							<div class="mainItem">
+								<span class="fwb">{{$t('message.arbitration.regNumber')}}：</span>
+								<span>{{item.appl}}</span>
+							</div>
+						</div>
+					</div>
+					<div class="footerWap" style="margin-top: 10px;">
+						<el-button round class="invitationBnt invitationBnt_wap"  size="normal" :loading="item.jiazai" :disabled="item.lock == 1 ? true:false" @click="yaoqingajax(item)">{{$t('message.arbitration.invite')}}</el-button>
+					</div>
+				</div>
 			</div>
 		</div>
 		<!-- 邀请弹框 -->
@@ -134,6 +179,8 @@
 			  	<el-input v-model="zc_user_yq.did" autocomplete="off" size="mini" class="search_input" :placeholder="$t('message.arbitration.enterOrderNum')"></el-input>
 				<el-button icon="el-icon-search" circle @click="sousou_dd" :loading="loadingsoudd"></el-button>
 			  </div>
+				<!-- <el-input v-model="zc_user_yq.did"style="padding: 1px;border: 1px solid;border-radius: 30px; width: 15%;" autocomplete="off" size="mini" class="search_input" :placeholder="$t('message.arbitration.enterOrderNum')"></el-input>
+				<el-button icon="el-icon-search" style="position: absolute; bottom: 2px;" circle @click="sousou_dd" :loading="loadingsoudd"></el-button> -->
 			</el-form-item>
 			<el-form-item :label="$t('message.arbitration.character')+':'" v-if="btnType == 1">
 			  <span>{{zc_user_yq.juese}}</span>
