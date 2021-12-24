@@ -231,7 +231,7 @@ export default {
           return;
         }
         Toast.loading({
-          message: 'In query'
+          message: '数据请求中...'
         });
         var dotsconn = new web3.eth.Contract(dotsapi, '0x23D58bd73136888ffAa3fDE672FC41870E928AA3');
         console.log(dotsconn)
@@ -257,11 +257,11 @@ export default {
     },
     tixianajax() {
       if (this.huobi[this.hbindex]['je'] < Number(this.je)) {
-        Notify({ type: 'danger', message: 'withdrawal amount cannot be greater than withdrawal limit' });
+        Notify({ type: 'danger', message: '支取金额不能大于支取限额' });
         return;
       }
       Toast.loading({
-        message: 'withdrawing...'
+        message: '提现中...'
       });
       var dq = this;
       var lx_time = "";
@@ -286,7 +286,7 @@ export default {
               clearTimeout(lx_time);
               Dialog.alert({
                 title: dq.$t('message.prompt'),
-                message: 'withdrawal succeeded!',
+                message: '提现成功！',
               }).then(() => {
                 window.location.reload();
               });

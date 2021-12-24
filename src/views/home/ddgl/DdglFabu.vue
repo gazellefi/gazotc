@@ -470,7 +470,7 @@ export default {
     var dq = this;
     //监测用户是否安装MASK
     if (typeof ethereum === 'undefined') {
-      alert('Please install the metamask plug-in first');
+      alert('请先安装metamask插件');
     } else {
       //初始化
       webinit();
@@ -606,7 +606,7 @@ export default {
             getusdt(dq.set_form['obj']['pro'], dq.uinfo['user'], (ret) => {
               if (ret < (Number(dq.set_form['num']) - Number(dq.set_form['obj']['Moa']))) {
                 dq.pcxgcode = false;
-                Toast.fail(dq.set_form['obj']['pro'] + 'Sorry, your credit is running low!');
+                Toast.fail(dq.set_form['obj']['pro'] + '余额不足！');
                 return;
               } else {
                 set_modify_moa();
@@ -644,7 +644,7 @@ export default {
       function set_mlive() {
         dq.pcxgcode = false;
         Toast.loading({
-          message: 'Modification request in progress...'
+          message: '正在进行修改请求。。。'
         });
         var contracts = new web3.eth.Contract(dotc_abi, dotc_key);
         contracts.methods.cageMlive(Number(dq.set_form['obj']['ddid'])).send({
@@ -652,9 +652,9 @@ export default {
         }, (err, ret) => {
           Toast.clear();
           if (ret) {
-            Toast.success('Modification request submitted!');
+            Toast.success('修改请求已提交！');
           } else {
-            Toast.fail('Please click agree to authorize!');
+            Toast.fail('请点击同意授权！');
           }
         });
       }
@@ -662,7 +662,7 @@ export default {
       function set_modify_unit() {
         dq.pcxgcode = false;
         Toast.loading({
-          message: 'Modification request in progress...'
+          message: '正在进行修改请求。。。'
         });
         var danjia = Number(dq.set_form['danjia']) * 100;
         console.log(danjia)
@@ -672,9 +672,9 @@ export default {
         }, (err, ret) => {
           Toast.clear();
           if (ret) {
-            Toast.success('Modification request submitted!');
+            Toast.success('修改请求已提交！');
           } else {
-            Toast.fail('Please click agree to authorize!');
+            Toast.fail('请点击同意授权！');
           }
         });
       }
@@ -682,7 +682,7 @@ export default {
       function set_modify_moa() {
         dq.pcxgcode = false;
         Toast.loading({
-          message: 'Modification request in progress...'
+          message: '正在进行修改请求。。。'
         });
         var key_num = 0;
         var set_num = 0;
@@ -703,9 +703,9 @@ export default {
         }, (err, ret) => {
           Toast.clear();
           if (ret) {
-            Toast.success('Modification request submitted!');
+            Toast.success('修改请求已提交！');
           } else {
-            Toast.fail('Please click agree to authorize!');
+            Toast.fail('请点击同意授权！');
           }
         });
       }

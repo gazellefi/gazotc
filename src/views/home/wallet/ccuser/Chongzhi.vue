@@ -161,6 +161,7 @@ export default {
 		web3 = new Web3(provider);
 		var proconn = new web3.eth.Contract(config['hbi'][config['key']][dq.hbilist[dq.hbindex]['id']]['abi'],config['hbi'][config['key']][dq.hbilist[dq.hbindex]['id']]['heyue']);
 		dq.balance = await proconn.methods.balanceOf(address).call();
+		this.$forceUpdate()
 	},
     //如果过亿请转换
     getFNum(num_str) {
@@ -244,7 +245,7 @@ export default {
         if (Number(this.hbilist[this.hbindex]['sq_je']) >= Number(this.je)) {
           //充值
           Toast.clear();
-          Toast.loading({ message: 'Recharging...' });
+          Toast.loading({ message: '充值中...' });
           czhiajax();
         } else {
           //授权
@@ -252,18 +253,18 @@ export default {
             if (this.hbilist[this.hbindex]['sq_je'] > 0) {
               //清除
               Toast.clear();
-              Toast.loading({ message: 'Clearing of authorized balance...' });
+              Toast.loading({ message: '清除授权余额。。。' });
               shouquan(1);
             } else {
               Toast.clear();
-              Toast.loading({ message: 'In authorized balance...' });
+              Toast.loading({ message: '授权余额中。。。' });
               //授权
               shouquan(2);
             }
           } else {
             //直接授权
             Toast.clear();
-            Toast.loading({ message: 'In authorized balance...' });
+            Toast.loading({ message: '在授权余额中。。。' });
             shouquan(2);
           }
         }
@@ -317,7 +318,7 @@ export default {
         } else {
           if (sq_je >= dq.je) {
             Toast.clear();
-            Toast.loading({ message: 'Recharging...' });
+            Toast.loading({ message: '充值中...' });
             czhiajax();
           } else {
             setTimeout(() => {

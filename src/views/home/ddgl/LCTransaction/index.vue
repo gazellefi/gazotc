@@ -53,7 +53,7 @@
 
       <!-- table -->
       <div class="">
-      	<el-table :data="list" stripe style="width: 100%">
+      	<el-table :data="list" stripe style="width: 100%" :cell-class-name="addClass">
 			<!-- 订单ID -->
       		<el-table-column align="center" prop="ddid" :label="$t('message.arbitration.orderId')" width="100px"> </el-table-column>
 			<!-- 资产类型 -->
@@ -102,7 +102,7 @@
 					no
 				</template>
 			</el-table-column>
-			<el-table-column align="center" :label="$t('message.operation')">
+			<el-table-column align="center" :label="$t('message.operation')" width="120px">
 				<template slot-scope="scope">
 					<!-- 私信 -->
 					<div style="margin-right: 10px; display: inline-block;">
@@ -239,7 +239,7 @@
       				<div class="f c_c">
       					<span class="fwb">{{item.type}}</span>
       					<span class="fwb">USDT</span>
-      					<div class="f c_c marty_nav">
+      					<div class="f c_c marty_nav marl-5">
       						<span>{{$t('message.arbitration.merchantMargin')}}{{ item.mma }}USDT</span>
       					</div>
       				</div>
@@ -271,7 +271,7 @@
 					<!-- 私信 -->
 					<van-button plain type="info"  class="marr-10" color="#FDC500" size="small"  @click="pcxiugaidd(2,index)">{{$t('message.dapp.privateLetter')}}</van-button>
 					<!-- 详情 -->
-					<van-button plain type="info" color="#FDC500" size="small"  @click="openinfo(scope.row.ddid)">{{$t('message.details')}}</van-button>
+					<van-button plain type="info" color="#FDC500" size="small"  @click="openinfo(item,ddid)">{{$t('message.details')}}</van-button>
 				</div>
       		</div>
       	</el-col>
@@ -383,6 +383,7 @@ export default {
         }else{
             web3.setProvider(config["hyue"][config["key"]]["Url"]);
         }
+		console.log(provider.selectedAddress);
         Address = provider.selectedAddress;
         // dq.getuinfo(Address);
         dq.getlist();
@@ -446,18 +447,13 @@ export default {
                   break;
                 }
               }
-			  // console.log(result[2][index][0]);
-			  if (result[1][index][0] == '0x73616c6500000000000000000000000000000000000000000000000000000000') {
-			      ttype = this.$t('message.dapp.forSale')
-			  }else{
-			      ttype = this.$t('message.dapp.buy')
-			  }
-      //         if (result[2][index][0] == Address) {
-				  // ttype = this.$t('message.dapp.buy')
-                
-      //         } else {
-      //            ttype = this.$t('message.dapp.forSale')
-      //         }
+			  let mid = this.lowerCase(result[2][index][0])
+              if (mid != Address) {
+				  ttype = this.$t('message.dapp.forSale')
+              } else {
+                 ttype = this.$t('message.dapp.buy')
+              }
+			  console.log(ttype);
               var zcsf_msg = '';
               var bzj_msg = '...';
               if (result[0][index][5] == 0 && result[0][index][4] == 0) {
@@ -477,7 +473,7 @@ export default {
               } else {
                 bzj_msg = this.$t('message.dapp.notReleased')
               }
-			  console.log(Number(result[0][index][2]));
+			  // console.log(Number(result[0][index][2]));
               obj = {
                 ddid: result[0][index][0],
                 Uoa: Number(result[0][index][1]) / (10 ** h_num),
@@ -504,6 +500,25 @@ export default {
         }
       })
     },
+	lowerCase(str) {
+		let arr = str.split("");
+		let newStr = "";
+		//通过for循环遍历数组
+		for (let i = 0; i < arr.length; i++) {
+			if (arr[i] >= 'A' && arr[i] <= 'Z')
+				newStr += arr[i].toLowerCase();
+			else
+				newStr += arr[i];
+		}
+		return newStr;
+	},
+	//  商家时候改变 table row 颜色
+	addClass({row, column, rowIndex, columnIndex }) {
+	  // console.log(columnIndex)
+	  if(row.type == this.$t('message.dapp.forSale') && columnIndex == 4) {
+		return 'weightCell';
+	  }
+	},
 	
     
   }
@@ -738,5 +753,10 @@ div{
 	color: #0D86FE;
 	padding: 3px 10px;
 	font-size: 12px;
+}
+div {
+	/deep/ .weightCell{
+		color: #0D86FE;
+	}
 }
 </style>

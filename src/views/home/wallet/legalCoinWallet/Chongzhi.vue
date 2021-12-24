@@ -153,6 +153,7 @@ export default {
 		// console.log(web3);
 		var proconn = new web3.eth.Contract(config['hbi'][config['key']][dq.hbilist[dq.hbindex]['title']]['abi'],config['hbi'][config['key']][dq.hbilist[dq.hbindex]['title']]['heyue']);
 		dq.balance = await proconn.methods.balanceOf(address).call();
+		this.$forceUpdate()
 	},
     //如果过亿请转换
     getFNum(num_str) {

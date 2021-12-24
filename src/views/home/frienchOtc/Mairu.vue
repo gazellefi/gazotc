@@ -10,36 +10,39 @@
 	<el-row type="flex" justify="center" v-if="type == 2">
 		<el-col :sm="24" :md="12">
 			<div class="view">
-			  <div class="view_ul">
-			    <div class="view_ul_li">
+				<div class="f c_c">
+					<span class="fwb fz18">{{ddinfo['Mmark'] != '0x6275790000000000000000000000000000000000000000000000000000000000' ? '买入':'出售'}}</span>
+				</div>
+			  <div class="view_ul padt-10">
+			    <div class="view_ul_li bordd">
 			      {{$t('message.arbitration.order')}}:{{ ddid }}
 			    </div>
-			    <div class="view_ul_li">
+			    <div class="view_ul_li bordd">
 			      <div class="view_ul_li_l">{{$t('message.dapp.unitPrice')}}</div>
 			      <div class="view_ul_li_r">{{ getnumsing(ddinfo.unit) }} {{ ddinfo.fabi }}</div>
 			    </div>
-			    <div class="view_ul_li">
+			    <div class="view_ul_li bordd">
 			      <div class="view_ul_li_l">{{$t('message.dapp.limit')}}</div>
 			      <div class="view_ul_li_r">{{ getnumsing(ddinfo.zer) }} - {{ getnumsing(ddinfo.mal) }} {{ddinfo.huobi}}</div>
 			    </div>
-			    <div class="view_ul_li">
+			    <div class="view_ul_li bordd">
 			      <div class="view_ul_li_l">{{$t('message.dapp.amount')}}</div>
 			      <div class="view_ul_li_r">{{ getnumsing(ddinfo.Moa) }} {{ddinfo.huobi}}</div>
 			    </div>
-			    <div class="view_ul_li">
+			    <div class="view_ul_li bordd">
 			      <div class="view_ul_li_l">{{$t('message.arbitration.merchantMargin')}}</div>
 			      <div class="view_ul_li_r">{{ getnumsing(ddinfo.bMar) }} Gaz</div>
 			    </div>
 			
-			    <div class="view_ul_li">
+			    <div class="view_ul_li bordd">
 			      <div class="view_ul_li_l">{{$t('message.dapp.MarginRatio')}}</div>
 			      <div class="view_ul_li_r">{{ getnumsing(ddinfo.mar) }} %</div>
 			    </div>
-			    <div class="view_ul_li">
+			    <div class="view_ul_li bordd">
 			      <div class="view_ul_li_l">{{$t('message.dapp.orderStatus')}}</div>
 			      <div class="view_ul_li_r">{{ ddinfo.mlive == 1 ? $t('message.dapp.ReceivingOrder'):$t('message.dapp.Resting') }}</div>
 			    </div>
-			    <div class="view_ul_li beizhu">
+			    <div class="view_ul_li bordd beizhu">
 			      <span>{{$t('message.remarks')}}：{{ ddinfo.beizhu == 'No remarks are filled in' ? $t('message.notFill') : ddinfo.beizhu}}</span>
 			    </div>
 			   <!-- <div class="view_ul_li beizhu_conn">
@@ -79,7 +82,7 @@
 			      </div>
 			    </div>
 			    <div class="view_form_item options">
-			      <van-button type="default" style="margin-right: auto;width: 40%;" @click="urlgo">{{$t('message.cancel')}}</van-button>
+			      <!-- <van-button type="default" style="margin-right: auto;width: 40%;" @click="urlgo">{{$t('message.cancel')}}</van-button> -->
 			      <van-button type="warning" color="#fdc500" style="margin-left: auto;width: 40%;" :loading="ddcode"
 				   @click="adddingdan">{{ ddinfo['Mmark'] == '0x6275790000000000000000000000000000000000000000000000000000000000'? $t('message.dapp.sell'):$t('message.dapp.buy')}}{{ddinfo.huobi}}</van-button>
 			    </div>
@@ -253,7 +256,12 @@ export default {
       }
     };
   },
+  props:['did'],
   watch: {
+	ddid(){
+		console.log('1111')
+		this.getddinfo()
+	},
     'form.num'(e) {
       if (!e) {
         return;
@@ -462,7 +470,7 @@ export default {
       var dq = this;
       if (this.ddid) {
         var jiazai = Toast.loading({
-          message: 'In query',
+          message: '请求中...',
           closeOnClick: false,
           closeOnClickOverlay: false,
           loadingType: 'spinner',
@@ -604,10 +612,10 @@ export default {
       //判断User deposit 与 资产
       if (dq.form['num'] > dq.user['balancepro']) {
         Dialog.confirm({
-          title: 'warning',
+          title: dq.$t('message.prompt'),
           message: dq.$t('message.assetRchargeTips') ,
           confirmButtonText: dq.$t('message.cancel'),
-          cancelButtonText: 'Recharge',
+          cancelButtonText: dq.$t('message.Recharge'),
           cancelButtonColor: '',
           getContainer: 'body'
         })
@@ -618,7 +626,7 @@ export default {
       }
       if (dq.form['bzj'] > dq.user['balancemar']) {
         Dialog.confirm({
-          title: 'warning',
+          title: dq.$t('message.prompt'),
           message: '押金不足，请先补足押金！',
           confirmButtonText: dq.$t('message.cancel'),
           cancelButtonText: dq.$t('message.Recharge'),
@@ -671,7 +679,7 @@ export default {
                 if (address == event.returnValues['Madd'].toLowerCase()) {
                   Dialog.alert({
                     title: 'success',
-                    message: msg.indexOf('On sale') != -1 ? 'Sold successfully! The order number is:' + +event['returnValues']['uorder'] + '' : 'Purchase succeeded! The order number is:' + +event['returnValues']['uorder'] + '',
+                    message: msg.indexOf('On sale') != -1 ? '出售成功！订单号为：' + +event['returnValues']['uorder'] + '' : '购买成功！订单号为：' + +event['returnValues']['uorder'] + '',
                   }).then(() => {
                     window.location.reload();
                   });
@@ -772,6 +780,9 @@ export default {
   background: #fff;
   /* margin: 10px 0; */
   padding: 10px 0;
+}
+.bordd{
+	border-bottom: 1px dashed  #999;
 }
 .view_ul_li_l {
   margin-right: auto;

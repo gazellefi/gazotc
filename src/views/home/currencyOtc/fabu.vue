@@ -27,6 +27,28 @@
 			            </div>
 			          </div>
 			        </div>
+					<div class="add_form_item">
+					  <div class="add_form_item_t">{{$t('message.dapp.amount')}}</div>
+					  <div class="add_form_item_input">
+					    <el-input :placeholder="$t('message.enterAmount')" v-model="form['num']">
+					      <template slot="append">
+							  <div style="width: 40px;text-align: center;">
+							  	{{ pro }}
+							  </div>
+						  </template>
+					    </el-input>
+					  </div>
+					  <div class="add_form_item_input errormsg" v-if="balancepro < form['num']">
+					    {{$t('message.exceedTips')}}（ {{ balancepro }} ）！
+					  </div>
+					  <div class="add_form_item_input errormsg" v-if="balancepro == 0">
+					    {{$t('message.rechargeTips')}}
+					  </div>
+					  <div class="add_form_item_input errormsg" v-if="form['num'] == 0">
+					    {{$t('message.contEmpty')}}
+					  </div>
+					</div>
+					
 			        <div class="add_form_item">
 			          <div class="add_form_item_t">{{$t('message.dapp.unitPrice')}}</div>
 			          <div class="add_form_item_input">
@@ -42,28 +64,8 @@
 			            {{$t('message.dapp.unitPrice')}}{{$t('message.contEmpty')}}
 			          </div>
 			        </div>
-			        <div class="add_form_item">
-			          <div class="add_form_item_t">{{$t('message.dapp.amount')}}</div>
-			          <div class="add_form_item_input">
-			            <el-input :placeholder="$t('message.enterAmount')" v-model="form['num']">
-			              <template slot="append">
-							  <div style="width: 40px;text-align: center;">
-							  	{{ pro }}
-							  </div>
-						  </template>
-			            </el-input>
-			          </div>
-			          <div class="add_form_item_input errormsg" v-if="balancepro < form['num']">
-			            {{$t('message.exceedTips')}}（ {{ balancepro }} ）！
-			          </div>
-			          <div class="add_form_item_input errormsg" v-if="balancepro == 0">
-			            {{$t('message.rechargeTips')}}
-			          </div>
-			          <div class="add_form_item_input errormsg" v-if="form['num'] == 0">
-			            {{$t('message.contEmpty')}}
-			          </div>
-			        </div>
-			        <div class="add_form_item">
+			        
+			       <!-- <div class="add_form_item">
 			          <div class="add_form_item_t">{{$t('message.dapp.maxAmount')}}</div>
 			          <div class="add_form_item_input">
 			            <el-input :placeholder="$t('message.enterMaxNum')" v-model="form['zdnum']">
@@ -74,7 +76,7 @@
 						  </template>
 			            </el-input>
 			          </div>
-			        </div>
+			        </div> -->
 			        <el-button type="primary" style="margin-top: 30px;background:#fdc500;border:0;margin-top: 150px" @click="fabuajax" :disabled=" 
 			            form['danj'] && form['num'] ? false : true
 			          ">{{$t('message.sumbmit')}}</el-button>
@@ -105,9 +107,8 @@ export default {
     for (const key in proa) {
       this.proarr.push(proa[key]);
     }
-    this.pro = this.proarr[0]["id"];
-    this.prob =
-      this.proarr.length >= 1 ? this.proarr[1]["id"] : this.proarr[0]["id"];
+    this.pro = this.proarr[3]["id"];
+    this.prob = this.proarr[0]["id"];
 	// var fbarr = config["fabi"][config["key"]];
 	// for (const key in fbarr) {
 	//   this.fbarr.push(fbarr[key]);
@@ -173,7 +174,7 @@ export default {
       form: {
         danj: null,
         num: null,
-        zdnum: null,
+        zdnum: 0,
       },
 
       balancepro: 0,
@@ -272,12 +273,12 @@ export default {
       await this.getproyue();
       //判断资产余额是否足够
       if (this.form.num > this.balancepro) {
-        Notify({ type: 'warning', message: 'Insufficient asset balance!' });
+        Notify({ type: 'warning', message: '资产余额不足！' });
         return;
       }
 
       Toast.loading({
-        message: "In release...",
+        message: "数据请求中...",
         forbidClick: true,
         loadingType: "spinner",
       });
@@ -329,8 +330,8 @@ export default {
               dq.balanceprob = balanceprob;
               Toast.clear();
               Dialog.alert({
-                title: "Published successfully",
-                message: "Published successfully! Can be viewed or modified in my order",
+                title: "提交成",
+                message: "发布成功！可以按我的顺序查看或修改",
               }).then(() => {
                 dq.form = {
                   danj: null,

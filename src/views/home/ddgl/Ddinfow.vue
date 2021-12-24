@@ -518,12 +518,12 @@ export default {
         //     alert('The order cannot be cancelled');
         //     return;
         // }
-        console.log('The order cannot be cancelled')
+        console.log('订单不能取消')
         qx_ddajax();
       }
       if (type == 'fk_ddajax') {
         if (dq.ddifo['timb']) {
-          alert('This order cannot be paid');
+          alert('此订单无法付款');
           return;
         }
         fk_ddajax();
@@ -538,7 +538,7 @@ export default {
         if (dq.ddifo['agree'] == 3 || (dq.ddifo.pau == 0 && dq.ddifo.timc != 0)) {
           sf_ddajax();
         } else {
-          alert('Cannot click');
+          alert('不能点击');
         }
       }
       if (type == 'fb_ddajax') {
@@ -550,10 +550,10 @@ export default {
         }, (err, ret) => {
           if (ret) {
             Toast.clear();
-            Toast.success('The order has been cancelled, please check later');
+            Toast.success('订单已取消，请稍后查看');
           } else {
             Toast.clear();
-            Toast.fail('Please agree to authorize!');
+            Toast.fail('请同意授权！');
           }
         });
       }
@@ -612,10 +612,10 @@ export default {
           user_pan_is((e, uarm) => {
             if (!e) {
               Dialog.confirm({
-                title: 'warning',
-                message: 'Insufficient margin, minimum margin required‘' + (uarm / (10 ** bzj_num)).toFixed(2) + '’, please operate after adding margin!',
-                confirmButtonText: 'Margin call',
-                cancelButtonText: 'give up'
+                title: dq.$t('message.prompt'),
+                message: '保证金不足，要求最低保证金‘' + (uarm / (10 ** bzj_num)).toFixed(2) + '’, 请在添加保证金后操作！',
+                confirmButtonText: '追加保证金',
+                cancelButtonText: '放弃'
               })
                 .then(() => {
                   mar_add();
@@ -638,10 +638,10 @@ export default {
           }, (err, ret) => {
             if (ret) {
               Toast.clear();
-              Toast.success('The order has been suspended, please check later');
+              Toast.success('订单已暂停，请稍后查看');
             } else {
               Toast.clear();
-              Toast.fail('Please agree to authorize!');
+              Toast.fail('请同意授权！');
             }
           });
         }
@@ -651,10 +651,10 @@ export default {
           }, (err, ret) => {
             if (ret) {
               Toast.clear();
-              Toast.success('The deposit has been added, please check later');
+              Toast.success('押金已经增加，请稍后再查');
             } else {
               Toast.clear();
-              Toast.fail('Please agree to authorize!');
+              Toast.fail('请同意授权！');
             }
           });
         }
@@ -665,10 +665,10 @@ export default {
         }, (err, ret) => {
           if (ret) {
             Toast.clear();
-            Toast.success('Agree to margin release, please check later');
+            Toast.success('同意保证金释放，请稍后查看');
           } else {
             Toast.clear();
-            Toast.fail('Please agree to authorize!');
+            Toast.fail('请同意授权！');
           }
         });
       }
@@ -678,10 +678,10 @@ export default {
         }, (err, ret) => {
           if (ret) {
             Toast.clear();
-            Toast.success('The deposit has been released. Please check later');
+            Toast.success('押金已经释放了。请稍后再查');
           } else {
             Toast.clear();
-            Toast.fail('Please agree to authorize!');
+            Toast.fail('请同意授权！');
           }
         });
       }
@@ -691,10 +691,10 @@ export default {
         }, (err, ret) => {
           if (ret) {
             Toast.clear();
-            Toast.success('The asset has been released. Please check later');
+            Toast.success('资产已被释放。请稍后再查');
           } else {
             Toast.clear();
-            Toast.fail('Please agree to authorize!');
+            Toast.fail('请同意授权！');
           }
         });
       }

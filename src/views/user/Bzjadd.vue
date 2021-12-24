@@ -199,7 +199,7 @@ export default {
     },
     balancemarajax() {
       Toast.loading({
-        message: 'In query'
+        message: '请求中...'
       });
       var dq = this;
       var index = 0;
@@ -227,17 +227,17 @@ export default {
     },
     chongzhi() {
       if (this.je <= 0) {
-        Notify({ type: 'warning', message: 'Please enter the correct amount' });
+        Notify({ type: 'warning', message: '请输入正确的金额' });
         return;
       }
       if (this.je > this.usdt_num) {
-        Notify({ type: 'warning', message: 'Transfer in amount cannot be greater than usdt balance' });
+        Notify({ type: 'warning', message: '转入金额不能大于usdt余额' });
         return;
       }
       var dq = this;
 
       Toast.loading({
-        message: 'Transfer in'
+        message: '转入中。。。'
       });
       var lx_time = "";
       //开始转入保证金
@@ -259,8 +259,8 @@ export default {
               Toast.clear();
               clearTimeout(lx_time);
               Dialog.alert({
-                title: 'Transfer in succeeded',
-                message: 'Transferred in ' + dq.je + ' Usdt to deposit',
+                title: '转入成功',
+                message: '转入 ' + dq.je,
               }).then(() => {
                 dq.balancemarajax();
                 dq.je = 0;
@@ -276,16 +276,16 @@ export default {
     },
     zhuanchu() {
       if (this.je <= 0) {
-        Notify({ type: 'warning', message: 'Please enter the correct amount' });
+        Notify({ type: 'warning', message: '请输入正确的金额' });
         return;
       }
       if (this.je > this.balancemar_num) {
-        Notify({ type: 'warning', message: 'The transfer out amount cannot be greater than the deposit balance' });
+        Notify({ type: 'warning', message: '转出金额不能大于存款余额' });
         return;
       }
       var dq = this;
       Toast.loading({
-        message: 'Transferring out'
+        message: '转出中...'
       });
 
       var lx_time = "";
@@ -307,8 +307,8 @@ export default {
               Toast.clear();
               clearTimeout(lx_time);
               Dialog.alert({
-                title: 'Transfer out succeeded',
-                message: 'Transferred out ' + dq.je + '',
+                title: '转出成功！',
+                message: '转出 ' + dq.je + '',
               }).then(() => {
                 dq.balancemarajax();
                 dq.je = 0;

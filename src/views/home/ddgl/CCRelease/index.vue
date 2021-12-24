@@ -80,7 +80,7 @@
 									class="el-icon-arrow-down el-icon--right"></i>
 							</span>
 							<el-dropdown-menu slot="dropdown">
-								<el-dropdown-item command="ALL">whole</el-dropdown-item>
+								<el-dropdown-item command="ALL">{{$t('message.all')}}</el-dropdown-item>
 								<el-dropdown-item command="USDT">USDT</el-dropdown-item>
 							</el-dropdown-menu>
 						</el-dropdown>
@@ -96,7 +96,7 @@
 									class="el-icon-arrow-down el-icon--right"></i>
 							</span>
 							<el-dropdown-menu slot="dropdown">
-								<el-dropdown-item command="ALL">whole</el-dropdown-item>
+								<el-dropdown-item command="ALL">{{$t('message.all')}}</el-dropdown-item>
 								<el-dropdown-item command="CNY">CNY</el-dropdown-item>
 							</el-dropdown-menu>
 						</el-dropdown>
@@ -111,31 +111,27 @@
 					</div>
 					<p :style="{'marginTop': '23px'}">{{$t('message.NoData')}}</p>
 				</div>
-				<el-col :span="24" v-for="(item,index) in list" :key="index">
+				<el-col :span="24" v-for="(item,index) in list" :key="index" class="list_item f c_b">
 					<div class="fc">
-						<div>
-							<span>{{$t('message.arbitration.orderId')+'|'+ item.ddid}}</span>
+						<div class="mart-10">
+							<span class="fwb">{{$t('message.arbitration.orderId')+' | '+ item.did}}</span>
 						</div>
-						<div>
-							<span>{{$t('message.dapp.unitPrice')}}</span>
-							<span>{{ item.uni }} {{ item.swap }}</span>
+						<div class="mart-10">
+							<span class="marr-10">{{$t('message.dapp.unitPrice')}}</span>
+							<span class="cba">{{ item.uni }} {{ item.swap }}</span>
 						</div>
-						<div>
-							<span>总数</span>
-							<span>{{ item.moa }} {{ item.pro }}</span>
+						<div class="mart-10">
+							<span class="marr-10">总数</span>
+							<span class="fz14">{{ item.moa }} {{ item.pro }}</span>
 						</div>
-						<div>
-							<span>最低数</span>
-							<span>{{ item.zer }} {{ item.pro }}</span>
-						</div>
-						<div>
-							<span>{{$t('message.dapp.orderStatus')}}</span>
-							<span>{{ item.mlive == 1 ? 'On the shelf':'Removed' }}</span>
+						<div class="mart-10">
+							<span class="marr-10">最低数</span>
+							<span class="fz14">{{ item.zer }} {{ item.pro }}</span>
 						</div>
 					</div>
 					<div class="fc c_r">
 						
-						<van-button plain type="info" size="small" @click="pcxiugaidd(2,index)">修改</van-button>
+						<van-button plain type="info"  color="#FDC500" size="small" @click="setdd(item)">修改</van-button>
 					</div>
 				</el-col>
 			</el-row>
@@ -648,5 +644,9 @@
 		display: flex;
 		flex-direction: column;
 		padding: 20px;
+	}
+	.list_item{
+		border-bottom: 1px solid #DCDCDC;
+		padding: 20px 10px;
 	}
 </style>

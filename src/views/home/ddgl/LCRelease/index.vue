@@ -52,7 +52,7 @@
 			<!-- table -->
 			<div class="">
 				<el-table :data="list" stripe style="width: 100%">
-					<el-table-column align="center" prop="ddid" :label="$t('message.arbitration.orderId')" width="100px"> </el-table-column>
+					<el-table-column align="center" prop="ddid" :label="$t('message.arbitration.orderId')"> </el-table-column>
 					<el-table-column align="center" prop="pro" :label="$t('message.dapp.type')"></el-table-column>
 					<el-table-column align="center" prop="Mmark" :label="$t('message.dapp.orderType')">
 						<template slot-scope="scope">
@@ -66,7 +66,10 @@
 					</el-table-column>
 					<el-table-column align="center" :label="$t('message.dapp.limit')">
 						<template slot-scope="scope">
-							{{ scope.row.zer }} - {{ scope.row.mal }} {{ scope.row.pro }}
+							{{ scope.row.zer }} - {{ scope.row.mal }} 
+							<div>
+								{{ scope.row.pro }}
+							</div>
 						</template>
 					</el-table-column>
 					<el-table-column align="center" :label="$t('message.dapp.unitPrice')">
@@ -160,37 +163,37 @@
 					</div>
 					<p :style="{'marginTop': '23px'}">{{$t('message.NoData')}}</p>
 				</div>
-				<el-col :span="24" v-for="(item,index) in list" :key="index">
+				<el-col :span="24" v-for="(item,index) in list" :key="index" class="list_item f c_b">
 					<div class="fc">
 						<div class="f c_b a_c">
 							<div class="f c_c">
-								<span>{{item.uadd}}</span>
-								<span>{{item.madd}}</span>
-								<div class="f c_c">
+								<span class="fwb">{{ item.Mmark =='for sale' ? $t("message.dapp.sell") : $t("message.dapp.buy") }}</span>
+								<span class="fwb">{{item.pro}}</span>
+								<div class="f c_c marty_nav">
 									<span>保证金{{item.mar}}%</span>
 								</div>
 							</div>
 						</div>
-						<div>
-							<span>{{$t('message.dapp.unitPrice')}}</span>
-							<span>{{ item.unit }} {{ item.fiat }}</span>
+						<div class="mart-10">
+							<span class="marr-10">{{$t('message.dapp.unitPrice')}}</span>
+							<span class="cba">{{ item.unit }} {{ item.fiat }}</span>
 						</div>
-						<div>
-							<span>{{$t('message.dapp.amount')}}</span>
-							<span>{{ item.Moa }} {{ item.pro }}</span>
+						<div class="mart-10">
+							<span class="marr-10">{{$t('message.dapp.amount')}}</span>
+							<span class="fz14">{{ item.Moa }} {{ item.pro }}</span>
 						</div>
-						<div>
-							<span>{{$t('message.dapp.limit')}}</span>
-							<span>{{ item.zer }} - {{ item.mal }} {{ item.pro }}</span>
+						<div class="mart-10">
+							<span class="marr-10">{{$t('message.dapp.limit')}}</span>
+							<span class="fz14">{{ item.zer }} - {{ item.mal }} {{ item.pro }}</span>
 						</div>
-						<div>
-							<span>{{$t('message.dapp.orderStatus')}}</span>
-							<span>{{ item.mlive == 1 ? $t('message.OnTheShelf'):$t('message.OffTheShelf') }}</span>
+						<div class="mart-10">
+							<span class="marr-10">{{$t('message.dapp.orderStatus')}}</span>
+							<span class="fz14" style="color: #E6240B;">{{ item.mlive == 1 ? $t('message.OnTheShelf'):$t('message.OffTheShelf') }}</span>
 						</div>
 					</div>
 					<div class="fc c_b">
-						<span>{{$t('message.arbitration.orderId')+'|'+ item.ddid}}</span>
-						<van-button plain type="info" size="small" @click="pcxiugaidd(2,index)">{{$t('message.modify')}}</van-button>
+						<span>{{$t('message.arbitration.orderId')+' | '+ item.ddid}}</span>
+						<van-button plain type="info" color="#FDC500" size="small" @click="pcxiugaidd(2,index)">{{$t('message.modify')}}</van-button>
 					</div>
 				</el-col>
 			</el-row>
@@ -268,7 +271,7 @@
 			var dq = this;
 			//监测用户是否安装MASK
 			if (typeof ethereum === 'undefined') {
-				alert('Please install the metamask plug-in first');
+				alert('请先安装metamask插件');
 			} else {
 				//初始化
 				webinit();
@@ -406,7 +409,7 @@
 							getusdt(dq.set_form['obj']['pro'], dq.uinfo['user'], (ret) => {
 								if (ret < (Number(dq.set_form['num']) - Number(dq.set_form['obj']['Moa']))) {
 									dq.pcxgcode = false;
-									Toast.fail(dq.set_form['obj']['pro'] + 'Sorry, your credit is running low!');
+									Toast.fail(dq.set_form['obj']['pro'] + '余额不足！');
 									return;
 								} else {
 									set_modify_moa();
@@ -892,5 +895,16 @@
 	.ddgl_fabu_wap_ul_li_item button {
 		margin-left: auto;
 		margin-top: 20px;
+	}
+	.marty_nav{
+		background-color: #FDC500;
+		color: #fff;
+		padding: 3px 10px;
+		font-size: 12px;
+		margin-left:5px
+	}
+	.list_item{
+		border-bottom: 1px solid #DCDCDC;
+		padding: 20px 10px;
 	}
 </style>

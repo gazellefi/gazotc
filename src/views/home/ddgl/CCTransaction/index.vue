@@ -13,7 +13,7 @@
 								class="el-icon-arrow-down el-icon--right"></i>
 						</span>
 						<el-dropdown-menu slot="dropdown">
-							<el-dropdown-item command="ALL">whole</el-dropdown-item>
+							<el-dropdown-item command="ALL">{{$t('message.all')}}</el-dropdown-item>
 							<el-dropdown-item command="USDT">USDT</el-dropdown-item>
 						</el-dropdown-menu>
 					</el-dropdown>
@@ -27,7 +27,7 @@
 								class="el-icon-arrow-down el-icon--right"></i>
 						</span>
 						<el-dropdown-menu slot="dropdown">
-							<el-dropdown-item command="ALL">whole</el-dropdown-item>
+							<el-dropdown-item command="ALL">{{$t('message.all')}}</el-dropdown-item>
 							<el-dropdown-item command="CNY">CNY</el-dropdown-item>
 						</el-dropdown-menu>
 					</el-dropdown>
@@ -88,7 +88,7 @@
 								class="el-icon-arrow-down el-icon--right"></i>
 						</span>
 						<el-dropdown-menu slot="dropdown">
-							<el-dropdown-item command="ALL">whole</el-dropdown-item>
+							<el-dropdown-item command="ALL">{{$t('message.all')}}</el-dropdown-item>
 							<el-dropdown-item command="USDT">USDT</el-dropdown-item>
 						</el-dropdown-menu>
 					</el-dropdown>
@@ -104,7 +104,7 @@
 								class="el-icon-arrow-down el-icon--right"></i>
 						</span>
 						<el-dropdown-menu slot="dropdown">
-							<el-dropdown-item command="ALL">whole</el-dropdown-item>
+							<el-dropdown-item command="ALL">{{$t('message.all')}}</el-dropdown-item>
 							<el-dropdown-item command="CNY">CNY</el-dropdown-item>
 						</el-dropdown-menu>
 					</el-dropdown>
@@ -119,30 +119,30 @@
 				</div>
 				<p :style="{'marginTop': '23px'}">{{$t('message.NoData')}}</p>
 			</div>
-			<el-col :span="24" v-for="(item,index) in list" :key="index">
+			<el-col :span="24" v-for="(item,index) in list" :key="index" class="list_item f c_b">
 				<div class="fc">
-					<div>
-						<span>{{$t('message.arbitration.orderId')+'|'+ item.did}}</span>
+					<div class="mart-10">
+						<span class="fwb">{{$t('message.arbitration.orderId')+' | '+ item.did}}</span>
 					</div>
-					<div>
-						<span>{{$t('message.dapp.unitPrice')}}</span>
-						<span>{{ item.uni }} {{ item.swap }}</span>
+					<div class="mart-10">
+						<span class="marr-10">{{$t('message.dapp.unitPrice')}}</span>
+						<span class="cba">{{ item.uni }} {{ item.swap }}</span>
 					</div>
-					<div>
-						<span>{{$t('message.arbitration.merchant')}}</span>
-						<span :class="uinfo.user == item.madd_b ? 'ac':''">{{ item.madd }}</span>
+					<div class="mart-10">
+						<span class="marr-10">{{$t('message.arbitration.merchant')}}</span>
+						<span class="fz14" :class="uinfo.user == item.madd_b ? 'ac':''">{{ item.madd }}</span>
 					</div>
-					<div>
-						<span>{{$t('message.arbitration.user')}}</span>
-						 <span :class="uinfo.user == item.uadd_b ? 'ac':''">{{ item.uadd }}</span>
+					<div class="mart-10">
+						<span class="marr-10">{{$t('message.arbitration.user')}}</span>
+						 <span class="fz14" :class="uinfo.user == item.uadd_b ? 'ac':''">{{ item.uadd }}</span>
 					</div>
-					<div>
-						<span>{{'卖出 '}}{{ item.uoa }} {{ item.pro }}</span>
-						<span>{{'买入 '}}{{ item.wad }} {{ item.swap }}</span>
+					<div class="mart-10">
+						<span class="asBtn marr-5">{{'卖出 '}}{{ item.uoa }} {{ item.pro }}</span>
+						<span class="asBtn">{{'买入 '}}{{ item.wad }} {{ item.swap }}</span>
 					</div>
 				</div>
 				<div class="fc c_r">
-					<span>{{'手续费'}}{{ item.free }} {{ item.pro }}</span>
+					<span class="fz14" style="color: #EE6A59;">{{'手续费'}}{{ item.free }} {{ item.pro }}</span>
 				</div>
 			</el-col>
 		</el-row>
@@ -480,5 +480,16 @@ export default {
 
 .ac {
   color: rgb(1, 217, 255);
+}
+.list_item{
+	border-bottom: 1px solid #DCDCDC;
+	padding: 20px 10px;
+}
+.asBtn{
+	border: 1px solid #FDC500;
+	border-radius: 30px;
+	font-size: 12px;
+	color: #FDC500;
+	padding: 2px 5px;
 }
 </style>

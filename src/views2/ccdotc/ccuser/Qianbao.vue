@@ -241,7 +241,7 @@ export default {
       this.$router.push(url);
     },
     async getqblist() {
-      Toast.loading({ message: 'In query' });
+      Toast.loading({ message: '数据请求中...' });
       var list = [];
       var binum = config['hyue'][config['key']]['Bzj']['num'];
       console.log(binum);

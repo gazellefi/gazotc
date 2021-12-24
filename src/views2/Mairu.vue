@@ -675,29 +675,29 @@ export default {
       //判断User deposit 与 资产
       if (dq.form['num'] > dq.user['balancepro']) {
         Dialog.confirm({
-          title: 'warning',
-          message: 'Insufficient asset balance, please recharge first!',
-          confirmButtonText: 'cancel',
-          cancelButtonText: 'Recharge',
+          title: dq.$('message.prompt'),
+          message: '资产余额不足，请先充值！',
+          confirmButtonText: dq.$t('message.cancel'),
+          cancelButtonText: dq.$t('message.Recharge'),
           cancelButtonColor: '',
           getContainer: 'body'
         })
           .catch(() => {
-            dq.$router.push('./chongzhi');
+            // dq.$router.push('./chongzhi');
           });
         return;
       }
       if (dq.form['bzj'] > dq.user['balancemar']) {
         Dialog.confirm({
-          title: 'warning',
-          message: 'The deposit is insufficient, please supplement the deposit first!',
-          confirmButtonText: 'cancel',
-          cancelButtonText: 'To supplement',
+          title: dq.$('message.prompt'),
+          message: '押金不足，请先补足押金！',
+          confirmButtonText: dq.$t('message.cancel'),
+          cancelButtonText: dq.$t('message.Recharge'),
           cancelButtonColor: '',
           getContainer: 'body'
         })
           .catch(() => {
-            dq.$router.push('./baozhengjin');
+            // dq.$router.push('./baozhengjin');
           });
         return;
       }

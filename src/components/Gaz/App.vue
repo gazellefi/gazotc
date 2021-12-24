@@ -206,7 +206,7 @@ Tunisia, Uganda, Ukraine, United States, Venezuela, Yemen, Zimbabwe.`,
       input.select();
       if (document.execCommand('copy')) {
         document.execCommand('copy');
-        this.$toast('Crowdfunding trc20 address copied successfully')
+        this.$toast('trc20地址复制成功')
       }
       document.body.removeChild(input);
 
@@ -256,7 +256,7 @@ Tunisia, Uganda, Ukraine, United States, Venezuela, Yemen, Zimbabwe.`,
 
       let isNumber = reg.test(this.form.c)
 
-      if (!isNumber) return this.$toast('Please enter a value greater than 0')
+      if (!isNumber) return this.$toast('请输入一个大于0的值')
 
 
       // if (Number(this.form.c) < 0)
@@ -287,14 +287,14 @@ Tunisia, Uganda, Ukraine, United States, Venezuela, Yemen, Zimbabwe.`,
       // 
 
       for (let i = 0; i < arr.length; i++) {
-        if (!arr[i].num || !arr[i].address) return this.$toast('Please complete the form')
+        if (!arr[i].num || !arr[i].address) return this.$toast('请填写表格')
       }
 
 
       // if (params.subGazTotal < 0) return this.$toast('Please enter a value greater than 0')
 
 
-      if (!params.codeId || !params.subGazTotal || !params.gazTotal || !params.codeId || !params.payPrice) return this.$toast('Please complete the form')
+      if (!params.codeId || !params.subGazTotal || !params.gazTotal || !params.codeId || !params.payPrice) return this.$toast('请填写表格')
 
 
 

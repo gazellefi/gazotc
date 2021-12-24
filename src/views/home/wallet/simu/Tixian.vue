@@ -292,7 +292,7 @@ export default {
       this.huobi[this.hbindex]['je'] = pro;
     },
     tixianajax() {
-      Toast.loading({ message: 'Withdrawal in progress...' });
+      Toast.loading({ message: '正在撤回。。。' });
       var dq_je = this.huobi[this.hbindex]['je'];
       var dq = this;
       var czconn = new web3.eth.Contract(
@@ -310,12 +310,12 @@ export default {
             tikchaxun();
           } else {
             Toast.clear();
-            Toast.fail('Please agree to authorize!');
+            Toast.fail('请同意授权！');
           }
         });
       } else {
         Toast.clear();
-        Toast.fail('The withdrawal amount cannot exceed the withdrawal limit');
+        Toast.fail('支取金额不能超过支取限额');
       }
 
       //轮询查询是否提款成功
@@ -325,7 +325,7 @@ export default {
           if (ret) {
             if (ret == tk_je) {
               Toast.clear();
-              Toast.success('Successful withdrawal');
+              Toast.success('提现成功');
               dq.huobi[dq.hbindex]['je'] = tk_je;
             } else {
               setTimeout(() => {

@@ -274,7 +274,7 @@ export default {
         return;
       }
       var loading = Toast.loading({
-        message: 'modifying... ',
+        message: '修改。。。 ',
         closeOnClick: false,
         closeOnClickOverlay: false,
         loadingType: 'spinner',

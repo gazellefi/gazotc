@@ -1,7 +1,7 @@
 <template>
 	<div class="qianbao">
 		<el-row class="head hidden-sm-and-down" type="flex" justify="space-between" >
-			<el-col :sm="24" :md="5">
+			<el-col :sm="24" :md="8" :lg="5">
 				<div class="left c_b">
 					<div class="f a_c">
 						<img src="@/assets/img/money1.png" style="width: 20px;" class="marr-10">
@@ -72,19 +72,19 @@
 			<el-col :span="6">
 				<div class="item_nav" v-if="item.key == 'baozhengjing'">
 					<span class="cba cursor" @click="showRu(item)">{{$t('message.changeInto')}}</span>
-					<span class="c935 cursor" @click="showOutPop(item)" style="margin-left: 20px;">{{$t('message.changeOut')}}</span>
+					<span class="c935 cursor" @click="showOutPop(item)" style="margin-left: 5px;">{{$t('message.changeOut')}}</span>
 				</div>
 				<div class="item_nav" v-else>
 					<span class="cba cursor" @click="showChongzhi(item)">{{$t('message.ChargeMoney')}}</span>
-					<span class="c935 cursor" @click="showTixian(item)" style="margin-left: 20px;">{{$t('message.WithdrawMoney')}}</span>
+					<span class="c935 cursor" @click="showTixian(item)" style="margin-left: 5px;">{{$t('message.WithdrawMoney')}}</span>
 				</div>
 			</el-col>
 		</el-row>
-		<myDialog width="25%" :isShowFooter="false"  :title="$t('message.Recharge')" :closeModal="false" :closePress="false"
+		<myDialog width="320px" :isShowFooter="false"  :title="$t('message.Recharge')" :closeModal="false" :closePress="false"
 			:visible.sync="isShowChongzhi">
 			<Chongzhi :type="type_c" @Recharge="Recharge"></Chongzhi>
 		</myDialog>
-		<myDialog width="25%" :isShowFooter="false" :title="$t('message.WithdrawMoney')" :closeModal="false" :closePress="false"
+		<myDialog width="320px" :isShowFooter="false" :title="$t('message.WithdrawMoney')" :closeModal="false" :closePress="false"
 			:visible.sync="isShowTixan">
 			<Tixian :type="type_t" @drawal="drawal"></Tixian>
 		</myDialog>
@@ -247,6 +247,7 @@
 							])
 						  ]),
 					    showCancelButton: true,
+						center: true,
 					    confirmButtonText: _this.popoType == 4? _this.$t('message.changeOut'):_this.popoType == 3? _this.$t('message.changeInto') : '',
 					    cancelButtonText: '取消',
 					    beforeClose: (action, instance, done) => {
@@ -267,10 +268,10 @@
 					        }
 					    }
 					}).then(action => {
-					    _this.$message({
-					        type: 'info',
-					        message: 'action: ' + action
-					    });
+					    // _this.$message({
+					    //     type: 'info',
+					    //     message: 'action: ' + action
+					    // });
 					});
 				})
 			},
@@ -296,7 +297,7 @@
 			  var dq = this;
 			
 			  Toast.loading({
-			    message: 'Transfer in'
+			    message: '转入中...'
 			  });
 			  var lx_time = "";
 			  //开始转入保证金
@@ -355,7 +356,7 @@
 			  var dq = this;
 			  			
 			  Toast.loading({
-			    message: 'Transfer in'
+			    message: '转入中...'
 			  });
 			  var lx_time = "";
 			  //开始转出保证金
@@ -421,7 +422,7 @@
 				//新版查询
 				function gethuobi() {
 					Toast.loading({
-						message: 'In query'
+						message: '数据请求中...'
 					});
 					var sqllist = [];
 					for (let index = 0; index < dq.huobi.length; index++) {
@@ -468,7 +469,7 @@
 				var dq = this;
 				return new Promise(function(resolve, reject){
 					dq.getBalancemar().then((res)=>{
-						dq.balancemar_num = res;
+						dq.balancemar_num = res.toFixed(2);
 						dq.getUsdt_num().then((res)=>{
 							dq.usdt_num = res;
 							dq.$forceUpdate()
