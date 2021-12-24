@@ -621,7 +621,8 @@ export default {
           getContainer: 'body'
         })
           .catch(() => {
-            dq.$router.push('./chongzhi');
+            // dq.$router.push('./chongzhi');
+			Notify({ type: 'warning', message: '请先进行充值' });
           });
         return;
       }
