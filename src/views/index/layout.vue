@@ -174,6 +174,7 @@ export default {
 		{ title: 'Rule', route: '/Homepage' },
 		{ title: 'News', route: '/Homepage' },
 		{ title: 'Dapp', route: '/Exchange' },
+		{ title: 'Paper', route: '/GazOTC.pdf' },
 		{ title: 'Contact', route: '/Homepage' },
       ],
     };
