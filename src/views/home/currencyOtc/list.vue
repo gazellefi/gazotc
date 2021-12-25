@@ -49,15 +49,14 @@
 			<el-row style="border-bottom: 1px solid #EEEEEE;">
 				<el-col :span="12">
 					<span class="typeSelect">{{ $t("message.dapp.currency")}}：</span>
-					<el-select size="mini" v-model="form.type" placeholder="Please select" style="width: 50%;">
+					<el-select size="mini" v-model="huobi" placeholder="Please select" style="width: 50%;">
 						<el-option v-for="item in hbarr" :key="item.key" :label="item.id" :value="item.key">
 						</el-option>
 					</el-select>
 				</el-col>
 				<el-col :span="12">
 					<span class="typeSelect">{{ $t("message.dapp.unit")}}：</span>
-					<el-select size="mini" placeholder="Please select" style="margin-left: 15px;width: 50%;"
-						v-model="form.type_b">
+					<el-select size="mini" placeholder="Please select" style="margin-left: 15px;width: 50%;" v-model="fabi">
 						<el-option v-for="item in hbarr" :key="item.key" :label="item.id" :value="item.key">
 						</el-option>
 					</el-select>
@@ -120,7 +119,9 @@
 				</el-form-item>
 				<el-form-item :label="$t('message.dapp.amount')">
 					<el-input v-model="mr_form.num"></el-input>
+					<div>最大购买数为：{{mr_form.ddinfo.moa}}</div>
 				</el-form-item>
+				
 			</el-form>
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="mairucode = false">{{$t('message.cancel')}}</el-button>
@@ -164,7 +165,7 @@
 			if (typeof ethereum === "undefined") {
 				web3 = new Web3(config["hyue"][config["key"]]["Url"]);
 				ccdotconn = new web3.eth.Contract(ccdotc_abi, ccdotc_key);
-				dq.listajax();
+				// dq.listajax();
 			} else {
 				webinit();
 			}
