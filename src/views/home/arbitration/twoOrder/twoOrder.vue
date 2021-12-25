@@ -39,7 +39,7 @@
 
 					</template>
 				</el-table-column>
-				<el-table-column align="center" :label="$t('message.arbitration.countdown')">
+				<!-- <el-table-column align="center" :label="$t('message.arbitration.countdown')">
 					<template slot-scope="scope">
 						<div v-if="scope.row.timc != 0 && scope.row.timd == 0">
 							<van-count-down :time="scope.row.djs_val" format="DD 天 HH 时 mm 分 ss 秒" />
@@ -51,7 +51,7 @@
 							<van-count-down :time="scope.row.djs_val" format="DD 天 HH 时 mm 分 ss 秒" />
 						</div>
 					</template>
-				</el-table-column>
+				</el-table-column> -->
 				<el-table-column align="center" :label="$t('message.operation')">
 					<template slot-scope="scope">
 						<!-- v-if="options_value_b == 0" -->

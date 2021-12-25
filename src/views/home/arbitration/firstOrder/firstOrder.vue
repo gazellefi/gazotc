@@ -61,11 +61,11 @@
 			      </div>
 			    </template>
 			  </el-table-column>
-			  <el-table-column align="center" :label="$t('message.arbitration.countdown')">
+			 <!-- <el-table-column align="center" :label="$t('message.arbitration.countdown')">
 			    <template slot-scope="scope">
 			      <van-count-down :time="scope.row.djs_val" format="DD 天 HH 时 mm 分 ss 秒" />
 			    </template>
-			  </el-table-column>
+			  </el-table-column> -->
 			  <el-table-column align="center" :label="$t('message.operation')">
 			    <template slot-scope="scope">
 			      <el-button type="text" @click="open_dylzc(scope.row)">{{$t('message.details')}}</el-button>

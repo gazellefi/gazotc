@@ -213,7 +213,7 @@ export default [
         name: 'Arbitration',
         component: () => import('@/views/home/arbitration/index'),
         meta: {
-          name: 'message.dapp.Arbitration',
+          name: 'message.dapp.arbitratorsLister',
           icon: require('@/assets/dappImg/6.png')
         },
       	redirect: '/home/arbitration/arbitration',
@@ -226,7 +226,7 @@ export default [
 			},
 			{
 				path:'/home/arbitration/firstOrder',
-				meta: { name: 'message.dapp.firstOrders' },
+				meta: { name: 'message.dapp.firstOrdersList' },
 				component: ()=> import('@/views/home/arbitration/firstOrder/index'),
 				children:[
 					{
@@ -236,7 +236,7 @@ export default [
 					},
 					{
 						path:'/home/arbitration/firstOrder/myPart',
-						meta: { name: 'message.dapp.myPart' },
+						meta: { name: 'message.dapp.myPart1' },
 						component: ()=> import('@/views/home/arbitration/firstOrder/myPart')
 					}
 				]
@@ -249,12 +249,12 @@ export default [
 				children:[
 					{
 						path:'/home/arbitration/twoOrder',
-						meta: { name: 'message.dapp.secondOrder' },
+						meta: { name: 'message.dapp.secondOrderList' },
 						component: ()=> import('@/views/home/arbitration/twoOrder/twoOrder')
 					},
 					{
 						path:'/home/arbitration/twoOrder/myPart',
-						meta: { name: 'message.dapp.myPart' },
+						meta: { name: 'message.dapp.myPart2' },
 						component: ()=> import('@/views/home/arbitration/twoOrder/myPart')
 					}
 				]
@@ -272,7 +272,7 @@ export default [
           },
           {
             path: '/home/arbitration/firstOrder',
-            meta: { name: 'message.dapp.firstOrders' },
+            meta: { name: 'message.dapp.firstOrdersList' },
             component: () => import('@/views/home/arbitration/firstOrder/index'),
             children: [
               {
@@ -282,7 +282,7 @@ export default [
               },
               {
                 path: '/home/arbitration/firstOrder/myPart',
-                meta: { name: 'message.dapp.myPart' },
+                meta: { name: 'message.dapp.myPart1' },
                 component: () => import('@/views/home/arbitration/firstOrder/myPart')
               }
             ]
@@ -290,7 +290,7 @@ export default [
           },
 		  {
 				path:'/home/arbitration/twoOrder',
-				meta: { name: 'message.dapp.secondOrder' },
+				meta: { name: 'message.dapp.secondOrderList' },
 				component: ()=> import('@/views/home/arbitration/twoOrder/index'),
 				children:[
 					{
@@ -300,7 +300,7 @@ export default [
 					},
 					{
 						path:'/home/arbitration/twoOrder/myPart',
-						meta: { name: 'message.dapp.myPart' },
+						meta: { name: 'message.dapp.myPart2' },
 						component: ()=> import('@/views/home/arbitration/twoOrder/myPart')
 					}
 				]
@@ -332,7 +332,7 @@ export default [
 	    name: 'rule',
 	    component: () => import('@/views/home/vipNft/index'),
 	    meta: {
-	      name: '会员NFT',
+	      name: 'message.dapp.ntf',
 	      icon: require('@/assets/dappImg/3.png')
 	      // isHideChild: true
 	    },
@@ -340,17 +340,17 @@ export default [
 	    children: [
 	      {
 	        path: "/home/vipNft/compose/index",
-	        meta: { name: '合成NFT' },
+	        meta: { name: 'message.dapp.ntfMinting' },
 	        component: () => import('@/views/home/vipNft/compose/index'),
 	      },
 	      {
 	        path: "/home/vipNft/turn/index",
-	        meta: { name: 'NFT转让' },
+	        meta: { name: 'message.dapp.ntfTransfer' },
 	        component: () => import('@/views/home/vipNft/turn/index'),
 	      },
 		  {
 		    path: "/home/vipNft/my/index",
-		    meta: { name: '我的NFT' },
+		    meta: { name: 'message.dapp.myNtf' },
 		    component: () => import('@/views/home/vipNft/my/index'),
 		  },
 	    ]
@@ -360,7 +360,7 @@ export default [
 	    name: 'rule',
 	    component: () => import('@/views/home/mining/index'),
 	    meta: {
-	      name: '挖矿',
+	      name: 'message.dapp.mining',
 	      icon: require('@/assets/dappImg/3.png')
 	      // isHideChild: true
 	    },
@@ -368,32 +368,32 @@ export default [
 	    children: [
 	      {
 	        path: "/home/mining/abrMine/index",
-	        meta: { name: '仲裁挖矿' },
+	        meta: { name: 'message.dapp.arbitrationMining' },
 	        component: () => import('@/views/home/mining/abrMine/index'),
 	      },
 	      {
 	        path: "/home/mining/orederMine/index",
-	        meta: { name: '订单挖矿' },
+	        meta: { name: 'message.dapp.orderMining' },
 	        component: () => import('@/views/home/mining/orederMine/index'),
 	      },
 		  {
 			path: "/home/mining/traMine/index",
-			meta: { name: '交易挖矿' },
+			meta: { name: 'message.dapp.transactionMining' },
 			component: () => import('@/views/home/mining/traMine/index'),
 		  },
 		  {
 		    path: "/home/mining/safeMine/index",
-		    meta: { name: '保险挖矿' },
+		    meta: { name: 'message.dapp.insuranceMining' },
 		    component: () => import('@/views/home/mining/safeMine/index'),
 		  },
 		  {
 		    path: "/home/mining/runMine/index",
-		    meta: { name: '流动性挖矿' },
+		    meta: { name: 'message.dapp.liquidityMining' },
 		    component: () => import('@/views/home/mining/runMine/index'),
 		  },
 		  {
 			path: "/home/mining/extend/index",
-			meta: { name: '推广挖矿' },
+			meta: { name: 'message.dapp.promoteMining' },
 			component: () => import('@/views/home/mining/extend/index'),
 		  },
 	    ]

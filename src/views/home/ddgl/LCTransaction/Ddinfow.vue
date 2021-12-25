@@ -47,17 +47,17 @@
 		width: 90%; border: 1px solid #5BAEAC; color: #5BAEAC;
 		margin-top: 20px;
 	}
-	@media only screen and (max-width: 991px){
-		.itemb_r{
-			border: none;
-			border-bottom: 1px solid #CCCCCC;
-		}
-	}
-	@media only screen and (min-width: 991px){
-		.itemb_r{
-			border-right: 1px solid #CCCCCC;
-		}
-	}
+	// @media only screen and (max-width: 991px){
+	// 	.itemb_r{
+	// 		border: none;
+	// 		border-bottom: 1px solid #CCCCCC;
+	// 	}
+	// }
+	// @media only screen and (min-width: 991px){
+	// 	.itemb_r{
+	// 		border-right: 1px solid #CCCCCC;
+	// 	}
+	// }
 </style>
 <template>
 	<div class="ddinfo_w">
@@ -127,7 +127,18 @@
 			<el-col :span="24" class="title">
 				<span>{{$t('message.dapp.PrivateMessage')}}</span>
 			</el-col>
-			<el-col :sm="24" :md="12" class="item2 itemb_r">
+			<el-col :sm="24"class="item2 itemb_r">
+				<div class="f a_c">
+					<span>{{$t('message.pwd')}}：</span>
+					<el-input style="width: 30%;" :placeholder="$t('message.enterPrivateTips')" v-model="input" size="mini"></el-input>
+					<el-link type="primary" class="marl-10">{{$t('message.decrypt')}}</el-link>
+				</div>
+				<div class="f a_c">
+					<span class="hidden-sm-and-down" style="visibility: hidden;">{{$t('message.dapp.message')}}：</span>
+					<el-input :placeholder="$t('message.noMsg')" v-model="input1" size="mini" type="textarea" :rows="2"></el-input>
+				</div>
+			</el-col>
+			<!-- <el-col :sm="24" :md="12" class="item2">
 				<div>
 					<span>{{$t('message.arbitration.nick')}}：</span>
 					<span></span>
@@ -145,26 +156,7 @@
 					<span class="hidden-sm-and-down" style="visibility: hidden;">{{$t('message.dapp.message')}}：</span>
 					<el-input :placeholder="$t('message.enterContent')" v-model="input1" size="mini" type="textarea" :rows="2"></el-input>
 				</div>
-			</el-col>
-			<el-col :sm="24" :md="12" class="item2">
-				<div>
-					<span>{{$t('message.arbitration.nick')}}：</span>
-					<span></span>
-				</div>
-				<div>
-					<span>{{$t('message.activit.addr')}}：</span>
-					<span></span>
-				</div>
-				<div class="f a_c">
-					<span>{{$t('message.dapp.message')}}：</span>
-					<el-input style="width: 30%;" :placeholder="$t('message.enterPrivateTips')" v-model="input" size="mini"></el-input>
-					<el-link type="primary" class="marl-10">{{$t('message.decrypt')}}</el-link>
-				</div>
-				<div class="f a_c">
-					<span class="hidden-sm-and-down" style="visibility: hidden;">{{$t('message.dapp.message')}}：</span>
-					<el-input :placeholder="$t('message.enterContent')" v-model="input1" size="mini" type="textarea" :rows="2"></el-input>
-				</div>
-			</el-col>
+			</el-col> -->
 		</el-row>
 		<el-row>
 			<el-col :span="24" class="title">
@@ -196,7 +188,7 @@
 						</el-col>
 						<!-- <el-col :sm="8" :lg="24"><van-button plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">提前释放</van-button></el-col> -->
 						<el-col :sm="24" :lg="8" class="fc c_c a_c">
-							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">{{$t('message.earlyReleaseMargin')}}</van-button>
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">{{$t('message.UserAgreesRelease')}}</van-button>
 							<div class="msg">
 							  <span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
 							  <span v-if="ddifo.agree == 2">{{$t('message.MerchantAgreesRelease')}}</span>
@@ -214,7 +206,7 @@
 				<el-col :span="24" v-if=" ddifo['myuser'] == ddifo['Uadd'] && ddifo['Umark_b'] == 'sell'">
 					<el-row style="padding-bottom: 20px;">
 						<el-col :sm="24" :lg="8" class="f c_c">
-							<van-button class="btnStyle" plain type="pr	imary" @click="setddcode('fb_ddajax')" :disabled="anarr('fb_ddajax')">{{$t('message.putMoney')}}</van-button>
+							<van-button class="btnStyle" plain type="pr	imary" @click="setddcode('fb_ddajax')" :dis<strong></strong>abled="anarr('fb_ddajax')">{{$t('message.putMoney')}}</van-button>
 						</el-col>
 						<el-col :sm="24" :lg="8" class="fc c_c a_c">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('zt_ddajax',2)" :disabled="anarr('zt_ddajax')">{{$t('message.pushMarginRelease')}}</van-button>
@@ -224,7 +216,7 @@
 							</div>
 						</el-col>
 						<el-col :sm="24" :lg="8" class="fc c_c a_c">
-							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Uadd',1)">{{$t('message.earlyReleaseMargin')}}</van-button>
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Uadd',1)">{{$t('message.MerchantAgreesRelease')}}</van-button>
 							<div class="msg">
 							  <span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
 							  <span v-if="ddifo.agree == 2">{{$t('message.MerchantAgreesRelease')}}</span>
@@ -240,6 +232,34 @@
 					</el-row>
 				</el-col>
 				<el-col :span="24" v-if="ddifo['myuser'] == ddifo['Madd'] && ddifo['Umark_b'] == 'sell'">
+					<el-row  style="padding-bottom: 20px;">
+						<el-col :sm="24" :lg="8" class="f c_c">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('fb_ddajax')" :disabled="anarr('fb_ddajax')">{{$t('message.putMoney')}}</van-button>
+						</el-col>
+						<el-col :sm="24" :lg="8" class="fc c_c a_c">
+							 <van-button class="btnStyle" plain type="primary" @click="setddcode('zt_ddajax',1)" :disabled="anarr('zt_ddajax')">{{$t('message.suspendBalad')}}</van-button>
+							 <div class="msg">
+							   <span v-if="ddifo.pau == 1">{{$t('message.UserPause')}}</span>
+							   <span v-if="ddifo.pau == 2">{{$t('message.MerchantSuspension')}}</span>
+							 </div>
+						</el-col>
+						<el-col :sm="24" :lg="8" class="f c_c a_c">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">{{$t('message.MerchantAgreesRelease')}}</van-button>
+							<div class="msg">
+							  <span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
+							  <span v-if="ddifo.agree == 2">{{$t('message.MerchantAgreesRelease')}}</span>
+							  <span v-if="ddifo.agree == 3">{{$t('message.allAgrees')}}</span>
+							</div>
+						</el-col>
+						<el-col :sm="24" :lg="8" class="f c_c">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('sf_ddajax')" :disabled="anarr('sf_ddajax')">{{$t('message.ReleaseMargin')}}</van-button>
+						</el-col>
+						<el-col :sm="24" :lg="8" class="f c_c">
+							<van-button class="btnStyle" plain type="primary" @click="openurl('./zhongcai')" :disabled="anarr('ss_ddajax')">{{$t('message.appeal')}}</van-button>
+						</el-col>
+					</el-row>
+				</el-col>
+				<el-col :span="24" v-if=" ddifo['myuser'] == ddifo['Uadd'] && ddifo['Umark_b'] == 'buy' ">
 					<el-row style="padding-bottom: 20px;">
 						<el-col class="f c_c" :sm="24" :lg="8">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('qx_ddajax')" :disabled="anarr('qx_ddajax')">{{$t('message.cancel')}}</van-button>
@@ -253,7 +273,7 @@
 							</div>
 						</el-col>
 						<el-col class="fc c_c a_c" :sm="24" :lg="8">
-							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd',2)">{{$t('message.earlyReleaseMargin')}}</van-button>
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd',2)">{{$t('message.UserAgreesRelease')}}</van-button>
 							<div class="msg">
 							  <span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
 							  <span v-if="ddifo.agree == 2">{{$t('message.MerchantAgreesRelease')}}</span>
@@ -264,34 +284,6 @@
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('sf_ddajax')" :disabled="anarr('sf_ddajax')">{{$t('message.ReleaseMargin')}}</van-button>
 						</el-col>
 						<el-col class="f c_c" :sm="24" :lg="8">
-							<van-button class="btnStyle" plain type="primary" @click="openurl('./zhongcai')" :disabled="anarr('ss_ddajax')">{{$t('message.appeal')}}</van-button>
-						</el-col>
-					</el-row>
-				</el-col>
-				<el-col :span="24" v-if=" ddifo['myuser'] == ddifo['Uadd'] && ddifo['Umark_b'] == 'buy' ">
-					<el-row  style="padding-bottom: 20px;">
-						<el-col :sm="24" :lg="8" class="f c_c">
-							<van-button class="btnStyle" plain type="primary" @click="setddcode('fb_ddajax')" :disabled="anarr('fb_ddajax')">{{$t('message.putMoney')}}</van-button>
-						</el-col>
-						<el-col :sm="24" :lg="8" class="fc c_c a_c">
-							 <van-button class="btnStyle" plain type="primary" @click="setddcode('zt_ddajax',1)" :disabled="anarr('zt_ddajax')">{{$t('message.suspendBalad')}}</van-button>
-							 <div class="msg">
-							   <span v-if="ddifo.pau == 1">{{$t('message.UserPause')}}</span>
-							   <span v-if="ddifo.pau == 2">{{$t('message.MerchantSuspension')}}</span>
-							 </div>
-						</el-col>
-						<el-col :sm="24" :lg="8" class="f c_c a_c">
-							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">{{$t('message.earlyReleaseMargin')}}</van-button>
-							<div class="msg">
-							  <span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
-							  <span v-if="ddifo.agree == 2">{{$t('message.MerchantAgreesRelease')}}</span>
-							  <span v-if="ddifo.agree == 3">{{$t('message.allAgrees')}}</span>
-							</div>
-						</el-col>
-						<el-col :sm="24" :lg="8" class="f c_c">
-							<van-button class="btnStyle" plain type="primary" @click="setddcode('sf_ddajax')" :disabled="anarr('sf_ddajax')">{{$t('message.ReleaseMargin')}}</van-button>
-						</el-col>
-						<el-col :sm="24" :lg="8" class="f c_c">
 							<van-button class="btnStyle" plain type="primary" @click="openurl('./zhongcai')" :disabled="anarr('ss_ddajax')">{{$t('message.appeal')}}</van-button>
 						</el-col>
 					</el-row>
@@ -434,6 +426,7 @@
 					dq.dquser = address;
 					if (dq.ddid) {
 						dq.getddinfo(dq.ddid);
+						console.log(dq.ddifo)
 					}
 				}
 			}

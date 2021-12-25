@@ -65,7 +65,7 @@
 			      </div>
 			    </div>
 			    <div class="view_form_item">
-			      <div class="view_form_item_t">{{ ddinfo['Mmark'] == '0x6275790000000000000000000000000000000000000000000000000000000000' ? $t('message.dapp.received'):$t('message.dapp.buy') }}</div>
+			      <div class="view_form_item_t">{{ ddinfo['Mmark'] == '0x6275790000000000000000000000000000000000000000000000000000000000' ? $t('message.dapp.received'):$t('message.dapp.pay') }}</div>
 			      <div class="view_form_item_input">
 			        <div class="view_form_item_input_srk">
 			          <van-field :placeholder="$t('message.dapp.getCurrency')" v-model="form.je" :disabled="true" />
@@ -284,11 +284,11 @@ export default {
       }
       var sxf = 0;
       var shuere = (e * Number(this.pros['rati'])) / (10 ** 6);
-      var bilie = (1 / Number(this.pros['uni'])) * 10 ** 6;
-      if (shuere >= bilie) {
+      // var bilie = (1 / Number(this.pros['uni'])) * 10 ** 6;
+      // if (shuere >= bilie) {
         sxf = shuere;
-      }
-      else { sxf = bilie; }
+      // }
+      // else { sxf = bilie; }
 
       this.ddinfo['sxf_je'] = sxf;
       this.ddinfo['sxf_shuere'] = shuere;
