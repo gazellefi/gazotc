@@ -213,7 +213,7 @@ export default [
         name: 'Arbitration',
         component: () => import('@/views/home/arbitration/index'),
         meta: {
-          name: 'message.dapp.arbitratorsLister',
+          name: 'message.dapp.Arbitration',
           icon: require('@/assets/dappImg/6.png')
         },
       	redirect: '/home/arbitration/arbitration',
