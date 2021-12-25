@@ -151,7 +151,7 @@ export default {
         {
           text: 'discord',
           img: require('@/assets/link/8.png'),
-          href: 'https://discord.com/invite/mhfdVHNx',
+          href: '(https://discord.gg/2DVfmvUBgH',
         }
       ],
       show: false,
@@ -174,6 +174,7 @@ export default {
 		{ title: 'Rule', route: '/Homepage' },
 		{ title: 'News', route: '/Homepage' },
 		{ title: 'Dapp', route: '/Exchange' },
+		{ title: 'Paper', route: '/GazOTC.pdf' },
 		{ title: 'Contact', route: '/Homepage' },
       ],
     };
@@ -200,7 +201,7 @@ export default {
         this.$router.push('/GAZ');
       } else if (v.route == '/Exchange') {
         this.$router.push('/home');
-      } else if (v.route == '/WhitePaper') {
+      } else if (v.route == '/Paper') {
         this.$router.push(v.route);
         this.currentRoute = v.route
       } else if (v.route == "/Activities") {

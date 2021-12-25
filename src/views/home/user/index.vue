@@ -100,8 +100,7 @@
 					<div style="padding-left: 30px;">
 						<div class="cont">
 							<p style="padding: 20px 0;">{{$t('message.keyp')}}</p>
-							<div
-								style="padding-bottom: 20px;max-width: 100%;text-align: justify;text-justify: newspaper;word-wrap: break-word">
+							<div style="padding-bottom: 20px;max-width: 100%;text-align: justify;text-justify: newspaper;word-wrap: break-word">
 								<span>{{form.publickey}}</span>
 							</div>
 							<el-form ref="form" :model="form" label-width="80px" class="form_nav">
@@ -122,6 +121,26 @@
 						</div>
 						<div class="btn" @click="apply_password">
 							<span>{{$t('message.set')}}</span>
+						</div>
+						<el-form ref="form" :model="form" class="form_nav">
+							<el-form-item>
+								<div style="border: 1px solid #DCDCDC;">
+									<van-field v-model="form.password" type="password" placeholder="请输入密文"/>
+								</div>
+							</el-form-item>
+						</el-form>
+						<div class="btn" @click="apply_password">
+							<span>加密</span>
+						</div>
+						<el-form ref="form" :model="form" class="form_nav">
+							<el-form-item>
+								<div style="border: 1px solid #DCDCDC;">
+									<van-field v-model="form.password" type="password" placeholder="请输入明文"/>
+								</div>
+							</el-form-item>
+						</el-form>
+						<div class="btn" @click="apply_password">
+							<span>解密</span>
 						</div>
 					</div>
 				</div>
@@ -695,7 +714,12 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 			align-items: center;
 		}
 	}
-
+    .el-form{
+		margin-top: 12px;
+	}
+	.el-form-item{
+		margin-bottom: 10px;
+	}
 	.aaa {
 		margin-bottom: 5px;
 	}

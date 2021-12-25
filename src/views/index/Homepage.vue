@@ -292,6 +292,7 @@ export default {
 	  flex-direction: column;
 	  justify-content: space-between;
 	  height: 70%;
+	  
     }
 	.readMore{
 		width: 8.625rem;
@@ -972,13 +973,18 @@ export default {
 		  .title,.info{
 			  margin-left: 0;
 		  }
+		  .info{
+			display: block !important;
+		  }
 	  }
       .info {
         line-height: 22px;
         letter-spacing: 0;
+		/* text-align: center; */
 		.readMore{
 			margin-top: 20px;
 		}
+		
       }
       // ul {
       //   padding: 10px 20px;
