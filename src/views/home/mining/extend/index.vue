@@ -1,6 +1,6 @@
 <template>
 	<div class="container f c_c">
-		<span class="c9">功能开发中...</span>
+		<span class="c9">developing</span>
 	</div>
 </template>
 

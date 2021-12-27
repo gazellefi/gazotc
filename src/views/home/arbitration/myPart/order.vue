@@ -252,6 +252,7 @@
 	import ZcDylList from "@/conn/zc/ZcDylList.json";
 	
 	import ZcModel from "@/conn/zc/ZcinfoModel.json";
+	import MySqZcList from "@/conn/zc/MySqZcList.json";
 	
 	var bzjnum = config['hyue'][config['key']]['Bzj']['num'];
 	//模块
