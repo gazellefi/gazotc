@@ -6,9 +6,9 @@
 	<div class="fc a_e c_a fz14" style="padding-right: 15px;">
 		<div class="f a_c">
 			<i class="el-icon-s-promotion" style="color: #333;font-size: 16px;margin-top: -4px;margin-right: 5px;"></i>
-			<span >联系客服</span>
+			<span >{{$t('message.service')}}</span>
 		</div>
-		<span > 电报群：+447536334816</span>
+		<span > {{$t('message.telAccount')}}</span>
 	</div>
   </div>
 </template>

@@ -12,13 +12,13 @@
 		</div>
 		<div class="rightText">
 			<div class="title">
-				About GAZOTC
+				{{$t('message.home.aboutGAZOTC')}}
 			</div>
 			<div class="info">
 				<div class="">
-					GAZOTC is committed to providing users with small and sophisticated DOTC services, creating a safe, convenient,and DAO decentralized OTC platfor.
+					{{$t('message.home.aboutContent')}}
 				</div>
-				<button class="readMore" type="button">BUY IT NOW</button>
+				<button class="readMore" type="button" @click="goDapp">{{$t('message.home.open')}}</button>
 			</div>
 		</div>
         <!-- <ul>
@@ -33,30 +33,30 @@
     <div class="whiteInfo">
       <div class="content">
 		<div class="safeTitle">
-			How Does GAZOTC Work
+			{{$t('message.home.howDo')}}
 		</div>
         <div class="safety">
 			<li v-for="v in safetyList" :class="v.title=='Safety'?'safe':v.title=='No License'?'nolicense':'autonomy'">
 				<div class="title" align="center">
 					<img :src="v.icon" alt="">
-					<div>{{v.title}}</div>
+					<div>{{$t(`message.home.${v.title}`)}}</div>
 				</div>
-				<div class="cont">{{v.cont}}</div>
+				<div class="cont">{{$t(`message.home.${v.cont}`)}}</div>
 				<!-- <div class="bgBox" style="position: absolute;">
 					<img :src="v.background" >
 				</div> -->
 			</li>
         </div>
-        <div class="fourInfo">
+        <!-- <div class="fourInfo">
 			<div class="infoTitle">
 				Market Participants
 			</div>
 			<div class="infoItem" style="display: flex;">
 				<li v-for="v in fourInfoList">{{v}}</li>
 			</div>
-        </div>
+        </div> -->
         <div class="Market">
-          <div class="title">Market Participants</div>
+          <div class="title">{{$t('message.home.market')}}</div>
           <div class="infos">
             <li v-for="(v,i) in infosList" :class="[(i+1)%2==0?'Odd':'even']">
               <div class="left">
@@ -68,19 +68,19 @@
                 </div>
               </div>
               <div class="right">
-                <div class="title"> {{v.title}} <img :src="v.icon3" ></div>
-                <div class="cont"> {{v.cont}}</div>
+                <div class="title"> {{$t(`message.home.${v.title}`)}}<img :src="v.icon3" ></div>
+                <div class="cont"> {{$t(`message.home.${v.cont}`)}}</div>
               </div>
             </li>
           </div>
         </div>
 		<div class="modelBox">
 			<div class="left">
-				<div class="model"> Economic Model
+				<div class="model"> {{$t('message.home.economic')}}
 				</div>
-				<div class="total">
+				<!-- <div class="total">
 				  The total number of tokens is 63M，Token allocation
-				</div>
+				</div> -->
 				<div class="img">
 				  <img src="../../assets/img/model.png" alt="">
 				</div>
@@ -89,7 +89,7 @@
 				<div class="loadingList" v-for="(v,i) in loadingList" :key="i">
 					<div class="loadingTitle">
 						<div class="">
-							 {{v.title}}
+							 {{$t(`message.home.${v.title}`)}}
 						</div>
 						<span>{{v.sliderNum}}</span></div>
 					<div class="loadingBar">
@@ -99,7 +99,7 @@
 			</div>
 		</div>
 		<div class="mediaBox">
-			<div class="title">Associated Media</div>
+			<div class="title">{{$t('message.home.media')}}</div>
 			<div class="mainBox">
 				<div class="mediaItem" v-for="(v,i) in mediaList" :key="i" :style="{backgroundColor:v.color}">
 					<img :src="v.background" >
@@ -151,9 +151,9 @@ export default {
 
       ],
       safetyList: [
-        { icon: require('../../assets/img/safe.png'),background:require('../../assets/img/safebg.png'), title: 'Safety', cont: 'Assets are managed by smart contracts and can only be transferred between trading parties, The platform has no right to use and lock user assets' },
-        { icon: require('../../assets/img/noLicense.png'),background:require('../../assets/img/licensebg.png'), title: 'No License', cont: 'Traders through third-party social software and verification interfaces,Mutual KYC, personal retained information' },
-        { icon: require('../../assets/img/daoAutonomy.png'),background:require('../../assets/img/autonomybg.png'), title: 'Dao Autonomy', cont: 'In case of any dispute, it shall be decided by the centralized arbitration mechanism in the chain;Platform parameters are set by community voting' },
+        { icon: require('../../assets/img/safe.png'),background:require('../../assets/img/safebg.png'), title: 'safe', cont: 'safeContent' },
+        { icon: require('../../assets/img/noLicense.png'),background:require('../../assets/img/licensebg.png'), title: 'noLicense', cont: 'noLicenseContent' },
+        { icon: require('../../assets/img/daoAutonomy.png'),background:require('../../assets/img/autonomybg.png'), title: 'daoAutonomy', cont: 'daoAutonomyContent' },
       ],
       fourInfoList: [
         'Decentralized OTC transactions and channels for digital currency in and out of cash',
@@ -162,18 +162,18 @@ export default {
         'Decentralized guarantee makes businesses no longer exploited by e-commerce platforms'
       ],
       infosList: [
-        { icon: require('../../assets/img/business_2.jpg'), icon2: require('@/assets/index/a.png'),icon3:require('../../assets/img/Business.png'), i: '01', title: 'Business', cont: 'The order issuer needs to mortgage the platform currency' },
-        { icon: require('../../assets/img/user_2.jpg'), icon2: require('@/assets/index/b.png'),icon3:require('../../assets/img/User.png'), i: '02', title: 'User', cont: 'The order issuer needs to mortgage the platform currency' },
-        { icon: require('../../assets/img/arbiter_2.jpg'), icon2: require('@/assets/index/c.png'),icon3:require('../../assets/img/Arbiter.png'), i: '03', title: 'Arbiter', cont: 'Arbitration of disputes requires the mortgage of platform currency' }
+        { icon: require('../../assets/img/business_2.jpg'), icon2: require('@/assets/index/a.png'),icon3:require('../../assets/img/Business.png'), i: '01', title: 'business', cont: 'businessContent' },
+        { icon: require('../../assets/img/user_2.jpg'), icon2: require('@/assets/index/b.png'),icon3:require('../../assets/img/User.png'), i: '02', title: 'user', cont: 'userContent' },
+        { icon: require('../../assets/img/arbiter_2.jpg'), icon2: require('@/assets/index/c.png'),icon3:require('../../assets/img/Arbiter.png'), i: '03', title: 'arbiter', cont: 'arbiterContent' }
       ],
 	  loadingList: [
-		  {title:'Reward',sliderNum:'65%'},
-		  {title:'Gazelle foundation',sliderNum:'12%'},
-		  {title:'Private placement',sliderNum:'10%'},
-		  {title:'Technical team',sliderNum:'8%'},
-		  {title:'Safe pool',sliderNum:'2%'},
-		  {title:'Airdrop',sliderNum:'2%'},
-		  {title:'Previous contributor',sliderNum:'1%'}
+		  {title:'reward',sliderNum:'65%'},
+		  {title:'gazelle',sliderNum:'12%'},
+		  {title:'private',sliderNum:'10%'},
+		  {title:'technical',sliderNum:'8%'},
+		  {title:'safePool',sliderNum:'2%'},
+		  {title:'airdrop',sliderNum:'2%'},
+		  {title:'contributor',sliderNum:'1%'}
 	  ],
 	  mediaList:[
 		  {color:'#fff',background:require('../../assets/img/logo1.jpg')},
@@ -190,7 +190,11 @@ export default {
   mounted() { },
   watch: {},
   computed: {},
-  methods: {},
+  methods: {
+	  goDapp(){
+		this.$router.push('/home');
+	  }
+  },
   components: {}
 };
 </script>
@@ -292,6 +296,7 @@ export default {
 	  flex-direction: column;
 	  justify-content: space-between;
 	  height: 70%;
+	  
     }
 	.readMore{
 		width: 8.625rem;
@@ -972,13 +977,18 @@ export default {
 		  .title,.info{
 			  margin-left: 0;
 		  }
+		  .info{
+			display: block !important;
+		  }
 	  }
       .info {
         line-height: 22px;
         letter-spacing: 0;
+		/* text-align: center; */
 		.readMore{
 			margin-top: 20px;
 		}
+		
       }
       // ul {
       //   padding: 10px 20px;

@@ -43,19 +43,19 @@
 		      <span :class="uinfo.user == scope.row.madd_b ? 'ac':''">{{ scope.row.madd }}</span>
 		    </template>
 		  </el-table-column>
-		  <el-table-column align="center" prop="uadd" :label="$t('message.arbitration.user')">
+		  <el-table-column align="center" prop="uadd" :label="$t('message.arbitration.buyer')">
 		    <template slot-scope="scope">
 		      <span :class="uinfo.user == scope.row.uadd_b ? 'ac':''">{{ scope.row.uadd }}</span>
 		    </template>
 		  </el-table-column>
-		  <el-table-column align="center" label="卖出">
-		    <template slot-scope="scope">
-		      {{ scope.row.uoa }} {{ scope.row.pro }}
-		    </template>
-		  </el-table-column>
-		  <el-table-column align="center" label="买入">
+		  <el-table-column align="center" :label="$t('message.arbitration.sell')">
 		    <template slot-scope="scope">
 		      {{ scope.row.wad }} {{ scope.row.swap }}
+		    </template>
+		  </el-table-column>
+		  <el-table-column align="center" :label="$t('message.arbitration.buy')">
+		    <template slot-scope="scope">
+		      {{ scope.row.uoa }} {{ scope.row.pro }}
 		    </template>
 		  </el-table-column>
 		  <el-table-column  align="center" :label="$t('message.dapp.unitPrice')">
@@ -63,7 +63,7 @@
 		      {{ scope.row.uni }} {{ scope.row.swap }}
 		    </template>
 		  </el-table-column>
-		  <el-table-column align="center" label="手续费">
+		  <el-table-column align="center" :label="$t('message.arbitration.tradeFee')">
 		    <template slot-scope="scope">
 		      {{ scope.row.free }} {{ scope.row.pro }}
 		    </template>

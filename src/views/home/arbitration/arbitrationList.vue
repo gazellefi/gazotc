@@ -3,10 +3,15 @@
 		<!-- pc -->
 		<div class="hidden-sm-and-down">
 			<div class="f c_b top_nav">
-				<div class="f a_c c935 cursor fz14"  @click="toDiscard">
-					<span>请先加入discard仲裁频道联系仲裁员</span>
-					<img src="../../../assets/img/discard.png" style="width: 24px;">
-				</div>
+					<div class="f a_c cursor fz14" style="color: #000000;">
+						<span>请先加入<span class="c935" style="text-decoration:underline ;" @click="toDiscard">discard</span></span>
+						<img @click="toDiscard" src="../../../assets/img/discard.png" style="width: 24px;">
+						<span>仲裁频道或</span>
+						<span class="c935" style="text-decoration:underline ;" @click="toGazOTC">GazOTCArb</span>
+						<i @click="toGazOTC" class="el-icon-s-promotion" style="color: #333;font-size: 24px;margin-top: -4px;margin-right: 5px;"></i>
+						<span>仲裁电报群联系仲裁员</span>
+					</div>
+				
 				<div class="f">
 					<div class="f c_c a_c cursor" @click="sq_zcy_dialog(2)">
 						<img :src="addIcon" width="22px" height="21px" style="margin-top: -2px;">
@@ -226,7 +231,7 @@
 			  <span>{{sq_zc_data.info.user_bzj.toFixed(2)+' GAZ'}}</span>
 			</el-form-item>
 			
-			<el-form-item :label="$t('message.available')+':'" v-if="btnType == 1 || btnType == 2">
+			<el-form-item :label="$t('message.arbitration.canUse')+':'" v-if="btnType == 1 || btnType == 2">
 			  <span>{{Number(balance / 10 ** 18).toFixed(2)+'GAZ'}}</span>
 			</el-form-item>
 			
@@ -456,7 +461,10 @@
 			  document.body.removeChild(input);
 			},
 			toDiscard(){
-				window.open("https://discord.gg/8r3fsN4shk")
+				window.open("https://discord.gg/2DVfmvUBgH")
+			},
+			toGazOTC(){
+				window.open("https://t.me/GazotcArb")
 			},
 			getList(){
 				var dq = this;

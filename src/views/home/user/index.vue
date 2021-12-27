@@ -37,8 +37,8 @@
 					</div>
 					<div class="" style="display: flex;justify-content: space-around;">
 						<div class="btn" style="margin-top: 10px;" @click="dialogVisible = true"><span>{{$t('message.modify')}}</span></div>
-						<div class="btn" style="margin-top: 10px;" @click="ruleHideAuth"><span>{{btnText}}</span></div>
-						<div class="btn" style="margin-top: 10px;" @click="ruleHideAuth" v-if="false"><span>{{btnText}}</span></div>
+						<div class="btn" style="margin-top: 10px;" @click="ruleHideAuth"><span>{{ $t("message.activit.IDnumber") }}</span></div>
+						<div class="btn" style="margin-top: 10px;" @click="ruleHideAuth" v-if="false"><span>{{ $t("message.activit.IDnumber") }}</span></div>
 					</div>
 				</div>
 				<!-- 仲裁员昵称 -->
@@ -64,7 +64,7 @@
 					<div class="cont">
 						<div class="list">
 							<li>
-								<span class="label_nav">节点:</span>
+								<span class="label_nav">{{$t('message.node')}}</span>
 								<span>{{beizhu_arr.team_beizhu?beizhu_arr.team_beizhu:'暂无节点'}}</span>
 							</li>
 						</div>
@@ -100,8 +100,7 @@
 					<div style="padding-left: 30px;">
 						<div class="cont">
 							<p style="padding: 20px 0;">{{$t('message.keyp')}}</p>
-							<div
-								style="padding-bottom: 20px;max-width: 100%;text-align: justify;text-justify: newspaper;word-wrap: break-word">
+							<div style="padding-bottom: 20px;max-width: 100%;text-align: justify;text-justify: newspaper;word-wrap: break-word">
 								<span>{{form.publickey}}</span>
 							</div>
 							<el-form ref="form" :model="form" label-width="80px" class="form_nav">
@@ -123,6 +122,26 @@
 						<div class="btn" @click="apply_password">
 							<span>{{$t('message.set')}}</span>
 						</div>
+						<el-form ref="form" :model="form" class="form_nav">
+							<el-form-item>
+								<div style="border: 1px solid #DCDCDC;">
+									<van-field v-model="form.password" type="password" placeholder="请输入明文"/>
+								</div>
+							</el-form-item>
+						</el-form>
+						<div class="btn" @click="apply_password">
+							<span>加密</span>
+						</div>
+						<el-form ref="form" :model="form" class="form_nav">
+							<el-form-item>
+								<div style="border: 1px solid #DCDCDC;">
+									<van-field v-model="form.password" type="password" placeholder="请输入密文"/>
+								</div>
+							</el-form-item>
+						</el-form>
+						<div class="btn" @click="apply_password">
+							<span>解密</span>
+						</div>
 					</div>
 				</div>
 			</el-col>
@@ -143,7 +162,7 @@
 				<el-input  v-model="regForm.identity" placeholder="请输入身份证号"></el-input>
 			</el-form-item>
 			<el-form>
-				<span class="c9">以上信息,均保存在智能合约中, * 为公开信息, ** 为不公开信息</span>
+				<span class="c9">{{$t('message.changeInfo')}}</span>
 			</el-form>
 		</el-form>
 	</myDialog>
@@ -154,7 +173,7 @@
 				<el-input  v-model="regForm.zc_beizhu" placeholder="请输入仲裁员昵称"></el-input>
 			</el-form-item>
 			<el-form>
-				<span class="c9">以上信息,均保存在智能合约中, * 为公开信息, ** 为不公开信息</span>
+				<span class="c9">{{$t('message.changeInfo')}}</span>
 			</el-form>
 		</el-form>
 	</myDialog>
@@ -165,7 +184,7 @@
 				<el-input  v-model="regForm.team_beizhu" placeholder="请输入节点"></el-input>
 			</el-form-item>
 			<el-form>
-				<span class="c9">以上信息,均保存在智能合约中, * 为公开信息, ** 为不公开信息</span>
+				<span class="c9">{{$t('message.changeInfo')}}</span>
 			</el-form>
 		</el-form>
 	</myDialog>
@@ -661,7 +680,8 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 			},
 			async apply_password(){
 				if (this.form.password != this.form.passwordAggin) {
-					alert("password mismatched")
+					alert(this.$t('message.applyPwd'))
+					// alert("password mismatched")
 				} else {
 					const key = new SeededRSA(this.form.password);
 					console.log(key)
@@ -695,7 +715,12 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 			align-items: center;
 		}
 	}
-
+    .el-form{
+		margin-top: 12px;
+	}
+	.el-form-item{
+		margin-bottom: 10px;
+	}
 	.aaa {
 		margin-bottom: 5px;
 	}
@@ -735,6 +760,7 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 					background: #ffc400;
 					display: inline-block;
 					color: #fff;
+					width: 160px;
 				}
 
 				margin: 20px;

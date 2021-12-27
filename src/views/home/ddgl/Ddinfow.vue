@@ -342,6 +342,7 @@ export default {
         if (dq.ddid) {
           dq.getddinfo(dq.ddid);
         }
+		  console.log(dq.ddifo)
       }
     }
 
@@ -728,8 +729,10 @@ export default {
       if (tcode == 'fb_ddajax') {
         if (ddinfo['release'] == 0 && ddinfo['timc'] == 0) {
           return false;
+		  console.log(111)
         } else {
           return true;
+		  console.log(222)
         }
       }
       if (tcode == 'tq_ddajax') {

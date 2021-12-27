@@ -42,8 +42,9 @@
 			      <div class="view_ul_li_l">{{$t('message.dapp.orderStatus')}}</div>
 			      <div class="view_ul_li_r">{{ ddinfo.mlive == 1 ? $t('message.dapp.ReceivingOrder'):$t('message.dapp.Resting') }}</div>
 			    </div>
+			      <div class="view_ul_li_l beizhuTtile">{{$t('message.remarks')}}：</div>
 			    <div class="view_ul_li bordd beizhu">
-			      <span>{{$t('message.remarks')}}：{{ ddinfo.beizhu == 'No remarks are filled in' ? $t('message.notFill') : ddinfo.beizhu}}</span>
+			      <div>{{ ddinfo.beizhu == 'No remarks are filled in' ? $t('message.notFill') : ddinfo.beizhu}}</div>
 			    </div>
 			   <!-- <div class="view_ul_li beizhu_conn">
 			      <el-button type="text" @click="openlxfs">{{$t('message.contactDes')}}</el-button>
@@ -64,7 +65,7 @@
 			      </div>
 			    </div>
 			    <div class="view_form_item">
-			      <div class="view_form_item_t">{{ ddinfo['Mmark'] == '0x6275790000000000000000000000000000000000000000000000000000000000' ? $t('message.dapp.received'):$t('message.dapp.buy') }}</div>
+			      <div class="view_form_item_t">{{ ddinfo['Mmark'] == '0x6275790000000000000000000000000000000000000000000000000000000000' ? $t('message.dapp.received'):$t('message.dapp.pay') }}</div>
 			      <div class="view_form_item_input">
 			        <div class="view_form_item_input_srk">
 			          <van-field :placeholder="$t('message.dapp.getCurrency')" v-model="form.je" :disabled="true" />
@@ -122,6 +123,7 @@
           <div class="view_ul_li_r">{{ ddinfo.mlive == 1 ? $t('message.dapp.ReceivingOrder'):$t('message.dapp.Resting') }}</div>
         </div>
         <div class="view_ul_li beizhu">
+			<div class="view_ul_li_l">{{$t('message.remarks')}}：</div>
           <span>{{$t('message.remarks')}}：{{ ddinfo.beizhu == 'No remarks are filled in' ? $t('message.notFill') : ddinfo.beizhu}}</span>
         </div>
        <!-- <div class="view_ul_li beizhu_conn">
@@ -282,11 +284,11 @@ export default {
       }
       var sxf = 0;
       var shuere = (e * Number(this.pros['rati'])) / (10 ** 6);
-      var bilie = (1 / Number(this.pros['uni'])) * 10 ** 6;
-      if (shuere >= bilie) {
+      // var bilie = (1 / Number(this.pros['uni'])) * 10 ** 6;
+      // if (shuere >= bilie) {
         sxf = shuere;
-      }
-      else { sxf = bilie; }
+      // }
+      // else { sxf = bilie; }
 
       this.ddinfo['sxf_je'] = sxf;
       this.ddinfo['sxf_shuere'] = shuere;
@@ -800,10 +802,12 @@ export default {
   opacity: 0.5;
   padding: 10px 15px;
   border: 1px solid rgb(100, 99, 99);
-  font-size: 14px;
+  font-size: 14px; 
+  line-height: 20px;
+}
+.beizhuTtile{ 
   margin-top: 15px;
 }
-
 .view_form {
   width: 100%;
   display: flex;

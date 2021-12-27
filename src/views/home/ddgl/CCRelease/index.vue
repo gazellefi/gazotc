@@ -38,12 +38,12 @@
 			<el-table :data="list" stripe style="width: 100%">
 				<el-table-column align="center" prop="did" width="100px" :label="$t('message.arbitration.orderId')">
 				</el-table-column>
-				<el-table-column align="center" label="总数">
+				<el-table-column align="center" :label="$t('message.amount')">
 					<template slot-scope="scope">
 						{{ scope.row.moa }} {{ scope.row.pro }}
 					</template>
 				</el-table-column>
-				<el-table-column align="center" label="最低数">
+				<el-table-column align="center" :label="$t('message.minOrder')">
 					<template slot-scope="scope">
 						{{ scope.row.zer }} {{ scope.row.pro }}
 					</template>

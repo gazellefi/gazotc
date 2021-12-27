@@ -7,7 +7,7 @@
 				<img src="../../assets/img/navLogo.png" >
 			</div>
 			<!-- <li :class="[currentRoute==v.route?'currentRoute':'']" @click="navClick(v)" v-for="v in navRoutes">{{v.title}}</li> -->
-			<li @click="navClick(v)" v-for="v in navRoutes">{{v.title}}</li>
+			<li @click="navClick(v)" v-for="v in navRoutes">{{$t(`message.home.${v.title}`)}}</li>
 			<div class="langBox">
 				
 				<lang class="lang"></lang>
@@ -18,12 +18,12 @@
     <van-popup class="nav2" v-model="show" position="left" :style="{ width: '50%' ,height:'100%'}">
       <!-- <li :class="[currentRoute==v.route?'currentRoute':'']" @click="navClick(v)" v-for="v in navRoutes"> -->
       <li @click="navClick(v)" v-for="v in navRoutes">
-        {{v.title}}
+        {{$t(`message.home.${v.title}`)}}
         <van-icon name="arrow" style="float:right" />
       </li>
-      <li><a target="_blank" href="/GazOTC.pdf">{{$t('message.WhitePaper')}}</a>
+      <!-- <li><a target="_blank" href="/GazOTC.pdf">{{$t('message.WhitePaper')}}</a>
         <van-icon name="arrow" style="float:right" />
-      </li>
+      </li> -->
     </van-popup>
     <div class="topNav">
       <div class="fold" @click="show=true">
@@ -84,19 +84,19 @@
           <div class="left">
             <a class="item" @click="goLink(v)" v-for="v in linklist">
               <img :src="v.img" alt="">
-              <div class="text">{{v.text}}</div>
+              <div class="text">{{$t(`message.home.${v.text}`)}}</div>
             </a>
           </div>
-          <div class="right">GAZOTC   Leader Of Decentralized OTC</div>
+          <div class="right">{{$t('message.home.leader')}}</div>
         </div>
 		<div class="botTop">
-			<span>2021 UNITED KINGDOM GZELLE DEFI FOUNDATION,Copyright</span>
-			<span>Company Number 13702258 </span>
-			<span>Address: 69, Aberdeen Avenue, Cambridge, England, CB2 8DL</span>
+			<span>{{$t('message.home.copyright')}}</span>
+			<span>{{$t('message.home.companyNum')}}</span>
+			<span>{{$t('message.home.address')}}</span>
 		</div>
         <div class="bot">
           <!-- <span>2021 Vimeo.com, Inc. All rights reserved.</span> -->
-		  Terms Privacy CA Privacy Copyright Cookies
+		  {{$t('message.home.terms')}}
           <!-- <span>Help: support@gazotc.com</span> -->
         </div>
       </div>
@@ -114,44 +114,44 @@ export default {
     return {
       linklist: [
         {
-          text: 'Github',
+          text: 'github',
           img: require('@/assets/link/1.png'),
           href: 'https://github.com/gazellefi/gazotc',
         },
         {
-          text: 'Twitter',
+          text: 'twitter',
           img: require('@/assets/link/2.png'),
           href: 'https://twitter.com/gazellefi',
         },
         {
-          text: 'Facebook',
+          text: 'facebook',
           img: require('@/assets/link/3.png'),
           href: 'https://www.facebook.com/gazotc',
         },
         {
-          text: 'Medium',
+          text: 'medium',
           img: require('@/assets/link/4.png'),
           href: 'https://medium.com/@gazotc',
         },
         {
-          text: 'Youtube',
+          text: 'youtube',
           img: require('@/assets/link/5.png'),
           href: 'https://www.youtube.com/channel/UCv2XLAJZg5bge_hGMXoPFTg',
         },
         {
-          text: 'Telegram',
+          text: 'telegram',
           img: require('@/assets/link/6.png'),
           href: 'https://t.me/gaztwo',
         },
         {
-          text: 'Telegram',
+          text: 'telegram',
           img: require('@/assets/link/7.png'),
           href: 'https://t.me/gazotcCN',
         },
         {
           text: 'discord',
           img: require('@/assets/link/8.png'),
-          href: 'https://discord.com/invite/mhfdVHNx',
+          href: 'https://discord.gg/2DVfmvUBgH',
         }
       ],
       show: false,
@@ -201,7 +201,7 @@ export default {
         this.$router.push('/GAZ');
       } else if (v.route == '/Exchange') {
         this.$router.push('/home');
-      } else if (v.route == '/WhitePaper') {
+      } else if (v.route == '/Paper') {
         this.$router.push(v.route);
         this.currentRoute = v.route
       } else if (v.route == "/Activities") {
