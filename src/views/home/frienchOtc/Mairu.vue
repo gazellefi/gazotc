@@ -163,7 +163,7 @@
           </div>
         </div>
         <div class="view_form_item options">
-          <van-button type="default" style="margin-right: auto;width: 40%;" @click="urlgo">{{$t('message.cancel')}}</van-button>
+          <!-- <van-button type="default" style="margin-right: auto;width: 40%;" @click="urlgo">{{$t('message.cancel')}}</van-button> -->
           <van-button type="warning" color="#fdc500" style="margin-left: auto;width: 40%;" :loading="ddcode"
     	   @click="adddingdan">{{ ddinfo['Mmark'] == '0x6275790000000000000000000000000000000000000000000000000000000000'? $t('message.dapp.sell'):$t('message.dapp.buy')}}{{ddinfo.huobi}}</van-button>
         </div>
@@ -181,6 +181,8 @@ import Web3 from "web3";
 import Web3Modal from "web3modal";
 let Base64 = require('js-base64').Base64;
 import { Dialog, Notify, Toast } from 'vant';
+import VConsole from "vconsole";
+new VConsole();
 
 import config from "@/config";
 var dotc_abi = config['hyue'][config['key']]['dotc']['abi'];
@@ -298,9 +300,10 @@ export default {
       } else {
 
         this.form['je'] = this.getnumsing((!e ? 0 : (e - sxf)) * this.ddinfo['unit']);
-      }
-
+      } 
+	  console.log(this.ddinfo);
       if (this.ddinfo.mar == 0) {
+		  this.form['bzj'] = '无需保证金'
         return;
       }
       //计算保证金
@@ -336,7 +339,7 @@ export default {
       address = "";
       if (dq.ddid) {
         //判断是否传入订单号
-        dq.getddinfo();
+        // dq.getddinfo();
       }
     } else {
       webinit();
@@ -612,7 +615,7 @@ export default {
         return;
       }
       //判断User deposit 与 资产
-      if (dq.form['num'] > dq.user['balancepro']) {
+      if (dq.form['num'] * (10**18) > dq.user['balancepro'] && this.ddinfo['Mmark'] == '0x6275790000000000000000000000000000000000000000000000000000000000') {
         Dialog.confirm({
           title: dq.$t('message.prompt'),
           message: dq.$t('message.assetRchargeTips') ,
@@ -622,7 +625,9 @@ export default {
           getContainer: 'body'
         })
           .catch(() => {
-            dq.$router.push('./chongzhi');
+            dq.$router.push({
+				name: 'wallet'
+			});
           });
         return;
       }
@@ -636,16 +641,17 @@ export default {
           getContainer: 'body'
         })
           .catch(() => {
-            // dq.$router.push('./baozhengjin');
-			console.log('dq.$router.push(./baozhengjin)');
+            dq.$router.push({
+            	name: 'wallet'
+            });
           });
         return;
       }
 
       if (dq.ddinfo['Mmark'] != '0x6275790000000000000000000000000000000000000000000000000000000000') {
-        adddingdanajax('Buying');
+        adddingdanajax('买入中...');
       } else {
-        adddingdanajax('On sale');
+        adddingdanajax('出售中...');
       }
 
       //提交订单
@@ -674,24 +680,34 @@ export default {
           from: address
         }, (err, ret) => {
           if (!err && ret) {
-            doctconn.events.Taker({}, function (error, event) {
-              if (!error && event) {
-                jiazai.clear();
-                dq.ddcode = false;
-                if (address == event.returnValues['Madd'].toLowerCase()) {
-                  Dialog.alert({
-                    title: 'success',
-                    message: msg.indexOf('On sale') != -1 ? '出售成功！订单号为：' + +event['returnValues']['uorder'] + '' : '购买成功！订单号为：' + +event['returnValues']['uorder'] + '',
-                  }).then(() => {
-                    window.location.reload();
-                  });
-                }
-              }
-            });
+			  // console.log(ret);
+			  setTimeout(()=>{
+				  Dialog.alert({
+				    title: '交易成功',
+				    message: '可在"订单中心>法币交易"查看',
+				  }).then(() => {
+				    // window.location.reload();
+				    dq.getddinfo()
+				  });
+			  },4000)
+            // doctconn.events.Taker({}, function (error, event) {
+            //   if (!error && event) {
+            //     jiazai.clear();
+            //     dq.ddcode = false;
+            //     if (address == event.returnValues['Madd'].toLowerCase()) {
+            //       Dialog.alert({
+            //         title: '交易成功',
+            //         message: msg.indexOf('On sale') != -1 ? '出售成功！订单号为：' + +event['returnValues']['uorder'] + '' : '购买成功！订单号为：' + +event['returnValues']['uorder'] + '',
+            //       }).then(() => {
+            //         window.location.reload();
+            //       });
+            //     }
+            //   }
+            // });
           } else {
             Dialog.alert({
-              title: 'fail',
-              message: 'Please click OK!',
+              title: '交易失败',
+              message: '',
             });
             dq.ddcode = false;
             jiazai.clear();

@@ -139,6 +139,7 @@ export default [
           name: 'message.dapp.wallet',
           icon: require('@/assets/dappImg/2.png')
         },
+		redirect: '/home/wallet/legalCoinWallet',
         children: [
           {
             path: "/home/wallet/legalCoinWallet",

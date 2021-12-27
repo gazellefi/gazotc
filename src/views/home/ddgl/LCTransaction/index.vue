@@ -59,7 +59,11 @@
 			<!-- 资产类型 -->
       		<el-table-column align="center" prop="pro"  :label="$t('message.dapp.assetsType')"></el-table-column>
 			<!-- 订单类型 -->
-      		<el-table-column align="center" prop="type" :label="$t('message.dapp.orderType')"></el-table-column>
+      		<el-table-column align="center" :label="$t('message.dapp.orderType')">
+				<template slot-scope="scope">
+					<span>{{ scope.row.type =='forSale' ? $t("message.dapp.sell") : $t("message.dapp.buy") }}</span>
+				</template>
+			</el-table-column>
 			<!-- 数量 -->
       		<el-table-column align="center" :label="$t('message.dapp.amount')">
       			<template slot-scope="scope">
@@ -174,7 +178,7 @@
 	</myDialog>
     <!-- WAP -->
     <div class="hidden-sm-and-up ddgl_fabu_wapview">
-      <el-row style="border-bottom: 1px solid #EEEEEE;">
+      <!-- <el-row style="border-bottom: 1px solid #EEEEEE;">
       	<el-col :span="12">
       		<div class="ddgl_fabu_p_head_sxan_i">
       			<span>{{ $t("message.dapp.currency")}}：</span>
@@ -223,7 +227,7 @@
       			</el-dropdown>
       		</div>
       	</el-col>
-      </el-row>
+      </el-row> -->
 
       <!-- 列表 -->
       <el-row>
@@ -237,7 +241,8 @@
       		<div class="fc">
       			<div class="f c_b a_c">
       				<div class="f c_c">
-      					<span class="fwb">{{item.type}}</span>
+						<span class="fwb">{{ item.type =='forSale' ? $t("message.dapp.sell") : $t("message.dapp.buy") }}</span>
+      					<!-- <span class="fwb">{{$t(`message.${item.type}`)}}</span> -->
       					<span class="fwb">USDT</span>
       					<div class="f c_c marty_nav marl-5">
       						<span>{{$t('message.arbitration.merchantMargin')}}{{ item.mma }}USDT</span>
@@ -271,7 +276,7 @@
 					<!-- 私信 -->
 					<van-button plain type="info"  class="marr-10" color="#FDC500" size="small"  @click="pcxiugaidd(2,index)">{{$t('message.dapp.privateLetter')}}</van-button>
 					<!-- 详情 -->
-					<van-button plain type="info" color="#FDC500" size="small"  @click="openinfo(item,ddid)">{{$t('message.details')}}</van-button>
+					<van-button plain type="info" color="#FDC500" size="small"  @click="openinfo(item.ddid)">{{$t('message.details')}}</van-button>
 				</div>
       		</div>
       	</el-col>
@@ -403,6 +408,7 @@ export default {
   },
   methods: {
 	  openinfo(ddid) {
+		  console.log(ddid);
 	    this.$router.push({
 	      name: 'Ddinfow',
 	      query: {
@@ -448,12 +454,27 @@ export default {
                 }
               }
 			  let mid = this.lowerCase(result[2][index][0])
-              if (mid != Address) {
-				  ttype = this.$t('message.dapp.forSale')
-              } else {
-                 ttype = this.$t('message.dapp.buy')
-              }
-			  console.log(ttype);
+			  // 买   0x6275790000000000000000000000000000000000000000000000000000000000
+			  if(result[1][index][0] == '0x6275790000000000000000000000000000000000000000000000000000000000'){
+				  if (mid != Address) {
+				  	ttype = 'buy'
+				  } else {
+				     ttype = 'forSale'
+				  }
+			  }else{
+				  if (mid != Address) {
+				  	ttype = 'forSale'
+				  } else {
+				     ttype = 'buy'
+				  }
+			  }
+			  // 
+     //          if (mid != Address) {
+				 //  ttype = 'buy'
+     //          } else {
+     //             ttype = 'forSale'
+     //          }
+			  // console.log(ttype);
               var zcsf_msg = '';
               var bzj_msg = '...';
               if (result[0][index][5] == 0 && result[0][index][4] == 0) {
@@ -493,7 +514,7 @@ export default {
               };
               list.push(obj);
             }
-			console.log(list);
+			// console.log(list);
             dq.list = list;
             dq.list_b = list;
           }
