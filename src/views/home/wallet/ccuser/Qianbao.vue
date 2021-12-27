@@ -7,7 +7,7 @@
 						<img src="@/assets/img/money1.png" style="width: 20px;" class="marr-10">
 						<div> {{ $t("message.dapp.capitalAsset")}}</div>
 					</div>
-					<div class="num">{{ user_zc.toFixed(2) }}</div>
+					<!-- <div class="num">{{ user_zc.toFixed(2) }}</div> -->
 				</div>
 			</el-col>
 			<el-col :sm="24" :md="10" class="f c_r a_c">
@@ -29,7 +29,7 @@
 						<img src="@/assets/img/money1.png" style="width: 20px;" class="marr-10">
 						<div> {{ $t("message.dapp.capitalAsset")}}</div>
 					</div>
-					<div class="num">{{ user_zc.toFixed(2) }}</div>
+					<!-- <div class="num">{{ user_zc.toFixed(2) }}</div> -->
 				</div>
 			</el-col>
 			<el-col :sm="24" :md="10" class="f a_c">
@@ -81,12 +81,12 @@
 		</el-row>
 		<myDialog width="320px" :isShowFooter="false" :title="$t('message.Recharge')" :closeModal="false" :closePress="false"
 			:visible.sync="isShowChongzhi">
-			<Chongzhi :type="type_c" @Recharge="Recharge"></Chongzhi>
+			<Chongzhi :type="type_c" :flag="isShowChongzhi" @Recharge="Recharge"></Chongzhi>
 		</myDialog>
 
 		<myDialog width="320px" :isShowFooter="false" :title="$t('message.WithdrawMoney')" :closeModal="false" :closePress="false"
 			:visible.sync="isShowTixan">
-			<Tixian :type="type_t" @drawal="drawal"></Tixian>
+			<Tixian :type="type_t" :flag="isShowTixan" @drawal="drawal"></Tixian>
 		</myDialog>
 	</div>
 </template>

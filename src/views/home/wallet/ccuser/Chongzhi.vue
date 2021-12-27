@@ -60,10 +60,10 @@ export default {
 	  balance: ''
     }
   },
-  props:['type'],
+  props:['type','flag'],
   created() {
   	this.form.region = this.type
-	this.je = 0
+	this.je = ''
 	if(this.type){
 		this.changeSelect(this.type)
 	}
@@ -71,10 +71,16 @@ export default {
   watch:{
 	  type(){
 	  	this.form.region = this.type
-		this.je = 0
+		this.je = ''
 	  	if(this.type){
 	  		this.changeSelect(this.type)
 	  	}
+	  },
+	  flag(){
+		 this.je = ''
+		 if(this.flag){
+			 this.changeSelect(this.type)
+		 }
 	  }
   },
   mounted() {

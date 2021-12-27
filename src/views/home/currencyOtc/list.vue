@@ -110,7 +110,7 @@
 
 
 		<!-- 弹出购买框 -->
-		<el-dialog :title='$t("message.dapp.buy")' :visible.sync="mairucode" width=350px>
+		<el-dialog :title='$t("message.dapp.buy")' :visible.sync="mairucode" width="320px" @close="mr_form.num =''">
 			<el-form :model="mr_form" label-width="80px">
 				<el-form-item :label="$t('message.arbitration.order')">
 					<el-input v-model="mr_form.ddinfo['iorder']" disabled></el-input>

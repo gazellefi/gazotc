@@ -55,7 +55,7 @@
 				</el-table-column>
 				<el-table-column align="center" :label="$t('message.operation')">
 					<template slot-scope="scope">
-						<el-button type="text" @click="setdd(scope.row)">修改</el-button>
+						<el-button type="text" @click="setdd(scope.row)">{{$t('message.modify') }}</el-button>
 					</template>
 				</el-table-column>
 				<div slot="empty">
@@ -121,17 +121,17 @@
 							<span class="cba">{{ item.uni }} {{ item.swap }}</span>
 						</div>
 						<div class="mart-10">
-							<span class="marr-10">总数</span>
+							<span class="marr-10">{{$t('message.amount')}}</span>
 							<span class="fz14">{{ item.moa }} {{ item.pro }}</span>
 						</div>
 						<div class="mart-10">
-							<span class="marr-10">最低数</span>
+							<span class="marr-10">{{$t('message.dapp.minAmount')}}</span>
 							<span class="fz14">{{ item.zer }} {{ item.pro }}</span>
 						</div>
 					</div>
 					<div class="fc c_r">
 						
-						<van-button plain type="info"  color="#FDC500" size="small" @click="setdd(item)">修改</van-button>
+						<van-button plain type="info"  color="#FDC500" size="small" @click="setdd(item)">{{$t('message.modify') }}</van-button>
 					</div>
 				</el-col>
 			</el-row>
