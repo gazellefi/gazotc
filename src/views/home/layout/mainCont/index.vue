@@ -1,7 +1,7 @@
 <template>
   <div class='mainCont'>
     <navBar></navBar>
-    <bread></bread>
+    <bread class="hidden-sm-and-down"></bread>
     <mainItem></mainItem>
   </div>
 </template>

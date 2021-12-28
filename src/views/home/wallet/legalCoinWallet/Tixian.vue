@@ -41,7 +41,7 @@ var ethereum = window.ethereum;
 			return {
 				huobi: hbarr,
 				hbindex: 0,
-				je: '',
+				je: 0,
 				form: {
 					region: ''
 				}
@@ -50,7 +50,7 @@ var ethereum = window.ethereum;
 		props: ['type'],
 		created() {
 			this.form.region = this.type
-			this.je = ''
+			this.je = 0
 			if(this.type){
 				this.changeSelect(this.type)
 			}
@@ -58,17 +58,11 @@ var ethereum = window.ethereum;
 		watch: {
 			type(){
 				this.form.region = this.type
-				this.je = ''
+				this.je = 0
 				if(this.type){
 					this.changeSelect(this.type)
 				}
-			},
-			  flag(){
-				 this.je = ''
-				 if(this.flag){
-					this.changeSelect(this.type)
-				 }
-			  }
+			}
 		},
 		mounted() {
 			//监测用户是否安装MASK
@@ -124,10 +118,10 @@ var ethereum = window.ethereum;
 				for (let i = 0; i < this.huobi.length; i++) {
 					if (this.huobi[i].id == e) {
 						this.hbindex = i
-						setTimeout(()=>{
-							this.gethuobizichan();
-						},300)
 					}
+					setTimeout(()=>{
+						this.gethuobizichan();
+					},500)
 				}
 			},
 			//如果过亿请转换
@@ -201,15 +195,16 @@ var ethereum = window.ethereum;
 			        config['hyue'][config['key']]['dotc']['abi'],
 			        config['hyue'][config['key']]['dotc']['heyue']
 			    );
-				console.log('aa');
 			    czconn.methods.balancepro(address,this.huobi[this.hbindex]['heyue']).call((err,ret)=>{
 			            if (ret) {
 			            this.huobi[this.hbindex]['je'] = ret;
+			             console.log(ret)
+			             console.log(213)
 			            }
 			        });    
 			},
 			tixianajax(){
-			    Toast.loading({message: '提币中...'});
+			    Toast.loading({message: '提款中...'});
 			    var dq_je = this.huobi[this.hbindex]['je'];
 			    var dq = this;
 			    var czconn = new web3.eth.Contract(
@@ -254,6 +249,7 @@ var ethereum = window.ethereum;
 			                    dq.gethuobizichan();
 								dq.je = 0
 								dq.$emit('drawal')
+			                    dq.je = 0;
 			                }else{
 			                    setTimeout(() => {
 			                        tikchaxun();

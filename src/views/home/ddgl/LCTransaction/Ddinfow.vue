@@ -40,7 +40,7 @@
 	  // opacity: 0.8;
 	  position: absolute;
 	  color: #999;
-	  bottom: -22px;
+	  bottom: -20px;
 	  
 	}
 	.btnStyle{
@@ -179,7 +179,7 @@
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('qx_ddajax')" :disabled="anarr('qx_ddajax')">{{$t('message.cancel')}}</van-button>
 						</el-col>
 						<!-- <el-col :sm="8" :lg="24"><van-button plain type="primary" @click="setddcode('fk_ddajax')" :disabled="anarr('qx_ddajax')">已付款</van-button></el-col> -->
-						<el-col :sm="24" :lg="8" class="fc c_c a_c pr">
+						<el-col :sm="24" :lg="8" class="fc c_c a_c">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('zt_ddajax',2)" :disabled="anarr('zt_ddajax')">{{$t('message.suspendBalad')}}</van-button>
 							<div class="msg">
 							  <span v-if="ddifo.pau == 1">{{$t('message.UserPause')}}</span>
@@ -187,8 +187,8 @@
 							</div>
 						</el-col>
 						<!-- <el-col :sm="8" :lg="24"><van-button plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">提前释放</van-button></el-col> -->
-						<el-col :sm="24" :lg="8" class="fc c_c a_c pr">
-							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">{{$t('message.unilateralAgrees')}}</van-button>
+						<el-col :sm="24" :lg="8" class="fc c_c a_c">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">{{$t('message.UserAgreesRelease')}}</van-button>
 							<div class="msg">
 							  <span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
 							  <span v-if="ddifo.agree == 2">{{$t('message.MerchantAgreesRelease')}}</span>
@@ -206,17 +206,17 @@
 				<el-col :span="24" v-if=" ddifo['myuser'] == ddifo['Uadd'] && ddifo['Umark_b'] == 'sell'">
 					<el-row style="padding-bottom: 20px;">
 						<el-col :sm="24" :lg="8" class="f c_c">
-							<van-button class="btnStyle" plain type="pr	imary" @click="setddcode('fb_ddajax')" :disabled="anarr('fb_ddajax')">{{$t('message.putMoney')}}</van-button>
+							<van-button class="btnStyle" plain type="pr	imary" @click="setddcode('fb_ddajax')" :dis<strong></strong>abled="anarr('fb_ddajax')">{{$t('message.putMoney')}}</van-button>
 						</el-col>
-						<el-col :sm="24" :lg="8" class="fc c_c a_c pr">
+						<el-col :sm="24" :lg="8" class="fc c_c a_c">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('zt_ddajax',2)" :disabled="anarr('zt_ddajax')">{{$t('message.pushMarginRelease')}}</van-button>
 							<div class="msg">
 							  <span v-if="ddifo.pau == 1">{{$t('message.UserPause')}}</span>
 							  <span v-if="ddifo.pau == 2">{{$t('message.MerchantSuspension')}}</span>
 							</div>
 						</el-col>
-						<el-col :sm="24" :lg="8" class="fc c_c a_c pr">
-							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Uadd',1)">{{$t('message.unilateralAgrees')}}</van-button>
+						<el-col :sm="24" :lg="8" class="fc c_c a_c">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Uadd',1)">{{$t('message.MerchantAgreesRelease')}}</van-button>
 							<div class="msg">
 							  <span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
 							  <span v-if="ddifo.agree == 2">{{$t('message.MerchantAgreesRelease')}}</span>
@@ -236,15 +236,15 @@
 						<el-col :sm="24" :lg="8" class="f c_c">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('fb_ddajax')" :disabled="anarr('fb_ddajax')">{{$t('message.putMoney')}}</van-button>
 						</el-col>
-						<el-col :sm="24" :lg="8" class="fc c_c a_c pr">
+						<el-col :sm="24" :lg="8" class="fc c_c a_c">
 							 <van-button class="btnStyle" plain type="primary" @click="setddcode('zt_ddajax',1)" :disabled="anarr('zt_ddajax')">{{$t('message.suspendBalad')}}</van-button>
 							 <div class="msg">
 							   <span v-if="ddifo.pau == 1">{{$t('message.UserPause')}}</span>
 							   <span v-if="ddifo.pau == 2">{{$t('message.MerchantSuspension')}}</span>
 							 </div>
 						</el-col>
-						<el-col :sm="24" :lg="8" class="f c_c a_c pr">
-							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">{{$t('message.unilateralAgrees')}}</van-button>
+						<el-col :sm="24" :lg="8" class="f c_c a_c">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd')">{{$t('message.MerchantAgreesRelease')}}</van-button>
 							<div class="msg">
 							  <span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
 							  <span v-if="ddifo.agree == 2">{{$t('message.MerchantAgreesRelease')}}</span>
@@ -265,15 +265,15 @@
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('qx_ddajax')" :disabled="anarr('qx_ddajax')">{{$t('message.cancel')}}</van-button>
 						</el-col>
 						<!-- <el-col :sm="24" :lg="8"><van-button plain type="primary" @click="setddcode('fk_ddajax')" :disabled="anarr('qx_ddajax')">已付款</van-button></el-col> -->
-						<el-col class="fc c_c a_c pr" :sm="24" :lg="8">
+						<el-col class="fc c_c a_c" :sm="24" :lg="8">
 							<van-button class="btnStyle" plain type="primary" @click="setddcode('zt_ddajax',1)" :disabled="anarr('zt_ddajax')">{{$t('message.pushMarginRelease')}}</van-button>
 							<div class="msg">
 							  <span v-if="ddifo.pau == 1">{{$t('message.UserPause')}}</span>
 							  <span v-if="ddifo.pau == 2">{{$t('message.MerchantSuspension')}}</span>
 							</div>
 						</el-col>
-						<el-col class="fc c_c a_c pr" :sm="24" :lg="8">
-							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd',2)">{{$t('message.unilateralAgrees')}}</van-button>
+						<el-col class="fc c_c a_c" :sm="24" :lg="8">
+							<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')" :disabled="anarr('tq_ddajax','Madd',2)">{{$t('message.UserAgreesRelease')}}</van-button>
 							<div class="msg">
 							  <span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
 							  <span v-if="ddifo.agree == 2">{{$t('message.MerchantAgreesRelease')}}</span>
@@ -320,8 +320,6 @@
 </template>
 <script>
 	import ddinfomodel from "./ddinfo.json";
-	// import VConsole from "vconsole";
-	// new VConsole();
 	import {
 		Toast
 	} from 'vant';
@@ -388,7 +386,6 @@
 			if (ddid) {
 				this.ddidcode = false;
 				this.ddid = ddid;
-				console.log(this.ddid);
 			} else {
 				this.ddidcode = true;
 			}
@@ -549,21 +546,8 @@
 						// dq.ddifo['Umark_b'] =  ret['Umark'] == '0x6275790000000000000000000000000000000000000000000000000000000000' ? 'buy':'sell';
 						
 						let udd = dq.lowerCase(ret['Uadd'])
-						if(ret['Umark'] == '0x6275790000000000000000000000000000000000000000000000000000000000'){
-						  if (udd != dq.dquser) {
-							dq.ddifo['Umark_b'] = 'buy'
-						  } else {
-							 dq.ddifo['Umark_b'] = 'sell'
-						  }
-						}else{
-						  if (udd != dq.dquser) {
-							dq.ddifo['Umark_b'] = 'sell'
-						  } else {
-							 dq.ddifo['Umark_b'] = 'buy'
-						  }
-						}
-						console.log(dq.ddifo['Umark_b']);
-						// dq.ddifo['Umark_b'] = udd != dq.dquser ? 'sell' : 'buy'
+						console.log(ret['pro'])
+						dq.ddifo['Umark_b'] = udd != dq.dquser ? 'sell' : 'buy'
 						for (let index = 0; index < huobijson['huobi'].length; index++) {
 							
 						  if (huobijson['huobi'][index]['key'] == ret['pro']) {
@@ -571,7 +555,7 @@
 						    dq.ddifo['pro_c'] = huobijson['huobi'][index]['id'];
 						  }
 						}
-						// dq.ddifo['pro_c'] = ret['pro'] == '0x7573647500000000000000000000000000000000000000000000000000000000' ? 'usdt' : 'Test';
+						// dq.ddifo['pro_c'] = ret['pro'] == '0x7573647400000000000000000000000000000000000000000000000000000000' ? 'usdt' : 'Test';
 						for (let index = 0; index < huobijson['huobi'].length; index++) {
 							var num = 0;
 							if (huobijson['huobi'][index]['key'] == ret['pro']) {
@@ -640,7 +624,7 @@
 				}
 				if (type == 'fk_ddajax') {
 					if (dq.ddifo['timb']) {
-						alert('此订单已释放');
+						alert('This order cannot be paid');
 						return;
 					}
 					fk_ddajax();
@@ -663,23 +647,12 @@
 				}
 
 				function qx_ddajax() {
-					Toast.loading({
-					  message: '请稍后...'
-					});
 					dotsconn.methods.releAss(dq.ddid + "").send({
 						from: address
 					}, (err, ret) => {
 						if (ret) {
-							setTimeout(()=>{
-								Toast.clear();
-								Dialog.alert({
-								  title: '操作成功',
-								  message: '订单已取消，请稍后查看',
-								}).then(() => {
-									dq.getddinfo(dq.ddid);
-								});
-							},5000)
-							
+							Toast.clear();
+							Toast.success('订单已取消，请稍后查看');
 						} else {
 							Toast.clear();
 							Toast.fail('请同意授权！');
@@ -767,22 +740,12 @@
 
 					//操作
 					function user_pan() {
-						Toast.loading({
-						  message: '请稍后...'
-						});
 						dotsconn.methods.pauseMar(dq.ddid).send({
 							from: address
 						}, (err, ret) => {
 							if (ret) {
-								setTimeout(()=>{
-									Toast.clear();
-									Dialog.alert({
-									  title: '操作成功',
-									  message: '订单已暂停，请稍后查看',
-									}).then(() => {
-										dq.getddinfo(dq.ddid);
-									});
-								},5000)
+								Toast.clear();
+								Toast.success('订单已暂停，请稍后查看');
 							} else {
 								Toast.clear();
 								Toast.fail('请同意授权！');
@@ -791,22 +754,12 @@
 					}
 
 					function mar_add() {
-						Toast.loading({
-						  message: '请稍后...'
-						});
 						dotsconn.methods.addMar(dq.ddid, dq.getFNum(uarm)).send({
 							from: address
 						}, (err, ret) => {
 							if (ret) {
-								setTimeout(()=>{
-									Toast.clear();
-									Dialog.alert({
-									  title: '操作成功',
-									  message: '押金已经增加，请稍后再查',
-									}).then(() => {
-										dq.getddinfo(dq.ddid);
-									});
-								},5000)
+								Toast.clear();
+								Toast.success('押金已经增加，请稍后再查');
 							} else {
 								Toast.clear();
 								Toast.fail('请同意授权！');
@@ -816,23 +769,12 @@
 				}
 
 				function tq_ddajax() {
-					Toast.loading({
-					  message: '请稍后...'
-					});
 					dotsconn.methods.aheadMar(dq.ddid).send({
 						from: address
 					}, (err, ret) => {
 						if (ret) {
-							setTimeout(()=>{
-								Toast.clear();
-								Dialog.alert({
-								  title: '操作成功',
-								  message: '同意保证金释放，请稍后查看',
-								}).then(() => {
-									dq.getddinfo(dq.ddid);
-								});
-							},5000)
-							
+							Toast.clear();
+							Toast.success('同意保证金发放，请稍后查看');
 						} else {
 							Toast.clear();
 							Toast.fail('请同意授权！');
@@ -841,23 +783,12 @@
 				}
 
 				function sf_ddajax() {
-					Toast.loading({
-					  message: '请稍后...'
-					});
 					dotsconn.methods.releMar(dq.ddid).send({
 						from: address
 					}, (err, ret) => {
 						if (ret) {
-							setTimeout(()=>{
-								Toast.clear();
-								Dialog.alert({
-								  title: '操作成功',
-								  message: '保证金已经释放,请稍后再查',
-								}).then(() => {
-									dq.getddinfo(dq.ddid);
-								});
-							},5000)
-							
+							Toast.clear();
+							Toast.success('押金已经释放了。请稍后再查');
 						} else {
 							Toast.clear();
 							Toast.fail('请同意授权！');
@@ -866,23 +797,12 @@
 				}
 
 				function fb_ddajax() {
-					Toast.loading({
-					  message: '请稍后...'
-					});
 					dotsconn.methods.releAss(dq.ddid + "").send({
 						from: address
 					}, (err, ret) => {
 						if (ret) {
-							setTimeout(()=>{
-								Toast.clear();
-								Dialog.alert({
-								  title: '操作成功',
-								  message: '资产已被释放。请稍后再查',
-								}).then(() => {
-									dq.getddinfo(dq.ddid);
-								});
-							},5000)
-							
+							Toast.clear();
+							Toast.success('资产已被释放。请稍后再查');
 						} else {
 							Toast.clear();
 							Toast.fail('请同意授权！');

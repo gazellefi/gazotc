@@ -51,10 +51,10 @@
 				}
 			}
 		},
-		props: ['type','flag'],
+		props: ['type'],
 		created() {
 			this.form.region = this.type
-			this.je = ''
+			this.je = 0
 			if(this.type){
 				this.changeSelect(this.type)
 			}
@@ -62,17 +62,11 @@
 		watch: {
 			type(){
 				this.form.region = this.type
-				this.je = ''
+				this.je = 0
 				if(this.type){
 					this.changeSelect(this.type)
 				}
-			},
-			  flag(){
-				 this.je = ''
-				 if(this.flag){
-				 	this.changeSelect(this.type)
-				 }
-			  }
+			}
 		},
 		mounted() {
 			if (this.$route.query.title) {

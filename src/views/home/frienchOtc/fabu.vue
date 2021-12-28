@@ -650,15 +650,14 @@ export default {
               forbidClick: true,
               loadingType: 'spinner',
             });
-            setTimeout(() => {              
-				Toast.clear();
-                Dialog.alert({
-                title: '发布成功',
-                message: '可以在我的订单页面修改',
-              }).then(() => {
-                // this.$router.push('./ddguanli');
-              });
-            }, 5000);
+            // setTimeout(() => {              Toast.clear();
+            //   Dialog.alert({
+            //     title: 'Published successfully',
+            //     message: 'Can be viewed or modified in my order',
+            //   }).then(() => {
+            //     this.$router.push('./ddguanli');
+            //   });
+            // }, 5000);
           }
         });
       }
