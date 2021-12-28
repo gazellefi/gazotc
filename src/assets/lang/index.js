@@ -262,8 +262,6 @@ export default {
 				TwoarbitrationState: 'Second round arbitration status',
 				nick:'Nickname',
 				setArbitration:'Enter Nickename',
-
-
 				myPartTitle: 'The first round of arbitration I participated in',
 				myPartOrderTitle: 'I participated in the order',
 				myPartOrderSuccssTitle: 'I successfully arbitrated the order',
@@ -391,7 +389,6 @@ export default {
 				received: 'Received',
 				getCurrency: 'The legal currency you will pay or receive',
 				mortgageDes: 'The deposit you will mortgage',
-
 				Merchant: 'Merchant',
 				blandAsk: 'Require',
 

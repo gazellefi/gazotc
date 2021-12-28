@@ -26,6 +26,18 @@ export default [
         component: () =>
           import('@/views/index/Homepage'),
       },
+	  {
+	    path: '/about',
+	    name: 'about',
+	    component: () =>
+	      import('@/views/index/about'),
+	  },
+	  {
+	    path: '/rule',
+	    name: 'rule',
+	    component: () =>
+	      import('@/views/index/rule'),
+	  },
       {
         path: '/Coremechanism',
         name: 'Coremechanism',

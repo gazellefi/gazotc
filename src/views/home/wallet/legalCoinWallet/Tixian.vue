@@ -23,7 +23,7 @@
 	</div>
 </template>
 <script>
-import { Toast  } from 'vant';
+import { Toast,Dialog  } from 'vant';
 
 import Web3 from "web3";
 import Web3Modal from "web3modal";
@@ -237,6 +237,7 @@ var ethereum = window.ethereum;
 			        Toast.clear();
 			        Toast.fail('提款金额不能超过提款额度');
 			    }
+				var mm = 0
 			
 			    //轮询查询是否提款成功
 			    function tikchaxun() {
@@ -251,6 +252,18 @@ var ethereum = window.ethereum;
 								dq.$emit('drawal')
 			                    dq.je = 0;
 			                }else{
+								mm++
+								if(mm > 3){
+									Toast.clear();
+									clearTimeout()
+									Dialog.alert({
+									    title: '提款成功',
+									}).then(() => {
+										dq.gethuobizichan();
+										dq.je = 0
+										dq.$emit('drawal')
+									});
+								}
 			                    setTimeout(() => {
 			                        tikchaxun();
 			                    }, 3000);

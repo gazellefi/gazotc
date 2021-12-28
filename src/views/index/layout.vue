@@ -30,51 +30,12 @@
         <div class="item" v-for="v in 3"></div>
       </div>
       <lang class="lang"></lang>
-      <el-carousel :autoplay="false"  arrow="nerver"  indicator-position="none" height="100%">
+      <!-- <el-carousel :autoplay="false"  arrow="nerver"  indicator-position="none" height="100%">
         <el-carousel-item style="position:relative">
           <img src="../../assets/img/giphy.gif" alt="">
-          <!-- <div class="info content">
-            <div class="Gazotc">Gazotc</div>
-            <div class="otc">Leader of decentralized OTC</div>
-            <div class="trackInitiative">
-              <div class="track">Defi new track</div>
-              <div class="Initiative">Global Initiative</div>
-            </div>
-          </div> -->
         </el-carousel-item>
-        <!-- <el-carousel-item>
-          <img src="@/assets/index/nav2.png" alt="">
-          <div class="info content">
-            <div class="top"><span>gazelle</span> = gain + zelle</div>
-            <div class="mid">Zelle-American Express Transfer Network <br /> Gazelle implies financial attributes</div>
-            <div class="bot">
-              Antelope is a very agile animal. It is not big, runs fast and jumps high, which means that the project can grow rapidly
-              Compared with unicorn of uniswap, gazelle enterprise is a high growth enterprise, which can easily surpass more than one, ten, 100 and 1000 times (Baidu Encyclopedia's definition of gazelle enterprise).
-            </div>
-          </div>
-        </el-carousel-item> -->
-      </el-carousel>
+      </el-carousel> -->
     </div>
-    <!-- <div class="topNav">
-      <el-carousel height="470px">
-        <el-carousel-item>
-          <div class="Gazotc">Gazotc</div>
-          <div class="otc">Leader of decentralized OTC</div>
-          <div class="trackInitiative">
-            <div class="track">Defi new track</div>
-            <div class="Initiative">Global Initiative</div>
-          </div>
-        </el-carousel-item>
-        <el-carousel-item>
-          <div class="Gazotc">Gazotc</div>
-          <div class="otc">Leader of decentralized OTC</div>
-          <div class="trackInitiative">
-            <div class="track">Defi new track</div>
-            <div class="Initiative">Global Initiative</div>
-          </div>
-        </el-carousel-item>
-      </el-carousel>
-    </div> -->
     <router-view></router-view>
     <!-- contactUs -->
     <div class="contactUs">
@@ -169,9 +130,9 @@ export default {
         // { title: 'DAPP', route: '/Exchange' },
         // { title: 'Public sale', route: '/Activities' },
 		{ title: 'Home', route: '/Homepage' },
-		{ title: 'About', route: '/Homepage' },
+		{ title: 'About', route: '/about' },
 		{ title: 'Document', route: '/Homepage' },
-		{ title: 'Rule', route: '/Homepage' },
+		{ title: 'Rule', route: '/rule' },
 		{ title: 'News', route: '/Homepage' },
 		{ title: 'Dapp', route: '/Exchange' },
 		{ title: 'Paper', route: '/GazOTC.pdf' },
@@ -227,6 +188,11 @@ export default {
 };
 </script>
 <style lang='less' scoped='scoped'>
+	div{
+		/deep/ .el-carousel__arrow{
+			display: none;
+		}
+	}
 	.mask{
 		background: #fff;
 		width: 100%;
@@ -305,7 +271,7 @@ export default {
       height: 100%;
 	  margin-top: 4.1875rem;
     }
-    height: 460px;
+    /* height: 460px; */
     text-align: center;
     .info {
       position: absolute;

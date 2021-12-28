@@ -1,265 +1,157 @@
 
 <template>
-  <el-row type="flex" justify="center">
-    <el-col :sm="24" :md="12" :lg="8">
-      <div class="fabu">
-        <div class="fabu_tab">
-          <div
-            class="fabu_tab_item"
-            style="margin-left: 0px"
-            @click="
-              m =
-                '0x6275790000000000000000000000000000000000000000000000000000000000'
-            "
-            :class="
-              m ==
-              '0x6275790000000000000000000000000000000000000000000000000000000000'
-                ? 'ac'
-                : ''
-            "
-          >
-            {{ $t("message.dapp.buy") }}
-          </div>
-          <div
-            class="fabu_tab_item"
-            @click="
-              m =
-                '0x73616c6500000000000000000000000000000000000000000000000000000000'
-            "
-            :class="
-              m ==
-              '0x73616c6500000000000000000000000000000000000000000000000000000000'
-                ? 'ac'
-                : ''
-            "
-          >
-            {{ $t("message.dapp.sell") }}
-          </div>
-        </div>
-        <!-- 表单 -->
-        <div class="add111">
-          <div class="add_form">
-            <div class="add_form_item_xuanze c_b">
-              <div class="add_form_item xz" style="margin-left: 0">
-                <div class="add_form_item_input">
-                  <el-select
-                    v-model="pro"
-                    placeholder="Please select"
-                    :disabled="user['user'] ? false : true"
-                  >
-                    <el-option
-                      v-for="item in data['huobi']"
-                      :key="item.id"
-                      :label="item.id"
-                      :value="item.id"
-                    >
-                    </el-option>
-                  </el-select>
-                </div>
-              </div>
-              <div class="add_form_item xz">
-                <div class="add_form_item_input">
-                  <el-select
-                    v-model="fi"
-                    placeholder="Please select"
-                    :disabled="user['user'] ? false : true"
-                  >
-                    <el-option
-                      v-for="item in data['fabi']"
-                      :key="item.id"
-                      :label="item.id"
-                      :value="item.id"
-                    >
-                    </el-option>
-                  </el-select>
-                </div>
-              </div>
-            </div>
-            <div class="add_form_item">
-              <div class="add_form_item_t">
-                {{ $t("message.dapp.unitPrice") }}
-              </div>
-              <div class="add_form_item_input">
-                <el-input
-                  class="input_nav"
-                  :placeholder="$t('message.enterUnitPrice')"
-                  v-model="form.dj"
-                  @blur="jsbzj"
-                  :disabled="user['user'] ? false : true"
-                >
-                  <template slot="append">
-                    <div style="width: 40px; text-align: center">
-                      {{ fi }}
-                    </div>
-                  </template>
-                </el-input>
-              </div>
-              <div class="add_form_item_input errormsg" v-if="isform.dj">
-                {{ $t("message.contEmpty") }}
-              </div>
-            </div>
-            <div class="add_form_item">
-              <div class="add_form_item_t">{{ $t("message.dapp.amount") }}</div>
-              <div class="add_form_item_input">
-                <el-input
-                  :placeholder="$t('message.enterAmount')"
-                  v-model="form.num"
-                  @blur="jsbzj"
-                  :disabled="user['user'] ? false : true"
-                >
-                  <template slot="append">
-                    <div style="width: 40px; text-align: center">
-                      {{ pro }}
-                    </div>
-                  </template>
-                </el-input>
-              </div>
-              <div
-                class="add_form_item_input errormsg"
-                v-if="isform.zcye && user['num'] > 0"
-              >
-                {{ $t("message.exceedTips") }}（{{ user["num"] }}）,
-                {{ $t("message.rechargeTips1") }}
-              </div>
-              <div
-                class="add_form_item_input errormsg"
-                v-if="isform.zcye && user['num'] <= 0"
-              >
-                {{ $t("message.rechargeTips") }}
-              </div>
-              <div class="add_form_item_input errormsg" v-if="isform.num">
-                {{ $t("message.contEmpty") }}
-              </div>
-            </div>
-            <div class="add_form_item">
-              <div class="add_form_item_t">
-                {{ $t("message.arbitration.merchantMargin") }}
-              </div>
-              <div class="add_form_item_input">
-                <el-input
-                  placeholder=""
-                  v-model="form.sjbzj"
-                  disabled
-                ></el-input>
-              </div>
-              <div
-                class="add_form_item_input errormsg"
-                v-if="isform.sjbzj"
-                style="color: #0d92f1"
-              >
-                {{ $t("message.enterBalanTips") }}
-              </div>
-            </div>
-            <div class="add_form_item">
-              <div class="add_form_item_t">
-                {{ $t("message.dapp.minAmount") }}
-              </div>
-              <div class="add_form_item_input">
-                <el-input
-                  :placeholder="$t('message.enterMinNum')"
-                  v-model="form.zd_num"
-                  :disabled="user['user'] ? false : true"
-                >
-                  <template slot="append">
-                    <div style="width: 40px; text-align: center">
-                      {{ pro }}
-                    </div>
-                  </template>
-                </el-input>
-              </div>
-              <div class="add_form_item_input errormsg" v-if="isform.zd_num">
-                {{ $t("message.MinNumEmpty") }}
-              </div>
-            </div>
-            <div class="add_form_item">
-              <div class="add_form_item_t">
-                {{ $t("message.dapp.maxAmount") }}
-              </div>
-              <div class="add_form_item_input">
-                <el-input
-                  :placeholder="$t('message.enterMaxNum')"
-                  v-model="form.zg_num"
-                  :disabled="user['user'] ? false : true"
-                >
-                  <template slot="append">
-                    <div style="width: 40px; text-align: center">
-                      {{ pro }}
-                    </div>
-                  </template>
-                </el-input>
-              </div>
-              <div class="add_form_item_input errormsg" v-if="isform.zg_num">
-                {{ $t("message.MaxNumEmpty") }}
-              </div>
-            </div>
-            <div class="add_form_item">
-              <div class="add_form_item_t">
-                {{ $t("message.arbitration.userMargin") }}
-              </div>
-              <div class="add_form_item_input">
-                <el-input
-                  :placeholder="$t('message.enterMargin')"
-                  v-model="form.user_bzj"
-                  :disabled="user['user'] ? false : true"
-                >
-                  <template slot="append">
-                    <div style="width: 40px; text-align: center">%</div>
-                  </template>
-                </el-input>
-              </div>
-            </div>
-            <div class="add_form_item">
-              <div class="add_form_item_t">{{ $t("message.remarks") }}</div>
-              <div class="add_form_item_input">
-                <el-input
-                  type="textarea"
-                  :placeholder="
-                    form.beizhu ? form.beizhu : $t('message.notFill')
-                  "
-                  maxlength="30"
-                  :disabled="maskDis"
-                  v-model="form.beizhu"
-                  show-word-limit
-                >
-                </el-input>
-              </div>
-              <p
-                class="add_form_item_input_p"
-                @click="maskDis = false"
-                v-if="maskDis"
-              >
-                <span class="cursor">{{ $t("message.editremarks") }}</span>
-              </p>
-              <p class="add_form_item_input_p" v-else>
-                <span class="cursor" @click="setNote">{{
-                  $t("message.complete")
-                }}</span>
-                <span class="marl-10 cursor" @click="maskDis = true">{{
-                  $t("message.return")
-                }}</span>
-              </p>
-            </div>
-            <el-button
-              type="primary"
-              style="margin-top: 30px; background: #fdc500; border: 0"
-              @click="tijiao"
-              :disabled="isform.zcye ? true : false"
-              >{{ $t("message.sumbmit") }}</el-button
-            >
-            <br />
-          </div>
-        </div>
-      </div>
-    </el-col>
+  <el-row type="flex"  justify="center">
+	  <el-col :sm="24" :md="12" :lg="8">
+		<div class="fabu">
+		  <div class="fabu_tab">
+		    <div class="fabu_tab_item" style="margin-left: 0px;" @click="m = '0x6275790000000000000000000000000000000000000000000000000000000000'" :class="m == '0x6275790000000000000000000000000000000000000000000000000000000000' ? 'ac':''">{{$t('message.dapp.buy')}}</div>
+		    <div class="fabu_tab_item" @click="m = '0x73616c6500000000000000000000000000000000000000000000000000000000'" :class="m == '0x73616c6500000000000000000000000000000000000000000000000000000000' ? 'ac':''">{{$t('message.dapp.sell')}}</div>
+		  </div>
+		  <!-- 表单 -->
+		  <div class="add111">
+		    <div class="add_form">
+		      <div class="add_form_item_xuanze c_b">
+		        <div class="add_form_item xz" style="margin-left: 0;">
+		          <div class="add_form_item_input">
+		            <el-select v-model="pro" placeholder="Please select" :disabled="user['user'] ? false:true">
+		              <el-option v-for="item in data['huobi']" :key="item.id" :label="item.id" :value="item.id">
+		              </el-option>
+		            </el-select>
+		          </div>
+		        </div>
+		        <div class="add_form_item xz">
+		          <div class="add_form_item_input">
+		            <el-select v-model="fi" placeholder="Please select" :disabled="user['user'] ? false:true">
+		              <el-option v-for="item in data['fabi']" :key="item.id" :label="item.id" :value="item.id">
+		              </el-option>
+		            </el-select>
+		          </div>
+		        </div>
+		      </div>
+		      <div class="add_form_item">
+		        <div class="add_form_item_t">{{$t('message.dapp.unitPrice')}}</div>
+		        <div class="add_form_item_input">
+		          <el-input class="input_nav" :placeholder="$t('message.enterUnitPrice')" v-model="form.dj" @blur="jsbzj" :disabled="user['user'] ? false:true">
+		            <template slot="append">
+						<div style="width: 40px;text-align: center;">
+							{{ fi }}
+						</div>
+					</template>
+		          </el-input>
+		        </div>
+		        <div class="add_form_item_input errormsg" v-if="isform.dj">
+		          {{$t('message.contEmpty')}}
+		        </div>
+		      </div>
+		      <div class="add_form_item">
+		        <div class="add_form_item_t">{{$t('message.dapp.amount')}}</div>
+		        <div class="add_form_item_input">
+		          <el-input :placeholder="$t('message.enterAmount')" v-model="form.num" @blur="jsbzj" :disabled="user['user'] ? false:true">
+		            <template slot="append">
+						<div style="width: 40px;text-align: center;">
+							{{ pro }}
+						</div>
+					</template>
+		          </el-input>
+		        </div>
+		        <div class="add_form_item_input errormsg" v-if="isform.zcye && user['num'] > 0">
+		          {{$t('message.exceedTips')}}（{{user['num']}}）, {{$t('message.rechargeTips1')}}
+		        </div>
+		        <div class="add_form_item_input errormsg" v-if="isform.zcye && user['num'] <= 0">
+		          {{$t('message.rechargeTips')}}
+		        </div>
+		        <div class="add_form_item_input errormsg" v-if="isform.num">
+		          {{$t('message.contEmpty')}}
+		        </div>
+		      </div>
+		      <div class="add_form_item">
+		        <div class="add_form_item_t">{{$t('message.arbitration.merchantMargin')}}</div>
+		        <div class="add_form_item_input">
+		          <el-input placeholder="" v-model="form.sjbzj" disabled>
+					  <template slot="append">
+					  	<div style="width: 40px;text-align: center;">
+					  		Gaz
+					  	</div>
+					  </template>
+				  </el-input>
+		        </div>
+		        <div class="add_form_item_input errormsg" v-if="isform.sjbzj" style="color: #0d92f1;">
+		          {{$t('message.enterBalanTips')}}
+		        </div>
+		      </div>
+		      <div class="add_form_item">
+		        <div class="add_form_item_t">{{$t('message.dapp.minAmount')}}</div>
+		        <div class="add_form_item_input">
+		          <el-input :placeholder="$t('message.enterMinNum')" v-model="form.zd_num" :disabled="user['user'] ? false:true">
+		            <template slot="append">
+						<div style="width: 40px;text-align: center;">
+							{{ pro }}
+						</div>
+					</template>
+		          </el-input>
+		        </div>
+		        <div class="add_form_item_input errormsg" v-if="isform.zd_num">
+		          {{$t('message.MinNumEmpty')}}
+		        </div>
+		      </div>
+		      <div class="add_form_item">
+		        <div class="add_form_item_t">{{$t('message.dapp.maxAmount')}}</div>
+		        <div class="add_form_item_input">
+		          <el-input :placeholder="$t('message.enterMaxNum')" v-model="form.zg_num" :disabled="user['user'] ? false:true">
+		            <template slot="append">
+						<div style="width: 40px;text-align: center;">
+							{{ pro }}
+						</div>
+					</template>
+		          </el-input>
+		        </div>
+		        <div class="add_form_item_input errormsg" v-if="isform.zg_num">
+		          {{$t('message.MaxNumEmpty')}}
+		        </div>
+		      </div>
+		      <div class="add_form_item">
+		        <div class="add_form_item_t">{{$t('message.arbitration.userMargin')}}</div>
+		        <div class="add_form_item_input">
+		          <el-input :placeholder="$t('message.enterMargin')" v-model="form.user_bzj" :disabled="user['user'] ? false:true">
+		            <template slot="append">
+						<div style="width: 40px;text-align: center;">
+							%
+						</div>
+					</template>
+		          </el-input>
+		        </div>
+		      </div>
+		      <div class="add_form_item">
+		        <div class="add_form_item_t">{{$t('message.remarks')}}</div>
+		        <div class="add_form_item_input">
+		          <el-input type="textarea" :placeholder="form.beizhu?form.beizhu:$t('message.notFill')" maxlength="30" :disabled="maskDis" v-model="form.beizhu" show-word-limit>
+		          </el-input>
+		        </div>
+		        <p class="add_form_item_input_p" @click="maskDis = false" v-if="maskDis">
+					<span class="cursor">{{$t('message.editremarks')}}</span>
+				</p>
+				<p class="add_form_item_input_p" v-else>
+					<span class="cursor" @click="setNote">{{$t('message.complete')}}</span>
+					<span class="marl-10 cursor" @click="maskDis = true">{{$t('message.return')}}</span>
+				</p>
+		      </div>
+		      <el-button type="primary" style="margin-top: 30px;background:#fdc500;border:0" @click="tijiao" :disabled="isform.zcye ? true:false">{{$t('message.sumbmit')}}</el-button>
+		      <br />
+		    </div>
+		  </div>
+		</div> 
+	  </el-col>
   </el-row>
 </template>
 <script>
 import config from "@/config";
 
-import Web3 from "web3";
-import Web3Modal from "web3modal";
-let Base64 = require("js-base64").Base64;
-import { Dialog, Toast, Notify } from "vant";
+import Web3 from "web3"
+import Web3Modal from "web3modal"
+let Base64 = require('js-base64').Base64;
+import { Dialog, Toast, Notify } from 'vant';
+// import VConsole from "vconsole";
+// new VConsole();
 
 //公共变量
 var web3 = "";
@@ -816,20 +708,15 @@ export default {
         var prosconn = new web3.eth.Contract(dotc_abi, dotc_key);
         prosconn.methods.pros(pro_key).call((err, ret) => {
           if (ret) {
-            console.log(ret);
-            var i_num = dq.form["num"];
-            var one = parseInt(ret["one"]);
-            var uni = parseInt(ret["uni"]);
-            var pri = parseInt(dq.hbi["pri"]);
-            var mara = parseInt(dq.hbi["mara"]);
-            var jisuan = (
-              mul(mul(i_num * one, uni), mara) /
-              mul(pri, one) /
-              10 ** bzj_num
-            ).toFixed(2);
-            dq.form["sjbzj"] = jisuan;
-            if (parseInt(dq.user["balancemar"]) / 10 ** bzj_num >= jisuan) {
-              dq.isform["sjbzj"] = false;
+            var i_num = dq.form['num'];
+            var one = parseInt(ret['one']);
+            var uni = parseInt(ret['uni']);
+            var pri = parseInt(dq.hbi['pri']);
+            var mara = parseInt(dq.hbi['mara']);
+            var jisuan = (mul(mul((i_num * one), uni), mara) / mul(pri, one) / (10 ** bzj_num)).toFixed(2);
+            dq.form['sjbzj'] = jisuan;
+            if ((dq.user['balancemar'] / (10 ** bzj_num)) >= jisuan) {
+              dq.isform['sjbzj'] = false;
             } else {
               dq.isform["sjbzj"] = true;
             }

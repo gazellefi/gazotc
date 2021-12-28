@@ -674,20 +674,31 @@ export default {
           from: address
         }, (err, ret) => {
           if (!err && ret) {
-            doctconn.events.Taker({}, function (error, event) {
-              if (!error && event) {
-                jiazai.clear();
-                dq.ddcode = false;
-                if (address == event.returnValues['Madd'].toLowerCase()) {
-                  Dialog.alert({
-                    title: 'success',
-                    message: msg.indexOf('On sale') != -1 ? '出售成功！订单号为：' + +event['returnValues']['uorder'] + '' : '购买成功！订单号为：' + +event['returnValues']['uorder'] + '',
-                  }).then(() => {
-                    window.location.reload();
-                  });
-                }
-              }
-            });
+			  // console.log(ret);
+			  setTimeout(()=>{
+				  Dialog.alert({
+				    title: '交易成功',
+				    message: '可在"订单中心>法币交易"查看',
+				  }).then(() => {
+				    // window.location.reload();
+					dq.ddcode = false;
+				    dq.getddinfo()
+				  });
+			  },4000)
+            // doctconn.events.Taker({}, function (error, event) {
+            //   if (!error && event) {
+            //     jiazai.clear();
+            //     dq.ddcode = false;
+            //     if (address == event.returnValues['Madd'].toLowerCase()) {
+            //       Dialog.alert({
+            //         title: '交易成功',
+            //         message: msg.indexOf('On sale') != -1 ? '出售成功！订单号为：' + +event['returnValues']['uorder'] + '' : '购买成功！订单号为：' + +event['returnValues']['uorder'] + '',
+            //       }).then(() => {
+            //         window.location.reload();
+            //       });
+            //     }
+            //   }
+            // });
           } else {
             Dialog.alert({
               title: 'fail',

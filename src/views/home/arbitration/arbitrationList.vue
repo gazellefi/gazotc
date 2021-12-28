@@ -74,9 +74,13 @@
 						<span class="top_text">{{$t("message.arbitration.exitArbitration")}}</span>
 					</div>
 				</div>
-				<div class="f a_c c935 cursor mart-10" >
-					<span>仲裁前请先加入</span>
-					<img src="../../../assets/img/discard.png" style="width: 24px;">
+				<div class="f a_c cursor fz14 mart-10" style="color: #000000;">
+					<span>请先加入<span class="c3c" style="text-decoration:underline ;" @click="toDiscard">discard</span></span>
+					<img @click="toDiscard" src="../../../assets/img/discard.png" style="width: 24px;">
+					<span>或</span>
+					<span class="c3c" style="text-decoration:underline ;">Telegram</span>
+					<i @click="toGazOTC" class="el-icon-s-promotion" style="color: #333;font-size: 24px;margin-top: -4px;margin-right: 5px;"></i>
+					<span>电报群联系仲裁员</span>
 				</div>
 			</div>
 			<div class="listWap" v-for="(item,index) in zc_list" :key="index">
@@ -124,7 +128,7 @@
 					</div>
 				</div>
 			</div> -->
-			<div class="listWap" v-for="(item,index) in zc_list" :key="index">
+			<div class="listWap" v-for="(item,index) in zc_list" :key="'i'+index">
 				<div class="listItem">
 					<div class="topWap">
 						<span class="topLabel fwb">{{$t('message.arbitration.arbitrator')}}:</span>
