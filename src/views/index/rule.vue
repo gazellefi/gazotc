@@ -142,7 +142,8 @@
 		display: flex;flex-direction: column;
 		align-items: center;
 		min-height: 450px;
-		padding: 0 30px;
+		padding: 0 30px 30px;
+		margin-top: 80px;
 		.in_nav{
 			width: 50%;
 		}
@@ -165,7 +166,7 @@
 		  border-bottom: 1px dotted #ccc;
 		  font-size: 14px;
 		  &:hover{
-				color: red;
+				color: #4451fa;
 				font-weight: bolder;
 		  }
 		}

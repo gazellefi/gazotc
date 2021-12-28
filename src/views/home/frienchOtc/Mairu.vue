@@ -596,11 +596,11 @@ export default {
     adddingdan() {
       var dq = this;
       if (!dq.form['num']) {
-        Notify({ type: 'warning', message: 'Quantity cannot be empty' });
+        Notify({ type: 'warning', message: '数量不能为空' });
         return;
       }
       if (!dq.form['je']) {
-        Notify({ type: 'warning', message: 'Please enter payment amount' });
+        Notify({ type: 'warning', message: '请输入付款金额' });
         return;
       }
       if (dq.form['num'] > Number(dq.ddinfo['mal'])) {
@@ -643,9 +643,9 @@ export default {
       }
 
       if (dq.ddinfo['Mmark'] != '0x6275790000000000000000000000000000000000000000000000000000000000') {
-        adddingdanajax('Buying');
+        adddingdanajax('购买');
       } else {
-        adddingdanajax('On sale');
+        adddingdanajax('出售');
       }
 
       //提交订单
@@ -701,8 +701,8 @@ export default {
             // });
           } else {
             Dialog.alert({
-              title: 'fail',
-              message: 'Please click OK!',
+              title: '交易失败',
+              // message: 'Please click OK!',
             });
             dq.ddcode = false;
             jiazai.clear();
