@@ -215,28 +215,26 @@
               <el-form-item>
                 <div style="border: 1px solid #dcdcdc">
                   <van-field
-                    v-model="form.password"
-                    type="password"
+                    v-model="form.msg_encrypt"
                     :placeholder="$t('message.setEncrypt')"
                   />
                 </div>
               </el-form-item>
             </el-form>
-            <div class="btn" @click="apply_password">
+            <div class="btn" @click="encrypt_message">
               <span>{{ $t("message.sumbmit") }}</span>
             </div>
             <el-form ref="form" :model="form" class="form_nav">
               <el-form-item>
                 <div style="border: 1px solid #dcdcdc">
                   <van-field
-                    v-model="form.password"
-                    type="password"
+                    v-model="form.msg_decrypt"
                     :placeholder="$t('message.encrypt')"
                   />
                 </div>
               </el-form-item>
             </el-form>
-            <div class="btn" @click="apply_password">
+            <div class="btn" @click="decrypt_message">
               <span>{{ $t("message.sumbmit") }}</span>
             </div>
           </div>
@@ -327,7 +325,7 @@ import Sha256 from "crypto-js/sha256";
 import { Base64 } from "js-base64";
 import axios from "axios";
 import SeededRSA from "./seededrsa/rsa.js";
-// import Crypto from 'crypto'
+import CryptoCore from 'crypto'
 import lang from "@/components/lang";
 import QRCode from "qrcodejs2";
 import WalletConnectProvider from "@walletconnect/web3-provider";
@@ -482,9 +480,12 @@ export default {
       address: "",
       addressRm: "",
       form: {
+		msg_encrypt: "",
+		msg_decrypt: "",
         password: "",
         passwordAggin: "",
         publickey: "",
+		privatekey: ""
       },
       regForm: {
         nickname: "",
@@ -852,8 +853,27 @@ export default {
         const value = await key.generate(2048).catch(console.log);
         console.log(value.publicKey);
         this.form.publickey = value.publicKey;
+		this.form.privatekey = value.privateKey;
       }
     },
+	encrypt_message() {
+	  console.log(CryptoCore)
+	  if (this.form.publickey == "" || this.form.msg_encrypt == "") {
+	    alert("empty publickey and message")
+	  }
+	  const pubkey = CryptoCore.createPublicKey(this.form.publickey)
+	  let msg = CryptoCore.publicEncrypt(pubkey, this.form.msg_encrypt)
+	  console.log("encrypt: ", msg.toString("hex"))
+	},
+	decrypt_message() {
+	  if (this.form.privatekey == "" || this.form.msg_decrypt == "") {
+	    alert("empty publickey and message")
+	  }
+	  const privkey = CryptoCore.createPrivateKey(this.form.privatekey)
+	  let msg = Buffer.from(this.form.msg_decrypt, "hex")
+	  let origin = CryptoCore.privateDecrypt(privkey, msg)
+	  console.log("decrypt: ", origin)
+	}
   },
 };
 </script>
