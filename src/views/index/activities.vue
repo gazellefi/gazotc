@@ -156,7 +156,7 @@
             Number(numberHb / 10 ** 18).toFixed(2)
           }}
         </div>
-        <van-field label-width="50" v-model="GAZVal" label="Gaz：" :placeholder="$t('message.activit.enterQuant')" />
+        <van-field label-width="50" v-model="GAZVal" label="GAZ：" :placeholder="$t('message.activit.enterQuant')" />
         <div @click="exchange" class="btn">
           {{ $t("message.activit.exchange") }}
         </div>
@@ -200,7 +200,7 @@
           <div class="item2" v-for="v in fanyongjilu">
             <span>{{ $t("message.activit.SerialNumbe") }}:<i>{{ v[0] }}</i></span>
             <span>usdt:<i>{{ (v[1] / 10 ** 18).toFixed(2) }}</i></span>
-            <span>gaz:<i>{{ (v[2] / 10 ** 18).toFixed(2) }}</i></span>
+            <span>GAZ:<i>{{ (v[2] / 10 ** 18).toFixed(2) }}</i></span>
             <span>{{ $t("message.activit.date") }}:<i>{{
                 $date(Number(v[3]) * 1000)
               }}</i></span>
@@ -213,7 +213,7 @@
               {{ $t("message.activit.PrimaryRelease") }}:{{
                 Number(gazone / 10 ** 18).toFixed(2)
               }}
-              gaz
+              GAZ
             </div>
             <span class="btn" @click="getone">
               {{ $t("message.activit.extract") }}</span>
@@ -224,13 +224,13 @@
                 {{ $t("message.activit.LinearRelease") }}:{{
                   Number(gazlock / 10 ** 18).toFixed(2)
                 }}
-                gaz
+                GAZ
               </div>
               <div class="line">
                 {{ $t("message.activit.ExtractableQuantity") }}:{{
                   Number(gazfree / 10 ** 18).toFixed(2)
                 }}
-                gaz
+                GAZ
               </div>
             </div>
             <span class="btn" @click="getfree">

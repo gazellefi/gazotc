@@ -137,8 +137,8 @@
 						 <span class="fz14" :class="uinfo.user == item.uadd_b ? 'ac':''">{{ item.uadd }}</span>
 					</div>
 					<div class="mart-10">
-						<span class="asBtn marr-5">{{'卖出 '}}{{ item.uoa }} {{ item.pro }}</span>
-						<span class="asBtn">{{'买入 '}}{{ item.wad }} {{ item.swap }}</span>
+						<span class="asBtn marr-5">{{$t('message.dapp.sell')}}{{ item.uoa }} {{ item.pro }}</span>
+						<span class="asBtn">{{$t('message.dapp.buy')}}{{ item.wad }} {{ item.swap }}</span>
 					</div>
 				</div>
 				<div class="fc c_r">

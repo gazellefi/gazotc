@@ -161,7 +161,7 @@ export default {
       ],
       conditionData: [
         '1. The crowdfunding of this project is not open to the public and is only for specific groups. The invitation code must be filled in when applying.',
-        '2. When subscribing, the minimum quantity shall be ≥ 1000gaz, and the maximum shall not be higher than the maximum amount of invitees.',
+        '2. When subscribing, the minimum quantity shall be ≥ 1000GAZ, and the maximum shall not be higher than the maximum amount of invitees.',
         '3. The following countries or regions are not supported',
       ],
       countryList: `Afghanistan, Albania, Belarus, Bosnia and Herzegovina,
@@ -172,7 +172,7 @@ Tunisia, Uganda, Ukraine, United States, Venezuela, Yemen, Zimbabwe.`,
       RiskTipsList: [
         '1.The gazotc platform is still in its infancy, and there may be great online insurance in the operation of the project, the underlying technology of the project, the legal and regulatory environment, etc.',
         '2. Understanding gazoto and gazele finance foundation and assessing their inherent risks requires advanced technical and financial knowledge.',
-        '3. Affected by technology, laws and regulations, market and other factors, the subscribed gaz price may fluctuate  violently, and the price may   be  greatly <br/> reduced  or  increased.',
+        '3. Affected by technology, laws and regulations, market and other factors, the subscribed GAZ price may fluctuate  violently, and the price may   be  greatly <br/> reduced  or  increased.',
       ],
       username: '',
       password: '',

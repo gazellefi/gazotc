@@ -149,7 +149,7 @@
 
 
 
-	<myDialog  :width="isphone ? '90%':'40%'" title="修改信息" :closeModal="false" :closePress="false" :visible.sync="dialogVisible"
+	<myDialog  :width="isphone ? '90%':'40%'" :title="$t('message.editInfomation')" :closeModal="false" :closePress="false" :visible.sync="dialogVisible"
 		@confirm="xiugaiajax(2)" @cancel="xiugaiajax(1)">
 		<el-form label-width="110px" v-model="regForm" style="padding: 20px;">
 			<el-form-item  :label="$t('message.activit.nickname')+'*'">
@@ -166,7 +166,7 @@
 			</el-form>
 		</el-form>
 	</myDialog>
-	<myDialog  :width="isphone ? '90%':'40%'" title="修改信息" :closeModal="false" :closePress="false" :visible.sync="dialogVisibleOne"
+	<myDialog  :width="isphone ? '90%':'40%'" :title="$t('message.editInfomation')" :closeModal="false" :closePress="false" :visible.sync="dialogVisibleOne"
 		@confirm="setbeizhu('zc_beizhu')" @cancel="xiugaiajax(1)">
 		<el-form label-width="110px" v-model="regForm" style="padding: 20px;">
 			<el-form-item  :label="$t('message.arbitration.nick')+'*'">
@@ -177,7 +177,7 @@
 			</el-form>
 		</el-form>
 	</myDialog>
-	<myDialog  :width="isphone ? '90%':'40%'" title="修改信息" :closeModal="false" :closePress="false" :visible.sync="dialogVisibleTwo"
+	<myDialog  :width="isphone ? '90%':'40%'" :title="$t('message.editInfomation')" :closeModal="false" :closePress="false" :visible.sync="dialogVisibleTwo"
 		@confirm="setbeizhu('team_beizhu')" @cancel="xiugaiajax(1)">
 		<el-form label-width="110px" v-model="regForm" style="padding: 20px;">
 			<el-form-item  :label="'节点*'">

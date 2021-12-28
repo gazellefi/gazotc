@@ -37,7 +37,7 @@
       <!-- 表格 -->
       <div class="listul" v-loading="loading">
         <el-table :fixed="true" :data="dataList" style="width: 100%; overflow: auto">
-          <el-table-column align="center" :label="$t('message.dapp.Merchant')">
+          <el-table-column align="center"  :render-header="askMerchant" :label="$t('message.dapp.Merchant')">
             <template slot-scope="scope">
               <div class="listul_user">
                 <div class="listul_user_name">{{ scope.row.username }}</div>
@@ -70,7 +70,7 @@
 		  <!-- <el-table-column align="center" :label="$t('message.arbitration.margin')"> -->
           <el-table-column align="center" :render-header="marginNav">
 			<!-- <template slot-scope="header">  </template> -->
-            <template slot-scope="scope"> {{ scope.row.bzj }} Gaz </template>
+            <template slot-scope="scope"> {{ scope.row.bzj }} GAZ </template>
           </el-table-column>
           <el-table-column align="center" :render-header="asknNav">
             <template slot-scope="scope">
@@ -215,7 +215,13 @@ export default {
 	}
     var hbarr = config["hbi"][config["key"]];
     for (const key in hbarr) {
-      this.hbarr.push(hbarr[key]);
+      console.log(hbarr[key])
+      if(hbarr[key].id=='Gaz'){
+        hbarr[key].id='GAZ';
+        this.hbarr.push(hbarr[key]);
+      }else{
+        this.hbarr.push(hbarr[key]);
+      }
     }
     var fbarr = config["fabi"][config["key"]];
     for (const key in fbarr) {
@@ -544,6 +550,30 @@ export default {
 	asknNav(h,{column,$index}){
 		let str = this.$t("message.dapp.blandAsk")
 		let str1 = this.$t("message.arbitration.payMar1")
+		return h('div', [
+		                h('span', str),
+		                h(
+		                    'el-tooltip',
+		                    {
+		                        props: {
+		                            effect: 'dark',
+		                            content: str1,
+		                            placement: 'top',
+		                        },
+		                    },
+		                    [
+		                        h('i', {
+		                            class: 'el-icon-question',
+		                            style: 'color:#409eff;margin-left:5px;',
+		                        }),
+		                    ],
+		                ),
+		            ]);
+	},
+  
+	askMerchant(h,{column,$index}){
+		let str = this.$t("message.dapp.Merchant")
+		let str1 = this.$t("message.dapp.MerchantAsk")
 		return h('div', [
 		                h('span', str),
 		                h(

@@ -120,7 +120,7 @@ body {
           <div class="qianbao_view_head_item_li" style="
                     font-size: 14px;
                     color: #fff;">
-            <div style="opacity: 0.5;">Assets in lock up(gaz)</div> <i class="el-icon-view" style="opacity:0.5"></i>
+            <div style="opacity: 0.5;">Assets in lock up(GAZ)</div> <i class="el-icon-view" style="opacity:0.5"></i>
           </div>
           <div class="qianbao_view_head_item_li numarr">
             <div class="qianbao_view_head_item_li_num">{{ user_sc.toFixed(2) }}</div>
@@ -132,7 +132,7 @@ body {
           <div class="qianbao_view_head_item_li" style="
                     font-size: 14px;
                     color: #fff;">
-            <div style="opacity: 0.5;">Withdrawable assets(gaz)</div> <i class="el-icon-view" style="opacity:0.5"></i>
+            <div style="opacity: 0.5;">Withdrawable assets(GAZ)</div> <i class="el-icon-view" style="opacity:0.5"></i>
           </div>
           <div class="qianbao_view_head_item_li numarr">
             <div class="qianbao_view_head_item_li_num">{{ user_fr.toFixed(2) }}</div>

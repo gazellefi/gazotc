@@ -89,11 +89,11 @@
 			</el-col>
 			<el-col :sm="24" :md="8" :lg="6" class="item">
 				<span>{{$t('message.arbitration.userMarginLock')}}：</span>
-				<span>{{ ddifo.uma.toFixed(2) }} Gaz</span>
+				<span>{{ ddifo.uma.toFixed(2) }} GAZ</span>
 			</el-col>
 			<el-col :sm="24" :md="8" :lg="6" class="item">
 				<span>{{$t('message.arbitration.merchantMarginLock')}}：</span>
-				<span>{{ ddifo.mma }} Gaz</span>
+				<span>{{ ddifo.mma }} GAZ</span>
 			</el-col>
 			<el-col :sm="24" :md="8" :lg="6" class="item">
 				<span>{{$t('message.dapp.transactionNum')}}：</span>

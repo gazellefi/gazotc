@@ -4,7 +4,7 @@
 	  <!-- 作为页面时有返回上一级 -->
 	<el-row style="padding: 20px;" v-if="type == 2">
 		<el-col>
-			<el-link class="marl-10" type="primary" @click="back">返回上一级</el-link>
+			<el-link class="marl-10" type="primary" @click="back">{{$t('message.backUp')}}</el-link>
 		</el-col>
 	</el-row>
 	<el-row type="flex" justify="center" v-if="type == 2">
@@ -31,7 +31,7 @@
 			    </div>
 			    <div class="view_ul_li bordd">
 			      <div class="view_ul_li_l">{{$t('message.arbitration.merchantMargin')}}</div>
-			      <div class="view_ul_li_r">{{ getnumsing(ddinfo.bMar) }} Gaz</div>
+			      <div class="view_ul_li_r">{{ getnumsing(ddinfo.bMar) }} GAZ</div>
 			    </div>
 			
 			    <div class="view_ul_li bordd">
@@ -79,7 +79,7 @@
 			        <div class="view_form_item_input_srk">
 			          <van-field :placeholder="$t('message.dapp.mortgageDes')" v-model="form.bzj" :disabled="true" />
 			        </div>
-			        <div class="view_form_item_input_msg">Gaz</div>
+			        <div class="view_form_item_input_msg">GAZ</div>
 			      </div>
 			    </div>
 			    <div class="view_form_item options">
@@ -111,7 +111,7 @@
         </div>
         <div class="view_ul_li">
           <div class="view_ul_li_l">{{$t('message.arbitration.merchantMargin')}}</div>
-          <div class="view_ul_li_r">{{ getnumsing(ddinfo.bMar) }} Gaz</div>
+          <div class="view_ul_li_r">{{ getnumsing(ddinfo.bMar) }} GAZ</div>
         </div>
     
         <div class="view_ul_li">
@@ -159,7 +159,7 @@
             <div class="view_form_item_input_srk">
               <van-field :placeholder="$t('message.dapp.mortgageDes')" v-model="form.bzj" :disabled="true" />
             </div>
-            <div class="view_form_item_input_msg">Gaz</div>
+            <div class="view_form_item_input_msg">GAZ</div>
           </div>
         </div>
         <div class="view_form_item options">

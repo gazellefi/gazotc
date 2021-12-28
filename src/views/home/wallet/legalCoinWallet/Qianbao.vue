@@ -225,7 +225,7 @@
 					var _this = this;
 					const h = _this.$createElement;
 					_this.$msgbox({
-					    title: '请输入'+_this.popoType == 4? _this.$t('message.changeOut'):_this.popoType == 3?_this.$t('message.changeInto') : ''+'保证金金额',
+					    title: '请输入'+_this.popoType == 4? _this.$t('message.changeOut'):_this.popoType == 3?_this.$t('message.changeInto') : ''+_this.$t('message.marginBalance'),
 						message: h('div', null, [
 							h('input', {
 								attrs: {
@@ -238,26 +238,26 @@
 								on: { input: _this.onCommentInputChange }
 							}),
 							h('div',null,[
-								h('i', { style: 'color: teal;display: inline-block;padding-top: 20px;' }, '当前保证金余额：'),
+								h('i', { style: 'color: teal;display: inline-block;padding-top: 20px;' }, _this.$t('message.currentMarginBalance')+'：'),
 								h('i', _this.balancemar_num),
 							]),
 							h('div',null,[
-								h('i', { style: 'color: teal;display: inline-block;padding-top: 20px;' }, 'Gaz：'),
+								h('i', { style: 'color: teal;display: inline-block;padding-top: 20px;' }, 'GAZ：'),
 								h('i', _this.usdt_num),
 							])
 						  ]),
 					    showCancelButton: true,
 						center: true,
 					    confirmButtonText: _this.popoType == 4? _this.$t('message.changeOut'):_this.popoType == 3? _this.$t('message.changeInto') : '',
-					    cancelButtonText: '取消',
+					    cancelButtonText: _this.$t('message.cancel'),
 					    beforeClose: (action, instance, done) => {
 					        if (action === 'confirm') {
 					            instance.confirmButtonLoading = true;
 								if(_this.popoType == 4){
-									instance.confirmButtonText = '转出中...';
+									instance.confirmButtonText = _this.$t('message.rollOut');
 									_this.out(instance, done)
 								}else if(_this.popoType ==3){
-									instance.confirmButtonText = '转入中...';
+									instance.confirmButtonText = _this.$t('message.rollIn');
 									_this.into(instance, done)
 								}
 					            
@@ -283,7 +283,7 @@
 			},
 			into(instance, done) {
 			  if (this.numRu <= 0) {
-			    Notify({ type: 'warning', message: '请输入正确的金额' });
+			    Notify({ type: 'warning', message: this.$t('message.correctAmount') });
 				instance.confirmButtonLoading = false;
 				instance.confirmButtonText = this.$t('message.changeInto');
 			    return;
@@ -364,7 +364,7 @@
 			// 转出 
 			out(instance, done) {
 			  if (this.numRu <= 0) {
-			    Notify({ type: 'warning', message: '请输入正确的金额' });
+			    Notify({ type: 'warning', message: this.$t('message.correctAmount') });
 			  				instance.confirmButtonLoading = false;
 			  				instance.confirmButtonText = dq.$t('message.changeOut');
 			    return;

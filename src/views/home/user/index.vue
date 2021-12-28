@@ -246,7 +246,7 @@
 
     <myDialog
       :width="isphone ? '90%' : '40%'"
-      title="修改信息"
+      :title="$t('message.editInfomation')"
       :closeModal="false"
       :closePress="false"
       :visible.sync="dialogVisible"
@@ -279,7 +279,7 @@
     </myDialog>
     <myDialog
       :width="isphone ? '90%' : '40%'"
-      title="修改信息"
+      :title="$t('message.editInfomation')"
       :closeModal="false"
       :closePress="false"
       :visible.sync="dialogVisibleOne"
@@ -300,7 +300,7 @@
     </myDialog>
     <myDialog
       :width="isphone ? '90%' : '40%'"
-      title="修改信息"
+      :title="$t('message.editInfomation')"
       :closeModal="false"
       :closePress="false"
       :visible.sync="dialogVisibleTwo"

@@ -610,7 +610,7 @@
 				    //需要先授权
 				    dq.loadingsoudd = true;
 				    Dialog.confirm({
-				      message: 'Gaz未经授权。它是授权的吗？',
+				      message: 'GAZ未经授权。它是授权的吗？',
 				      confirmButtonText: 'determine',
 				      cancelButtonText: 'cancel',
 				      cancelButtonColor: '',
@@ -744,14 +744,14 @@
 			    if (gaz_sqa < this.sq_zc_data['je']) {
 			      //需要先授权
 			      Dialog.confirm({
-			        message: 'Gaz未经授权。它是授权的吗？',
+			        message: 'GAZ未经授权。它是授权的吗？',
 			        confirmButtonText: 'determine',
 			        cancelButtonText: 'cancel',
 			        cancelButtonColor: '',
 			        getContainer: 'body'
 			      }).then(() => {
 			        Toast.loading({
-			          message: 'Gaz授权。。。',
+			          message: 'GAZ授权。。。',
 			          forbidClick: true,
 			          loadingType: 'spinner',
 			        });

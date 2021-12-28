@@ -23,7 +23,7 @@
       Margin rules
     </div>
     <div class="jygz_msg">
-      1. In stage 1, the mainstream stable currency is used for the transaction margin and the platform currency is used for the arbitration margin gaz;<br /><br />
+      1. In stage 1, the mainstream stable currency is used for the transaction margin and the platform currency is used for the arbitration margin GAZ;<br /><br />
       2. Ethereum and wave field use usdt as security deposit, and Huo coin ecological chain uses husd as security deposit;<br /><br />
       3. The deposit needs to be recharged before transfer;<br /><br />
       4. The deposit will be automatically frozen when the order is taken;<br /><br />

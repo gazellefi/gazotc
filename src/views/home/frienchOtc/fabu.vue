@@ -70,7 +70,7 @@
 		          <el-input placeholder="" v-model="form.sjbzj" disabled>
 					  <template slot="append">
 					  	<div style="width: 40px;text-align: center;">
-					  		Gaz
+					  		GAZ
 					  	</div>
 					  </template>
 				  </el-input>
