@@ -1,7 +1,5 @@
 npm run build
 sudo su
-cd /tmp
-unzip dist.zip
 docker stop nginx
 docker rm nginx
 rm -r /home/nginx/dist

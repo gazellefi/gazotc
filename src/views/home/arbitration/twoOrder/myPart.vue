@@ -54,7 +54,7 @@
 			  <el-table-column align="center" :label="$t('message.operation')">
 				  <template slot-scope="scope">
 					<div>
-					  <el-button size="mini"  @click="openqb('openzcgl')">{{$t('message.details')}}</el-button>
+					  <el-button size="mini"  @click="openqb('openzcgl',scope.row.did)">{{$t('message.details')}}</el-button>
 					</div>
 				  </template>
 			  </el-table-column>
@@ -194,6 +194,254 @@
 			</div>
 		</el-dialog>
 		
+		
+		<!-- 第二轮仲裁管理 -->
+		<el-dialog
+		  title="第二轮仲裁管理"
+		  :visible.sync="zcgldata.code"
+		  width=350px
+		>
+		<div v-if="zcgldata.tcode" class="zcglul">
+		  <div class="zcglul_li_item">
+		    <div class="zcglul_li_l">我的账号：</div>
+		    <div class="zcglul_li_r">{{ zcgldata['info']['myuser'].substring(0,7) }}....</div>
+		  </div>
+		  <div class="zcglul_li_item">
+		    <div class="zcglul_li_l">我的昵称：</div>
+		    <div class="zcglul_li_r">{{ zcgldata['info']['myname'] }}</div>
+		  </div>
+		  <div class="zcglul_li_item">
+		    <div class="zcglul_li_l">我的角色：</div>
+		    <div class="zcglul_li_r">{{ zcgldata['info']['myjuese'] }}</div>
+		  </div>
+		  <div class="zcglul_li_item">
+		    <div class="zcglul_li_l">订单号：</div>
+		    <div class="zcglul_li_r">{{ zcgldata['info']['ddid'] }}</div>
+		  </div>
+		  <div class="zcglul_li_item">
+		    <div class="zcglul_li_l">订单详情：</div>
+		    <div class="zcglul_li_r list">
+		      <div class="zcglul_li_r_item">
+		        商家地址：{{ zcgldata['info']['ddinfo']['mad'].substring(0,7) }}....
+		      </div>
+		      <div class="zcglul_li_r_item">
+		        用户地址：{{ zcgldata['info']['ddinfo']['uad'].substring(0,7) }}....
+		      </div>
+		      <div class="zcglul_li_r_item">
+		        交易数量：{{ zcgldata['info']['ddinfo']['uoa'] }}  {{ zcgldata['info']['ddinfo']['pro'] }}
+		      </div>
+		      <div class="zcglul_li_r_item">
+		        商家保证金：{{ zcgldata['info']['ddinfo']['mma']  }}  USDT
+		      </div>
+		      <div class="zcglul_li_r_item">
+		        用户保证金：{{ zcgldata['info']['ddinfo']['uma'] }}  USDT
+		      </div>
+		    </div>
+		  </div>
+		  <div class="zcglul_li title">仲裁方案</div>
+		  <div class="zcglul_li_item">
+		    <div class="zcglul_li_l">编号：</div>
+		    <div class="zcglul_li_r maleftreft">
+		      <div>
+		        <el-select v-model="zcgldata.faid" placeholder="请选择" size="mini">
+		            <el-option
+		              v-for="item in zcgldata['bhnum']"
+		              :key="item"
+		              :label="item"
+		              :value="item">
+		            </el-option>
+		          </el-select>
+		          <el-button type="text" style="margin-left: 5px;" @click="openqb('openbzcfanwin')"><i class="el-icon-circle-plus-outline"></i> 新建</el-button>
+		      </div>
+		      <div style="margin-top: 5px;">票数 {{ !zcgldata['info']['tpjdu']?0:zcgldata['info']['tpjdu'] }}/5</div>
+		    </div>
+		  </div>
+		  <div class="zcglul_li_item">
+		    <div class="zcglul_li_l">资产归属：</div>
+		    <div class="zcglul_li_r">{{ zcgldata['info']['zcguishu'] }}</div>
+		  </div>
+		  <div class="zcglul_li_item">
+		    <div class="zcglul_li_l">保证金：</div>
+		    <div class="zcglul_li_r">({{ zcgldata['info']['who'] == 1 ? '扣除商家的保证金':'扣除用户的保证金' }}) <br> {{ zcgldata['info']['bzjnum'] }} USDT</div>
+		  </div>
+		  <div class="zcglul_li_item">
+		    <div class="zcglul_li_l">商家仲裁员：</div>
+		    <div class="zcglul_li_r">{{ zcgldata['info']['sjnum'] }} GAZ</div>
+		  </div>
+		  <div class="zcglul_li_item">
+		    <div class="zcglul_li_l">用户仲裁员：</div>
+		    <div class="zcglul_li_r">{{ zcgldata['info']['yhnum'] }} GAZ</div>
+		  </div>
+		  <div class="zcglul_li_item">
+		    <div class="zcglul_li_l">第二轮仲裁费：</div>
+		    <div class="zcglul_li_r">{{ zcgldata['info']['delnum'] }} GAZ</div>
+		  </div>
+		  <div class="zcglul_li_item daojishi">
+		    <div class="zcglul_li_l">投票倒计时</div>
+		    <div class="zcglul_li_r"><van-count-down :time="zcgldata['info'].djsval" format="DD 天 HH 时 mm 分 ss 秒" /></div>
+		  </div>
+		  <div class="zcglul_li coll">
+		    <div class="zcglul_li_item_in">
+		      <van-button type="danger"  :loading="zcgldata['loading']" @click="qxtoupiao">取 消</van-button>
+		      <van-button type="primary" style="margin-left: 10px;" @click="toupiaoajax" :loading="zcgldata.loading">投 票</van-button>
+		    </div>
+		    <div class="zcglul_li_item_in">
+		      <van-button type="info" :loading="zcgldata.loading" @click="jieshoutoupiao">接 受</van-button>
+		      <van-button type="default" style="margin-left: 10px;" :loading="zcgldata.loading">撤 销</van-button>
+		    </div>
+		    <div class="zcglul_li_item_in">
+		      <van-button type="info" :loading="zcgldata.loading" @click="executeajax">执 行</van-button>
+		      <van-button type="default" style="margin-left: 10px;" :loading="zcgldata.loading" @click="restartlArbajax">重 启</van-button>
+		    </div>
+		  </div>
+		</div>
+		</el-dialog>
+		
+		
+		<!-- 设置仲裁方案 -->
+		<el-dialog
+		  title="第二轮仲裁方案"
+		  :visible.sync="bzj_fangan.code"
+		  width=350px
+		>
+		  <span v-if="!bzj_fangan.data.code">
+		    <el-input
+		      v-model="bzj_fangan['ddid']"
+		      placeholder="请输入订单号"
+		    ></el-input>
+		  </span>
+		
+		  <div v-if="bzj_fangan.data.code" class="bzj_fangan_ul">
+		    <div class="bzj_fangan_ul_li">
+		      我的账号:{{ bzj_fangan.data["myuser"].substring(0, 8) }} ....
+		    </div>
+		    <div class="bzj_fangan_ul_li">
+		      我的昵称:{{ bzj_fangan.data["myname"] }}
+		    </div>
+		    <div class="bzj_fangan_ul_li">订单号:{{ bzj_fangan.ddid }}</div>
+		    <div class="bzj_fangan_ul_li ul">
+		      <div class="bzj_fangan_ul_li_ul">订单详情：</div>
+		      <div class="bzj_fangan_ul_li_ul_li">
+		        商家地址：{{ bzj_fangan.data["mad"].substring(0, 8) }} ....
+		      </div>
+		      <div class="bzj_fangan_ul_li_ul_li">
+		        用户地址：{{ bzj_fangan.data["uad"].substring(0, 8) }} ....
+		      </div>
+		      <div class="bzj_fangan_ul_li_ul_li">
+		        交易数量：{{ bzj_fangan.data["uoa"].toFixed(2) }} 
+		        {{ bzj_fangan.data["pro"] }}
+		      </div>
+		      <div class="bzj_fangan_ul_li_ul_li">
+		        商家保证金：{{ bzj_fangan.data["mma"].toFixed(2) }}  USDT
+		      </div>
+		      <div class="bzj_fangan_ul_li_ul_li">
+		        用户证金：{{ bzj_fangan.data["uma"].toFixed(2) }}  USDT
+		      </div>
+		    </div>
+		    <div class="bzj_fangan_ul_li title">仲裁方案</div>
+		
+		    <div class="bzj_fangan_ul_li">
+		      <span class="bzj_fangan_ul_lia">资产归属：</span
+		      ><el-radio v-model="bzj_fangan.from.who" label="1">商家</el-radio>
+		      <el-radio v-model="bzj_fangan.from.who" label="2">用户</el-radio>
+		      <el-radio v-model="bzj_fangan.from.who" label="0">已释放</el-radio>
+		    </div>
+		    <div class="bzj_fangan_ul_li">
+		      <span class="bzj_fangan_ul_lia">保证金：</span>
+		      <el-select
+		        size="mini"
+		        placeholder="请选择"
+		        v-model="bzj_fangan.from.bzjt"
+		      >
+		        <el-option
+		          v-for="item in [
+		            { label: '商家', value: '1' },
+		            { label: '用户', value: '2' },
+		          ]"
+		          :key="item.value"
+		          :label="item.label"
+		          :value="item.value"
+		        >
+		        </el-option>
+		      </el-select>
+		      <el-select
+		        size="mini"
+		        placeholder="请选择"
+		        style="margin-left: 5px"
+		        v-model="bzj_fangan.from.bzjtb"
+		      >
+		        <el-option
+		          v-for="item in [
+		            { label: '增加', value: '1' },
+		            { label: '减少', value: '2' },
+		          ]"
+		          :key="item.value"
+		          :label="item.label"
+		          :value="item.value"
+		        >
+		        </el-option>
+		      </el-select>
+		      <el-input
+		        size="mini"
+		        placeholder="请输入"
+		        style="margin-left: 5px"
+		        v-model="bzj_fangan.from.bzjnum"
+		      >
+		        <template slot="append">USDT</template>
+		      </el-input>
+		    </div>
+		    <div class="bzj_fangan_ul_li">
+		      <span class="bzj_fangan_ul_lia">用户仲裁员：</span
+		      ><el-input
+		        size="mini"
+		        placeholder="请输入"
+		        v-model="bzj_fangan.from.sjzcy"
+		      >
+		        <template slot="append">GAZ</template>
+		      </el-input>
+		    </div>
+		    <div class="bzj_fangan_ul_li">
+		      <span class="bzj_fangan_ul_lia">商家仲裁员：</span>
+		      <el-input
+		        size="mini"
+		        placeholder="请输入"
+		        v-model="bzj_fangan.from.yhzcy"
+		      >
+		        <template slot="append">GAZ</template>
+		      </el-input>
+		    </div>
+		    <div class="bzj_fangan_ul_li">
+		      <span class="bzj_fangan_ul_lia">第二轮仲裁费：</span
+		      ><el-input
+		        size="mini"
+		        placeholder="请输入费用"
+		        v-model="bzj_fangan.from.zcfeiyong"
+		      >
+		        <template slot="append">GAZ</template>
+		      </el-input>
+		    </div>
+		  </div>
+		
+		  <span slot="footer" class="dialog-footer">
+		    <el-button @click="bzj_fangan.code = false">取消</el-button>
+		    <el-button
+		      type="primary"
+		      @click="ddinfoajax_fan"
+		      :loading="bzj_fangan.loading"
+		      v-if="!bzj_fangan.data.code"
+		      >设 置</el-button
+		    >
+		    <el-button plain v-if="bzj_fangan.data.code" @click="backsyb">返回上一步</el-button>
+		    <el-button
+		      type="primary"
+		      :loading="bzj_fangan.loading"
+		      v-if="bzj_fangan.data.code"
+		      @click="schemeajax"
+		      >设 置</el-button
+		    >
+		  </span>
+		</el-dialog>
+		
 	</el-container>
 </template>
 
@@ -214,6 +462,8 @@
 	import Web3Modal from "web3modal";
 	import { Dialog, Toast } from 'vant';
 	var address, web3, ArbOne, ArbTwo, GazConn, Dotc, Arbdate;
+	var webtrue = false;
+	var bzj_num = config["hyue"][config["key"]]["Bzj"]["num"];
 	
 	export default{
 		data(){
@@ -228,7 +478,7 @@
 				formLabelWidth: '150px',
 				isphone:false,
 				dyl_zc: {
-				  code: true,
+				  code: false,
 				  my_user: '',
 				  my_name: '',
 				  did: '',
@@ -244,6 +494,58 @@
 				  },
 				  zcinfo: ZcModel
 				},
+				
+				  bzj_fangan: {
+				    loading: false,
+				    ddid: "",
+				    code: false,
+				  
+				    data: {
+				      code: false,
+				    },
+				  
+				    from: {
+				      who: "",
+				      bzjt: "1",
+				      bzjtb: "1",
+				      bzjnum: null,
+				      sjzcy: null,
+				      yhzcy: null,
+				      zcfeiyong: null,
+				    },
+				  },
+				  
+				zcgldata:{
+				  loading:false,
+				  code:false,
+				  tcode:false,
+				  faid:1,
+				  bhnum:0,
+				  ddid:0,
+				  arbs:{},
+				  info:{
+				    myuser:'',
+				    myname:'',
+				    myjuese:'',
+				    ddid:'',
+				    ddinfo:{
+				      uad:'',
+				      mad:'',
+				      pro:'',
+				      mma:'',
+				      uma:'',
+				      uoa:''
+				    },
+				    tpjdu:0,
+				    zcguishu:'',
+				    bzjnum:0,
+				    who:0,
+				    sjnum:0,
+				    yhnum:0,
+				    delnum:0,
+				    djsval:0
+				  }
+				}
 			}
 		},
 		created() {
@@ -258,14 +560,343 @@
 		  if (typeof ethereum === "undefined") {
 		    web3 = new Web3(config['hyue'][config['key']]['Url']);
 		  } else {
+			webtrue = true;
 		    //初始化
 		    this.webinit();
 		  }
 		},
 		methods:{
-			openqb(e) {
+    //如果过亿请转换
+    getFNum(num_str) {
+      num_str = num_str.toString();
+      if (num_str.indexOf("+") != -1) {
+        num_str = num_str.replace("+", "");
+      }
+      if (num_str.indexOf("E") != -1 || num_str.indexOf("e") != -1) {
+        var resValue = "",
+          power = "",
+          result = null,
+          dotIndex = 0,
+          resArr = [],
+          sym = "";
+        var numStr = num_str.toString();
+        if (numStr[0] == "-") {
+          // 如果为负数，转成正数处理，先去掉‘-’号，并保存‘-’.
+          numStr = numStr.substr(1);
+          sym = "-";
+        }
+        if (numStr.indexOf("E") != -1 || numStr.indexOf("e") != -1) {
+          var regExp = new RegExp(
+            "^(((\\d+.?\\d+)|(\\d+))[Ee]{1}((-(\\d+))|(\\d+)))$",
+            "ig"
+          );
+          result = regExp.exec(numStr);
+          if (result != null) {
+            resValue = result[2];
+            power = result[5];
+            result = null;
+          }
+          if (!resValue && !power) {
+            return false;
+          }
+          dotIndex = resValue.indexOf(".") == -1 ? 0 : resValue.indexOf(".");
+          resValue = resValue.replace(".", "");
+          resArr = resValue.split("");
+          if (Number(power) >= 0) {
+            var subres = resValue.substr(dotIndex);
+            var length = dotIndex == 0 ? 0 : subres.length;
+            power = Number(power);
+            //幂数大于小数点后面的数字位数时，后面加0
+            for (var i = 0; i < power - length; i++) {
+              resArr.push("0");
+            }
+            if (power - subres.length < 0) {
+              resArr.splice(dotIndex + power, 0, ".");
+            }
+          } else {
+            power = power.replace("-", "");
+            power = Number(power);
+            //幂数大于等于 小数点的index位置, 前面加0
+            for (let i = 0; i < power - dotIndex; i++) {
+              resArr.unshift("0");
+            }
+            var n = power - dotIndex >= 0 ? 1 : -(power - dotIndex);
+            resArr.splice(n, 0, ".");
+          }
+        }
+        resValue = resArr.join("");
+
+        return sym + resValue;
+      } else {
+        return num_str;
+      }
+    },
+			openqb(e,d) {
+			
 			  this.wapcd = false;
+			  console.log(e)
+			  
+			  if (e == "openbzcfanwin") {
+			    if (!webtrue) {
+			      this.$notify.error({
+			        title: "未连接钱包",
+			        duration: 2000,
+			        message: "系统检测您未安装钱包插件！",
+			      });
+			      return;
+			    }
+			    this.bzj_fangan.code = true;
+			    return;
+			  }
+			  if (e == "openzcgl") {
+				
+				if (!webtrue) {
+					this.$notify.error({
+					  title: "未连接钱包",
+					  duration: 2000,
+					  message: "系统检测您未安装钱包插件！",
+					});
+					return;
+				}
+				this.zcgldata['ddid']=d;
+				this.getzcinfoajax();
+			    this.zcgldata['code'] = true;
+			    return;
+			  }
 			  this.$router.push(e);
+			},
+			
+			//方案点击回退上一步
+			backsyb(){
+			  this.bzj_fangan = {
+			    loading: false,
+			    ddid: this.bzj_fangan.ddid,
+			    code: true,
+			
+			    data: {
+			      code: false,
+			    },
+			
+			    from: {
+			      who: "",
+			      bzjt: "1",
+			      bzjtb: "1",
+			      bzjnum: null,
+			      sjzcy: null,
+			      yhzcy: null,
+			      zcfeiyong: null,
+			    },
+			  };
+			},
+			//方案操作
+			async ddinfoajax_fan() {
+			  var dq = this;
+			  dq.bzj_fangan.loading = true;
+			  dq.bzj_fangan.data.code = false;
+			  var ddinfo = await ArbOne.methods.user(dq.bzj_fangan.ddid).call();
+			  if (
+			    ddinfo["mark"] ==
+			    "0x0000000000000000000000000000000000000000000000000000000000000000"
+			  ) {
+			    //初始化
+			    var ddis = await Dotc.methods.users(this.bzj_fangan.ddid).call();
+			    if (ddis["iorder"] == 0) {
+			      dq.bzj_fangan.loading = false;
+			      dq.$message({
+			        message: "订单不存在",
+			        type: "warning",
+			      });
+			      return;
+			    }
+			    initlx();
+			  } else {
+			    //组装数据
+			    setobj(ddinfo);
+			  }
+			
+			  //轮询查询是否初始化成功
+			  function initlx() {
+			    ArbOne.methods.user(dq.bzj_fangan.ddid).call((err, ret) => {
+			      if (ret) {
+			        if (
+			          ret["mark"] !=
+			          "0x0000000000000000000000000000000000000000000000000000000000000000"
+			        ) {
+			          setobj(ret);
+			        } else {
+			          setTimeout(() => {
+			            initlx();
+			          }, 3000);
+			        }
+			      } else {
+			        dq.bzj_fangan.loading = false;
+			        dq.$message({
+			          message: "请点击同意！",
+			          type: "warning",
+			        });
+			      }
+			    });
+			  }
+			
+			  //组装数据
+			  async function setobj(data) {
+			    var bzjnum = config["hyue"][config["key"]]["Bzj"]["num"];
+			    var pro = {
+			      num: 0,
+			      pro: "",
+			    };
+			    var hbarr = config["hbi"][config["key"]];
+			    for (const key in hbarr) {
+			      if (data.pro == hbarr[key]["key"]) {
+			        pro.num = hbarr[key]["num"];
+			        pro.pro = hbarr[key]["id"];
+			        break;
+			      }
+			    }
+			    var username = await ArbOne.methods.message(address, "0").call();
+			    dq.bzj_fangan.loading = false;
+			    dq.bzj_fangan.data.code = true;
+			    data.uma = Number(data.uma) / 10 ** bzjnum;
+			    data.mma = Number(data.mma) / 10 ** bzjnum;
+			    data.uoa = Number(data.uoa) / 10 ** pro.num;
+			    data.pro = pro.pro;
+			    data.myuser = address;
+			    data.myname = username ? Base64.decode(username) : "暂未设置";
+			    for (const key in data) {
+			      dq.bzj_fangan.data[key] = data[key];
+			    }
+			  }
+			},
+			
+			//提交方案
+			async schemeajax() {
+			  var dq = this;
+			  dq.bzj_fangan.loading = true;
+			  // 分配的数量之和必须等于交易双方及第一轮仲裁费之和
+			  var _who = 1;
+			  if (
+			    this.bzj_fangan["from"]["bzjt"] == 1 &&
+			    this.bzj_fangan["from"]["bzjtb"] == 1
+			  ) {
+			    _who = 2;
+			  } else if (
+			    this.bzj_fangan["from"]["bzjt"] == 1 &&
+			    this.bzj_fangan["from"]["bzjtb"] == 2
+			  ) {
+			    _who = 1;
+			  } else if (
+			    this.bzj_fangan["from"]["bzjt"] == 2 &&
+			    this.bzj_fangan["from"]["bzjtb"] == 1
+			  ) {
+			    _who = 1;
+			  } else if (
+			    this.bzj_fangan["from"]["bzjt"] == 2 &&
+			    this.bzj_fangan["from"]["bzjtb"] == 2
+			  ) {
+			    _who = 2;
+			  }
+			  var meg = await ArbTwo.methods.meg().call();
+			  var arat = await ArbTwo.methods.arat().call();
+			  var arbs = await ArbTwo.methods.arbs(this.bzj_fangan["ddid"]).call();
+			  var user = await ArbTwo.methods.user(this.bzj_fangan["ddid"]).call();
+			  var arm = Number(arbs.arm);
+			  var mma = Number(user.mma);
+			  var uma = Number(user.uma);
+			  var tol =
+			    Number(this.bzj_fangan.from.sjzcy) * 10**bzj_num +
+			    Number(this.bzj_fangan.from.yhzcy) * 10**bzj_num;
+			  if (
+			    add(tol, mul(Number(this.bzj_fangan.from.zcfeiyong) * 10**bzj_num, meg)) ==
+			    mul(add(arm, mma), 2)
+			  ) {
+			    var numbbbbb = Number(this.bzj_fangan.from.bzjnum) * 10**bzj_num;
+			    //第二轮仲裁员分配的仲裁费必须低于最高比例
+			    if (
+			      mul(Number(this.bzj_fangan.from.zcfeiyong) * 10**bzj_num, 10 ** 6) <=
+			      mul(mma, Number(arat))
+			    ) {
+			      //设置保证金调整方案,@_who == 1 扣除商家的保证金,@_who == 2 扣除用户的保证金,
+			      if (_who == 1) {
+			        if (numbbbbb <= mma) {
+			          getfanan();
+			        } else {
+			          dq.bzj_fangan.loading = false;
+			          this.$message.error("设置金额不能大于商家保证金金额！");
+			        }
+			      } else {
+			        if (numbbbbb <= uma) {
+			          getfanan();
+			        } else {
+			          dq.bzj_fangan.loading = false;
+			          this.$message.error("设置金额不能大于用户保证金金额！");
+			        }
+			      }
+			    } else {
+			      dq.bzj_fangan.loading = false;
+			      this.$message.error("此方案设置失败");
+			    }
+			  } else {
+			    dq.bzj_fangan.loading = false;
+			    this.$message.error("此方案设置失败");
+			  }
+			
+			  //提交本次设置方案
+			  async function getfanan() {
+			    var numbbbbb = dq.getFNum(dq.bzj_fangan.from.bzjnum * 10 ** 12*10**6);
+			    var zcfeiyong = dq.getFNum(dq.bzj_fangan.from.zcfeiyong * 10 ** 12*10**6);
+			    var sjzcy = dq.getFNum(dq.bzj_fangan.from.sjzcy * 10 ** 12*10**6);
+			    var yhzcy = dq.getFNum(dq.bzj_fangan.from.yhzcy * 10 ** 12*10**6);
+			    var array = new Array(4);
+			    array[0] = 0;
+			    array[1] = 0;
+			    array[2] = sjzcy;
+			    array[3] = yhzcy;
+			    //查询编号是否存在
+			    var shasing = await Arbdate.methods
+			      .scheme(
+			        dq.bzj_fangan["ddid"],
+			        dq.bzj_fangan.from.who + "",
+			        _who + "",
+			        numbbbbb + "",
+			        array,
+			        zcfeiyong + ""
+			      )
+			      .call();
+			    var isfanan = await ArbTwo.methods.plan(shasing).call();
+			    if (isfanan != 0) {
+			      dq.bzj_fangan.loading = false;
+			      dq.$message.error("您好，此方案已存在!,方案编号为{isfanan}");
+			      return;
+			    }
+			    ArbTwo.methods
+			      .scheme(
+			        dq.bzj_fangan["ddid"],
+			        dq.bzj_fangan.from.who + "",
+			        _who + "",
+			        numbbbbb + "",
+			        array,
+			        zcfeiyong + ""
+			      )
+			      .send({ from: address }, (err, ret) => {
+			        if (ret) {
+			          dq.bzj_fangan.loading = false;
+			          dq.$message({
+			            message: "已经提交方案",
+			            type: "success",
+			          });
+			        } else {
+			          dq.bzj_fangan.loading = false;
+			          dq.$message.error("请点击同意!");
+			        }
+			      });
+			  }
+			
+			  function mul(z, y) {
+			    return z * y;
+			  }
+			  function add(z, y) {
+			    return z + y;
+			  }
 			},
 			//第二轮我参与的
 			async getList() {
@@ -327,6 +958,7 @@
 			          list.push(obj);
 			        }
 			        dq.del_list = list;
+					console.log(list)
 			      }
 			    }
 			  });
@@ -348,6 +980,137 @@
 			  console.log(this.del_list);
 			
 			},
+			
+			//仲裁方案查询 订单信息 方案列表 投票结果 资产归属信息
+			async getzcinfoajax(){
+				console.log(this.zcgldata.ddid)
+			  if (!this.zcgldata.ddid  || this.zcgldata == 0) {
+				  console.log(this.zcgldata)
+			    this.$message.error('请输入订单号！');
+			    return;
+			  }
+			  var dq = this;
+			  var data = dq.zcgldata;
+			  dq.zcgldata.loading = true;
+			  //查询订单信息
+			  var ddinfo = await ArbOne.methods.user(this.zcgldata.ddid).call();
+			  if (ddinfo['mark'] == '0x0000000000000000000000000000000000000000000000000000000000000000') {
+			    this.$message.error('订单不存在！');
+			    dq.zcgldata.loading = false;
+			    return;
+			  }
+			  getshuju();
+			  //获取数据 并且组装
+			  async function getshuju() {
+			    //查询总票数量
+			    var bhnum = await ArbTwo.methods.paus(data.ddid).call(); 
+			    //查询仲裁数据库
+			    var arbs = await ArbTwo.methods.arbs(data.ddid).call();
+			    var Timc = await ArbTwo.methods.Timc().call();
+			    //查询默认编号投票人数 以及信息
+			    var guishu;
+			    var slates = await ArbTwo.methods.slates(data.ddid,data['faid']).call();
+			      if (slates['arb'] == 1) guishu =  '商家';
+			      if (slates['arb'] == 2) guishu =  '用户';
+			      if (slates['arb'] == 0) guishu =  '已释放';
+			      console.log(34567)
+			      console.log(data['faid'])
+			      console.log(slates['comp'])
+			    var weight = await ArbTwo.methods.weight(data.ddid,arbs['timc'],data['faid']).call();
+			
+			    var sjzcy_num = 0;
+			    var yhzcy_num  = 0;
+				console.log(data.ddid,data['faid'])
+			    await ArbTwo.methods.slat(data.ddid,data['faid'],3).call((err,ret)=>{
+			      if (ret) {
+			        sjzcy_num = ret;
+			      }
+					console.log(ret)
+			    });
+			    await ArbTwo.methods.slat(data.ddid,data['faid'],2).call((err,ret)=>{
+			      if (ret) {
+			        yhzcy_num = ret;
+			      }
+					console.log(err)
+			    });
+			    var pro_num = 0;
+			    var pro_id = '';
+			    var huobi = config['hbi'][config['key']];
+			    for (const key in huobi) {
+			      if (ddinfo['pro'] == huobi[key]['key']) {
+			        pro_num =  huobi[key]['num'];
+			        pro_id =  huobi[key]['id'];
+			        break;
+			      }
+			    }
+			
+			    //获取用户名
+			    var username = await ArbOne.methods.message(address,0).call();
+			
+			    //倒计时
+			    var dqtime = Math.round(new Date() / 1000);
+			    var ensjc = Number(Timc) + Number(arbs['timc']);
+			    var djsval = (dqtime - ensjc)*1000;
+			    console.log("倒计时1")
+			    console.log(dqtime)
+			    console.log(ensjc)
+			    console.log(djsval)
+			    dq.zcgldata = {
+			      code:data.code,
+			      loading:false,
+			      tcode:true,
+			      faid:1,
+			      bhnum:Number(bhnum),
+			      ddid:data['ddid'],
+			      arbs:arbs,
+			      info:{
+			        myuser:address,
+			        myname:username ? Base64.decode(username):'暂未填写',
+			        myjuese:'',
+			        ddid:data['ddid'],
+			        ddinfo:{
+			          uad:ddinfo['uad'],
+			          mad:ddinfo['mad'],
+			          pro:pro_id,
+			          mma:Number(ddinfo['mma']) / (10**bzj_num),
+			          uma:Number(ddinfo['uma']) / (10**bzj_num),
+			          uoa:Number(ddinfo['uoa']) / (10**pro_num)
+			        },
+			        tpjdu:weight,
+			        zcguishu:guishu,
+			        bzjnum:Number(slates['comp']) / (10**bzj_num),
+			        who:slates['who'],
+			        sjnum:Number(sjzcy_num) / (10**bzj_num),
+			        yhnum:Number(yhzcy_num) / (10**bzj_num),
+			        delnum:Number(slates['fees']) / (10**bzj_num),
+			        djsval:djsval
+			      }
+			    }
+			    //查询我是否双方交易之一
+			    if (zmxiaoxie(JSON.stringify(ddinfo)).indexOf(zmxiaoxie(address)) != -1) {
+			      if (zmxiaoxie(ddinfo['mad']) == zmxiaoxie(address)) {
+			        dq.zcgldata.info.myjuese = '商家';
+			      }else if (zmxiaoxie(ddinfo['uad']) == zmxiaoxie(address)) {
+			        dq.zcgldata.info.myjuese = '用户';
+			      }
+			    }else{
+			      //查询投票者
+			        ArbTwo.methods.applySuceed(data.ddid).call((err,ret)=>{
+			          if (ret) {
+			            if (zmxiaoxie(JSON.stringify(ret)).indexOf(zmxiaoxie(address)) != -1) {
+			              dq.zcgldata.info.myjuese = '投票者';
+			            }else{
+			              dq.zcgldata.info.myjuese = '其他';
+			            }
+			          }else{
+			            dq.zcgldata.info.myjuese = '其他';
+			          }
+			        });
+			    }
+			    dq.zcgldata.loading = false;
+			  }
+			},
+			
 			//赞成提交
 			agree() {
 			  ArbOne.methods.arbAsse(this.dyl_zc.did + "", this.dyl_zc.what + "").send({
@@ -543,8 +1306,175 @@
 			    dq.user = address.toLowerCase();
 			    dq.tabindex = "3";
 			  }
+			},
+			
+			//取消投票
+			async qxtoupiao(){
+			  var dq  = this;
+			  this.zcgldata.loading = true;
+			  var arbs = await ArbTwo.methods.arbs(this.zcgldata.ddid).call();
+			  var pau = await ArbTwo.methods.arbn(this.zcgldata.ddid,arbs['timc'],address).call();
+			  console.log(999)
+			  console.log(arbs['time'])
+			  console.log(pau)
+			  if (arbs['time'] == 0 && pau == this.zcgldata.faid) {
+			    ArbTwo.methods.notVote(this.zcgldata.ddid,this.zcgldata.faid).send({
+			      from:address
+			    },(err,ret)=>{
+			      dq.zcgldata.loading = false;
+			      if (ret) {
+			        console.log('ok');
+			      }else{
+			        dq.$message.error('请您点击同意！');
+			      }
+			    });
+			  }else{
+			    this.$message.error('你无法取消该投票');
+			    this.zcgldata.loading = false;
+			  }
+			},
+			
+			//投票
+			async toupiaoajax(){
+			    var dq  = this;
+			    this.zcgldata.loading = true;
+			    var arbs = await ArbTwo.methods.arbs(this.zcgldata.ddid).call();
+			    var Timd = await ArbTwo.methods.Timd().call();
+			    var dqtime =  Math.round(new Date() / 1000);
+			    if (Number(Timd) > dqtime - Number(arbs['timd']) && Number(arbs['timd']) != 0) {
+			      var arbw = await ArbTwo.methods.arbw(this.zcgldata.ddid,address).call();
+			      var arbn = await ArbTwo.methods.arbn(this.zcgldata.ddid,arbs['timc'],address).call();
+			      if (arbw == 1 &&  arbn == 0 ) {
+			        ArbTwo.methods.vote(this.zcgldata.ddid,this.zcgldata.faid).send({from:address},(err,ret)=>{
+			          dq.zcgldata.loading = false;
+			          if (ret) {
+			            console.log('投票成功');
+			          }else{
+			            dq.$message.error('请点击同意！');
+			          }
+			        });
+			      }else{
+			        this.zcgldata.loading = false;
+			        dq.$message.error('投票失败！');
+			      }
+			    }else{
+			      this.zcgldata.loading = false;
+			      this.$message.error('您无法投票！');
+			    }
+			},
+			
+			//接受投票 accept
+			async jieshoutoupiao(){
+			  /*
+			    weight arbs leg
+			  */
+			  var dq = this;
+			  this.zcgldata['loading'] = true;
+			  var sing = this.zcgldata['info']['ddinfo']['mad']+','+this.zcgldata['info']['ddinfo']['uad'];
+			  if (zmxiaoxie(sing).indexOf(zmxiaoxie(address)) == -1) {
+			    this.zcgldata['loading'] = false;
+			    this.$message.error('不是交易者之一！');
+			    return;
+			  }
+			  var arbs = await ArbTwo.methods.arbs(this.zcgldata.ddid).call();
+			  var weight = await ArbTwo.methods.weight(this.zcgldata.ddid,arbs['timc'],this.zcgldata['faid']).call();
+			  var leg = await ArbTwo.methods.leg().call();
+			  if (Number(weight) >= Number(leg) && Number(arbs['time']) == 0) {
+			    ArbTwo.methods.accept(this.zcgldata.ddid,this.zcgldata['faid']).send({from:address},(err,ret)=>{
+			      dq.zcgldata['loading'] = false;
+			      if (ret) {
+			        dq.$message({
+			          message: '已提交接受！',
+			          type: 'success'
+			        });
+			      }else{
+			        dq.$message.error('操作失败1！');
+			      }
+			    });
+			  }else{
+			    this.zcgldata['loading'] = false;
+			    this.$message.error('操作失败2！');
+			  }
+			},
+			//执行投票 execute
+			async executeajax(){
+			  /*
+			    weight leg arbs Time slates
+			  */
+			   var dq = this;
+			   dq.zcgldata.loading = true;
+			   var arbs = await ArbTwo.methods.arbs(this.zcgldata.ddid).call();
+			   var weight = await ArbTwo.methods.weight(this.zcgldata.ddid,arbs['timc'],this.zcgldata['faid']).call();
+			   var leg = await ArbTwo.methods.leg().call();
+			   var Time = await ArbTwo.methods.Time().call();
+			   var dqtime = Math.round(new Date() / 1000);
+			   if (Number(weight) >= Number(leg) && Number(arbs['time']) != 0 && Number(Time) < dqtime - Number(arbs['time'])) {
+			     if (Number(arbs['finish']) != 0) {
+			       dq.zcgldata.loading = false;
+			       this.$message.error('已执行！');
+			       return;
+			     }
+			     ArbTwo.methods.execute(this.zcgldata.ddid,this.zcgldata['faid']).send({from:address},(err,ret)=>{
+			       dq.zcgldata.loading = false;
+			       if (ret) {
+			          dq.$message({
+			            message: '已提交执行操作！',
+			            type: 'success'
+			          });
+			       }else{
+			          dq.$message.error('请点击同意!');
+			       }
+			     });
+			   }else{
+			     dq.zcgldata.loading = false;
+			     this.$message.error('执行失败！');
+			   }
+			},
+			//重启投票 restartlArbajax
+			async restartlArbajax(){
+			  var dq = this;
+			  this.zcgldata['loading'] = true;
+			  var arbs = await ArbTwo.methods.arbs(this.zcgldata.ddid).call();
+			  var Timd = await ArbTwo.methods.Timd().call();
+			  var dqtime = 	 Math.round(new Date() / 1000);
+			  if (arbs['time'] == 0 && Number(Timd) < (dqtime - Number(arbs['timd'])) && Number(arbs['timd']) != 0) {
+			    //除交易双方外，本轮入选仲裁员均可撤销本次仲裁团
+			    var uarr = [];
+			    var ruxuanarr = await ArbTwo.methods.applySuceed(this.zcgldata.ddid).call();
+			    for (let index = 0; index < ruxuanarr[0].length; index++) {
+			      uarr.push(ruxuanarr[0][index]);
+			    }
+			    uarr.push(this.zcgldata['info']['ddinfo']['uad']);
+			    uarr.push(this.zcgldata['info']['ddinfo']['mad']);
+			    var sing = zmxiaoxie(JSON.stringify(uarr));
+			    if (sing.indexOf(zmxiaoxie(address)) != -1) {
+			      ArbTwo.methods.restartlArb(this.zcgldata.ddid).send({from:address},(err,ret)=>{
+			        dq.zcgldata['loading'] = false;
+			        if (ret) {
+			          dq.$message({
+			            message: '已提交重启操作！',
+			            type: 'success'
+			          });
+			        }else{
+			          dq.$message.error('请同意授权');
+			        }
+			      });
+			    }else{
+			      this.zcgldata['loading'] = false;
+			      this.$message.error('不是交易者之一！');
+			    }
+			  }else{
+			    this.zcgldata['loading'] = false;
+			    this.$message.error('重启失败！');
+			  }
 			}
-		}
+			
+			
+		},
+		
+	}
+	function zmxiaoxie(da) {
+	  return da.toLowerCase();
 	}
 </script>
 
@@ -578,5 +1508,34 @@
 	}
 	.implementBtn{
 		background-color: #489cfe;
+	}
+	.zcglul_li_item{
+		display: flex;
+		justify-content: flex-start;
+		line-height: 20px;
+	}
+	.zcglul_li_r{
+		/* float: right; */
+		flex: 1;
+	}
+	.zcglul_li_l{
+		/* float: left; */
+		flex: 1;
+	}
+	.zc_user_li_item,.title{
+		font-size: 20px;
+		padding: 5px 0;
+	}
+	.zcglul_li_item_in{
+		display: flex;
+		justify-content: space-around;
+		margin-top: 10px;
+		/* margin-right: 20px; */
+	}
+	.zcglul_li_item_in:first-child{
+		margin-top: 30px;
+	}
+	.bzj_fangan_ul_li{
+		
 	}
 </style>

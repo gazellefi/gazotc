@@ -37,8 +37,8 @@
 					</div>
 					<div class="" style="display: flex;justify-content: space-around;">
 						<div class="btn" style="margin-top: 10px;" @click="dialogVisible = true"><span>{{$t('message.modify')}}</span></div>
-						<div class="btn" style="margin-top: 10px;" @click="ruleHideAuth"><span>{{ $t("message.activit.Authentication") }}</span></div>
-						<div class="btn" style="margin-top: 10px;" @click="ruleHideAuth" v-if="false"><span>{{ $t("message.activit.Authentication") }}</span></div>
+						<div class="btn" style="margin-top: 10px;" @click="ruleHideAuth"><span>{{ $t("message.activit.IDnumber") }}</span></div>
+						<div class="btn" style="margin-top: 10px;" @click="ruleHideAuth" v-if="false"><span>{{ $t("message.activit.IDnumber") }}</span></div>
 					</div>
 				</div>
 				<!-- 仲裁员昵称 -->
@@ -477,16 +477,9 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 			  //轮询注册是否成功
 			  function zcchaxun() {
 			    setTimeout(() => {
-				  that.dialogVisible = false
 			      Toast.clear();
-				  Dialog.alert({
-				    title: '注册成功',
-				  }).then(() => {
-				  	that.getsczc()
-				  });
-			   //    Toast.success("注册成功");
-				  // that.dialogVisible = false
-				  
+			      Toast.success("注册成功");
+				  that.dialogVisible = false
 				  return
 				  let data = {
 					  idNo: that.regForm.identity, 
@@ -518,7 +511,7 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 					  }
 				  })
 				  
-			    }, 5000);
+			    }, 3000);
 			  }
 			},
 			ruleChangeHideAuth() {

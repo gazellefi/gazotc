@@ -106,7 +106,7 @@
 		<!-- WAP -->
 		<div class="hidden-sm-and-up ddgl_fabu_wapview">
 			<el-row style="border-bottom: 1px solid #EEEEEE;">
-<!-- 				<el-col :span="12">
+				<el-col :span="12">
 					<div class="ddgl_fabu_p_head_sxan_i">
 						<span>{{ $t("message.dapp.currency")}}：</span>
 						<el-dropdown class="ddlistaa_head_item" @command="saixuanpro">
@@ -153,7 +153,7 @@
 							</el-dropdown-menu>
 						</el-dropdown>
 					</div>
-				</el-col> -->
+				</el-col>
 			</el-row>
 			<!-- 列表 -->
 			<el-row>

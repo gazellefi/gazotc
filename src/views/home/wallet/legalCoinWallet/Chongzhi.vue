@@ -58,7 +58,7 @@ export default {
     return {
       hbilist: hbarr,
       hbindex: 0,
-      je: '',
+      je: 0,
       key: config['key'],
       form: {
 		  region: ''
@@ -66,10 +66,10 @@ export default {
 	  balance: ''
     }
   },
-  props:['type','flag'],
+  props:['type'],
   created() {
   	this.form.region = this.type
-	this.je = ''
+	this.je = 0
 	if(this.type){
 		this.changeSelect(this.type)
 	}
@@ -77,16 +77,10 @@ export default {
   watch:{
 	  type(){
 	  	this.form.region = this.type
-		this.je = ''
+		this.je = 0
 	  	if(this.type){
 	  		this.changeSelect(this.type)
 	  	}
-	  },
-	  flag(){
-		 this.je = ''
-		 if(this.flag){
-		 	this.changeSelect(this.type)
-		 }
 	  }
   },
   mounted() {

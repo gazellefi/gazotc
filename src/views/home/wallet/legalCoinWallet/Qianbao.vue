@@ -7,8 +7,7 @@
 						<img src="@/assets/img/money1.png" style="width: 20px;" class="marr-10">
 						<div> {{ $t("message.dapp.capitalAsset")}}</div>
 					</div>
-					<!-- 计算不对 暂时隐藏 -->
-					<!-- <div class="num">{{ user_zc.toFixed(2) }}</div> -->
+					<div class="num">{{ user_zc.toFixed(2) }}</div>
 				</div>
 			</el-col>
 			<el-col :sm="24" :md="10" class="f c_r a_c">
@@ -30,7 +29,7 @@
 						<img src="@/assets/img/money1.png" style="width: 20px;" class="marr-10">
 						<div> {{ $t("message.dapp.capitalAsset")}}</div>
 					</div>
-					<!-- <div class="num">{{ user_zc.toFixed(2) }}</div> -->
+					<div class="num">{{ user_zc.toFixed(2) }}</div>
 				</div>
 			</el-col>
 			<el-col :sm="24" :md="10" class="f a_c">
@@ -62,7 +61,7 @@
 		</el-row>
 		<el-row v-for="(item,index) in list" :key="index">
 			<el-col :span="6">
-				<div class="item_nav c6"><span>{{item.name == 'bond' ? $t(`message.${item.name}`) : item.name}}</span></div>
+				<div class="item_nav c6"><span>{{item.name}}</span></div>
 			</el-col>
 			<el-col :span="6">
 				<div class="item_nav c6"><span>{{item.balancepro}}</span></div>
@@ -83,11 +82,11 @@
 		</el-row>
 		<myDialog width="320px" :isShowFooter="false"  :title="$t('message.Recharge')" :closeModal="false" :closePress="false"
 			:visible.sync="isShowChongzhi">
-			<Chongzhi :type="type_c" :flag="isShowChongzhi" @Recharge="Recharge"></Chongzhi>
+			<Chongzhi :type="type_c" @Recharge="Recharge"></Chongzhi>
 		</myDialog>
 		<myDialog width="320px" :isShowFooter="false" :title="$t('message.WithdrawMoney')" :closeModal="false" :closePress="false"
 			:visible.sync="isShowTixan">
-			<Tixian :type="type_t" :flag="isShowTixan" @drawal="drawal"></Tixian>
+			<Tixian :type="type_t" @drawal="drawal"></Tixian>
 		</myDialog>
 	</div>
 </template>
@@ -309,14 +308,7 @@
 			  }, (error, ret) => {
 			    if (ret) {
 			      zhuanru_lx(instance, done);
-			    }else{
-					Toast.clear()
-					instance.confirmButtonLoading = false;
-					instance.confirmButtonText = dq.popoType == 4? dq.$t('message.changeOut'):dq.popoType == 3?dq.$t('message.changeInto') : ''
-					done()
-					dq.numRu = 0;
-					dq.onCommentInputChange1()
-				}
+			    }
 			  });
 			  var mm = 0  // 轮询 次数
 			
@@ -329,8 +321,8 @@
 			          Toast.clear();
 			          clearTimeout(lx_time);
 			          Dialog.alert({
-			            title: '转入成功',
-			            message: '转入' + dq.numRu,
+			            title: 'Transfer in succeeded',
+			            message: 'Transferred in ' + dq.numRu + ' Usdt to deposit',
 			          }).then(() => {
 						instance.confirmButtonLoading = false;
 						instance.confirmButtonText = dq.popoType == 4? dq.$t('message.changeOut'):dq.popoType == 3?dq.$t('message.changeInto') : ''
@@ -386,7 +378,7 @@
 			  var dq = this;
 			  			
 			  Toast.loading({
-			    message: '转出中...'
+			    message: '转入中...'
 			  });
 			  var lx_time = "";
 			  //开始转出保证金
@@ -398,14 +390,7 @@
 				  console.log(ret);
 			    if (ret) {
 			      zhuanru_lx(instance, done);
-			    }else{
-					Toast.clear()
-					instance.confirmButtonLoading = false;
-					instance.confirmButtonText = dq.popoType == 4? dq.$t('message.changeOut'):dq.popoType == 3?dq.$t('message.changeInto') : ''
-					done()
-					dq.numRu = 0;
-					dq.onCommentInputChange1()
-				}
+			    }
 			  });
 			  	var mm = 0  // 轮询 次数
 			  //轮询查询是否转出成功 
@@ -413,7 +398,7 @@
 			    doctconn.methods.balancemar(address + "").call((err, ret) => {
 			      if (ret) {
 			        var balancemar = Number(ret) / (10 ** bzj_num);
-			        if (balancemar <= dq.balancemar_num - Number(dq.numRu)) {
+			        if (balancemar == dq.balancemar_num - Number(dq.numRu)) {
 			          Toast.clear();
 			          clearTimeout(lx_time);
 			          Dialog.alert({
@@ -423,7 +408,7 @@
 						  instance.confirmButtonLoading = false;
 						  instance.confirmButtonText = dq.popoType == 4? dq.$t('message.changeOut') :dq.popoType == 3?dq.$t('message.changeInto'): ''
 						  done()
-						    dq.getqblist(true)
+						  dq.getqblist(true)
 							dq.balancemarajax();
 							dq.numRu = 0;
 							dq.onCommentInputChange1()

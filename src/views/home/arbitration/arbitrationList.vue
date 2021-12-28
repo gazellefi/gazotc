@@ -9,7 +9,7 @@
 						<span>仲裁频道或</span>
 						<span class="c935" style="text-decoration:underline ;" @click="toGazOTC">GazOTCArb</span>
 						<i @click="toGazOTC" class="el-icon-s-promotion" style="color: #333;font-size: 24px;margin-top: -4px;margin-right: 5px;"></i>
-						<span>电报群联系仲裁员</span>
+						<span>仲裁电报群联系仲裁员</span>
 					</div>
 				
 				<div class="f">
