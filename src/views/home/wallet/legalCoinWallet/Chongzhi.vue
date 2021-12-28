@@ -286,7 +286,7 @@ export default {
 				}
             });
         }
-    
+        var mm = 0  // 轮询 次数
         function chongzhi_lx() {
             dotcconn.methods.balancepro(address+"",proust).call((err,ret)=>{
                 if (ret) {
@@ -304,6 +304,20 @@ export default {
                         });
     
                     }else{
+						mm++
+						if(mm > 3){
+							Toast.clear();
+							clearTimeout(usdtlxtime);
+							Dialog.alert({
+							    title: '充值成功',
+							    message: '您已成功充值'+ dq.je +' '+ dq.hbilist[dq.hbindex]['title'] +'',
+							}).then(() => {
+								dq.je = 0
+							    dq.$emit('Recharge')
+								// window.location.reload();
+							});
+							return
+						}
                         usdtlxtime = setTimeout(() => {
                             chongzhi_lx();
                         }, 3000);

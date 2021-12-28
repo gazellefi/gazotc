@@ -181,8 +181,8 @@ import Web3 from "web3";
 import Web3Modal from "web3modal";
 let Base64 = require('js-base64').Base64;
 import { Dialog, Notify, Toast } from 'vant';
-import VConsole from "vconsole";
-new VConsole();
+// import VConsole from "vconsole";
+// new VConsole();
 
 import config from "@/config";
 var dotc_abi = config['hyue'][config['key']]['dotc']['abi'];
@@ -687,6 +687,7 @@ export default {
 				    message: '可在"订单中心>法币交易"查看',
 				  }).then(() => {
 				    // window.location.reload();
+					dq.ddcode = false;
 				    dq.getddinfo()
 				  });
 			  },4000)

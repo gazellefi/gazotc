@@ -301,9 +301,10 @@
 			    message: '转入中...'
 			  });
 			  var lx_time = "";
+			  let str = dq.getFNum(Number(this.numRu) * (10 ** bzj_num))
 			  //开始转入保证金
 			  var doctconn = new web3.eth.Contract(dotc_abi, dotc_key);
-			  doctconn.methods.transfer("1", (Number(this.numRu) * (10 ** bzj_num)) + "").send({
+			  doctconn.methods.transfer("1",str).send({
 			    from: address
 			  }, (error, ret) => {
 			    if (ret) {
@@ -317,6 +318,7 @@
 					dq.onCommentInputChange1()
 				}
 			  });
+			  var mm = 0  // 轮询 次数
 			
 			  //轮询查询是否转入成功 
 			  function zhuanru_lx(instance, done) {
@@ -339,6 +341,26 @@
 						dq.onCommentInputChange1()
 			          });
 			        } else {
+						mm++
+						// 在轮询3次后 退出
+						console.log(mm);
+						if(mm > 3){
+							Toast.clear();
+							clearTimeout(lx_time);
+							Dialog.alert({
+							  title: '转入成功',
+							  message: '转入' + dq.numRu,
+							}).then(() => {
+									instance.confirmButtonLoading = false;
+									instance.confirmButtonText = dq.popoType == 4? dq.$t('message.changeOut'):dq.popoType == 3?dq.$t('message.changeInto') : ''
+									done()
+									dq.getqblist(true)
+								  dq.balancemarajax();
+								  dq.numRu = 0;
+								dq.onCommentInputChange1()
+							});
+							return
+						}
 			          lx_time = setTimeout(() => {
 			            zhuanru_lx(instance, done);
 			          }, 3000);
@@ -369,8 +391,8 @@
 			  var lx_time = "";
 			  //开始转出保证金
 			  var doctconn = new web3.eth.Contract(dotc_abi, dotc_key);
-			  // console.log(this.getFNum((Number(this.numRu) * (10 ** bzj_num))));
-			  doctconn.methods.transfer("2", (Number(this.numRu) * (10 ** bzj_num)) + "").send({
+			  let str = dq.getFNum(Number(this.numRu) * (10 ** bzj_num))
+			  doctconn.methods.transfer("2", str).send({
 			    from: address
 			  }, (error, ret) => {
 				  console.log(ret);
@@ -385,11 +407,10 @@
 					dq.onCommentInputChange1()
 				}
 			  });
-			  			
+			  	var mm = 0  // 轮询 次数
 			  //轮询查询是否转出成功 
 			  function zhuanru_lx(instance, done) {
 			    doctconn.methods.balancemar(address + "").call((err, ret) => {
-					console.log(ret);
 			      if (ret) {
 			        var balancemar = Number(ret) / (10 ** bzj_num);
 			        if (balancemar <= dq.balancemar_num - Number(dq.numRu)) {
@@ -408,6 +429,26 @@
 							dq.onCommentInputChange1()
 			          });
 			        } else {
+					  mm++
+					  // 在轮询3次后 退出
+					  console.log(mm);
+					  if(mm > 3){
+					  	Toast.clear();
+					  	clearTimeout(lx_time);
+					  	Dialog.alert({
+					  	  title: '转入成功',
+					  	  message: '转入' + dq.numRu,
+					  	}).then(() => {
+					  			instance.confirmButtonLoading = false;
+					  			instance.confirmButtonText = dq.popoType == 4? dq.$t('message.changeOut'):dq.popoType == 3?dq.$t('message.changeInto') : ''
+					  			done()
+					  			dq.getqblist(true)
+					  		  dq.balancemarajax();
+					  		  dq.numRu = 0;
+					  		dq.onCommentInputChange1()
+					  	});
+					  	return
+					  }
 			          lx_time = setTimeout(() => {
 			            zhuanru_lx(instance, done);
 			          }, 3000);

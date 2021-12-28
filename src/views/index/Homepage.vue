@@ -1,5 +1,12 @@
 <template>
   <div class='index'>
+	  <div class="f a_c c_c" style="height: 500px;">
+	  	<el-carousel :autoplay="false"  arrow="nerver"  indicator-position="none" height="100%">
+	  	  <el-carousel-item style="position:relative">
+	  	    <img src="../../assets/img/giphy.gif" alt="">
+	  	  </el-carousel-item>
+	  	</el-carousel>
+	  </div>
     <!-- therefore -->
     <div class="therefore ">
       <div class="content">

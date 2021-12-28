@@ -207,13 +207,13 @@
 				<el-form-item :label="$t('message.dapp.ModifyType')">
 					<el-select v-model="set_form.tcode" :placeholder="$t('message.SelectType')">
 						<el-option
-							v-for="item in [{code:1,name: $t('message.dapp.ModifyPrice')},{code:2,name:$t('message.dapp.ModifiedQuantity')},{code:3,name: $t('message.dapp.ModifyOrderStatus')}]"
+							v-for="item in [{code:1,name: $t('message.dapp.ModifyPrice')},{code:2,name:$t('message.dapp.ModifiedQuantity')},{code:3,name: set_form.mlive == 1 ? $t('message.undercarriage'): $t('message.Shelf')}]"
 							:key="item.code" :label="item.name" :value="item.code">
 						</el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item :label="$t('message.dapp.orderStatus')" v-if="set_form.tcode == 3">
-					<el-button>{{ set_form.mlive == 1 ? $t('message.OnTheShelf'):$t('message.OffTheShelf') }}</el-button>
+					<el-button :disabled="true">{{ set_form.mlive == 1 ? $t('message.OnTheShelf'):$t('message.OffTheShelf') }}</el-button>
 				</el-form-item>
 				<el-form-item :label="$t('message.dapp.amount')" v-if="set_form.tcode == 2">
 					<el-input v-model="set_form.num"></el-input>

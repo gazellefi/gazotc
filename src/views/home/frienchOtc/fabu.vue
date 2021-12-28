@@ -67,7 +67,13 @@
 		      <div class="add_form_item">
 		        <div class="add_form_item_t">{{$t('message.arbitration.merchantMargin')}}</div>
 		        <div class="add_form_item_input">
-		          <el-input placeholder="" v-model="form.sjbzj" disabled></el-input>
+		          <el-input placeholder="" v-model="form.sjbzj" disabled>
+					  <template slot="append">
+					  	<div style="width: 40px;text-align: center;">
+					  		Gaz
+					  	</div>
+					  </template>
+				  </el-input>
 		        </div>
 		        <div class="add_form_item_input errormsg" v-if="isform.sjbzj" style="color: #0d92f1;">
 		          {{$t('message.enterBalanTips')}}
@@ -145,6 +151,8 @@ import Web3 from "web3"
 import Web3Modal from "web3modal"
 let Base64 = require('js-base64').Base64;
 import { Dialog, Toast, Notify } from 'vant';
+// import VConsole from "vconsole";
+// new VConsole();
 
 //公共变量
 var web3 = "";
@@ -674,7 +682,6 @@ export default {
         var prosconn = new web3.eth.Contract(dotc_abi, dotc_key);
         prosconn.methods.pros(pro_key).call((err, ret) => {
           if (ret) {
-            console.log(ret);
             var i_num = dq.form['num'];
             var one = parseInt(ret['one']);
             var uni = parseInt(ret['uni']);
@@ -682,7 +689,7 @@ export default {
             var mara = parseInt(dq.hbi['mara']);
             var jisuan = (mul(mul((i_num * one), uni), mara) / mul(pri, one) / (10 ** bzj_num)).toFixed(2);
             dq.form['sjbzj'] = jisuan;
-            if ((parseInt(dq.user['balancemar']) / (10 ** bzj_num)) >= jisuan) {
+            if ((dq.user['balancemar'] / (10 ** bzj_num)) >= jisuan) {
               dq.isform['sjbzj'] = false;
             } else {
               dq.isform['sjbzj'] = true;
