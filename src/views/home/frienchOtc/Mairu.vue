@@ -55,7 +55,7 @@
 			    <div class="view_form_item">
 			      <div class="view_form_item_t">
 			        {{ ddinfo['Mmark'] == '0x6275790000000000000000000000000000000000000000000000000000000000' ? $t('message.dapp.sell'):$t('message.dapp.buy')  }}
-			        <span v-if="form.num">手续费 {{ ddinfo['sxf_je'] }} {{ddinfo.huobi}}</span>
+			        <span v-if="form.num">{{$t('message.frienchOtc.charge')}} {{ ddinfo['sxf_je'] }} {{ddinfo.huobi}}</span>
 			      </div>
 			      <div class="view_form_item_input">
 			        <div class="view_form_item_input_srk f c_c a_c" style="border: 1px solid #DCDCDC; width: 80%;height: 40px;">
@@ -135,7 +135,7 @@
         <div class="view_form_item">
           <div class="view_form_item_t">
             {{ ddinfo['Mmark'] == '0x6275790000000000000000000000000000000000000000000000000000000000' ? $t('message.dapp.sell'):$t('message.dapp.buy')  }}
-            <span v-if="form.num">手续费 {{ ddinfo['sxf_je'] }} {{ddinfo.huobi}}</span>
+            <span v-if="form.num">{{$t('message.frienchOtc.charge')}} {{ ddinfo['sxf_je'] }} {{ddinfo.huobi}}</span>
           </div>
           <div class="view_form_item_input">
             <div class="view_form_item_input_srk f c_c a_c" style="border: 1px solid #DCDCDC; width: 80%;height: 40px;">
@@ -270,16 +270,16 @@ export default {
       }
 
       if (e < Number(this.ddinfo['zer'])) {
-        Notify({ type: 'warning', message: '数量不能少于' + this.ddinfo['zer'] });
+        Notify({ type: 'warning', message: this.$t('message.frienchOtc.noLess') + this.ddinfo['zer'] });
         return;
       }
 
       if (e > Number(this.ddinfo['mal'])) {
-        Notify({ type: 'warning', message: '数量不能少于' + this.ddinfo['mal'] });
+        Notify({ type: 'warning', message: this.$t('message.frienchOtc.noLess') + this.ddinfo['mal'] });
         return;
       }
       if (e > Number(this.ddinfo['Moa'])) {
-        Notify({ type: 'warning', message: '数量不能少于' + this.ddinfo['Moa'] });
+        Notify({ type: 'warning', message: this.$t('message.frienchOtc.noLess') + this.ddinfo['Moa'] });
         return;
       }
       var sxf = 0;
@@ -472,7 +472,7 @@ export default {
       var dq = this;
       if (this.ddid) {
         var jiazai = Toast.loading({
-          message: '请求中...',
+          message: dq.$t('message.frienchOtc.requesting'),
           closeOnClick: false,
           closeOnClickOverlay: false,
           loadingType: 'spinner',
@@ -558,7 +558,7 @@ export default {
           if (ret && !error) {
             dq.ddinfo.username = Base64.decode(ret);
           } else {
-            dq.ddinfo.username = 'No nickname is filled in';
+            dq.ddinfo.username = dq.$t('message.frienchOtc.noNickname');
           }
         });
       }
@@ -568,7 +568,7 @@ export default {
           if (ret && !error) {
             dq.ddinfo.beizhu = Base64.decode(ret);
           } else {
-            dq.ddinfo.beizhu = 'No remarks are filled in';
+            dq.ddinfo.beizhu = this.$t('message.frienchOtc.noRemark');
           }
         });
       }
@@ -596,11 +596,11 @@ export default {
     adddingdan() {
       var dq = this;
       if (!dq.form['num']) {
-        Notify({ type: 'warning', message: '数量不能为空' });
+        Notify({ type: 'warning', message: this.$t('message.frienchOtc.quantity') });
         return;
       }
       if (!dq.form['je']) {
-        Notify({ type: 'warning', message: '请输入付款金额' });
+        Notify({ type: 'warning', message: this.$t('message.frienchOtc.enterAmount') });
         return;
       }
       if (dq.form['num'] > Number(dq.ddinfo['mal'])) {
@@ -629,7 +629,7 @@ export default {
       if (dq.form['bzj'] > dq.user['balancemar']) {
         Dialog.confirm({
           title: dq.$t('message.prompt'),
-          message: '押金不足，请先补足押金！',
+          message: dq.$t('message.frienchOtc.insufficient'),
           confirmButtonText: dq.$t('message.cancel'),
           cancelButtonText: dq.$t('message.Recharge'),
           cancelButtonColor: '',
@@ -643,9 +643,9 @@ export default {
       }
 
       if (dq.ddinfo['Mmark'] != '0x6275790000000000000000000000000000000000000000000000000000000000') {
-        adddingdanajax('购买');
+        adddingdanajax('Buying');
       } else {
-        adddingdanajax('出售');
+        adddingdanajax('On sale');
       }
 
       //提交订单
@@ -677,8 +677,8 @@ export default {
 			  // console.log(ret);
 			  setTimeout(()=>{
 				  Dialog.alert({
-				    title: '交易成功',
-				    message: '可在"订单中心>法币交易"查看',
+				    title: dq.$t('message.frienchOtc.successful'),
+				    message: dq.$t('message.frienchOtc.check'),
 				  }).then(() => {
 				    // window.location.reload();
 					dq.ddcode = false;
@@ -701,8 +701,8 @@ export default {
             // });
           } else {
             Dialog.alert({
-              title: '交易失败',
-              // message: 'Please click OK!',
+              title: dq.$t('message.frienchOtc.fail'),
+              message: dq.$t('message.frienchOtc.clickOk'),
             });
             dq.ddcode = false;
             jiazai.clear();

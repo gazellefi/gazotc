@@ -94,7 +94,7 @@
     <div class="czhiview">
       <div class="czhiview_form">
         <div class="czhiview_form_hblist">
-          <div class="czhiview_form_hblist_t">Select currency</div>
+          <div class="czhiview_form_hblist_t">{{ $t('message.wallet.selectCurrency')}}</div>
           <div class="czhiview_form_hblist_ul">
             <div class="czhiview_form_hblist_item" v-for="(li, index) in hbilist" :key="index" @click="hbindex = index" :class="hbindex == index ? 'ac' : ''">
               {{ li.id }}
@@ -102,7 +102,7 @@
           </div>
         </div>
         <div class="czhiview_form_shurk">
-          <div class="czhiview_form_shurk_t">Recharge amount</div>
+          <div class="czhiview_form_shurk_t">{{ $t('message.wallet.rechargeAmount')}}</div>
           <div class="czhiview_form_shurk_input">
             <div class="czhiview_form_shurk_input_l">
               {{ hbilist[hbindex].id }}
@@ -112,7 +112,7 @@
         </div>
 
         <div class="czhiview_form_czhi">
-          <van-button type="primary" block @click="chongzhi">Recharge</van-button>
+          <van-button type="primary" block @click="chongzhi">{{ $t('message.wallet.recharge')}}</van-button>
         </div>
       </div>
     </div>
@@ -163,7 +163,7 @@ export default {
     }
     //监测用户是否安装MASK
     if (typeof ethereum === "undefined") {
-      alert("Please install the metamask plug-in first");
+      alert(this.$t('message.currencyOtc.install'));
     } else {
       //初始化
       webinit();
@@ -288,7 +288,7 @@ export default {
       }
     },
     chongzhi() {
-      Toast.loading({ message: '正在进行充值计算。。。' });
+      Toast.loading({ message: this.$t('message.wallet.depositting') });
       var dq = this;
       //查询该授权余额 -》查询余额- >充值-》轮询 倍数18需要转换
       if (this.je <= 0) {
@@ -312,24 +312,24 @@ export default {
             if (this.hbilist[this.hbindex]['sq_je'] > 0) {
               //清除
               Toast.clear();
-              Toast.loading({ message: '清除授权余额。。。' });
+              Toast.loading({ message: this.$t('message.wallet.clear') });
               shouquan(1);
             } else {
               Toast.clear();
-              Toast.loading({ message: '在授权余额中。。。' });
+              Toast.loading({ message: this.$t('message.wallet.authorized') });
               //授权
               shouquan(2);
             }
           } else {
             //直接授权
             Toast.clear();
-            Toast.loading({ message: '在授权余额中。。。' });
+            Toast.loading({ message: this.$t('message.wallet.authorized') });
             shouquan(2);
           }
         }
       } else {
         //Insufficient funds
-        alert('Insufficient funds');
+        alert(this.$t('message.wallet.insufficientFund'));
       }
 
       /*
@@ -375,7 +375,7 @@ export default {
         } else {
           if (sq_je >= dq.je) {
             Toast.clear();
-            Toast.loading({ message: '充值中...' });
+            Toast.loading({ message: this.$t('message.wallet.depositing') });
             czhiajax();
           } else {
             setTimeout(() => {
@@ -419,7 +419,7 @@ export default {
         czconn.methods.balancepro(address, dq.hbilist[dq.hbindex]['heyue']).call((erra, reta) => {
           if (reta) {
             if (Number(reta) >= dq_je) {
-              Toast.success('充值成功！');
+              Toast.success(this.$t('message.wallet.depositeSuccess'));
             } else {
               setTimeout(() => {
                 czhi_lunxun();

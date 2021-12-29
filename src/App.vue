@@ -12,10 +12,7 @@ div,
   padding: 0;
   list-style: none;
 }
-#app{
-	// background-image: url(assets/img/contact/bg1.png);
-	// background-size: 100% 100%;
-}
+
 .anniucss {
   cursor: pointer;
 }

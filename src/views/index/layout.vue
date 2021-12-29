@@ -133,10 +133,10 @@ export default {
 		{ title: 'About', route: '/about' },
 		{ title: 'Document', route: '/Homepage' },
 		{ title: 'Rule', route: '/rule' },
-		{ title: 'News', route: '/news' },
+		{ title: 'News', route: '/Homepage' },
 		{ title: 'Dapp', route: '/Exchange' },
 		{ title: 'Paper', route: '/GazOTC.pdf' },
-		{ title: 'Contact', route: '/contact' },
+		{ title: 'Contact', route: '/Homepage' },
       ],
     };
   },
@@ -271,7 +271,7 @@ export default {
       height: 100%;
 	  margin-top: 4.1875rem;
     }
-    height: 3.75rem;
+    /* height: 460px; */
     text-align: center;
     .info {
       position: absolute;
@@ -473,7 +473,7 @@ export default {
   }
   .topNav {
 	  
-    height: 3.75rem !important;
+    height: 140px !important;
     position: relative;
 	
 	.el-carousel {

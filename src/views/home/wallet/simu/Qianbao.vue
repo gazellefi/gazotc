@@ -75,7 +75,7 @@ export default {
     //监测用户是否安装MASK
     console.log("111")
     if (typeof ethereum === "undefined") {
-      alert("Please install the metamask plug-in first");
+      alert(this.$t('message.currencyOtc.install'));
     } else {
       //初始化
       webinit();
@@ -85,7 +85,7 @@ export default {
       this.huobi.push(huobiarr[key]);
     }
 
-    Toast.setDefaultOptions('loading', {
+    Toast.setDefaultOptions(this.$t('message.wallet.loading'), {
       forbidClick: false,
       closeOnClickOverlay: false,
       duration: 0,
@@ -185,7 +185,7 @@ export default {
       this.$router.push(url);
     },
     async getsczc() {
-      Toast.loading({ message: '请求中...' });
+      Toast.loading({ message: this.$t('message.wallet.requesting') });
       var scze = await simuonn.methods.balanceOf(address).call();
       this.items[0].num = scze / (10 ** 18);
       free = await simuonn.methods.callfree(address).call();
@@ -194,7 +194,7 @@ export default {
 
     },
     tixianajax() {
-      Toast.loading({ message: '正在撤回。。。' });
+      Toast.loading({ message: this.$t('message.wallet.withdrawing1') });
       var tkje = this.getFNum(free);
       simuonn.methods.withdraw(tkje).send({
         from: address
@@ -203,7 +203,7 @@ export default {
           tikchaxun();
         } else {
           Toast.clear();
-          Toast.fail('请同意授权！');
+          Toast.fail(this.$t('message.wallet.submit1'));
         }
       }
       );
@@ -212,7 +212,7 @@ export default {
       function tikchaxun() {
         setTimeout(() => {
           Toast.clear();
-          Toast.success('提现成功');
+          Toast.success(this.$t('message.wallet.withdrawSuccess'));
         }, 3000);
       }
     }

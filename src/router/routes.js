@@ -38,18 +38,6 @@ export default [
 	    component: () =>
 	      import('@/views/index/rule'),
 	  },
-	  {
-	    path: '/contact',
-	    name: 'contact',
-	    component: () =>
-	      import('@/views/index/contact'),
-	  },
-	  {
-	    path: '/news',
-	    name: 'news',
-	    component: () =>
-	      import('@/views/index/news'),
-	  },
       {
         path: '/Coremechanism',
         name: 'Coremechanism',
