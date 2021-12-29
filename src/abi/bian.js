@@ -5,6 +5,7 @@ import dotc from "./bian/dotc.json";
 import Ccdotc from "./bian/Ccdotc.json";
 import Arbdate from "./bian/Arbdate.json";
 import Pripla from "./bian/Pripla.json";
+import Letter from "./bian/Letter.json";
 var bian = {
     Url:'https://bsc-dataseed1.binance.org',
     Bzj:{
@@ -38,7 +39,11 @@ var bian = {
     Arbdate:{
         heyue:"0xA353Ae3FAf21833dC1fddD632aDfd82f03DDd38c",
         abi:Arbdate
-    }
+    },
+	Letter:{
+		heyue:"0x24c133348Aac78c5a1093E58Af6914D7E7377c93",
+		abi:Letter
+	}
 };
 
 export default bian;
