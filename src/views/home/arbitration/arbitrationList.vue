@@ -4,12 +4,12 @@
 		<div class="hidden-sm-and-down">
 			<div class="f c_b top_nav">
 					<div class="f a_c cursor fz14" style="color: #000000;">
-						<span>请先加入<span class="c935" style="text-decoration:underline ;" @click="toDiscard">discard</span></span>
+						<span>{{$t('message.join1')}}<span class="c935" style="text-decoration:underline ;" @click="toDiscard">Discard</span></span>
 						<img @click="toDiscard" src="../../../assets/img/discard.png" style="width: 24px;">
-						<span>仲裁频道或</span>
-						<span class="c935" style="text-decoration:underline ;" @click="toGazOTC">GazOTCArb</span>
+						<span>{{$t('message.join2')}}</span>
+						<span class="c935" style="text-decoration:underline ;" @click="toGazOTC">GazOTCarb</span>
 						<i @click="toGazOTC" class="el-icon-s-promotion" style="color: #333;font-size: 24px;margin-top: -4px;margin-right: 5px;"></i>
-						<span>仲裁电报群联系仲裁员</span>
+						<span>{{$t('message.join3')}}</span>
 					</div>
 				
 				<div class="f">
@@ -622,7 +622,7 @@
 				    //需要先授权
 				    dq.loadingsoudd = true;
 				    Dialog.confirm({
-				      message: 'Gaz未经授权。它是授权的吗？',
+				      message: 'GAZ未经授权。它是授权的吗？',
 				      confirmButtonText: 'determine',
 				      cancelButtonText: 'cancel',
 				      cancelButtonColor: '',
@@ -756,14 +756,14 @@
 			    if (gaz_sqa < this.sq_zc_data['je']) {
 			      //需要先授权
 			      Dialog.confirm({
-			        message: 'Gaz未经授权。它是授权的吗？',
+			        message: 'GAZ未经授权。它是授权的吗？',
 			        confirmButtonText: 'determine',
 			        cancelButtonText: 'cancel',
 			        cancelButtonColor: '',
 			        getContainer: 'body'
 			      }).then(() => {
 			        Toast.loading({
-			          message: 'Gaz授权。。。',
+			          message: 'GAZ授权。。。',
 			          forbidClick: true,
 			          loadingType: 'spinner',
 			        });
@@ -947,7 +947,7 @@
 		color: #08A99C;
 	}
 	.frozen_style{
-		color: #F04F73;
+		/* color: #F04F73; */
 	}
 	.invitationBnt{
 		background-color: #fdc600;

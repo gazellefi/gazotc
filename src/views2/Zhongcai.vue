@@ -353,9 +353,9 @@
       </div>
       <p>Asset ownership: Merchant</p>
       <p>Deposit: users reduced by 200ustd</p>
-      <p>Commercial Arbitrator: 1000gaz</p>
-      <p>User Arbitrator: 100gaz</p>
-      <p>Second round arbitration fee: 90gaz</p>
+      <p>Commercial Arbitrator: 1000GAZ</p>
+      <p>User Arbitrator: 100GAZ</p>
+      <p>Second round arbitration fee: 90GAZ</p>
       <div class="time-out">Voting Countdown: 04:30:20</div>
       <div class="buttons">
         <el-button type="primary" @click="dailogCloser">cancel</el-button>
@@ -1767,7 +1767,7 @@ export default {
         //需要先授权
         dq.loadingsoudd = true;
         Dialog.confirm({
-          message: 'Gaz is not authorized. Is it authorized?',
+          message: 'GAZ is not authorized. Is it authorized?',
           confirmButtonText: 'determine',
           cancelButtonText: 'cancel',
           cancelButtonColor: '',
@@ -1880,14 +1880,14 @@ export default {
         if (gaz_sqa < this.sq_zc_data['je']) {
           //需要先授权
           Dialog.confirm({
-            message: 'Gaz is not authorized. Is it authorized?',
+            message: 'GAZ is not authorized. Is it authorized?',
             confirmButtonText: 'determine',
             cancelButtonText: 'cancel',
             cancelButtonColor: '',
             getContainer: 'body'
           }).then(() => {
             Toast.loading({
-              message: 'Gaz is authorizing...',
+              message: 'GAZ is authorizing...',
               forbidClick: true,
               loadingType: 'spinner',
             });

@@ -69,13 +69,13 @@
 			<!-- 商家保证金 -->
       		<el-table-column align="center" :label="$t('message.arbitration.merchantMargin')">
       			<template slot-scope="scope">
-      				{{ scope.row.mma }} Gaz
+      				{{ scope.row.mma }} GAZ
       			</template>
       		</el-table-column>
 			<!-- 用户保证金 -->
       		<el-table-column align="center" :label="$t('message.arbitration.userMargin')">
       			<template slot-scope="scope">
-      				{{ scope.row.uma }} Gaz
+      				{{ scope.row.uma }} GAZ
       			</template>
       		</el-table-column>
 			<!-- 单价 -->

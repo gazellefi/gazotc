@@ -8,9 +8,9 @@
       <slot name="footer">
         <!--将取消与确定按钮集成到内部-->
         <span>
-          <el-button v-if="isShowCancle" @click="_handleCancel">取 消</el-button>
+          <el-button v-if="isShowCancle" @click="_handleCancel">{{$t('message.cancel')}}</el-button>
           <el-button v-if="isShowconfirm" type="primary" @click="_handleConfirm">
-            确 定
+            {{$t('message.confrim')}}
           </el-button>
         </span>
       </slot>

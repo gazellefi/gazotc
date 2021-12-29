@@ -2,13 +2,13 @@
 	<div class="chongzhi">
 		<el-form size='mini' ref="form" :model="form" label-width="90px">
 
-			<el-form-item label="选择币种">
-				<el-select v-model="form.region" placeholder="请选择币种" @change="changeSelect">
+			<el-form-item :label="$t('message.chooseCoin')">
+				<el-select v-model="form.region" :placeholder="$t('message.chooseContent')" @change="changeSelect">
 					<el-option v-for="item in huobi" :key="item.key"  :label="item.id" :value="item.id">
 					</el-option>
 				</el-select>
 			</el-form-item>
-			<el-form-item label="提币金额">
+			<el-form-item :label="$t('message.extract')">
 				<el-input v-model="je"></el-input>
 			</el-form-item>
 			<el-form-item label-width="0">

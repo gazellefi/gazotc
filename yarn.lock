@@ -3559,11 +3559,6 @@
   "resolved" "https://registry.nlark.com/crypto-js/download/crypto-js-4.1.1.tgz"
   "version" "4.1.1"
 
-"crypto@^1.0.1":
-  "integrity" "sha512-VxBKmeNcqQdiUQUW2Tzq0t377b54N2bMtXO/qiLa+6eRRmmC4qT3D4OnTGoT/U6O9aklQ/jTwbOtRMTTY8G0Ig=="
-  "resolved" "https://registry.npmjs.org/crypto/-/crypto-1.0.1.tgz"
-  "version" "1.0.1"
-
 "css-color-keywords@^1.0.0":
   "integrity" "sha1-/qJhbcZ2spYmhrOvjb2+GAskTgU="
   "resolved" "https://registry.npm.taobao.org/css-color-keywords/download/css-color-keywords-1.0.0.tgz"
@@ -6468,6 +6463,11 @@
   "integrity" "sha1-peZUwuWi3rXyAdls77yoDA7y9RM="
   "resolved" "https://registry.npm.taobao.org/jsbn/download/jsbn-0.1.1.tgz"
   "version" "0.1.1"
+
+"jsencrypt@^3.2.1":
+  "integrity" "sha512-k1sD5QV0KPn+D8uG9AdGzTQuamt82QZ3A3l6f7TRwMU6Oi2Vg0BsL+wZIQBONcraO1pc78ExMdvmBBJ8WhNYUA=="
+  "resolved" "https://registry.npmjs.org/jsencrypt/-/jsencrypt-3.2.1.tgz"
+  "version" "3.2.1"
 
 "jsesc@^2.5.1":
   "integrity" "sha1-gFZNLkg9rPbo7yCWUKZ98/DCg6Q="

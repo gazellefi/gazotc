@@ -215,28 +215,26 @@
               <el-form-item>
                 <div style="border: 1px solid #dcdcdc">
                   <van-field
-                    v-model="form.password"
-                    type="password"
+                    v-model="form.msg_encrypt"
                     :placeholder="$t('message.setEncrypt')"
                   />
                 </div>
               </el-form-item>
             </el-form>
-            <div class="btn" @click="apply_password">
+            <div class="btn" @click="encrypt_message">
               <span>{{ $t("message.sumbmit") }}</span>
             </div>
             <el-form ref="form" :model="form" class="form_nav">
               <el-form-item>
                 <div style="border: 1px solid #dcdcdc">
                   <van-field
-                    v-model="form.password"
-                    type="password"
+                    v-model="form.msg_decrypt"
                     :placeholder="$t('message.encrypt')"
                   />
                 </div>
               </el-form-item>
             </el-form>
-            <div class="btn" @click="apply_password">
+            <div class="btn" @click="decrypt_message">
               <span>{{ $t("message.sumbmit") }}</span>
             </div>
           </div>
@@ -246,7 +244,7 @@
 
     <myDialog
       :width="isphone ? '90%' : '40%'"
-      title="修改信息"
+      :title="$t('message.editInfomation')"
       :closeModal="false"
       :closePress="false"
       :visible.sync="dialogVisible"
@@ -279,7 +277,7 @@
     </myDialog>
     <myDialog
       :width="isphone ? '90%' : '40%'"
-      title="修改信息"
+      :title="$t('message.editInfomation')"
       :closeModal="false"
       :closePress="false"
       :visible.sync="dialogVisibleOne"
@@ -300,7 +298,7 @@
     </myDialog>
     <myDialog
       :width="isphone ? '90%' : '40%'"
-      title="修改信息"
+      :title="$t('message.editInfomation')"
       :closeModal="false"
       :closePress="false"
       :visible.sync="dialogVisibleTwo"
@@ -327,14 +325,14 @@ import Sha256 from "crypto-js/sha256";
 import { Base64 } from "js-base64";
 import axios from "axios";
 import SeededRSA from "./seededrsa/rsa.js";
-// import Crypto from 'crypto'
+import JSEncrypt from "jsencrypt"
 import lang from "@/components/lang";
 import QRCode from "qrcodejs2";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import QRCodeModal from "@walletconnect/qrcode-modal";
 
 import { Notify, Dialog, Toast } from "vant";
-import Crypto from "crypto-js";
+import CryptoJs from "crypto-js";
 import Beizhujson from "@/conn/Beizhu.json";
 import Web3 from "web3";
 import Web3Modal from "web3modal";
@@ -431,8 +429,8 @@ export default {
                   Beizhujson[index]["id"] == 5 ||
                   Beizhujson[index]["id"] == 9
                 ) {
-                  ret = Crypto.AES.decrypt(ret, "gazotc");
-                  ret = ret.toString(Crypto.enc.Utf8);
+                  ret = CryptoJs.AES.decrypt(ret, "gazotc");
+                  ret = ret.toString(CryptoJs.enc.Utf8);
                 }
                 dq.beizhu_arr[Beizhujson[index]["key"]] = ret;
               }
@@ -482,9 +480,12 @@ export default {
       address: "",
       addressRm: "",
       form: {
+		msg_encrypt: "",
+		msg_decrypt: "",
         password: "",
         passwordAggin: "",
         publickey: "",
+		privatekey: ""
       },
       regForm: {
         nickname: "",
@@ -811,7 +812,7 @@ export default {
       var inputval = this.inputval;
       if (lxkey == 5 || lxkey == 9) {
         console.log("encrypt 5,9 = ", inputval);
-        inputval = Crypto.AES.encrypt(inputval, "gazotc");
+        inputval = CryptoJs.AES.encrypt(inputval, "gazotc");
       }
       beizhucon.methods
         .commun(lxkey + "", Base64.encode(this.regForm.team_beizhu + ""))
@@ -852,8 +853,28 @@ export default {
         const value = await key.generate(2048).catch(console.log);
         console.log(value.publicKey);
         this.form.publickey = value.publicKey;
+		this.form.privatekey = value.privateKey;
       }
     },
+	encrypt_message() {
+	  console.log(Crypto)
+	  if (this.form.publickey == "" || this.form.msg_encrypt == "") {
+	    alert("empty publickey and message");
+	  }
+	  let pubkey = new JSEncrypt();
+	  pubkey.setPublicKey(this.form.publickey);
+	  let msg = pubkey.encrypt(this.form.msg_encrypt);
+	  this.form.msg_decrypt = msg
+	},
+	decrypt_message() {
+	  if (this.form.privatekey == "" || this.form.msg_decrypt == "") {
+	    alert("empty publickey and message")
+	  }
+	  let privkey = new JSEncrypt()
+	  privkey.setPrivateKey(this.form.privatekey)
+	  let origin = privkey.decrypt(this.form.msg_decrypt)
+	  console.log("origin: ", origin)
+	}
   },
 };
 </script>

@@ -70,7 +70,7 @@
 		  <!-- <el-table-column align="center" :label="$t('message.arbitration.margin')"> -->
           <el-table-column align="center" :render-header="marginNav">
 			<!-- <template slot-scope="header">  </template> -->
-            <template slot-scope="scope"> {{ scope.row.bzj }} Gaz </template>
+            <template slot-scope="scope"> {{ scope.row.bzj }} GAZ </template>
           </el-table-column>
           <el-table-column align="center" :render-header="asknNav">
             <template slot-scope="scope">

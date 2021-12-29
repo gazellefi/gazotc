@@ -2,17 +2,17 @@
 	<div class="chongzhi">
 		<el-form size='mini' ref="form" :model="form" label-width="90px">
 
-			<el-form-item label="选择币种">
-				<el-select v-model="form.region" placeholder="请选择币种" @change="changeSelect">
+			<el-form-item :label="$t('message.chooseCoin')">
+				<el-select v-model="form.region" :placeholder="$t('message.chooseContent')"  @change="changeSelect">
 					<el-option v-for="item in huobi" :key="item.key"  :label="item.id" :value="item.id">
 					</el-option>
 				</el-select>
 			</el-form-item>
-			<el-form-item label="提币金额">
+			<el-form-item :label="$t('message.extract')">
 				<el-input v-model="je"></el-input>
 			</el-form-item>
 			<el-form-item label-width="0">
-				<span style="color: #DCDCDC;">你可提额度：{{ (huobi[hbindex]['je']/ (10**huobi[hbindex]['num'])).toFixed(2)  }}</span>
+				<span style="color: #DCDCDC;">{{$t('message.canWithdraw')}}：{{ (huobi[hbindex]['je']/ (10**huobi[hbindex]['num'])).toFixed(2)  }}</span>
 			</el-form-item>
 			<el-form-item class="chongzhiBtn" label-width="0">
 				<span @click="tixianajax" class="f c_c a_c fz14 cursor" style="width: 100%;height: 30px;background-color: #fdc500;color: #fff;">{{$t('message.WithdrawMoney')}}</span>

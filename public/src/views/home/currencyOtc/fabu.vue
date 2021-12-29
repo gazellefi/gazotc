@@ -438,7 +438,7 @@ export default {
 
 .errormsg {
   font-size: 14px;
-  color: #f33;
+  // color: #f33;
 }
 
 .add_form_item_input_p {

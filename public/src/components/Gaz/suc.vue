@@ -9,7 +9,7 @@
       <div class="infoItem" v-for="(item, index) in infoData" :key="index">
         <van-cell-group>
           <van-cell title="GAZ Total" :value="item.gazTotal" />
-          <van-cell title="Claim Gaz Total" :value="item.subGazTotal" />
+          <van-cell title="Claim GAZ Total" :value="item.subGazTotal" />
           <van-cell @click="copy(item.crowdAddress)" title="Crowdfunding TRC20 Address" :value="item.crowdAddress">
             <template #right-icon>
               <van-icon style="margin-left:6px" size="20" @click="copy(item.crowdAddress)" name="label" class="label" />

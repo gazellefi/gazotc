@@ -225,7 +225,7 @@
 					var _this = this;
 					const h = _this.$createElement;
 					_this.$msgbox({
-					    title: '请输入'+_this.popoType == 4? _this.$t('message.changeOut'):_this.popoType == 3?_this.$t('message.changeInto') : ''+'保证金金额',
+					    title: '请输入'+_this.popoType == 4? _this.$t('message.changeOut'):_this.popoType == 3?_this.$t('message.changeInto') : ''+_this.$t('message.marginBalance'),
 						message: h('div', null, [
 							h('input', {
 								attrs: {
@@ -237,12 +237,13 @@
 								value: _this.numRu,
 								on: { input: _this.onCommentInputChange }
 							}),
+							// '当前保证金余额：'
 							h('div',null,[
-								h('i', { style: 'color: teal;display: inline-block;padding-top: 20px;' }, '当前保证金余额：'),
+								h('i', { style: 'color: teal;display: inline-block;padding-top: 20px;' }, _this.$t('message.currentMarginBalance')+'：'),
 								h('i', _this.balancemar_num),
 							]),
 							h('div',null,[
-								h('i', { style: 'color: teal;display: inline-block;padding-top: 20px;' }, 'Gaz：'),
+								h('i', { style: 'color: teal;display: inline-block;padding-top: 20px;' }, 'GAZ：'),
 								h('i', _this.usdt_num),
 							])
 						  ]),

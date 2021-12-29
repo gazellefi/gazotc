@@ -1,6 +1,6 @@
 <template>
 	<div class="container f c_c">
-		<span class="c9">developing</span>
+		<span class="c9">{{$t('message.ComingSoon')}}</span>
 	</div>
 </template>
 
