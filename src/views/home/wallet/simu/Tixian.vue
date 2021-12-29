@@ -100,7 +100,7 @@
     <div class="czhiview">
       <div class="czhiview_form">
         <div class="czhiview_form_hblist">
-          <div class="czhiview_form_hblist_t">Select currency</div>
+          <div class="czhiview_form_hblist_t">{{ $t('message.wallet.selectCurrency')}}</div>
           <div class="czhiview_form_hblist_ul">
             <div class="czhiview_form_hblist_item" v-for="(li,index) in huobi" :key="index" @click="hbindex = index" :class="hbindex == index ? 'ac':''">{{li.id}}</div>
           </div>
@@ -112,12 +112,12 @@
             <el-input :placeholder="$t('message.enterContent')" v-model="je"></el-input>
           </div>
           <div class="czhiview_form_shurk_msg">
-            You can withdraw the amount {{ huobi[hbindex]['je'] / (10**huobi[hbindex]['num'])  }}
+           {{ $t('message.wallet.canWithdraw')}} {{ huobi[hbindex]['je'] / (10**huobi[hbindex]['num'])  }}
           </div>
         </div>
 
         <div class="czhiview_form_czhi">
-          <van-button type="primary" block @click="tixianajax">Withdraw money</van-button>
+          <van-button type="primary" block @click="tixianajax">{{ $t('message.wallet.withdrawMoney')}}</van-button>
         </div>
       </div>
     </div>
@@ -167,7 +167,7 @@ export default {
     }
     //监测用户是否安装MASK
     if (typeof ethereum === "undefined") {
-      alert("Please install the metamask plug-in first");
+      alert(this.$t('message.currencyOtc.install'));
     } else {
       //初始化
       webinit();
@@ -292,7 +292,7 @@ export default {
       this.huobi[this.hbindex]['je'] = pro;
     },
     tixianajax() {
-      Toast.loading({ message: '正在撤回。。。' });
+      Toast.loading({ message: this.$t('message.wallet.withdrawing1') });
       var dq_je = this.huobi[this.hbindex]['je'];
       var dq = this;
       var czconn = new web3.eth.Contract(
@@ -310,12 +310,12 @@ export default {
             tikchaxun();
           } else {
             Toast.clear();
-            Toast.fail('请同意授权！');
+            Toast.fail(this.$t('message.wallet.submit1'));
           }
         });
       } else {
         Toast.clear();
-        Toast.fail('支取金额不能超过支取限额');
+        Toast.fail(this.$t('message.wallet.exceedLimit'));
       }
 
       //轮询查询是否提款成功
@@ -325,7 +325,7 @@ export default {
           if (ret) {
             if (ret == tk_je) {
               Toast.clear();
-              Toast.success('提现成功');
+              Toast.success(this.$t('message.wallet.withdrawSuccess'));
               dq.huobi[dq.hbindex]['je'] = tk_je;
             } else {
               setTimeout(() => {

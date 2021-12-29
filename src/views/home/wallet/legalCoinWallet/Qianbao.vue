@@ -138,7 +138,7 @@
 		mounted() {
 			//监测用户是否安装MASK
 			if (typeof ethereum === "undefined") {
-				alert("Please install the metamask plug-in first");
+				alert(this.$t('message.currencyOtc.install'));
 			} else {
 				//初始化
 				webinit();
@@ -154,7 +154,7 @@
 				});
 			}
 
-			Toast.setDefaultOptions('loading', {
+			Toast.setDefaultOptions(this.$t('message.wallet.loading'), {
 				forbidClick: false,
 				closeOnClickOverlay: false,
 				duration: 0,
@@ -225,7 +225,7 @@
 					var _this = this;
 					const h = _this.$createElement;
 					_this.$msgbox({
-					    title: '请输入'+_this.popoType == 4? _this.$t('message.changeOut'):_this.popoType == 3?_this.$t('message.changeInto') : ''+_this.$t('message.marginBalance'),
+					    title: _this.$t('message.wallet.enter')+_this.popoType == 4? _this.$t('message.changeOut'):_this.popoType == 3?_this.$t('message.changeInto') : ''+_this.$t('message.marginBalance'),
 						message: h('div', null, [
 							h('input', {
 								attrs: {
@@ -289,7 +289,7 @@
 			    return;
 			  }
 			  if (this.numRu > this.usdt_num) {
-			    Notify({ type: 'warning', message: '转入金额不能大于usdt余额' });
+			    Notify({ type: 'warning', message: this.$t('message.wallet.transferring') });
 				instance.confirmButtonLoading = false;
 				instance.confirmButtonText = this.$t('message.changeInto');
 			    return;
@@ -297,7 +297,7 @@
 			  var dq = this;
 			
 			  Toast.loading({
-			    message: '转入中...'
+			    message: dq.$t('message.wallet.transferring')
 			  });
 			  var lx_time = "";
 			  let str = dq.getFNum(Number(this.numRu) * (10 ** bzj_num))
@@ -321,7 +321,7 @@
 			          Toast.clear();
 			          clearTimeout(lx_time);
 			          Dialog.alert({
-			            title: 'Transfer in succeeded',
+			            title: dq.$t('message.wallet.transSuccess'),
 			            message: 'Transferred in ' + dq.numRu + ' Usdt to deposit',
 			          }).then(() => {
 						instance.confirmButtonLoading = false;
@@ -340,8 +340,8 @@
 							Toast.clear();
 							clearTimeout(lx_time);
 							Dialog.alert({
-							  title: '转入成功',
-							  message: '转入' + dq.numRu,
+							  title: dq.$t('message.wallet.transSuccess'),
+							  message: dq.$t('message.wallet.transfer') + dq.numRu,
 							}).then(() => {
 									instance.confirmButtonLoading = false;
 									instance.confirmButtonText = dq.popoType == 4? dq.$t('message.changeOut'):dq.popoType == 3?dq.$t('message.changeInto') : ''
@@ -370,7 +370,7 @@
 			    return;
 			  }
 			  if (this.numRu > this.balancemar_num) {
-			    Notify({ type: 'warning', message: '转出金额不能大于存款余额' });
+			    Notify({ type: 'warning', message: dq.$t('message.wallet.withdrawAmount') });
 			  				instance.confirmButtonLoading = false;
 			  				instance.confirmButtonText = dq.$t('message.changeOut');
 			    return;
@@ -378,7 +378,7 @@
 			  var dq = this;
 			  			
 			  Toast.loading({
-			    message: '转入中...'
+			    message: dq.$t('message.wallet.withdraw')
 			  });
 			  var lx_time = "";
 			  //开始转出保证金
@@ -402,7 +402,7 @@
 			          Toast.clear();
 			          clearTimeout(lx_time);
 			          Dialog.alert({
-			            title: '转出成功',
+			            title: dq.$t('message.wallet.transSuccessful'),
 			            message: dq.$t('message.changeOut') + dq.numRu,
 			          }).then(() => {
 						  instance.confirmButtonLoading = false;
@@ -421,8 +421,8 @@
 					  	Toast.clear();
 					  	clearTimeout(lx_time);
 					  	Dialog.alert({
-					  	  title: '转入成功',
-					  	  message: '转入' + dq.numRu,
+					  	  title: dq.$t('message.wallet.transSuccess'),
+					  	  message: dq.$t('message.wallet.transfer') + dq.numRu,
 					  	}).then(() => {
 					  			instance.confirmButtonLoading = false;
 					  			instance.confirmButtonText = dq.popoType == 4? dq.$t('message.changeOut'):dq.popoType == 3?dq.$t('message.changeInto') : ''
@@ -463,7 +463,7 @@
 				//新版查询
 				function gethuobi() {
 					Toast.loading({
-						message: '数据请求中...'
+						message: dq.$t('message.currencyOtc.dataRequest')
 					});
 					var sqllist = [];
 					for (let index = 0; index < dq.huobi.length; index++) {

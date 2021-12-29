@@ -170,7 +170,7 @@
 								<span class="fwb">{{ item.Mmark =='for sale' ? $t("message.dapp.sell") : $t("message.dapp.buy") }}</span>
 								<span class="fwb">{{item.pro}}</span>
 								<div class="f c_c marty_nav">
-									<span>保证金{{item.mar}}%</span>
+									<span>保证金Margin{{item.mar}}%</span>
 								</div>
 							</div>
 						</div>

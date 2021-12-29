@@ -116,7 +116,7 @@ export default {
     //初始化WEB3
     //监测用户是否安装MASK
     if (typeof ethereum === "undefined") {
-      alert("Please install the metamask plug-in first");
+      alert(this.$t('message.currencyOtc.install'));
     } else {
       webinit();
     }
@@ -273,12 +273,12 @@ export default {
       await this.getproyue();
       //判断资产余额是否足够
       if (this.form.num > this.balancepro) {
-        Notify({ type: 'warning', message: '资产余额不足！' });
+        Notify({ type: 'warning', message: this.$t('message.currencyOtc.insufficient') });
         return;
       }
 
       Toast.loading({
-        message: "数据请求中...",
+        message: this.$t('message.currencyOtc.dataRequest'),
         forbidClick: true,
         loadingType: "spinner",
       });
@@ -330,8 +330,8 @@ export default {
               dq.balanceprob = balanceprob;
               Toast.clear();
               Dialog.alert({
-                title: "提交成",
-                message: "发布成功！可以按我的顺序查看或修改",
+                title: this.$t('message.currencyOtc.success'),
+                message: this.$t('message.currencyOtc.release'),
               }).then(() => {
                 dq.form = {
                   danj: null,

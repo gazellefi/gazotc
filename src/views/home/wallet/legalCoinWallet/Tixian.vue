@@ -67,13 +67,13 @@ var ethereum = window.ethereum;
 		mounted() {
 			//监测用户是否安装MASK
 			if (typeof ethereum === "undefined") {
-			    alert("请先安装METAMASK插件");
+			    alert(this.$t('message.currencyOtc.install'));
 			} else {
 			    //初始化
 			    webinit();
 			}
 			
-			Toast.setDefaultOptions('loading',{
+			Toast.setDefaultOptions(this.$t('message.wallet.loading'),{
 			    forbidClick:false,
 			    closeOnClickOverlay:false,
 			    duration:0,
@@ -204,7 +204,7 @@ var ethereum = window.ethereum;
 			        });    
 			},
 			tixianajax(){
-			    Toast.loading({message: '提款中...'});
+			    Toast.loading({message: this.$t('message.wallet.withdraw')});
 			    var dq_je = this.huobi[this.hbindex]['je'];
 			    var dq = this;
 			    var czconn = new web3.eth.Contract(
@@ -230,12 +230,12 @@ var ethereum = window.ethereum;
 			                //                 }, 5000); 
 			            }else{
 			                Toast.clear();
-			                Toast.fail('请同意授权！');
+			                Toast.fail(this.$t('message.wallet.submit1'));
 			            }
 			        });
 			    }else{
 			        Toast.clear();
-			        Toast.fail('提款金额不能超过提款额度');
+			        Toast.fail(this.$t('message.wallet.cannotExceed'));
 			    }
 				var mm = 0
 			
@@ -246,7 +246,7 @@ var ethereum = window.ethereum;
 			            if (ret) {
 			                if (ret == tk_je) {
 			                    Toast.clear();
-			                    Toast.success('提款成功');
+			                    Toast.success(this.$t('message.wallet.withdrawSuccess'));
 			                    dq.gethuobizichan();
 								dq.je = 0
 								dq.$emit('drawal')
@@ -257,7 +257,7 @@ var ethereum = window.ethereum;
 									Toast.clear();
 									clearTimeout()
 									Dialog.alert({
-									    title: '提款成功',
+									    title: this.$t('message.wallet.withdrawSuccess'),
 									}).then(() => {
 										dq.gethuobizichan();
 										dq.je = 0

@@ -12,7 +12,7 @@
 									class="el-icon-arrow-down el-icon--right"></i>
 							</span>
 							<el-dropdown-menu slot="dropdown">
-								<el-dropdown-item command="ALL">whole</el-dropdown-item>
+								<el-dropdown-item command="ALL">{{$t('message.all')}}</el-dropdown-item>
 								<el-dropdown-item command="USDT">USDT</el-dropdown-item>
 							</el-dropdown-menu>
 						</el-dropdown>
@@ -26,7 +26,7 @@
 									class="el-icon-arrow-down el-icon--right"></i>
 							</span>
 							<el-dropdown-menu slot="dropdown">
-								<el-dropdown-item command="ALL">whole</el-dropdown-item>
+								<el-dropdown-item command="ALL">{{$t('message.all')}}</el-dropdown-item>
 								<el-dropdown-item command="CNY">CNY</el-dropdown-item>
 							</el-dropdown-menu>
 						</el-dropdown>

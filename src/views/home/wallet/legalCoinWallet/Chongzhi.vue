@@ -85,7 +85,7 @@ export default {
   },
   mounted() {
 	  var dq = this
-    Toast.setDefaultOptions('loading', {
+    Toast.setDefaultOptions(dq.$t('message.wallet.loading'), {
       forbidClick: false,
       closeOnClickOverlay: false,
       duration: 0,
@@ -101,7 +101,7 @@ export default {
     }
     //监测用户是否安装MASK
     if (typeof ethereum === "undefined") {
-      alert("请先安装METAMASK插件");
+      alert(dq.$t('message.currencyOtc.install'));
     } else {
       //初始化
       webinit();
@@ -222,11 +222,11 @@ export default {
     },
     chongzhi(){
         if (this.je <= 0) {
-            Notify({ type: 'warning', message: '金额不能小于0' });
+            Notify({ type: 'warning', message: this.$t('message.wallet.cannotLess') });
             return;
         }
         Toast.loading({
-            message: '加载中...'
+            message: this.$t('message.wallet.loading')
         });
         var proconn = new web3.eth.Contract(config['hbi'][config['key']][this.hbilist[this.hbindex]['title']]['abi'],config['hbi'][config['key']][this.hbilist[this.hbindex]['title']]['heyue']);
         var dotcconn = new web3.eth.Contract(config['hyue'][config['key']]['dotc']['abi'],config['hyue'][config['key']]['dotc']['heyue']);
@@ -248,8 +248,8 @@ export default {
                             if (balanceOf < Number(dq.je)) {
                                 Toast.clear();
                                 Dialog.alert({
-                                    title: '警告',
-                                    message: pro + '余额不足！',
+                                    title: dq.$t('message.wallet.waring'),
+                                    message: pro + dq.$t('message.wallet.insufficient'),
                                 }).then(() => {
                                 // on close
                                 });
@@ -265,7 +265,7 @@ export default {
         //提交充值
         function chongzhiajax() {
             Toast.loading({
-                message: '正在充值中...'
+                message: dq.$t('message.wallet.depositing')
             });
             var cznum = dq.getFNum((Number(dq.je) * dec));
             console.log("充值中")
@@ -289,8 +289,8 @@ export default {
                         Toast.clear();
                         clearTimeout(usdtlxtime);
                         Dialog.alert({
-                            title: '充值成功',
-                            message: '您已成功充值'+ dq.je +' '+ dq.hbilist[dq.hbindex]['title'] +'',
+                            title: dq.$t('message.wallet.depositeSuccess'),
+                            message: dq.$t('message.wallet.success')+ dq.je +' '+ dq.hbilist[dq.hbindex]['title'] +'',
                         }).then(() => {
 							dq.je = 0
                             dq.$emit('Recharge')
@@ -303,8 +303,8 @@ export default {
 							Toast.clear();
 							clearTimeout(usdtlxtime);
 							Dialog.alert({
-							    title: '充值成功',
-							    message: '您已成功充值'+ dq.je +' '+ dq.hbilist[dq.hbindex]['title'] +'',
+							    title: dq.$t('message.wallet.depositeSuccess'),
+							    message: dq.$t('message.wallet.success')+ dq.je +' '+ dq.hbilist[dq.hbindex]['title'] +'',
 							}).then(() => {
 								dq.je = 0
 							    dq.$emit('Recharge')
@@ -335,7 +335,7 @@ export default {
         //授权
         function set_shouquan() {
             Toast.loading({
-                message: pro +'授权中....',
+                message: pro +dq.$t('message.wallet.submit'),
             });
             proconn.methods.approve(dotcust,dq.getFNum((Number(dq.je) * 100) * dec)+"").send({
                 from:address

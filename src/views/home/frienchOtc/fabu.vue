@@ -13,7 +13,7 @@
 		      <div class="add_form_item_xuanze c_b">
 		        <div class="add_form_item xz" style="margin-left: 0;">
 		          <div class="add_form_item_input">
-		            <el-select v-model="pro" placeholder="Please select" :disabled="user['user'] ? false:true">
+		            <el-select v-model="pro" :placeholder="$t('message.frienchOtc.select')" :disabled="user['user'] ? false:true">
 		              <el-option v-for="item in data['huobi']" :key="item.id" :label="item.id" :value="item.id">
 		              </el-option>
 		            </el-select>
@@ -21,7 +21,7 @@
 		        </div>
 		        <div class="add_form_item xz">
 		          <div class="add_form_item_input">
-		            <el-select v-model="fi" placeholder="Please select" :disabled="user['user'] ? false:true">
+		            <el-select v-model="fi" :placeholder="$t('message.frienchOtc.select')" :disabled="user['user'] ? false:true">
 		              <el-option v-for="item in data['fabi']" :key="item.id" :label="item.id" :value="item.id">
 		              </el-option>
 		            </el-select>
@@ -560,7 +560,7 @@ export default {
               "0x6275790000000000000000000000000000000000000000000000000000000000"
             ) {
               Dialog.alert({
-                title: "Published successfully",
+                title: dq.$t('message.frienchOtc.publishen'),
                 message:
                   "The order number is:" + ret["returnValues"]["order"] + "",
               }).then(() => {
@@ -568,7 +568,7 @@ export default {
               });
             } else {
               Dialog.alert({
-                title: "Published successfully",
+                title: dq.$t('message.frienchOtc.publishen'),
                 message:
                   "The order number is:" + ret["returnValues"]["order"] + "",
               }).then(() => {
@@ -609,7 +609,7 @@ export default {
           });
         }
         Toast.loading({
-          message: "提交中。。。",
+          message: dq.$t('message.frienchOtc.submiting'),
           forbidClick: true,
           loadingType: "spinner",
         });
@@ -618,7 +618,7 @@ export default {
       //Release order
       function addajax() {
         Toast.loading({
-          message: "请确认提交内容。。。",
+          message: dq.$t('message.frienchOtc.confirm'),
           forbidClick: true,
           loadingType: "spinner",
         });
@@ -673,14 +673,14 @@ export default {
               if (!ret) {
                 Toast.clear();
                 Toast({
-                  message: "请点击授权！",
+                  message: dq.$t('message.frienchOtc.submit'),
                   icon: "cross",
                   duration: 2000,
                 });
               } else {
                 Toast.clear();
                 Toast.loading({
-                  message: "发布订单中...",
+                  message: dq.$t('message.frienchOtc.sendingOrder'),
                   forbidClick: true,
                   loadingType: "spinner",
                 });
@@ -811,7 +811,7 @@ export default {
     setNote() {
       var that = this;
       var loading = Toast.loading({
-        message: "修改中... ",
+        message: that.$t('message.frienchOtc.changing'),
         closeOnClick: false,
         closeOnClickOverlay: false,
         loadingType: "spinner",

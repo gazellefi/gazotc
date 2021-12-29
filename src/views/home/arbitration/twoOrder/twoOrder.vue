@@ -23,8 +23,7 @@
 						{{ scope.row.uma }} USDT
 					</template>
 				</el-table-column>
-				<el-table-column :label="$t('message.arbitration.arbitrationState')" :filters="towLeveThree"
-					:filter-method="filterTag" filter-placement="bottom-end">
+				<el-table-column :label="$t('message.arbitration.arbitrationState')">
 					<template slot-scope="scope">
 						<div v-if="scope.row.timc == 0">Not registered</div>
 						<div v-if="scope.row.timc != 0 && scope.row.timd == 0">{{$t('message.arbitration.signing')}}
@@ -141,39 +140,39 @@
 			</div>
 		</div>
 		
-		<el-dialog title="第二轮仲裁报名" class="listType" :visible.sync="deldata['dialogcode']" width=350px>
+		<el-dialog :title="$t('message.arbitration.secondDetail')" class="listType" :visible.sync="deldata['dialogcode']" width=350px>
 		  <div>
 		    <p>
-		      我的账号：<span>{{  deldata.myuser.user }}</span>
+		      {{$t('message.arbitration.account')}}：<span>{{  deldata.myuser.user }}</span>
 		    </p>
 		    <p>
-		      我的昵称：<span>{{  deldata.myuser.name }}</span>
+		      {{$t('message.arbitration.nickName')}}：<span>{{  deldata.myuser.name }}</span>
 		    </p>
 		    <p>
-		      订单号：<span>{{ deldata.data.did }}</span>
+		      {{$t('message.arbitration.idNum')}}：<span>{{ deldata.data.did }}</span>
 		    </p>
 		    <div>
-		      <p>订单详情</p>
+		      <p>{{$t('message.arbitration.orderDetail')}}</p>
 		      <ul class="list-number">
-		        <li>商家地址：{{deldata.data.mad_b}}</li>	
-		        <li>用户地址：{{deldata.data.uad_b}}</li>
-		        <li>资产总数：{{deldata.data.uoa}} {{ deldata.data.pro }}</li>
-		        <li>商家保证金：{{deldata.data.mma}} USDT</li>
-		        <li>用户保证金：{{deldata.data.uma}} USDT</li>
+		        <li>{{$t('message.arbitration.merchant')}}：{{deldata.data.mad_b}}</li>	
+		        <li>{{$t('message.arbitration.userAccount')}}：{{deldata.data.uad_b}}</li>
+		        <li>{{$t('message.arbitration.asset')}}：{{deldata.data.uoa}} {{ deldata.data.pro }}</li>
+		        <li>{{$t('message.arbitration.merMargin')}}：{{deldata.data.uma}} USDT</li>
+		        <li>{{$t('message.arbitration.userMargin')}}：{{deldata.data.mma}} USDT</li>
 		      </ul>
 		    </div>
-		    <p>报名人数：<span>{{deldata.Arbs.aid}} / {{deldata.renshunum}}</span></p>
-		    <p>报名倒计时：<span><van-count-down :time="deldata.data.djs_val" format="DD 天 HH 时 mm 分 ss 秒" /></span></p>
+		    <p>{{$t('message.arbitration.arbitrators1')}}：<span>{{deldata.Arbs.aid}} / {{deldata.renshunum}}</span></p>
+		    <p>{{$t('message.arbitration.countDown')}}：<span><van-count-down :time="deldata.data.djs_val" :format="'DD'+$t('message.day')+'HH'+$t('message.hour')+'mm'+$t('message.minute')+'ss'+$t('message.second')" /></span></p>
 		    <div>
-		      <p>入选者账号</p>
+		      <p>{{$t('message.arbitration.arbitratorsList')}}</p>
 		      <ul class="list-number">
 		        <li v-for="(li,index) in deldata['Uarr']" :key="index">{{li}}</li>
 		      </ul>
 		    </div>
-		    <p v-if="deldata.ubmcode">你已报名，并入选</p>
+		    <p v-if="deldata.ubmcode">{{$t('message.arbitration.entered')}}</p>
 		  </div>
 		  <span slot="footer" class="dialog-footer">
-		    <el-button type="primary" @click="kaishibaomingajax" :disabled="deldata.ubmcode" :loading="deldata.loading">报名</el-button>
+		    <el-button type="primary" @click="kaishibaomingajax" :disabled="deldata.ubmcode" :loading="deldata.loading">{{$t('message.arbitration.apply')}}</el-button>
 		  </span>
 		</el-dialog>
 
@@ -365,10 +364,10 @@
 				}, (err, ret) => {
 					if (ret) {
 						Toast.clear();
-						Toast.success('仲裁已经执行，请稍后查看');
+						Toast.success(this.$t('message.arbitration.arbitrationPerformed'));
 					} else {
 						Toast.clear();
-						Toast.fail('请同意授权！');
+						Toast.fail(this.$t('message.wallet.submit1'));
 					}
 			 });
 			},
@@ -577,7 +576,7 @@
 					this.deldata['myuser']['user'] = add;
 					
 					var 我的名字 = await ArbOne.methods.message(address, "0").call();
-					this.deldata['myuser']['name'] = 我的名字 ? Base64.decode(我的名字) : '暂未设置';
+					this.deldata['myuser']['name'] = 我的名字 ? Base64.decode(我的名字) : this.$t('message.arbitration.haveName');
 					console.log(仲裁详情)
 					this.deldata['Arbs'] = 仲裁详情;
 					var 人员列表 = [];
@@ -611,10 +610,10 @@
 					}, (err, ret) => {
 						if (ret) {
 							Toast.clear();
-							Toast.success('订单已初始化，请稍后检查');
+							Toast.success(this.$t('message.arbitration.orderInit'));
 						} else {
 							Toast.clear();
-							Toast.fail('请同意授权！');
+							Toast.fail(this.$t('message.wallet.submit1'));
 						}
 					});
 				}
@@ -637,7 +636,7 @@
 			      //查询是否存在
 			      var slot = await ArbTwo.methods.slot(arbTwoApply).call();
 			      if (slot != 0) {
-			        dq.$message.error('你已成功报名！');
+			        dq.$message.error(this.$t('message.arbitration.enrolledSuccess'));
 			        return;
 			      }
 			
@@ -646,17 +645,17 @@
 			          bmlxsql();
 			        }else{
 			          dq.deldata.loading = false;
-			          dq.$message.error('请点击确定！');
+			          dq.$message.error(this.$t('message.arbitration.clickOk'));
 			        }
 			      });
 			    }else{
 			      dq.deldata.loading = false;
-			      this.$message.error('报名失败');
+			      this.$message.error(this.$t('message.arbitration.failed'));
 			    }
 			    
 			  }else{
 			    dq.deldata.loading = false;
-			    this.$message.error('已停止报名');
+			    this.$message.error(this.$t('message.arbitration.stopEnrolment'));
 			  }
 			  //轮询查询是否报名成功
 			  async function bmlxsql() {
@@ -665,7 +664,7 @@
 			     if (JSONS.indexOf(address) != -1) {
 			        dq.$message({
 			          showClose: true,
-			          message: '你已成功报名'
+			          message: this.$t('message.arbitration.enrolledSuccess')
 			        });
 			        dq.deldata.loading = false;
 			        dq.deldata['ubmcode'] = true;

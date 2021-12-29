@@ -37,7 +37,7 @@
 			        <div v-if="scope.row.what == 3">{{$t('message.other')}}</div>
 			      </template>
 			    </el-table-column>
-			    <el-table-column prop="arb" align="center" :label="$t('message.arbitration.OnearbitrationResult')" :filters="oneLeveThree" :filter-method="filterTag" filter-placement="bottom-end">
+			    <el-table-column prop="arb" align="center" :label="$t('message.arbitration.OnearbitrationResult')">
 			      <template slot-scope="scope">
 					<div v-if="scope.row.arb == 1">{{$t('message.arbitration.userVictory')}}</div>
 					<div v-if="scope.row.arb == 2">{{$t('message.arbitration.MerchantsVictory')}}</div>
@@ -45,7 +45,7 @@
 					<div v-if="scope.row.arb == 0">{{$t('message.arbitration.NotStart')}}</div>
 			      </template>
 			    </el-table-column>
-			    <el-table-column prop="arb" align="center" :label="$t('message.arbitration.OnearbitrationState')" filter-placement="bottom-end" v-if="my_ss_tindex == 1">
+			    <el-table-column prop="arb" align="center" :label="$t('message.arbitration.OnearbitrationState')">
 			      <template slot-scope="scope">
 			       <div v-if="scope.row.code == 0">
 			         <span>{{$t('message.arbitration.NotStart')}}</span>

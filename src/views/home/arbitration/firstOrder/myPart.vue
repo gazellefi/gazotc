@@ -37,7 +37,7 @@
 			    </template>
 			  </el-table-column>
 			
-			  <el-table-column align="center" prop="arb" :label="$t('message.arbitration.arbitrationResult')" :filters="oneLeveThree" :filter-method="filterTag" filter-placement="bottom-end">
+			  <el-table-column align="center" prop="arb" :label="$t('message.arbitration.arbitrationResult')">
 			    <template slot-scope="scope">
 			      <div v-if="scope.row.arb == 1">{{$t('message.arbitration.userVictory')}}</div>
 			      <div v-if="scope.row.arb == 2">{{$t('message.arbitration.MerchantsVictory')}}</div>

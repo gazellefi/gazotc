@@ -351,7 +351,7 @@
 			mairuajax() {
 				var dq = this;
 				if (!this.mr_form["num"]) {
-					alert("Please enter quantity");
+					alert(this.$t('message.frienchOtc.quantity'));
 					return;
 				}
 				if (this.mr_form["num"] < Number(this.mr_form["ddinfo"]["zer"])) {
@@ -379,7 +379,7 @@
 							if (ret) {
 								dq.mairucode = false;
 								dq.isLoading = false
-								dq.$message.success("Buy successfully!");
+								dq.$message.success(this.$t('message.frienchOtc.buySuccess'));
 							} else {
 								dq.isLoading = false
 							}

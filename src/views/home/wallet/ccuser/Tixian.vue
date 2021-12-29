@@ -79,7 +79,7 @@
 			}
 			//监测用户是否安装MASK
 			if (typeof ethereum === "undefined") {
-				alert("请先安装METAMASK插件");
+				alert(this.$t('message.currencyOtc.install'));
 			} else {
 				//初始化
 				webinit();
@@ -212,7 +212,7 @@
 			  this.huobi[this.hbindex]['je'] = pro;
 			},
 			tixianajax() {
-			  Toast.loading({ message: '正在提现...' });
+			  Toast.loading({ message: this.$t('message.wallet.withdrawing') });
 			  var dq_je = this.huobi[this.hbindex]['je'];
 			  var dq = this;
 			  var czconn = new web3.eth.Contract(
@@ -231,13 +231,13 @@
 			        tikchaxun();
 			      } else {
 			        Toast.clear();
-			        Toast.fail('请同意授权！');
+			        Toast.fail(this.$t('message.wallet.submit1'));
 			      }
 			    });
 			  } else {
 			    Toast.clear();
 			    // Toast.fail('The withdrawal amount cannot exceed the withdrawal limit');
-				Toast.fail('支取金额不能超过支取限额');
+				Toast.fail(this.$t('message.wallet.withdrawAmount'));
 			  }
 			
 			  //轮询查询是否提款成功
@@ -248,7 +248,7 @@
 			        if (ret == tk_je) {
 			          Toast.clear();
 			          // Toast.success('Successful withdrawal');
-					  Toast.success('提现成功');
+					  Toast.success(this.$t('message.wallet.withdrawSuccess'));
 			          dq.huobi[dq.hbindex]['je'] = tk_je;
 					  dq.je = 0
 					  dq.$emit('drawal')

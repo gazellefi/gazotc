@@ -130,7 +130,7 @@
 		mounted() {
 			//监测用户是否安装MASK
 			if (typeof ethereum === "undefined") {
-				alert("Please install the metamask plug-in first");
+				alert(this.$t('message.currencyOtc.install'));
 			} else {
 				//初始化
 				webinit();
@@ -140,7 +140,7 @@
 				this.huobi.push(huobiarr[key]);
 			}
 
-			Toast.setDefaultOptions('loading', {
+			Toast.setDefaultOptions(this.$t('message.wallet.loading'), {
 				forbidClick: false,
 				closeOnClickOverlay: false,
 				duration: 0,
@@ -207,7 +207,7 @@
 		    this.$router.push(url);
 		  },
 		  async getqblist(flag) {
-		    Toast.loading({ message: '请求中...' });
+		    Toast.loading({ message: this.$t('message.wallet.loading') });
 		    var list = [];
 		    var binum = config['hyue'][config['key']]['Bzj']['num'];
 		    if(flag){

@@ -17,7 +17,7 @@
         <div class="right">
           <div class="saixuan">
             <span class="typeSelect">{{ $t("message.dapp.currency")}}：</span>
-            <el-select size="mini" v-model="huobi" placeholder="Please select">
+            <el-select size="mini" v-model="huobi" :placeholder="$t('message.frienchOtc.select')">
               <el-option v-for="item in hbarr" :key="item.key" :label="item.id" :value="item.id">
               </el-option>
             </el-select>
@@ -25,7 +25,7 @@
           </div>
           <div class="saixuan">
             <span class="typeSelect">{{ $t("message.dapp.unit")}}：</span>
-            <el-select size="mini" v-model="fabi" placeholder="Please select">
+            <el-select size="mini" v-model="fabi" :placeholder="$t('message.frienchOtc.select')">
               <el-option v-for="item in fbarr" :key="item.key" :label="item.id" :value="item.id">
               </el-option>
             </el-select>
@@ -111,7 +111,7 @@
       <div class="ddlist_w_huobilist">
         <div class="saixuan">
           <span class="typeSelect">{{ $t("message.dapp.currency")}}：</span>
-          <el-select size="mini" v-model="huobi" placeholder="Please select">
+          <el-select size="mini" v-model="huobi" :placeholder="$t('message.frienchOtc.select')">
             <el-option v-for="item in hbarr" :key="item.key" :label="item.id" :value="item.id">
             </el-option>
           </el-select>
@@ -119,7 +119,7 @@
 
         <div class="saixuan">
           <span class="typeSelect">{{ $t("message.dapp.unit")}}：</span>
-          <el-select size="mini" v-model="fabi" placeholder="Please select">
+          <el-select size="mini" v-model="fabi" :placeholder="$t('message.frienchOtc.select')">
             <el-option v-for="item in fbarr" :key="item.key" :label="item.id" :value="item.id">
             </el-option>
           </el-select>

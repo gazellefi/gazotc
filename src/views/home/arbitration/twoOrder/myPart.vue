@@ -26,7 +26,7 @@
 			      {{ scope.row.arbw == 0 ? 'Not selected' : 'Successfully selected' }}
 			    </template>
 			  </el-table-column>
-			  <el-table-column :label="$t('message.arbitration.arbitrationState')" :filters="towLeveThree" :filter-method="filterTag" filter-placement="bottom-end">
+			  <el-table-column :label="$t('message.arbitration.arbitrationState')">
 			    <template slot-scope="scope">
 			      <div v-if="scope.row.timc == 0">Not registered</div>
 			      <div v-if="scope.row.timc != 0 && scope.row.timd == 0">{{$t('message.arbitration.signing')}}</div>
@@ -197,53 +197,54 @@
 		
 		<!-- 第二轮仲裁管理 -->
 		<el-dialog
-		  title="第二轮仲裁管理"
+		  :title="$t('message.arbitration.secondManagement')"
 		  :visible.sync="zcgldata.code"
 		  width=350px
 		>
-		<div v-if="zcgldata.tcode" class="zcglul">
+		<!-- <div v-if="zcgldata.tcode" class="zcglul"> -->
+		<div class="zcglul">
 		  <div class="zcglul_li_item">
-		    <div class="zcglul_li_l">我的账号：</div>
+		    <div class="zcglul_li_l">{{$t('message.arbitration.account')}}：</div>
 		    <div class="zcglul_li_r">{{ zcgldata['info']['myuser'].substring(0,7) }}....</div>
 		  </div>
 		  <div class="zcglul_li_item">
-		    <div class="zcglul_li_l">我的昵称：</div>
+		    <div class="zcglul_li_l">{{$t('message.arbitration.nickName')}}：</div>
 		    <div class="zcglul_li_r">{{ zcgldata['info']['myname'] }}</div>
 		  </div>
 		  <div class="zcglul_li_item">
-		    <div class="zcglul_li_l">我的角色：</div>
+		    <div class="zcglul_li_l">{{$t('message.arbitration.myCharacter')}}：</div>
 		    <div class="zcglul_li_r">{{ zcgldata['info']['myjuese'] }}</div>
 		  </div>
 		  <div class="zcglul_li_item">
-		    <div class="zcglul_li_l">订单号：</div>
+		    <div class="zcglul_li_l">{{$t('message.arbitration.idNum')}}：</div>
 		    <div class="zcglul_li_r">{{ zcgldata['info']['ddid'] }}</div>
 		  </div>
 		  <div class="zcglul_li_item">
-		    <div class="zcglul_li_l">订单详情：</div>
+		    <div class="zcglul_li_l">{{$t('message.arbitration.orderDetail')}}：</div>
 		    <div class="zcglul_li_r list">
 		      <div class="zcglul_li_r_item">
-		        商家地址：{{ zcgldata['info']['ddinfo']['mad'].substring(0,7) }}....
+		        {{$t('message.arbitration.merchants')}}：{{ zcgldata['info']['ddinfo']['mad'].substring(0,7) }}....
 		      </div>
 		      <div class="zcglul_li_r_item">
-		        用户地址：{{ zcgldata['info']['ddinfo']['uad'].substring(0,7) }}....
+		        {{$t('message.arbitration.userAccount')}}：{{ zcgldata['info']['ddinfo']['uad'].substring(0,7) }}....
 		      </div>
 		      <div class="zcglul_li_r_item">
-		        交易数量：{{ zcgldata['info']['ddinfo']['uoa'] }}  {{ zcgldata['info']['ddinfo']['pro'] }}
+		        {{$t('message.arbitration.numberTransaction')}}：{{ zcgldata['info']['ddinfo']['uoa'] }}  {{ zcgldata['info']['ddinfo']['pro'] }}
 		      </div>
 		      <div class="zcglul_li_r_item">
-		        商家保证金：{{ zcgldata['info']['ddinfo']['mma']  }}  USDT
+		        {{$t('message.arbitration.merMargin')}}：{{ zcgldata['info']['ddinfo']['mma']  }}  USDT
 		      </div>
 		      <div class="zcglul_li_r_item">
-		        用户保证金：{{ zcgldata['info']['ddinfo']['uma'] }}  USDT
+		        {{$t('message.arbitration.userMargin')}}：{{ zcgldata['info']['ddinfo']['uma'] }}  USDT
 		      </div>
 		    </div>
 		  </div>
-		  <div class="zcglul_li title">仲裁方案</div>
+		  <div class="zcglul_li title">{{$t('message.arbitration.arbitrationScheme')}}</div>
 		  <div class="zcglul_li_item">
-		    <div class="zcglul_li_l">编号：</div>
+		    <div class="zcglul_li_l">{{$t('message.arbitration.num')}}：</div>
 		    <div class="zcglul_li_r maleftreft">
 		      <div>
-		        <el-select v-model="zcgldata.faid" placeholder="请选择" size="mini">
+		        <el-select v-model="zcgldata.faid" :placeholder="$t('message.arbitration.choose')" size="mini">
 		            <el-option
 		              v-for="item in zcgldata['bhnum']"
 		              :key="item"
@@ -251,47 +252,47 @@
 		              :value="item">
 		            </el-option>
 		          </el-select>
-		          <el-button type="text" style="margin-left: 5px;" @click="openqb('openbzcfanwin')"><i class="el-icon-circle-plus-outline"></i> 新建</el-button>
+		          <el-button type="text" style="margin-left: 5px;" @click="openqb('openbzcfanwin')"><i class="el-icon-circle-plus-outline"></i> {{$t('message.arbitration.new')}}</el-button>
 		      </div>
-		      <div style="margin-top: 5px;">票数 {{ !zcgldata['info']['tpjdu']?0:zcgldata['info']['tpjdu'] }}/5</div>
+		      <div style="margin-top: 5px;">{{$t('message.arbitration.voteNum')}} {{ !zcgldata['info']['tpjdu']?0:zcgldata['info']['tpjdu'] }}/5</div>
 		    </div>
 		  </div>
 		  <div class="zcglul_li_item">
-		    <div class="zcglul_li_l">资产归属：</div>
+		    <div class="zcglul_li_l">{{$t('message.arbitration.assetOwnership')}}：</div>
 		    <div class="zcglul_li_r">{{ zcgldata['info']['zcguishu'] }}</div>
 		  </div>
 		  <div class="zcglul_li_item">
-		    <div class="zcglul_li_l">保证金：</div>
-		    <div class="zcglul_li_r">({{ zcgldata['info']['who'] == 1 ? '扣除商家的保证金':'扣除用户的保证金' }}) <br> {{ zcgldata['info']['bzjnum'] }} USDT</div>
+		    <div class="zcglul_li_l">{{$t('message.arbitration.bail')}}：</div>
+		    <div class="zcglul_li_r">({{ zcgldata['info']['who'] == 1 ? $t('message.arbitration.merchantBail'):$t('message.arbitration.userBail') }}) <br> {{ zcgldata['info']['bzjnum'] }} USDT</div>
 		  </div>
 		  <div class="zcglul_li_item">
-		    <div class="zcglul_li_l">商家仲裁员：</div>
+		    <div class="zcglul_li_l">{{$t('message.arbitration.M_arbitrator')}}：</div>
 		    <div class="zcglul_li_r">{{ zcgldata['info']['sjnum'] }} GAZ</div>
 		  </div>
 		  <div class="zcglul_li_item">
-		    <div class="zcglul_li_l">用户仲裁员：</div>
+		    <div class="zcglul_li_l">{{$t('message.arbitration.U_arbitrator')}}：</div>
 		    <div class="zcglul_li_r">{{ zcgldata['info']['yhnum'] }} GAZ</div>
 		  </div>
 		  <div class="zcglul_li_item">
-		    <div class="zcglul_li_l">第二轮仲裁费：</div>
+		    <div class="zcglul_li_l">{{$t('message.arbitration.secondArbitrationFee')}}：</div>
 		    <div class="zcglul_li_r">{{ zcgldata['info']['delnum'] }} GAZ</div>
 		  </div>
 		  <div class="zcglul_li_item daojishi">
-		    <div class="zcglul_li_l">投票倒计时</div>
+		    <div class="zcglul_li_l">{{$t('message.arbitration.votingCountDown')}}</div>
 		    <div class="zcglul_li_r"><van-count-down :time="zcgldata['info'].djsval" format="DD 天 HH 时 mm 分 ss 秒" /></div>
 		  </div>
 		  <div class="zcglul_li coll">
 		    <div class="zcglul_li_item_in">
-		      <van-button type="danger"  :loading="zcgldata['loading']" @click="qxtoupiao">取 消</van-button>
-		      <van-button type="primary" style="margin-left: 10px;" @click="toupiaoajax" :loading="zcgldata.loading">投 票</van-button>
+		      <van-button type="danger"  :loading="zcgldata['loading']" @click="qxtoupiao">{{$t('message.arbitration.cancel')}}</van-button>
+		      <van-button type="primary" style="margin-left: 10px;" @click="toupiaoajax" :loading="zcgldata.loading">{{$t('message.arbitration.vote')}}</van-button>
 		    </div>
 		    <div class="zcglul_li_item_in">
-		      <van-button type="info" :loading="zcgldata.loading" @click="jieshoutoupiao">接 受</van-button>
-		      <van-button type="default" style="margin-left: 10px;" :loading="zcgldata.loading">撤 销</van-button>
+		      <van-button type="info" :loading="zcgldata.loading" @click="jieshoutoupiao">{{$t('message.arbitration.accept')}}</van-button>
+		      <van-button type="default" style="margin-left: 10px;" :loading="zcgldata.loading">{{$t('message.arbitration.repeal')}}</van-button>
 		    </div>
 		    <div class="zcglul_li_item_in">
-		      <van-button type="info" :loading="zcgldata.loading" @click="executeajax">执 行</van-button>
-		      <van-button type="default" style="margin-left: 10px;" :loading="zcgldata.loading" @click="restartlArbajax">重 启</van-button>
+		      <van-button type="info" :loading="zcgldata.loading" @click="executeajax">{{$t('message.arbitration.execute')}}</van-button>
+		      <van-button type="default" style="margin-left: 10px;" :loading="zcgldata.loading" @click="restartlArbajax">{{$t('message.arbitration.restart')}}</van-button>
 		    </div>
 		  </div>
 		</div>
@@ -300,63 +301,63 @@
 		
 		<!-- 设置仲裁方案 -->
 		<el-dialog
-		  title="第二轮仲裁方案"
+		  :title="$t('message.arbitration.secondScheme')"
 		  :visible.sync="bzj_fangan.code"
 		  width=350px
 		>
 		  <span v-if="!bzj_fangan.data.code">
 		    <el-input
 		      v-model="bzj_fangan['ddid']"
-		      placeholder="请输入订单号"
+		      :placeholder="$t('message.arbitration.enterNumber')"
 		    ></el-input>
 		  </span>
 		
 		  <div v-if="bzj_fangan.data.code" class="bzj_fangan_ul">
 		    <div class="bzj_fangan_ul_li">
-		      我的账号:{{ bzj_fangan.data["myuser"].substring(0, 8) }} ....
+		      {{$t('message.arbitration.account')}}:{{ bzj_fangan.data["myuser"].substring(0, 8) }} ....
 		    </div>
 		    <div class="bzj_fangan_ul_li">
-		      我的昵称:{{ bzj_fangan.data["myname"] }}
+		      {{$t('message.arbitration.nickName')}}:{{ bzj_fangan.data["myname"] }}
 		    </div>
-		    <div class="bzj_fangan_ul_li">订单号:{{ bzj_fangan.ddid }}</div>
+		    <div class="bzj_fangan_ul_li">{{$t('message.arbitration.idNum')}}:{{ bzj_fangan.ddid }}</div>
 		    <div class="bzj_fangan_ul_li ul">
-		      <div class="bzj_fangan_ul_li_ul">订单详情：</div>
+		      <div class="bzj_fangan_ul_li_ul">{{$t('message.arbitration.orderDetail')}}：</div>
 		      <div class="bzj_fangan_ul_li_ul_li">
-		        商家地址：{{ bzj_fangan.data["mad"].substring(0, 8) }} ....
+		        {{$t('message.arbitration.merchants')}}：{{ bzj_fangan.data["mad"].substring(0, 8) }} ....
 		      </div>
 		      <div class="bzj_fangan_ul_li_ul_li">
-		        用户地址：{{ bzj_fangan.data["uad"].substring(0, 8) }} ....
+		        {{$t('message.arbitration.userAccount')}}：{{ bzj_fangan.data["uad"].substring(0, 8) }} ....
 		      </div>
 		      <div class="bzj_fangan_ul_li_ul_li">
-		        交易数量：{{ bzj_fangan.data["uoa"].toFixed(2) }} 
+		        {{$t('message.arbitration.asset')}}：{{ bzj_fangan.data["uoa"].toFixed(2) }} 
 		        {{ bzj_fangan.data["pro"] }}
 		      </div>
 		      <div class="bzj_fangan_ul_li_ul_li">
-		        商家保证金：{{ bzj_fangan.data["mma"].toFixed(2) }}  USDT
+		        {{$t('message.arbitration.merMargin')}}：{{ bzj_fangan.data["mma"].toFixed(2) }}  USDT
 		      </div>
 		      <div class="bzj_fangan_ul_li_ul_li">
-		        用户证金：{{ bzj_fangan.data["uma"].toFixed(2) }}  USDT
+		        {{$t('message.arbitration.userMargin')}}：{{ bzj_fangan.data["uma"].toFixed(2) }}  USDT
 		      </div>
 		    </div>
-		    <div class="bzj_fangan_ul_li title">仲裁方案</div>
+		    <div class="bzj_fangan_ul_li title">{{$t('message.arbitration.arbitrationScheme')}}</div>
 		
 		    <div class="bzj_fangan_ul_li">
-		      <span class="bzj_fangan_ul_lia">资产归属：</span
-		      ><el-radio v-model="bzj_fangan.from.who" label="1">商家</el-radio>
-		      <el-radio v-model="bzj_fangan.from.who" label="2">用户</el-radio>
-		      <el-radio v-model="bzj_fangan.from.who" label="0">已释放</el-radio>
+		      <span class="bzj_fangan_ul_lia">{{$t('message.arbitration.assetOwnership')}}：</span
+		      ><el-radio v-model="bzj_fangan.from.who" label="1">{{$t('message.arbitration.merchant')}}</el-radio>
+		      <el-radio v-model="bzj_fangan.from.who" label="2">{{$t('message.arbitration.user')}}</el-radio>
+		      <el-radio v-model="bzj_fangan.from.who" label="0">{{$t('message.arbitration.hasReleased')}}</el-radio>
 		    </div>
 		    <div class="bzj_fangan_ul_li">
-		      <span class="bzj_fangan_ul_lia">保证金：</span>
+		      <span class="bzj_fangan_ul_lia">{{$t('message.arbitration.bail')}}：</span>
 		      <el-select
 		        size="mini"
-		        placeholder="请选择"
+		        :placeholder="$t('message.arbitration.choose')"
 		        v-model="bzj_fangan.from.bzjt"
 		      >
 		        <el-option
 		          v-for="item in [
-		            { label: '商家', value: '1' },
-		            { label: '用户', value: '2' },
+		            { label: $t('message.arbitration.merchant'), value: '1' },
+		            { label: $t('message.arbitration.user'), value: '2' },
 		          ]"
 		          :key="item.value"
 		          :label="item.label"
@@ -366,14 +367,14 @@
 		      </el-select>
 		      <el-select
 		        size="mini"
-		        placeholder="请选择"
+		        :placeholder="$t('message.arbitration.choose')"
 		        style="margin-left: 5px"
 		        v-model="bzj_fangan.from.bzjtb"
 		      >
 		        <el-option
 		          v-for="item in [
-		            { label: '增加', value: '1' },
-		            { label: '减少', value: '2' },
+		            { label: $t('message.arbitration.add'), value: '1' },
+		            { label: $t('message.arbitration.reduce'), value: '2' },
 		          ]"
 		          :key="item.value"
 		          :label="item.label"
@@ -383,7 +384,7 @@
 		      </el-select>
 		      <el-input
 		        size="mini"
-		        placeholder="请输入"
+		        :placeholder="$t('message.arbitration.enterInput')"
 		        style="margin-left: 5px"
 		        v-model="bzj_fangan.from.bzjnum"
 		      >
@@ -391,30 +392,30 @@
 		      </el-input>
 		    </div>
 		    <div class="bzj_fangan_ul_li">
-		      <span class="bzj_fangan_ul_lia">用户仲裁员：</span
+		      <span class="bzj_fangan_ul_lia">{{$t('message.arbitration.U_arbitrator')}}：</span
 		      ><el-input
 		        size="mini"
-		        placeholder="请输入"
+		        :placeholder="$t('message.arbitration.enterInput')"
 		        v-model="bzj_fangan.from.sjzcy"
 		      >
 		        <template slot="append">GAZ</template>
 		      </el-input>
 		    </div>
 		    <div class="bzj_fangan_ul_li">
-		      <span class="bzj_fangan_ul_lia">商家仲裁员：</span>
+		      <span class="bzj_fangan_ul_lia">{{$t('message.arbitration.M_arbitrator')}}：</span>
 		      <el-input
 		        size="mini"
-		        placeholder="请输入"
+		        :placeholder="$t('message.arbitration.enterInput')"
 		        v-model="bzj_fangan.from.yhzcy"
 		      >
 		        <template slot="append">GAZ</template>
 		      </el-input>
 		    </div>
 		    <div class="bzj_fangan_ul_li">
-		      <span class="bzj_fangan_ul_lia">第二轮仲裁费：</span
+		      <span class="bzj_fangan_ul_lia">{{$t('message.arbitration.secondArbitrationFee')}}：</span
 		      ><el-input
 		        size="mini"
-		        placeholder="请输入费用"
+		        :placeholder="$t('message.arbitration.enterCost')"
 		        v-model="bzj_fangan.from.zcfeiyong"
 		      >
 		        <template slot="append">GAZ</template>
@@ -423,21 +424,21 @@
 		  </div>
 		
 		  <span slot="footer" class="dialog-footer">
-		    <el-button @click="bzj_fangan.code = false">取消</el-button>
+		    <el-button @click="bzj_fangan.code = false">{{$t('message.arbitration.cancel')}}</el-button>
 		    <el-button
 		      type="primary"
 		      @click="ddinfoajax_fan"
 		      :loading="bzj_fangan.loading"
 		      v-if="!bzj_fangan.data.code"
-		      >设 置</el-button
+		      >{{$t('message.arbitration.set')}}</el-button
 		    >
-		    <el-button plain v-if="bzj_fangan.data.code" @click="backsyb">返回上一步</el-button>
+		    <el-button plain v-if="bzj_fangan.data.code" @click="backsyb">{{$t('message.arbitration.backUp')}}</el-button>
 		    <el-button
 		      type="primary"
 		      :loading="bzj_fangan.loading"
 		      v-if="bzj_fangan.data.code"
 		      @click="schemeajax"
-		      >设 置</el-button
+		      >{{$t('message.arbitration.set')}}</el-button
 		    >
 		  </span>
 		</el-dialog>

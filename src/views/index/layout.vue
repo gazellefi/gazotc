@@ -281,7 +281,7 @@ export default {
       height: 100%;
 	  margin-top: 4.1875rem;
     }
-    height: 3.75rem;
+    /* height: 460px; */
     text-align: center;
     .info {
       position: absolute;
@@ -483,7 +483,7 @@ export default {
   }
   .topNav {
 	  
-    height: 3.75rem !important;
+    height: 140px !important;
     position: relative;
 	
 	.el-carousel {
