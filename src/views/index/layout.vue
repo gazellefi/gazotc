@@ -7,7 +7,7 @@
 				<img src="../../assets/img/navLogo.png" >
 			</div>
 			<!-- <li :class="[currentRoute==v.route?'currentRoute':'']" @click="navClick(v)" v-for="v in navRoutes">{{v.title}}</li> -->
-			<li @click="navClick(v)" v-for="v in navRoutes">{{$t(`message.home.${v.title}`)}}</li>
+			<li @click="navClick(v)" v-for="(v,index) in navRoutes" :key="index" :class="[activeIndex == v.value ? 'currentRoute' : '']">{{$t(`message.home.${v.title}`)}}</li>
 			<div class="langBox">
 				
 				<lang class="lang"></lang>
@@ -17,7 +17,7 @@
     </ul>
     <van-popup class="nav2" v-model="show" position="left" :style="{ width: '50%' ,height:'100%'}">
       <!-- <li :class="[currentRoute==v.route?'currentRoute':'']" @click="navClick(v)" v-for="v in navRoutes"> -->
-      <li @click="navClick(v)" v-for="v in navRoutes">
+      <li @click="navClick(v)"  v-for="(v,index) in navRoutes" :key="index" :class="[activeIndex == v.value ? 'currentRoute' : '']">
         {{$t(`message.home.${v.title}`)}}
         <van-icon name="arrow" style="float:right" />
       </li>
@@ -38,7 +38,7 @@
     </div>
     <router-view></router-view>
     <!-- contactUs -->
-    <div class="contactUs">
+    <div class="contactUs" v-if="showBottom">
       <div class="content">
         <!-- <div class="title">Get the latest news and updates</div> -->
         <div class="info">
@@ -129,15 +129,16 @@ export default {
         // { title: 'Arbitration rules', route: '/Arbitrationrules' },
         // { title: 'DAPP', route: '/Exchange' },
         // { title: 'Public sale', route: '/Activities' },
-		{ title: 'Home', route: '/Homepage' },
-		{ title: 'About', route: '/about' },
-		{ title: 'Document', route: '/Homepage' },
-		{ title: 'Rule', route: '/rule' },
-		{ title: 'News', route: '/news' },
-		{ title: 'Dapp', route: '/Exchange' },
-		{ title: 'Paper', route: '/GazOTC.pdf' },
-		{ title: 'Contact', route: '/contact' },
+		{ title: 'Home', route: '/Homepage',value: 1 },
+		{ title: 'About', route: '/about',value: 2 },
+		{ title: 'Document', route: '/Homepage',value: 3 },
+		{ title: 'Rule', route: '/rule',value: 4 },
+		{ title: 'News', route: '/news',value: 5 },
+		{ title: 'Dapp', route: '/Exchange',value: 6 },
+		{ title: 'Paper', route: '/GazOTC',value: 7 },
+		{ title: 'Contact', route: '/contact',value: 8 },
       ],
+	  activeIndex: 1
     };
   },
   created() {
@@ -150,7 +151,15 @@ export default {
     window.addEventListener('scroll', this.handleScroll, true);
   },
   watch: {},
-  computed: {},
+  computed: {
+	  showBottom(){
+		  if(this.activeIndex == 8 || this.activeIndex == 5 || this.activeIndex == 7){
+			  return false
+		  }else{
+			  return true
+		  }
+	  }
+  },
   methods: {
     goLink(v) {
       window.open(v.href, '_blank')
@@ -158,6 +167,7 @@ export default {
 
     navClick(v) {
       this.show = false
+	  this.activeIndex = v.value
       if (v.route == '/Publicsale') {
         this.$router.push('/GAZ');
       } else if (v.route == '/Exchange') {

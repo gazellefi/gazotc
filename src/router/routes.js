@@ -45,6 +45,12 @@ export default [
 	      import('@/views/index/contact'),
 	  },
 	  {
+	    path: '/GazOTC',
+	    name: 'GazOTC',
+	    component: () =>
+	      import('@/views/index/GazOTC'),
+	  },
+	  {
 	    path: '/news',
 	    name: 'news',
 	    component: () =>

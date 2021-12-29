@@ -1,0 +1,65 @@
+[{
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "id",
+		"type": "uint256"
+	}, {
+		"internalType": "string",
+		"name": "data",
+		"type": "string"
+	}],
+	"name": "commun",
+	"outputs": [],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "id",
+		"type": "uint256"
+	}, {
+		"internalType": "string",
+		"name": "data",
+		"type": "string"
+	}, {
+		"internalType": "uint256",
+		"name": "_indicator",
+		"type": "uint256"
+	}],
+	"name": "dispatch",
+	"outputs": [],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "address",
+		"name": "",
+		"type": "address"
+	}],
+	"name": "indicator",
+	"outputs": [{
+		"internalType": "uint256",
+		"name": "",
+		"type": "uint256"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "address",
+		"name": "",
+		"type": "address"
+	}, {
+		"internalType": "uint256",
+		"name": "",
+		"type": "uint256"
+	}],
+	"name": "message",
+	"outputs": [{
+		"internalType": "string",
+		"name": "",
+		"type": "string"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}]
