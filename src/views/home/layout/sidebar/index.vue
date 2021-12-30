@@ -2,7 +2,7 @@
   <div class="sideBar">
     <div class="nav hidden-sm-and-down">
       <span>{{morenkey_lang}}</span>
-	  <img class="img" src="@/assets/img/option.png" >
+	  <!-- <img class="img" src="@/assets/img/option.png" > -->
       <div class="list" :class="{ishow:imgClick}">
         <li v-for="(item,index) in option1" :key="index"  @click="wlxuanze(item.value)">{{$t(`message.dapp.${item.text}`)}}</li>
       </div>
@@ -49,7 +49,7 @@ export default {
     },
   },
   mounted() {
-    document.addEventListener('click', this.clickFn)
+    // document.addEventListener('click', this.clickFn)
   },
   methods: {
     clickFn(e) {

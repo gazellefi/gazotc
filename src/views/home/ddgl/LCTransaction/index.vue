@@ -271,7 +271,7 @@
 					<!-- 私信 -->
 					<van-button plain type="info"  class="marr-10" color="#FDC500" size="small"  @click="pcxiugaidd(2,index)">{{$t('message.dapp.privateLetter')}}</van-button>
 					<!-- 详情 -->
-					<van-button plain type="info" color="#FDC500" size="small"  @click="openinfo(item,ddid)">{{$t('message.details')}}</van-button>
+					<van-button plain type="info" color="#FDC500" size="small"  @click="openinfo(item.ddid)">{{$t('message.details')}}</van-button>
 				</div>
       		</div>
       	</el-col>
@@ -370,20 +370,20 @@ export default {
       web3 = new Web3(provider);
       if (web3 && provider) {
         //其他钱包使用测试网络
-        if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-            var wlcode = window.ethereum.networkVersion;
-            //imtoken只能查看 无法操作 出发是ETF主网
-            if (window.ethereum.isImToken) {
-                web3.setProvider(config["hyue"][config["key"]]["Url"]);
-            }
-            //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-            if (window.ethereum.isMetaMask && wlcode != 4) {
-                web3.setProvider(config["hyue"][config["key"]]["Url"]);
-            }
-        }else{
-            web3.setProvider(config["hyue"][config["key"]]["Url"]);
-        }
-		console.log(provider.selectedAddress);
+  //       if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
+  //           var wlcode = window.ethereum.networkVersion;
+  //           //imtoken只能查看 无法操作 出发是ETF主网
+  //           if (window.ethereum.isImToken) {
+  //               web3.setProvider(config["hyue"][config["key"]]["Url"]);
+  //           }
+  //           //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
+  //           if (window.ethereum.isMetaMask && wlcode != 4) {
+  //               web3.setProvider(config["hyue"][config["key"]]["Url"]);
+  //           }
+  //       }else{
+  //           web3.setProvider(config["hyue"][config["key"]]["Url"]);
+  //       }
+		// console.log(provider.selectedAddress);
         Address = provider.selectedAddress;
         // dq.getuinfo(Address);
         dq.getlist();
@@ -402,6 +402,84 @@ export default {
   	}
   },
   methods: {
+	  // 提交私信
+	  submitLetter(){
+		  let form = this.set_form
+		  // 整理数据
+		  let newForm = {}
+		  if(form.phoneNuberCheack){ newForm = Object.assign(newForm,{phoneNuber:form.phoneNuber})}
+		  if(form.eMailCheack){ newForm = Object.assign(newForm,{eMail:form.eMail})}
+		  if(form.teleCheack){ newForm = Object.assign(newForm,{tele:form.tele})}
+		  if(form.wechatCheack){ newForm = Object.assign(newForm,{wechat:form.wechat})}
+		  if(form.otherCheack){ newForm = Object.assign(newForm,{other:form.other})}
+		  let str = Base64.encode(JSON.stringify(newForm))
+		  // 加密 
+		  let pubkey = new JSEncrypt();
+		  // console.log(form.pubKey);
+		  pubkey.setPublicKey(form.pubKey);
+		  let msg = pubkey.encrypt(str);
+		  // console.log(msg);
+		  this.setLetter(msg)
+	  },
+	  // 私信存链上
+	  setLetter(msg){
+		var that = this
+		// 存到链上   16
+		var beizhucon = new web3.eth.Contract(
+		  config["hyue"][config["key"]]["Letter"]["abi"],
+		  config["hyue"][config["key"]]["Letter"]["heyue"]
+		);
+		Toast.loading({ message: that.$t('message.wallet.loading')+'...' });
+		that.setLink(beizhucon,msg,'16',that.set_form.setId,that.set_form.orderId).then(()=>{
+			Dialog.alert({
+			  title: that.$t("message.prompt"),
+			  message: that.$t("message.success"),
+			}).then(() => {
+				that.dialog = false
+				that.set_form = {
+						  orderId: '',
+						  phoneNuber: '',
+						  phoneNuberCheack: false,
+						  eMail: '',
+						  eMailCheack: false,
+						  tele: '',
+						  teleCheack: false,
+						  wechat: '',
+						  wechatCheack: false,
+						  other: '',
+						  otherCheack: false,
+				}
+				Toast.clear()
+			});
+		}).catch(()=>{
+				Dialog.alert({
+				  title: that.$t("message.prompt"),
+				  message: that.$t("message.failed"),
+				}).then(() => {
+				  Toast.clear()
+				});
+		})  
+	  },
+	  // 存链公用方法 init:初始化  parma:传的值  type: 存的位置  address:存储id         id:订单id
+	  setLink(init,parma,type,address,id){
+	  	return new Promise((resolve,reject)=>{
+			console.log(type);
+			console.log(parma);
+			
+			console.log(id);
+			console.log(address);
+	  		init.methods.dispatch(type, parma,id+'').send( { from: Address, }, (err, ret) => {
+				console.log(err);
+	  		      if (ret && !err) {
+	  		        resolve()
+	  		      } else {
+	  				reject()
+	  		      }
+	  		    }
+	  		  );
+	  	})
+	  },
+	  // 跳转详情
 	  openinfo(ddid) {
 	    this.$router.push({
 	      name: 'Ddinfow',
