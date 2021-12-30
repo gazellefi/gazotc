@@ -174,7 +174,7 @@
 	</myDialog>
     <!-- WAP -->
     <div class="hidden-sm-and-up ddgl_fabu_wapview">
-      <el-row style="border-bottom: 1px solid #EEEEEE;">
+ <!--     <el-row style="border-bottom: 1px solid #EEEEEE;">
       	<el-col :span="12">
       		<div class="ddgl_fabu_p_head_sxan_i">
       			<span>{{ $t("message.dapp.currency")}}：</span>
@@ -223,7 +223,7 @@
       			</el-dropdown>
       		</div>
       	</el-col>
-      </el-row>
+      </el-row> -->
 
       <!-- 列表 -->
       <el-row>
@@ -238,9 +238,9 @@
       			<div class="f c_b a_c">
       				<div class="f c_c">
       					<span class="fwb">{{item.type}}</span>
-      					<span class="fwb">USDT</span>
+      					<span class="fwb">{{item.pro}}</span>
       					<div class="f c_c marty_nav marl-5">
-      						<span>{{$t('message.arbitration.merchantMargin')}}{{ item.mma }}USDT</span>
+      						<span>{{$t('message.arbitration.merchantMargin')}}{{ item.mma }} GAZ</span>
       					</div>
       				</div>
       			</div>

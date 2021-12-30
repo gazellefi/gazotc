@@ -207,7 +207,7 @@
 		    this.$router.push(url);
 		  },
 		  async getqblist(flag) {
-		    Toast.loading({ message: this.$t('message.wallet.loading') });
+		    Toast.loading({ message: this.$t('message.netDes') });
 		    var list = [];
 		    var binum = config['hyue'][config['key']]['Bzj']['num'];
 		    if(flag){
