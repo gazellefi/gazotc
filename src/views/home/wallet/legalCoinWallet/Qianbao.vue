@@ -482,14 +482,27 @@
 							var lock_yue_arr = ret[1];
 							for (let index = 0; index < dq.huobi.length; index++) {
 								var num = Number(dq.huobi[index]['num']);
-								dq.list.push({
-									id: index,
-									key: dq.huobi[index]['hyue'],
-									name: dq.huobi[index]['id'],
-									balancepro: (Number(yue_arr[index]) / (10 ** num)).toFixed(2),
-									lockpro: (Number(lock_yue_arr[index]) / (10 ** num)).toFixed(2)
-								});
+								
+								if(dq.huobi[index]['id']=='bond'){
+									dq.list.push({
+										id: index,
+										key: dq.huobi[index]['hyue'],
+										name: dq.$t('message.arbitration.margin'),
+										balancepro: (Number(yue_arr[index]) / (10 ** num)).toFixed(2),
+										lockpro: (Number(lock_yue_arr[index]) / (10 ** num)).toFixed(2)
+									});
+								}else{
+									dq.list.push({
+										id: index,
+										key: dq.huobi[index]['hyue'],
+										name: dq.huobi[index]['id'],
+										balancepro: (Number(yue_arr[index]) / (10 ** num)).toFixed(2),
+										lockpro: (Number(lock_yue_arr[index]) / (10 ** num)).toFixed(2)
+									});
+								}
+								
 							}
+							console.log(dq.list)
 							for (let index = 0; index < dq.huobi.length - 1; index++) {
 								var num_a = Number(dq.huobi[index]['num']);
 								//var zhic = dq.huobi[index]['key'];
