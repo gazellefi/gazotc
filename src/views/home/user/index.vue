@@ -438,22 +438,24 @@ export default {
         // }
 
         //查询仲裁备注
-        var zc_conn = new web3.eth.Contract(
-          config["hyue"][config["key"]]["ArbOne"]["abi"],
-          config["hyue"][config["key"]]["ArbOne"]["heyue"]
-        );
-        for (let index = 0; index < Beizhujson.length; index++) {
-          if (Beizhujson[index]["id"] == 8) {
-            zc_conn.methods
-              .message(dq.user ? dq.user : address + "", 0 + "")
-              .call((err, ret) => {
-                if (ret) {
-                  dq.beizhu_arr[Beizhujson[index]["key"]] = Base64.decode(ret);
-                }
-              });
-            break;
-          }
-        }
+      //   var zc_conn = new web3.eth.Contract(
+      //     config["hyue"][config["key"]]["ArbOne"]["abi"],
+      //     config["hyue"][config["key"]]["ArbOne"]["heyue"]
+      //   );
+      //   for (let index = 0; index < Beizhujson.length; index++) {
+      //     if (Beizhujson[index]["id"] == 8) {
+      //       zc_conn.methods
+      //         .message(dq.user ? dq.user : address + "", 0 + "")
+      //         .call((err, ret) => {
+				  // console.log(ret);
+      //           if (ret) {
+      //             dq.beizhu_arr[Beizhujson[index]["key"]] = Base64.decode(ret);
+				  // console.log(dq.beizhu_arr[Beizhujson[index]["key"]]);
+      //           }
+      //         });
+      //       break;
+      //     }
+      //   }
 		dotc = new web3.eth.Contract(dotc_abi, dotc_key);
         dq.getsczc();
         dq.getBz();

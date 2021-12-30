@@ -58,7 +58,7 @@ export default {
     return {
       hbilist: hbarr,
       hbindex: 0,
-      je: 0,
+      je: '',
       key: config['key'],
       form: {
 		  region: ''
@@ -69,7 +69,7 @@ export default {
   props:['type'],
   created() {
   	this.form.region = this.type
-	this.je = 0
+	this.je = ''
 	if(this.type){
 		this.changeSelect(this.type)
 	}
@@ -77,7 +77,7 @@ export default {
   watch:{
 	  type(){
 	  	this.form.region = this.type
-		this.je = 0
+		this.je = ''
 	  	if(this.type){
 	  		this.changeSelect(this.type)
 	  	}
@@ -248,10 +248,9 @@ export default {
                             if (balanceOf < Number(dq.je)) {
                                 Toast.clear();
                                 Dialog.alert({
-                                    title: dq.$t('message.wallet.waring'),
+                                    title: dq.$t('message.wallet.warning'),
                                     message: pro + dq.$t('message.wallet.insufficient'),
                                 }).then(() => {
-                                // on close
                                 });
                                 return;
                             }else{
@@ -306,7 +305,7 @@ export default {
 							    title: dq.$t('message.wallet.depositeSuccess'),
 							    message: dq.$t('message.wallet.success')+ dq.je +' '+ dq.hbilist[dq.hbindex]['title'] +'',
 							}).then(() => {
-								dq.je = 0
+								dq.je = ''
 							    dq.$emit('Recharge')
 								// window.location.reload();
 							});
