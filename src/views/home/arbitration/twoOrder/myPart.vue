@@ -916,6 +916,7 @@
 			        var infoarr = ret[0];
 			        var typearr = ret[1];
 			        var userarr = ret[2];
+					  console.log(ret)
 			        for (let index = 0; index < infoarr.length; index++) {
 			          var zc_num = '';
 			          var zc_id = '';
@@ -958,6 +959,14 @@
 			          obj['Timee'] = Number(Time);
 			          list.push(obj);
 			        }
+					for(let i=0;i<list.length;i++){
+						for(let j=i+1;j<list.length;j++){
+							if(list[i]['did']==list[j]['did']){
+								list.splice(j,1);
+								j--;
+							}
+						}
+					}
 			        dq.del_list = list;
 					console.log(list)
 			      }

@@ -106,7 +106,7 @@
 				<template slot-scope="scope">
 					<!-- 私信 -->
 					<div style="margin-right: 10px; display: inline-block;">
-						<van-button  color="#FDC500" plain type="info" size="small"  @click="pcxiugaidd(1,scope.row)">{{$t('message.dapp.privateLetter')}}</van-button>
+						<van-button  color="#FDC500" plain type="info" size="small"  @click="pcxiugaidd(1,scope.$index)">{{$t('message.dapp.privateLetter')}}</van-button>
 					</div>
 					<!-- 详情 -->
 					<van-button  color="#FDC500" plain type="info" size="small"  @click="openinfo(scope.row.ddid)">{{$t('message.details')}}</van-button>
@@ -165,7 +165,7 @@
 			   </div>
 		   </el-form-item>
 		   <div class="f a_c c_c">
-		   		<span class="submitBtn" @click="submitLetter">{{$t('message.sumbmit')}}</span>
+		   		<span class="submitBtn" @click="openinfo(20)">{{$t('message.sumbmit')}}</span>
 		   </div>
 		   <el-form-item  :label="$t('message.dapp.explain')+':'">
 				  <p class="fz12">{{popDes}}</p>
@@ -269,7 +269,7 @@
       			<span>{{$t('message.arbitration.orderId')+' | '+ item.ddid}}</span>
       			<div class="f a_c">
 					<!-- 私信 -->
-					<van-button plain type="info"  class="marr-10" color="#FDC500" size="small"  @click="pcxiugaidd(2,item)">{{$t('message.dapp.privateLetter')}}</van-button>
+					<van-button plain type="info"  class="marr-10" color="#FDC500" size="small"  @click="pcxiugaidd(2,index)">{{$t('message.dapp.privateLetter')}}</van-button>
 					<!-- 详情 -->
 					<van-button plain type="info" color="#FDC500" size="small"  @click="openinfo(item.ddid)">{{$t('message.details')}}</van-button>
 				</div>
@@ -284,9 +284,6 @@
 import Web3 from "web3"
 import Web3Modal from "web3modal"
 let Base64 = require('js-base64').Base64;
-import { Notify, Dialog, Toast } from "vant";
-import JSEncrypt from "jsencrypt"
-import SeededRSA from "@/views/home/user/seededrsa/rsa.js";
 
 import config from "@/config";
 var dotc_abi = config['hyue'][config['key']]['dotc']['abi'];
@@ -503,70 +500,10 @@ export default {
 	  },
 	  // 私信 弹框 提交
 	  xiugaiajax(num){},
-	  //  详情弹框 c 1:wep  2:wap
-	  pcxiugaidd(c, item) {
+	  //  详情弹框
+	  pcxiugaidd(c, index) {
 		  this.type_code = c
-		  this.set_form.orderId = item.ddid
-		  // 通过订单id获取 用户id和商家id
-		  this.getId(item.ddid).then(res=>{
-			  let {Uadd,Madd } = res
-			  var id = ''
-			  // 判断 当前用户是商家还是用户(转小写比较)
-			  if(Address == Uadd.toLowerCase()){
-				  id = Madd
-			  }else{
-				  id = Uadd
-			  }
-			  // 设置对方id
-			  this.set_form.setId = id
-			  console.log(id);
-			  // 通过对方id 获取 公钥
-			  this.getPubKey(id).then(res=>{
-				  // 设置公钥
-				  this.set_form.pubKey = res
-				  // 显示弹框
-				  this.dialog = true
-			  }).catch((err)=>{
-				  console.log('获取公钥失败');
-			  })
-		  }).catch((err)=>{
-			  console.log('获取商家id和用户id失败');
-		  })
-		  
-	  },
-	  // 通过订单获取 id
-	  getId(id){
-		  return new Promise((resolve,reject)=>{
-			  var dotsconn = new web3.eth.Contract(dotc_abi, dotc_key);
-			  dotsconn.methods.users(id).call(function(error, ret) {
-			  	if (ret) {
-					let ids = {
-						Uadd: ret.Uadd,
-						Madd: ret.Madd
-					}
-					resolve(ids)
-			  	}else{
-					reject()
-				}
-			  });
-		  })
-	  },
-	  // 通过用户id 获取公钥
-	  getPubKey(id){
-		  var beizhucon = new web3.eth.Contract(
-		    config["hyue"][config["key"]]["Letter"]["abi"],
-		    config["hyue"][config["key"]]["Letter"]["heyue"]
-		  );
-		  return new Promise((resolve,reject)=>{
-			  beizhucon.methods.message(id,15).call(function(error, ret) {
-				if (ret) {
-					let key = ret
-					resolve(key)
-				}else{
-					reject(error)
-				}
-			  });
-		  })
+		  this.dialog = true
 	  },
     getlist() {
       var list = [];

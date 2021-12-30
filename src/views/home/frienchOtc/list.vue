@@ -13,9 +13,10 @@
           </div>
         </div>
         <!-- <div class="ddlistaa_head_item"></div> -->
-
         <div class="right">
+			<Choose></Choose>
           <div class="saixuan">
+		
             <span class="typeSelect">{{ $t("message.dapp.currency")}}：</span>
             <el-select size="mini" v-model="huobi" :placeholder="$t('message.frienchOtc.select')">
               <el-option v-for="item in hbarr" :key="item.key" :label="item.id" :value="item.id">
@@ -187,6 +188,7 @@ let Base64 = require("js-base64").Base64;
 
 import Web3 from "web3";
 import Web3Modal from "web3modal";
+import Choose from '../../../components/chooseChange.vue'
 
 var Address = "";
 var web3 = "";
@@ -199,7 +201,8 @@ var bzj_num = config["hyue"][config["key"]]["Bzj"]["num"];
 
 //import VConsole from "vconsole";
 
-export default {
+	
+export default{
   created() {
     this.body_h = document.documentElement.clientHeight;
     //new VConsole();
@@ -371,51 +374,53 @@ export default {
           if (ret) {
             if (ret[0].length > 0) {
               for (let index = 0; index < ret[0].length; index++) {
-                var obj = {};
-				console.log(ret[2][index]);
-				let arr = ret[2][index].split("|")
-                obj["username"] = Base64.decode(arr[0]);
-                obj["user"] =
-                  ret[1][index].slice(0, 5) +
-                  "..." +
-                  ret[1][index].slice(
-                    ret[1][index].length - 5,
-                    ret[1][index].length
-                  );
-                obj["user_u"] =
-                  ret[1][index].toLowerCase() == Address ? true : false;
-                if (
-                  Number(ret[0][index][6]) == 0 &&
-                  Number(ret[0][index][7]) == 0
-                ) {
-                  obj["bfb"] = 0;
-                } else {
-                  obj["bfb"] = (
-                    100 /
-                    (Number(ret[0][index][6]) + Number(ret[0][index][7]))
-                  ).toFixed(0);
-                }
-                obj["jd_num"] =
-                  Number(ret[0][index][6]) + Number(ret[0][index][7]);
-                obj["ddid"] = Number(ret[0][index][0]);
-                obj["num"] = (
-                  Number(ret[0][index][1]) /
-                  10 ** huobi_num
-                ).toFixed(2);
-                obj["zd_mun"] = (
-                  Number(ret[0][index][2]) /
-                  10 ** huobi_num
-                ).toFixed(2);
-                obj["zg_mun"] = (
-                  Number(ret[0][index][3]) /
-                  10 ** huobi_num
-                ).toFixed(2);
-                obj["danjia"] = (Number(ret[0][index][4]) / 100).toFixed(2);
-                obj["bzj"] = (Number(ret[0][index][8]) / 10 ** bzj_num).toFixed(
-                  2
-                );
-                obj["bzj_u"] = Number(ret[0][index][5]) / 10 ** 16;
-                dataList.push(obj);
+				  if(Number(ret[0][index][0])!=0){
+					var obj = {};
+					console.log(ret[2][index]);
+					let arr = ret[2][index].split("|")
+					obj["username"] = Base64.decode(arr[0]);
+					obj["user"] =
+					  ret[1][index].slice(0, 5) +
+					  "..." +
+					  ret[1][index].slice(
+						ret[1][index].length - 5,
+						ret[1][index].length
+					  );
+					obj["user_u"] =
+					  ret[1][index].toLowerCase() == Address ? true : false;
+					if (
+					  Number(ret[0][index][6]) == 0 &&
+					  Number(ret[0][index][7]) == 0
+					) {
+					  obj["bfb"] = 0;
+					} else {
+					  obj["bfb"] = (
+						100 /
+						(Number(ret[0][index][6]) + Number(ret[0][index][7]))
+					  ).toFixed(0);
+					}
+					obj["jd_num"] =
+					  Number(ret[0][index][6]) + Number(ret[0][index][7]);
+					obj["ddid"] = Number(ret[0][index][0]);
+					obj["num"] = (
+					  Number(ret[0][index][1]) /
+					  10 ** huobi_num
+					).toFixed(2);
+					obj["zd_mun"] = (
+					  Number(ret[0][index][2]) /
+					  10 ** huobi_num
+					).toFixed(2);
+					obj["zg_mun"] = (
+					  Number(ret[0][index][3]) /
+					  10 ** huobi_num
+					).toFixed(2);
+					obj["danjia"] = (Number(ret[0][index][4]) / 100).toFixed(2);
+					obj["bzj"] = (Number(ret[0][index][8]) / 10 ** bzj_num).toFixed(
+					  2
+					);
+					obj["bzj_u"] = Number(ret[0][index][5]) / 10 ** 16;
+					dataList.push(obj);
+				  }
               }
               dq.dataList = dataList;
             } else {
@@ -597,7 +602,7 @@ export default {
 	
   },
   components: {
-    Mairu, myDialog
+    Mairu, myDialog,Choose
   }
 };
 </script>
