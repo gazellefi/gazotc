@@ -571,8 +571,16 @@ export default {
       }
     },
     async getsczc() {
-      Toast.loading({ message: "查询中..." });
-      var data = await dotc.methods.message(address, 0).call();
+      var that = this
+      Toast.loading({ message: this.$t('message.Waiting') });
+      var data = await dotc.methods.message(address, 0).call(function(error, ret) {
+      		// if(error){
+      		// 	  Toast.loading({ message: that.$t('message.netDes') });
+      		// 	  setTimeout(()=>{
+      		// 		Toast.clear();
+      		// 	  },20000)
+      		// }
+      });
       this.str1 = data;
       let arr = data.split("|");
       this.nickname = Base64.decode(arr[0]);
