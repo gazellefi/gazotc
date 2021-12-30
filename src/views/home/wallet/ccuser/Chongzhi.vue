@@ -291,7 +291,9 @@ export default {
         }, (err, ret) => {
           if (ret) {
             sq_lunxun(code);
-          }
+          }else{
+			  Toast('授权失败')
+		  }
         });
       }
     
