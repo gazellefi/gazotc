@@ -131,15 +131,11 @@
 				<div class="f a_c">
 					<span>{{$t('message.pwd')}}：</span>
 					<el-input style="width: 30%;" :placeholder="$t('message.enterPrivateTips')" v-model="input" size="mini"></el-input>
-					<el-link type="primary" class="marl-10" @click="geStr">{{$t('message.decrypt')}}</el-link>
+					<el-link type="primary" class="marl-10">{{$t('message.decrypt')}}</el-link>
 				</div>
 				<div class="f a_c">
 					<span class="hidden-sm-and-down" style="visibility: hidden;">{{$t('message.dapp.message')}}：</span>
-					<el-input :placeholder="$t('message.noMsg')" :disabled="true" v-model="letter" size="mini" type="textarea" :rows="2"></el-input>
-				</div>
-				<div class="f c_b">
-					<span class="hidden-sm-and-down" style="visibility: hidden;">{{$t('message.dapp.message')}}：</span>
-					<el-link type="primary" class="marl-10" @click="copy">{{$t('message.copy')}}</el-link>
+					<el-input :placeholder="$t('message.noMsg')" v-model="input1" size="mini" type="textarea" :rows="2"></el-input>
 				</div>
 			</el-col>
 			<!-- <el-col :sm="24" :md="12" class="item2">
@@ -329,9 +325,6 @@
 	} from 'vant';
 
 	import config from "@/config";
-	import JSEncrypt from "jsencrypt"
-	let Base64 = require('js-base64').Base64;
-	import SeededRSA from "@/views/home/user/seededrsa/rsa.js";
 	var dotc_abi = config['hyue'][config['key']]['dotc']['abi'];
 	var dotc_key = config['hyue'][config['key']]['dotc']['heyue'];
 	var huobijson = {
@@ -379,8 +372,7 @@
 				input: '',
 				input1: '',
 				dquser:'',
-				ddifo: ddinfomodel,
-				letter: ''
+				ddifo: ddinfomodel
 			}
 		},
 		watch: {
@@ -434,35 +426,7 @@
 					dq.dquser = address;
 					if (dq.ddid) {
 						dq.getddinfo(dq.ddid);
-						dq.getId(dq.ddid).then(res=>{
-							  let {Uadd,Madd } = res
-							  var id = ''
-							  // 判断 当前用户是商家还是用户(转小写比较)
-							  if(address == Uadd.toLowerCase()){
-								  id = Madd
-							  }else{
-								  id = Uadd
-							  }
-							  // 通过对方id 获取返回id
-							  dq.getHasLetter(id).then(res=>{
-								  //  返回id 等于 此订单id  获取公钥
-								  console.log(res);
-								  if(res == dq.ddid){
-									  // 获取 私信内容
-									  dq.getLetter(id).then(res=>{
-										  dq.letter = res
-									  }).catch((err)=>{
-									  		console.log('获取私信失败');
-									  })
-								  }
-							  }).catch((err)=>{
-								  console.log('获取id失败');
-							  })
-							  
-							  
-						}).catch((err)=>{
-									  console.log('获取商家id和用户id失败');
-						})
+						console.log(dq.ddifo)
 					}
 				}
 			}
@@ -470,120 +434,6 @@
 
 		},
 		methods: {
-			async copy() {
-			  await this.$nextTick(e => { })
-			  var Url2 = document.querySelector(".copy .van-field__control");
-			  if (!this.letter) return
-			  const input = document.createElement('input');
-			  document.body.appendChild(input);
-			  input.setAttribute('value', this.letter);
-			  input.select();
-			  if (document.execCommand('copy')) {
-			    document.execCommand('copy');
-			    this.$toast('私信复制成功')
-			  }
-			  document.body.removeChild(input);
-			
-			},
-			// 解密
-			async geStr(){
-				if(this.input == '') return
-				// 解密
-				const key = new SeededRSA(this.input);
-				// 获取密钥
-				const value = await key.generate(2048).catch(console.log);
-				let ss = value.privateKey
-				let privkey = new JSEncrypt()
-				privkey.setPrivateKey(ss)
-				let origin = privkey.decrypt(this.letter)
-				let jsonOrigin =  JSON.parse(Base64.decode(origin))
-				let str = ''
-				if(jsonOrigin.hasOwnProperty('phoneNuber')){
-					str += this.$t('message.phoneNumber')+'：' + jsonOrigin.phoneNuber + ' '
-				}
-				if(jsonOrigin.hasOwnProperty('eMail')){
-					str += this.$t('message.email')+'：' + jsonOrigin.eMail + ' '
-				}
-				if(jsonOrigin.hasOwnProperty('tele')){
-					str += 'Tele：' + jsonOrigin.tele
-				}
-				if(jsonOrigin.hasOwnProperty('wechat')){
-					str += this.$t('message.WeChat')+ '：' + jsonOrigin.wechat + ' '
-				}
-				if(jsonOrigin.hasOwnProperty('other')){
-					str += this.$t('message.other')+ '：' + jsonOrigin.other + ' '
-				}
-				this.letter = str
-				// console.log(str);
-			},
-			// 通过对方id 获取私信
-			getLetter(id){
-				var beizhucon = new web3.eth.Contract(
-				  config["hyue"][config["key"]]["Letter"]["abi"],
-				  config["hyue"][config["key"]]["Letter"]["heyue"]
-				);
-				return new Promise((resolve,reject)=>{
-					  beizhucon.methods.message(id,'16').call(function(error, ret) {
-						if (ret) {
-							resolve(ret)
-						}else{
-							reject(error)
-						}
-					  });
-				})
-			},
-			// 通过Id 获取 订单号
-			getHasLetter(id){
-				var beizhucon = new web3.eth.Contract(
-				  config["hyue"][config["key"]]["Letter"]["abi"],
-				  config["hyue"][config["key"]]["Letter"]["heyue"]
-				);
-				return new Promise((resolve,reject)=>{
-					  beizhucon.methods.indicator(id).call(function(error, ret) {
-						if (ret) {
-							let id = ret
-							resolve(id)
-						}else{
-							reject(error)
-						}
-					  });
-				})
-			},
-			// 通过订单获取 id
-			getId(id){
-					  return new Promise((resolve,reject)=>{
-						  var dotsconn = new web3.eth.Contract(dotc_abi, dotc_key);
-						  dotsconn.methods.users(id).call(function(error, ret) {
-						  	if (ret) {
-								let ids = {
-									Uadd: ret.Uadd,
-									Madd: ret.Madd
-								}
-								resolve(ids)
-						  	}else{
-								reject()
-							}
-						  });
-					  })
-			},
-			// 通过用户id 获取公钥
-			getPubKey(id){
-				console.log(id);
-					  var beizhucon = new web3.eth.Contract(
-					    config["hyue"][config["key"]]["Letter"]["abi"],
-					    config["hyue"][config["key"]]["Letter"]["heyue"]
-					  );
-					  return new Promise((resolve,reject)=>{
-						  beizhucon.methods.message(id,'15').call(function(error, ret) {
-							if (ret) {
-								let key = ret
-								resolve(key)
-							}else{
-								reject(error)
-							}
-						  });
-					  })
-			},
 			//如果过亿请转换
 			getFNum(num_str) {
 				num_str = num_str.toString();

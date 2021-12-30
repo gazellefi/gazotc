@@ -177,16 +177,7 @@ export default {
         this.currentRoute = v.route
       } else if (v.route == "/Activities") {
         this.$router.push('/Activities');
-      } else if(v.route == "/GazOTC"){
-		  let lang = localStorage.getItem('lang')
-		  if(lang == 'zh'){
-		  		window.location.href = '/GazOTC.pdf'
-		  }else{
-			  // 暂无
-			  window.location.href = '/GazOTC.pdf'
-		  }
-		  
-	  }else {
+      } else {
         this.$router.push(v.route);
         this.currentRoute = v.route
       }

@@ -82,10 +82,10 @@ export default {
 	  morenkey_text: '',
       option1: [
         { text: 'coinNet', value: 'bian' },
-        // { text: 'HecoNet', value: 'huobi' },
-        // { text: 'EthereumRinkeby', value: 'etfcshi' },
-      		// { text: 'EthereumNet', value: 'etf' },
-      		// { text: 'WaveNet', value: 'tron' },
+        { text: 'HecoNet', value: 'huobi' },
+        { text: 'EthereumRinkeby', value: 'etfcshi' },
+      		{ text: 'EthereumNet', value: 'etf' },
+      		{ text: 'WaveNet', value: 'tron' },
       ],
 
       title: process.env.VUE_APP_TITLE,
@@ -149,7 +149,6 @@ export default {
 			if(this.option1[i].value == e){
 				this.morenkey = this.option1[i].text
 				this.morenkey_text = this.$t(`message.dapp.${this.option1[i].text}`)
-				// location.reload();
 			}
 		}
 	},
@@ -158,17 +157,8 @@ export default {
 		this.morenkey_text = this.$t(`message.dapp.${this.morenkey}`)
 	},
     async getsczc() {
-		var that = this
-      Toast.loading({ message: this.$t('message.Waiting') });
-      var data = await dotc.methods.message(address, 0).call(function(error, ret) {
-		  // if(error){
-			 //  Toast.loading({ message: that.$t('message.netDes') });
-			 //  setTimeout(()=>{
-			 //  	Toast.clear();
-			 //  },20000)
-		  // }
-		
-	  });
+      Toast.loading({ message: "查询中..." });
+      var data = await dotc.methods.message(address, 0).call();
       this.str1 = data;
       let arr = data.split("|");
       this.nickname = Base64.decode(arr[0]);
