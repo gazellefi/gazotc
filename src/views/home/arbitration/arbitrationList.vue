@@ -4,7 +4,7 @@
 		<div class="hidden-sm-and-down">
 			<div class="f c_b top_nav">
 					<div class="f a_c cursor fz14" style="color: #000000;">
-						<span>{{$t('message.join1')}}<span class="c935" style="text-decoration:underline ;" @click="toDiscard">Discard</span></span>
+						<span>{{$t('message.join1')}}<span class="c935" style="text-decoration:underline ;" @click="toDiscard">Discord</span></span>
 						<img @click="toDiscard" src="../../../assets/img/discard.png" style="width: 24px;">
 						<span>{{$t('message.join2')}}</span>
 						<span class="c935" style="text-decoration:underline ;" @click="toGazOTC">GazOTCarb</span>
@@ -75,7 +75,7 @@
 					</div>
 				</div>
 				<div class="f a_c cursor fz14 mart-10" style="color: #000000;">
-					<span>请先加入<span class="c3c" style="text-decoration:underline ;" @click="toDiscard">discard</span></span>
+					<span>请先加入<span class="c3c" style="text-decoration:underline ;" @click="toDiscard">Discord</span></span>
 					<img @click="toDiscard" src="../../../assets/img/discard.png" style="width: 24px;">
 					<span>或</span>
 					<span class="c3c" style="text-decoration:underline ;">Telegram</span>

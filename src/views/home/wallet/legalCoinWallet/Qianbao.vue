@@ -61,7 +61,7 @@
 		</el-row>
 		<el-row v-for="(item,index) in list" :key="index">
 			<el-col :span="6">
-				<div class="item_nav c6"><span>{{item.name}}</span></div>
+				<div class="item_nav c6"><span> {{item.name == 'bond' ? $t(`message.${item.name}`) : item.name}}</span></div>
 			</el-col>
 			<el-col :span="6">
 				<div class="item_nav c6"><span>{{item.balancepro}}</span></div>
