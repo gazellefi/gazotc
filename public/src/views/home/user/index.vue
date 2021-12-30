@@ -401,20 +401,9 @@ var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 			
 			// 获取 基本信息
 			async getsczc() {
-			  var that = this
-			  Toast.loading({ message: this.$t('message.Waiting') });
-			  var data = await dotc.methods.message(address, 0).call(function(error, ret) {
-				  console.log(error);
-				  console.log(ret);
-			  // 		if(error){
-			  // 			  Toast.loading({ message: that.$t('message.netDes') });
-			  // 			  setTimeout(()=>{
-			  // 				Toast.clear();
-			  // 			  },20000)
-			  // 		}else{
-					// 	Toast.clear();
-					// }
-			  });
+			  Toast.loading({ message: "查询中..." });
+			  var dotc = new web3.eth.Contract(dotc_abi, dotc_key);
+			  var data = await dotc.methods.message(address, 0).call();
 			  console.log(data);
 			  // this.str1 = data;
 			  let arr = data.split("|");

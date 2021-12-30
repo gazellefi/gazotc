@@ -14,7 +14,7 @@
         </div>
         <!-- <div class="ddlistaa_head_item"></div> -->
         <div class="right">
-			<Choose></Choose>
+			<Choose :Ldata='dataList' @getdata='getLists'></Choose>
           <div class="saixuan">
 		
             <span class="typeSelect">{{ $t("message.dapp.currency")}}：</span>
@@ -37,7 +37,7 @@
       </div>
       <!-- 表格 -->
       <div class="listul" v-loading="loading">
-        <el-table :fixed="true" :data="dataList" style="width: 100%; overflow: auto">
+        <el-table :fixed="true" :data="arrList" style="width: 100%; overflow: auto">
           <el-table-column align="center"  :render-header="askMerchant" :label="$t('message.dapp.Merchant')">
             <template slot-scope="scope">
               <div class="listul_user">
@@ -92,11 +92,11 @@
 		  </div>
         </el-table>
 
-        <!-- <div class="listul_load" v-if="dataList.length > 0">
+        <div class="listul_load" v-if="dataList.length > 0">
           <div class="listul_load_an">
             <el-button @click="loadajax">{{$t('message.loadMore')}}</el-button>
           </div>
-        </div> -->
+        </div>
       </div>
     </div>
 
@@ -167,9 +167,9 @@
               </div>
             </div>
           </div>
-        <!--  <div class="ddlist_w_ddlist_ul_append" v-if="dataList.length > 0">
+          <div class="ddlist_w_ddlist_ul_append" v-if="dataList.length > 0">
             <van-button plain type="primary" :disabled="load" @click="loadajax">{{$t('message.loadMore')}}</van-button>
-          </div> -->
+          </div>
         </div>
       </div>
     </div>
@@ -298,6 +298,7 @@ export default{
       visibleDialogShow: false,
       did: '',
 	  isphone:false,
+	  arrList:[],
     };
   },
   watch: {
@@ -317,6 +318,11 @@ export default{
     },
   },
   methods: {
+	getLists(e){
+		console.log(e)
+		this.arrList=e;
+		// this.dataList=e;
+	},
     xuanzehuobi(e) {
       this.huobi = e;
     },
@@ -423,8 +429,10 @@ export default{
 				  }
               }
               dq.dataList = dataList;
+			  dq.arrList=dq.dataList;
             } else {
               dq.dataList = dataList;
+			  dq.arrList=dq.dataList;
             }
           }
         });

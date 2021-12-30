@@ -26,7 +26,7 @@ export default {
       pdfList:[
         {  
 		  // https://gazotc.com/GazOTC.pdf
-          zh_pdfUrl: '../../assets/img/GazOTC.pdf',
+          zh_pdfUrl:"https://gazotc.com/GazOTC.pdf",
 		  en_pdurl: ''
         },
       ],

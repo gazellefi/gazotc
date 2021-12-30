@@ -1093,5 +1093,104 @@ export default {
 		  margin-top: 20px !important;
 	  }
   }
+  
+  .topNav {
+  	  
+    height: 140px !important;
+    position: relative;
+  	
+  	.el-carousel {
+  		height: 100%;
+  		margin-top: 0px !important;
+  	}
+    .fold {
+  		color: #000;
+      position: absolute;
+      // background: red;
+      width: 40px;
+      height: 40px;
+      top: 30px;
+      left: 20px;
+      z-index: 1000;
+      .item {
+        width: 20px;
+        height: 3px;
+        border-radius: 2px;
+        background: #000;
+        margin: 3px;
+      }
+    }
+    .lang {
+  		margin-right: 10px;
+      position: absolute !important;
+      // background: red;
+      width: 40px;
+      height: 40px;
+      top: 10px !important;
+      right: 10px !important;
+      z-index: 1000;
+      color: #fff;
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+    }
+    .info {
+      margin: 0 !important;
+      transform: 0;
+      .top {
+        font-weight: 600 !important;
+        font-size: 12px !important;
+        // transform: translateX(95px);
+        line-height: 16px;
+  
+        span {
+          // height: 20px;
+          padding: 2px;
+          line-height: 14px;
+        }
+      }
+      .mid {
+        margin: 0;
+        font-size: 12px;
+        padding: 4px;
+        line-height: 16px;
+        margin-top: 20px;
+        // transform: translateX(65px) scale(0.8);
+      }
+      .bot {
+        font-size: 12px;
+        line-height: 10px;
+        transform: translateX(25px) scale(0.7);
+        letter-spacing: 0;
+      }
+      .Gazotc {
+        font-size: 20px;
+        margin: 10px;
+        line-height: 16px;
+      }
+      .otc {
+        font-size: 12px;
+        line-height: 10px;
+        margin-bottom: 10px;
+        font-weight: normal;
+        letter-spacing: 1px;
+      }
+      .track {
+        height: 20px;
+        font-size: 12px;
+        line-height: 12px;
+        padding: 2px !important;
+        width: auto;
+        margin-right: 10px;
+      }
+      .trackInitiative {
+        align-items: center;
+      }
+      .Initiative {
+        font-size: 10px !important;
+        line-height: 10px !important;
+      }
+    }
+  }
 }
 </style>
