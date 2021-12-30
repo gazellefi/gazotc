@@ -829,7 +829,7 @@ export default {
 				success:'提交成功',
 				release:'发布成功！可以按我的顺序查看或修改',
 			},
-			Wallet:{
+			wallet:{
 				enter:'请输入',
 				transferAmount:'转入金额不能大于USDT余额',
 				transferring:'转入中',

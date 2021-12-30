@@ -52,7 +52,7 @@ export default {
     return {
       hbilist: arr,
       hbindex: 0,
-      je: 0,
+      je: '',
       key: config['key'],
       form: {
 		  region: ''
@@ -63,7 +63,7 @@ export default {
   props:['type'],
   created() {
   	this.form.region = this.type
-	this.je = 0
+	this.je = ''
 	if(this.type){
 		this.changeSelect(this.type)
 	}
@@ -71,7 +71,7 @@ export default {
   watch:{
 	  type(){
 	  	this.form.region = this.type
-		this.je = 0
+		this.je = ''
 	  	if(this.type){
 	  		this.changeSelect(this.type)
 	  	}
@@ -348,7 +348,9 @@ export default {
               }
             });
             czhi_lunxun();
-          }
+          }else{  // 拉起钱包之后点击拒绝
+			  Toast('充值失败');
+		  }
         });
       }
     
@@ -363,7 +365,7 @@ export default {
           if (reta) {
             if (Number(reta) >= dq_je) {
               Toast.success(dq.$t('message.wallet.depositeSuccess'));
-			  dq.je = 0
+			  dq.je = ''
 			  dq.$emit('Recharge')
             } else {
               setTimeout(() => {
