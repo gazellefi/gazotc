@@ -18,8 +18,8 @@
 					<!-- <el-input size="mini" v-model="form.zdnum" placeholder="请输入数量"
 						style="margin-left: 15px; max-width: 150px"></el-input> -->
 
-					<el-button size="mini" type="primary" icon="el-icon-search" circle style="margin-left: 15px"
-						@click="listajax"></el-button>
+					<!-- <el-button size="mini" type="primary" icon="el-icon-search" circle style="margin-left: 15px"
+						@click="listajax"></el-button> -->
 				</div>
 				<el-table v-loading="jiazai" :data="list">
 					<el-table-column align=center prop="iorder" :label="$t('message.arbitration.order')">
@@ -314,14 +314,15 @@
 					}
 				}
 				// 输入框的内容
-				var sounum = "000000";
-				if (dq.form["zdnum"]) {
-					sounum = dq.getFNum(dq.form["zdnum"] * 10 ** js_num);
-				}
-				console.log(dq.huobi)
+				var sounum = "000001";
+				// if (dq.form["zdnum"]) {
+				// 	sounum = dq.getFNum(dq.form["zdnum"] * 10 ** js_num);
+				// }
+				console.log(sounum)
 				//加载列表数据
 				ccdotconn.methods.sort(dq.huobi, dq.fabi, 30, 30, sounum + "")
 					.call((error, ret) => {
+						console.log(ret)
 						dq.jiazai = false;
 						if (ret) {
 							var list = [];

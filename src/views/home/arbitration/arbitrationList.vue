@@ -75,60 +75,15 @@
 					</div>
 				</div>
 				<div class="f a_c cursor fz14 mart-10" style="color: #000000;">
-					<span>请先加入<span class="c3c" style="text-decoration:underline ;" @click="toDiscard">discard</span></span>
+					<span>{{$t('message.join1')}}<span class="c3c" style="text-decoration:underline ;" @click="toDiscard">discard</span></span>
 					<img @click="toDiscard" src="../../../assets/img/discard.png" style="width: 24px;">
-					<span>或</span>
+					<span>{{$t('message.join2')}}</span>
 					<span class="c3c" style="text-decoration:underline ;">Telegram</span>
 					<i @click="toGazOTC" class="el-icon-s-promotion" style="color: #333;font-size: 24px;margin-top: -4px;margin-right: 5px;"></i>
-					<span>电报群联系仲裁员</span>
+					<span>{{$t('message.join3')}}</span>
 				</div>
 			</div>
 			<div class="listWap" v-for="(item,index) in zc_list" :key="index">
-				<div class="listItem">
-					<div class="topWap">
-						<span class="topLabel fwb">{{$t('message.arbitration.arbitrator')}}:</span>
-						<!-- {{ item.username }} -->
-						<div class="topMain">
-							<div class="topUser">{{ item.username }}</div>
-							<div class="topUsername">{{ item.user_b }}</div>
-						</div>
-					</div>
-					<div class="mainWap" style="margin-top: 10px;">
-						<div class="mainLeft">
-							<div class="mainItem">
-								<span class="fwb">{{$t('message.arbitration.serial')}}：</span>
-								<span class="">{{item.index}}</span>
-							</div>
-							<div class="mainItem">
-								<span class="fwb">{{$t('message.arbitration.balance')}}：</span>
-								<span>{{item.balanceMar}} GAZ</span>
-							</div>
-							<div class="mainItem">
-								<span class="fwb">{{$t('message.arbitration.frozenState')}}：</span>
-								<span :class="[item.lock == 0 ? 'normal_style':'frozen_style']">{{item.lock == 0 ? $t('message.arbitration.normal'):$t('message.arbitration.frozen')  }}</span>
-							</div>
-						</div>
-						<div class="mainRight">
-							<div class="mainItem">
-								<span class="fwb">{{$t('message.arbitration.inviteNumber')}}：</span>
-								<span>{{item.invite}}</span>
-							</div>
-							<div class="mainItem">
-								<span class="fwb">{{$t('message.arbitration.singular')}}：</span>
-								<span>{{item.succeed}}</span>
-							</div>
-							<div class="mainItem">
-								<span class="fwb">{{$t('message.arbitration.regNumber')}}：</span>
-								<span>{{item.appl}}</span>
-							</div>
-						</div>
-					</div>
-					<div class="footerWap" style="margin-top: 10px;">
-						<el-button round class="invitationBnt invitationBnt_wap"  size="normal" :loading="item.jiazai" :disabled="item.lock == 1 ? true:false" @click="yaoqingajax(item)">{{$t('message.arbitration.invite')}}</el-button>
-					</div>
-				</div>
-			</div> -->
-			<div class="listWap" v-for="(item,index) in zc_list" :key="'i'+index">
 				<div class="listItem">
 					<div class="topWap">
 						<span class="topLabel fwb">{{$t('message.arbitration.arbitrator')}}:</span>
@@ -181,7 +136,7 @@
 		      <span @click="copy(zc_user_yq.my_user)">{{isphone ? $getStr(zc_user_yq.my_user) : zc_user_yq.my_user}}</span>
 		    </el-form-item>
 			<el-form-item :label="$t('message.arbitration.nickname')+':'" v-if="btnType == 1">
-				<span>{{zc_user_yq.my_name == 'Not filled in yet' ? $t('message.notFill') : zc_user_yq.my_name}}</span>
+				<span>{{zc_user_yq.my_name == 'Not filled in yet' ? $t('message.arbitration.haveName') : zc_user_yq.my_name}}</span>
 			</el-form-item>
 			<el-form-item :label="$t('message.arbitration.order')+':'" v-if="btnType == 1" class="input_nav">
 			   <div class="f c_b a_c sarch_nav">
@@ -217,7 +172,7 @@
 			  <span>{{sq_zc_data.info.user}}</span>
 			</el-form-item>
 			<el-form-item :label="$t('message.arbitration.nickname')+':'" v-if="btnType == 2 || btnType == 3">
-				<span>{{sq_zc_data.info.username == 'Not filled in yet' ? $t('message.notFill') : sq_zc_data.info.username}}</span>
+				<span>{{sq_zc_data.info.username == 'Not filled in yet' ? $t('message.arbitration.haveName') : sq_zc_data.info.username}}</span>
 			</el-form-item>
 			
 			<el-form-item :label="$t('message.arbitration.Serial')+':'" v-if="btnType == 3">

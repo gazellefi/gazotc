@@ -9,12 +9,3 @@ docker run --name nginx -p 80:80 -p 443:443 -v /home/nginx/nginx.conf:/etc/nginx
 git add .
 git commit -m v0.20
 git push origin master
-
-
-
-
-parma:{
-	15:公钥,
-	16:私信
-}
-commun(num,parma)

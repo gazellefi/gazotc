@@ -844,53 +844,18 @@ export default {
         );
     },
     async apply_password() {
-	  var that = this
-	  Toast.loading({ message: that.$t("message.loading")+'...' });
       if (this.form.password != this.form.passwordAggin) {
         alert(this.$t("message.applyPwd"));
         // alert("password mismatched")
       } else {
         const key = new SeededRSA(this.form.password);
-		// 获取密钥
+        console.log(key);
         const value = await key.generate(2048).catch(console.log);
-		// 存到链上   15
-		var beizhucon = new web3.eth.Contract(
-		  config["hyue"][config["key"]]["Letter"]["abi"],
-		  config["hyue"][config["key"]]["Letter"]["heyue"]
-		);
-		that.setPublicKey(beizhucon,value.publicKey).then(()=>{
-			Dialog.alert({
-			  title: that.$t("message.prompt"),
-			  message: that.$t("message.success"),
-			}).then(() => {
-				that.form.publickey = value.publicKey;
-				that.form.privatekey = value.privateKey;
-			    Toast.clear();
-			});
-		}).catch(()=>{
-				Dialog.alert({
-				  title: that.$t("message.prompt"),
-				  message: that.$t("message.failed"),
-				}).then(() => {
-				  Toast.clear();
-				});
-		})
-        
+        console.log(value.publicKey);
+        this.form.publickey = value.publicKey;
+		this.form.privatekey = value.privateKey;
       }
     },
-	// 存公钥到链
-	setPublicKey(beizhucon,publicKey){
-		return new Promise((resolve,reject)=>{
-			beizhucon.methods .commun(15 + "", publicKey) .send( { from: address, }, (err, ret) => {
-			      if (ret && !err) {
-			        resolve()
-			      } else {
-					reject()
-			      }
-			    }
-			  );
-		})
-	},
 	encrypt_message() {
 	  console.log(Crypto)
 	  if (this.form.publickey == "" || this.form.msg_encrypt == "") {

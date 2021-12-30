@@ -36,7 +36,7 @@
 			      <div v-if="scope.row.what == 3">{{$t('message.other')}}</div>
 			    </template>
 			  </el-table-column>
-			
+			  
 			  <el-table-column align="center" prop="arb" :label="$t('message.arbitration.arbitrationResult')">
 			    <template slot-scope="scope">
 			      <div v-if="scope.row.arb == 1">{{$t('message.arbitration.userVictory')}}</div>
