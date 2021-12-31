@@ -137,7 +137,7 @@
 				</div>
 				<p style="margin-top: 20px; color: #DCDCDC;">{{$t('message.NoData')}}</p>
 			</div>
-          <div class="ddlist_w_ddlist_ul_li" v-for="(li, index) in dataList" :key="index">
+          <div class="ddlist_w_ddlist_ul_li" v-for="(li, index) in arrList" :key="index">
             <div class="ddlist_w_ddlist_ul_li_u">
               <div class="ddlist_w_ddlist_ul_li_u_username">
                 {{ li.username }}

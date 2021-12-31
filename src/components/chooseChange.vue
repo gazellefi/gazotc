@@ -8,7 +8,7 @@
 			</div>
 			<div class="butBox">
 				<button type="button" @click="filter()">确认</button>
-				<button type="button">重置</button>
+				<button type="button" @click="reset()">重置</button>
 			</div>
 		</div>
 		<div class="cover" v-show="showModel" @click="changeShow">
@@ -94,6 +94,11 @@ export default {
 		this.$emit("getdata",this.arr3)
 		this.showModel=false
 		console.log(this.arr3)
+	  },
+	  reset(){
+		 for(let k in this.chooseList) {
+			 this.chooseList[k].value=0;
+		 }
 	  }
   },
   components: {}
@@ -213,6 +218,7 @@ export default {
 			height: 100%;
 			background-color: #333;
 			opacity: 0.8;
+			z-index: 998;
 		}
 	}
 }
