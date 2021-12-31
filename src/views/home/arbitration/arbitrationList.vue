@@ -424,7 +424,7 @@
 				window.open("https://discord.gg/2DVfmvUBgH")
 			},
 			toGazOTC(){
-				window.open("https://t.me/GazotcArb")
+				window.open("https://t.me/gazotcE")
 			},
 			getList(){
 				var dq = this;
