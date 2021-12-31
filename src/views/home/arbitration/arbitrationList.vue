@@ -555,7 +555,7 @@
 			  this.zc_user_yq['show'] = true;
 			  this.zc_user_yq['my_user'] = address;
 			  var uname = await ArbOne.methods.message(address + "", "0").call();
-			  this.zc_user_yq['my_name'] = uname ? Base64.decode(uname) : '未填写121';
+			  this.zc_user_yq['my_name'] = uname ? Base64.decode(uname) : '未填写155';
 			  this.zc_user_yq['form_user'] = rows['user'];
 			  this.zc_user_yq['index'] = index;
 			  this.dialogFormVisible = true
@@ -569,6 +569,7 @@
 				  }
 					  console.log(111)
 					  console.log(222)
+					  console.log(333)
 				  this.dialogFormVisible = false
 				  var dq = this;
 				  //查询授权状态与GAZ余额
