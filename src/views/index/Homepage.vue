@@ -213,7 +213,7 @@ export default {
 }
 .index {
 	.carouser_nav{
-		padding: 50px 0;
+		padding:50px 0 50px;
 	}
   .topNav {
     height: 410px;
@@ -790,7 +790,7 @@ export default {
     }
   }
   .carouser_nav{
-  	padding: 0;
+  	padding:0 0 50px !important;
   }
   .rightText{
 	  .title{

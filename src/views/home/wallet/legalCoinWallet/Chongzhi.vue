@@ -255,6 +255,7 @@ export default {
                                 Toast.clear();
                                 Dialog.alert({
                                     title: dq.$t('message.wallet.waring'),
+									confirmButtonText: '确定',
                                     message: pro + dq.$t('message.wallet.insufficient'),
                                 }).then(() => {
                                 // on close
@@ -298,6 +299,7 @@ export default {
                         clearTimeout(usdtlxtime);
                         Dialog.alert({
                             title: dq.$t('message.wallet.depositeSuccess'),
+							confirmButtonText: '确定',
                             message: dq.$t('message.wallet.success')+ dq.je +' '+ dq.hbilist[dq.hbindex]['title'] +'',
                         }).then(() => {
 							dq.je = 0
@@ -312,6 +314,7 @@ export default {
 							clearTimeout(usdtlxtime);
 							Dialog.alert({
 							    title: dq.$t('message.wallet.depositeSuccess'),
+								confirmButtonText: '确定',
 							    message: dq.$t('message.wallet.success')+ dq.je +' '+ dq.hbilist[dq.hbindex]['title'] +'',
 							}).then(() => {
 								dq.je = 0

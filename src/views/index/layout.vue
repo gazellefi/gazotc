@@ -488,7 +488,7 @@ export default {
   }
   .topNav {
 	  
-    /* height: 140px !important; */
+    height: 60px !important;
     position: relative;
 	
 	.el-carousel {

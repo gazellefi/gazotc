@@ -143,6 +143,7 @@
 		align-items: center;
 		min-height: 450px;
 		padding: 0 30px;
+		margin-top: 50px;
 		.in_nav{
 			width: 50%;
 		}

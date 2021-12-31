@@ -13,7 +13,7 @@
 		      <div class="add_form_item_xuanze c_b">
 		        <div class="add_form_item xz" style="margin-left: 0;">
 		          <div class="add_form_item_input">
-		            <el-select v-model="pro" :placeholder="$t('message.frienchOtc.select')" :disabled="user['user'] ? false:true">
+		            <el-select v-model="pro" placeholder="Please select" :disabled="user['user'] ? false:true">
 		              <el-option v-for="item in data['huobi']" :key="item.id" :label="item.id" :value="item.id">
 		              </el-option>
 		            </el-select>
@@ -21,7 +21,7 @@
 		        </div>
 		        <div class="add_form_item xz">
 		          <div class="add_form_item_input">
-		            <el-select v-model="fi" :placeholder="$t('message.frienchOtc.select')" :disabled="user['user'] ? false:true">
+		            <el-select v-model="fi" placeholder="Please select" :disabled="user['user'] ? false:true">
 		              <el-option v-for="item in data['fabi']" :key="item.id" :label="item.id" :value="item.id">
 		              </el-option>
 		            </el-select>
@@ -70,7 +70,7 @@
 		          <el-input placeholder="" v-model="form.sjbzj" disabled>
 					  <template slot="append">
 					  	<div style="width: 40px;text-align: center;">
-					  		GAZ
+					  		Gaz
 					  	</div>
 					  </template>
 				  </el-input>
@@ -142,6 +142,7 @@
 		</div> 
 	  </el-col>
   </el-row>
+
 </template>
 <script>
 import config from "@/config";
@@ -150,8 +151,8 @@ import Web3 from "web3"
 import Web3Modal from "web3modal"
 let Base64 = require('js-base64').Base64;
 import { Dialog, Toast, Notify } from 'vant';
-import VConsole from "vconsole";
-new VConsole();
+// import VConsole from "vconsole";
+// new VConsole();
 
 //公共变量
 var web3 = "";
@@ -159,10 +160,10 @@ var address = "";
 var ethereum = window.ethereum;
 
 //定义新版相关配置
-var dotc_abi = config["hyue"][config["key"]]["dotc"]["abi"];
-var dotc_key = config["hyue"][config["key"]]["dotc"]["heyue"];
-var huobi = config["hbi"][config["key"]];
-var fabi = config["fabi"][config["key"]];
+var dotc_abi = config['hyue'][config['key']]['dotc']['abi'];
+var dotc_key = config['hyue'][config['key']]['dotc']['heyue'];
+var huobi = config['hbi'][config['key']];
+var fabi = config['fabi'][config['key']];
 var huobi_arr = [];
 var fabi_arr = [];
 for (const key in huobi) {
@@ -176,10 +177,8 @@ export default {
   created() {
     var dq = this;
     // 监测用户是否安装MASK
-    if (typeof ethereum === "undefined") {
-      web3 = new Web3(
-        "https://rinkeby.infura.io/v3/eae681441c2243b3969a2e663290ffc4"
-      );
+    if (typeof ethereum === 'undefined') {
+      web3 = new Web3('https://rinkeby.infura.io/v3/eae681441c2243b3969a2e663290ffc4');
     } else {
       //初始化
       webinit();
@@ -191,7 +190,7 @@ export default {
       const web3Modal = new Web3Modal({
         network: "mainnet",
         cacheProvider: true,
-        providerOptions,
+        providerOptions
       });
       var provider = await web3Modal.connect();
       web3 = new Web3(provider);
@@ -210,11 +209,11 @@ export default {
         // }else{
         //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
         // }
-        address = provider.selectedAddress;
-        if (!address) {
-          address = provider.accounts[0];
-        }
-        dq.user["user"] = provider.selectedAddress;
+		address = provider.selectedAddress;
+		if (!address) {
+		  address = provider.accounts[0];
+		}
+        dq.user['user'] = provider.selectedAddress;
       }
     }
   },
@@ -225,26 +224,26 @@ export default {
       closeOnClick: false,
       closeOnClickOverlay: false,
       duration: 0,
-      getContainer: "body",
+      getContainer: 'body'
     });
   },
   data() {
     return {
-      m: "0x6275790000000000000000000000000000000000000000000000000000000000",
-      pro: huobi_arr[0]["id"],
-      fi: fabi_arr[0]["id"],
+      m: '0x6275790000000000000000000000000000000000000000000000000000000000',
+      pro: huobi_arr[0]['id'],
+      fi: fabi_arr[0]['id'],
       data: {
         huobi: huobi_arr,
-        fabi: fabi_arr,
+        fabi: fabi_arr
       },
-      maskDis: true,
+	  maskDis: true,
 
       //用户数据
       user: {
-        user: "",
+        user: '',
         balancemar: 0,
         balancepro: 0,
-        num: 0,
+        num: 0
       },
 
       hbi: {
@@ -252,7 +251,7 @@ export default {
         mara: 0,
         uni: 0,
         rati: 0,
-        one: 0,
+        one: 0
       },
 
       //验证
@@ -263,36 +262,36 @@ export default {
         sjbzj: false,
         zd_num: false,
         zg_num: false,
-        user_bzj: false,
+        user_bzj: false
       },
       //表单
       form: {
-        dj: "",
-        num: "",
+        dj: '',
+        num: '',
 
-        sjbzj: "",
-        zd_num: "",
-        zg_num: "",
-        user_bzj: "",
-        beizhu: "",
+        sjbzj: '',
+        zd_num: '',
+        zg_num: '',
+        user_bzj: '',
+        beizhu: ''
       },
 
       sq_code: 0, //0默认 1余额大于1 2直接授权
-    };
+    }
   },
   //数据监听
   watch: {
-    m() {
+    'm'() {
       //初始化表单
-      this.form = Object.assign(this.form, {
-        dj: "",
-        num: "",
+	  this.form = Object.assign(this.form,{
+        dj: '',
+        num: '',
 
-        sjbzj: "",
-        zd_num: "",
-        zg_num: "",
-        user_bzj: "",
-      });
+        sjbzj: '',
+        zd_num: '',
+        zg_num: '',
+        user_bzj: ''
+      })
       this.isform = {
         dj: false,
         zcye: false,
@@ -300,14 +299,14 @@ export default {
         sjbzj: false,
         zd_num: false,
         zg_num: false,
-        user_bzj: false,
-      };
+        user_bzj: false
+      }
     },
-    "user.user"(e) {
+    'user.user'(e) {
       var dq = this;
       //读取会员资料
       var dotsconn = new web3.eth.Contract(dotc_abi, dotc_key);
-      dotsconn.methods.message(e + "", "6").call((err, ret) => {
+      dotsconn.methods.message(e + "", '6').call((err, ret) => {
         if (ret) {
           dq.form.beizhu = Base64.decode(ret);
         }
@@ -315,23 +314,23 @@ export default {
       //获取查询条件所需数据
       dotsconn.methods.pri().call((err, ret) => {
         if (ret) {
-          dq.hbi["pri"] = ret;
+          dq.hbi['pri'] = ret;
         }
       });
       dotsconn.methods.mara().call((err, ret) => {
         if (ret) {
-          dq.hbi["mara"] = ret;
+          dq.hbi['mara'] = ret;
         }
       });
-      var cpro = config["hbi"][config["key"]][dq.pro]["key"];
+      var cpro = config['hbi'][config['key']][dq.pro]['key'];
       dotsconn.methods.pros(cpro).call((err, ret) => {
         if (ret) {
-          dq.hbi["uni"] = ret["uni"];
-          dq.hbi["rati"] = ret["rati"];
-          dq.hbi["one"] = ret["one"];
+          dq.hbi['uni'] = ret['uni'];
+          dq.hbi['rati'] = ret['rati'];
+          dq.hbi['one'] = ret['one'];
         }
       });
-      var zicheyue = config["hbi"][config["key"]][dq.pro]["heyue"];
+      var zicheyue = config['hbi'][config['key']][dq.pro]['heyue'];
       // 如果发布卖单
       dotsconn.methods.balancemar(e).call((err, balancemar) => {
         //保证金
@@ -341,22 +340,22 @@ export default {
             //用户资产余额
             if (balancepro) {
               var balanceprob = Number(balancepro);
-              dq.user["balancepro"] = balanceprob;
-              dq.user["balancemar"] = balancemarb;
+              dq.user['balancepro'] = balanceprob;
+              dq.user['balancemar'] = balancemarb;
             }
           });
         }
       });
     },
-    "form.dj"(e) {
+    'form.dj'(e) {
       if (!e || e == 0) {
-        this.isform["dj"] = true;
+        this.isform['dj'] = true;
       } else {
-        this.isform["dj"] = false;
+        this.isform['dj'] = false;
       }
       var result = e.indexOf(".");
       if (result != -1) {
-        var eaa = e.substr(e.indexOf(".") + 1, e.length);
+        var eaa = e.substr((e.indexOf(".") + 1), e.length);
         if (eaa.length > 2) {
           var ea = parseFloat(e);
           this.form.dj = ea.toFixed(2);
@@ -366,15 +365,15 @@ export default {
         this.jsbzj();
       }
     },
-    "form.num"(e) {
+    'form.num'(e) {
       if (!e || e == 0) {
-        this.isform["num"] = true;
+        this.isform['num'] = true;
       } else {
-        this.isform["num"] = false;
+        this.isform['num'] = false;
       }
       var result = e.indexOf(".");
       if (result != -1) {
-        var eaa = e.substr(e.indexOf("."), e.length);
+        var eaa = e.substr((e.indexOf(".")), e.length);
         if (eaa.length > 2) {
           var ea = parseFloat(e);
           this.form.num = ea.toFixed(2);
@@ -384,100 +383,98 @@ export default {
         this.jsbzj();
       }
     },
-    "form.zd_num"(e) {
+    'form.zd_num'(e) {
       if (!e || e == 0) {
-        this.isform["zd_num"] = true;
+        this.isform['zd_num'] = true;
       } else {
-        this.isform["zd_num"] = false;
+        this.isform['zd_num'] = false;
       }
       var result = e.indexOf(".");
       if (result != -1) {
-        var eaa = e.substr(e.indexOf(".") + 1, e.length);
+        var eaa = e.substr((e.indexOf(".") + 1), e.length);
         if (eaa.length > 2) {
           var ea = parseFloat(e);
           this.form.zd_num = ea.toFixed(2);
         }
       }
     },
-    "form.zg_num"(e) {
+    'form.zg_num'(e) {
       if (!e || e == 0) {
-        this.isform["zg_num"] = true;
+        this.isform['zg_num'] = true;
       } else {
-        this.isform["zg_num"] = false;
+        this.isform['zg_num'] = false;
       }
       var result = e.indexOf(".");
       if (result != -1) {
-        var eaa = e.substr(e.indexOf(".") + 1, e.length);
+        var eaa = e.substr((e.indexOf(".") + 1), e.length);
         if (eaa.length > 2) {
           var ea = parseFloat(e);
           this.form.zg_num = ea.toFixed(2);
         }
       }
     },
-    "form.user_bzj"(e) {
+    'form.user_bzj'(e) {
       if (!e || e == 0) {
-        this.isform["user_bzj"] = true;
+        this.isform['user_bzj'] = true;
       } else {
-        this.isform["user_bzj"] = false;
+        this.isform['user_bzj'] = false;
       }
       var result = e.indexOf(".");
       if (result != -1) {
-        var eaa = e.substr(e.indexOf(".") + 1, e.length);
+        var eaa = e.substr((e.indexOf(".") + 1), e.length);
         if (eaa.length > 2) {
           var ea = parseFloat(e);
           this.form.user_bzj = ea.toFixed(2);
         }
       }
     },
-    pro(e) {
+    'pro'(e) {
       var dq = this;
       //读取会员资料
       var dotsconn = new web3.eth.Contract(dotc_abi, dotc_key);
       //获取查询条件所需数据
       dotsconn.methods.pri().call((err, ret) => {
         if (ret) {
-          dq.hbi["pri"] = ret;
+          dq.hbi['pri'] = ret;
         }
       });
       dotsconn.methods.mara().call((err, ret) => {
         if (ret) {
-          dq.hbi["mara"] = ret;
+          dq.hbi['mara'] = ret;
         }
       });
-      var zichepros = config["hbi"][config["key"]][e]["key"];
+      var zichepros = config['hbi'][config['key']][e]['key'];
       dotsconn.methods.pros(zichepros + "").call((err, ret) => {
         if (ret) {
-          dq.hbi["uni"] = ret["uni"];
-          dq.hbi["rati"] = ret["rati"];
-          dq.hbi["one"] = ret["one"];
+          dq.hbi['uni'] = ret['uni'];
+          dq.hbi['rati'] = ret['rati'];
+          dq.hbi['one'] = ret['one'];
         }
       });
-      var zicheyue = config["hbi"][config["key"]][e]["heyue"];
+      var zicheyue = config['hbi'][config['key']][e]['heyue'];
       // 如果发布卖单
-      dotsconn.methods.balancemar(dq.user["user"]).call((err, balancemar) => {
+      dotsconn.methods.balancemar(dq.user['user']).call((err, balancemar) => {
         //保证金
         if (balancemar) {
           var balancemarb = Number(balancemar);
-          dotsconn.methods
-            .balancepro(dq.user["user"], zicheyue)
-            .call((errb, balancepro) => {
-              //用户资产余额
-              if (balancepro) {
-                var balanceprob = Number(balancepro);
-                dq.user["balancepro"] = balanceprob;
-                dq.user["balancemar"] = balancemarb;
-              }
-            });
+          dotsconn.methods.balancepro(dq.user['user'], zicheyue).call((errb, balancepro) => {
+            //用户资产余额
+            if (balancepro) {
+              var balanceprob = Number(balancepro);
+              dq.user['balancepro'] = balanceprob;
+              dq.user['balancemar'] = balancemarb;
+            }
+          });
         }
       });
-    },
+    }
   },
   methods: {
     //数字保留两位数
     getnumsing(num) {
-      let numStr = num.toString();
-      let index = numStr.indexOf(".");
-      let result;
+      let numStr = num.toString()
+      let index = numStr.indexOf('.')
+      let result
       if (index != -1) {
         result = numStr.slice(0, index + 3);
       } else {
@@ -488,55 +485,46 @@ export default {
     },
     tijiao() {
       var dotsconn = new web3.eth.Contract(dotc_abi, dotc_key);
-      if (!this.form["dj"]) {
+      if (!this.form['dj']) {
         return;
       }
-      if (!this.form["num"]) {
+      if (!this.form['num']) {
         return;
       }
-      if (!this.form["zd_num"]) {
+      if (!this.form['zd_num']) {
         return;
       }
-      if (!this.form["zg_num"]) {
+      if (!this.form['zg_num']) {
         return;
       }
-      if (!this.form["user_bzj"]) {
+      if (!this.form['user_bzj']) {
         return;
       }
-      if (Number(this.form["zd_num"]) > Number(this.form["num"])) {
-        Notify({
-          type: "warning",
-          message: this.$t("message.NotcannotMinNum"),
-        });
+      if (Number(this.form['zd_num']) > Number(this.form['num'])) {
+        Notify({ type: 'warning', message: this.$t('message.NotcannotMinNum') });
         return;
       }
-      if (Number(this.form["zg_num"]) > Number(this.form["num"])) {
-        Notify({
-          type: "warning",
-          message: this.$t("message.NotcannotManNum"),
-        });
+      if (Number(this.form['zg_num']) > Number(this.form['num'])) {
+        Notify({ type: 'warning', message: this.$t('message.NotcannotManNum') });
         return;
       }
-      if (Number(this.form["user_bzj"]) > 100) {
-        Notify({
-          type: "warning",
-          message: this.$t("message.NotCannotDesposit"),
-        });
+      if (Number(this.form['user_bzj']) > 100) {
+        Notify({ type: 'warning', message: this.$t('message.NotCannotDesposit') });
         return;
       }
       var dq = this;
       if (dq.isform.sjbzj) {
         Dialog.confirm({
-          title: dq.$t("message.prompt"),
-          message: this.$t("message.MarginLowTips"),
-          confirmButtonText: this.$t("message.SupMargin"),
-          cancelButtonText: this.$t("message.dapp.ReleaseOrder"),
-          cancelButtonColor: "",
-          getContainer: "body",
+          title: dq.$t('message.prompt'),
+          message: this.$t('message.MarginLowTips'),
+          confirmButtonText: this.$t('message.SupMargin'),
+          cancelButtonText: this.$t('message.dapp.ReleaseOrder'),
+          cancelButtonColor: '',
+          getContainer: 'body'
         })
           .then(() => {
-            // 此处要加个保证金  跳转钱包
-            dq.$router.push({name:'wallet'});
+			  // 此处要加个保证金
+            // dq.$router.push('./baozhengjin');
           })
           .catch(() => {
             isdingdan();
@@ -549,161 +537,147 @@ export default {
       function isdingdan() {
         //监听订单发布结果
         dotsconn.events.Merch("", (err, ret) => {
-          console.log(err, ret);
+          console.log(err, ret)
           //结果
-          if (ret["returnValues"]["owner"].toLowerCase() == dq.user["user"]) {
+          if (ret['returnValues']['owner'].toLowerCase() == dq.user['user']) {
             Toast.clear();
             dq.sq_code = 0;
             //判断是购买还是出售
-            if (
-              dq.m ==
-              "0x6275790000000000000000000000000000000000000000000000000000000000"
-            ) {
+            if (dq.m == '0x6275790000000000000000000000000000000000000000000000000000000000') {
               Dialog.alert({
-                title: dq.$t('message.frienchOtc.publishen'),
-                message:
-                  "订单号:" + ret["returnValues"]["order"] + "",
+                title: 'Published successfully',
+                message: 'The order number is:' + ret['returnValues']['order'] + '',
               }).then(() => {
                 window.location.reload();
               });
             } else {
               Dialog.alert({
-                title: dq.$t('message.frienchOtc.publishen'),
-                message:
-                  "订单号:" + ret["returnValues"]["order"] + "",
+                title: 'Published successfully',
+                message: 'The order number is:' + ret['returnValues']['order'] + '',
               }).then(() => {
                 window.location.reload();
               });
             }
+
           }
         });
-        getOrder();
-        function getOrder() {
-          dotsconn.events.Taker("", (err, ret) => {
-            //结果
-            if (ret["returnValues"]["owner"].toLowerCase() == dq.user["user"]) {
-              Toast.clear();
-              dq.sq_code = 0;
-              //判断是购买还是出售
-              if (
-                dq.m ==
-                "0x6275790000000000000000000000000000000000000000000000000000000000"
-              ) {
-                Dialog.alert({
-                  title: "Published successfully",
-                  message:
-                    "The order number is:" + ret["returnValues"]["order"] + "",
-                }).then(() => {
-                  window.location.reload();
-                });
-              } else {
-                Dialog.alert({
-                  title: "Published successfully",
-                  message:
-                    "The order number is:" + ret["returnValues"]["order"] + "",
-                }).then(() => {
-                  window.location.reload();
-                });
-              }
-            }
-          });
-        }
+		getOrder()
+        function getOrder(){
+        	dotsconn.events.Taker("", (err, ret) => {
+        	  //结果
+        	  if (ret['returnValues']['owner'].toLowerCase() == dq.user['user']) {
+        	    Toast.clear();
+        	    dq.sq_code = 0;
+        	    //判断是购买还是出售
+        	    if (dq.m == '0x6275790000000000000000000000000000000000000000000000000000000000') {
+        	      Dialog.alert({
+        	        title: 'Published successfully',
+        	        message: 'The order number is:' + ret['returnValues']['order'] + '',
+        	      }).then(() => {
+        	        window.location.reload();
+        	      });
+        	    } else {
+        	      Dialog.alert({
+        	        title: 'Published successfully',
+        	        message: 'The order number is:' + ret['returnValues']['order'] + '',
+        	      }).then(() => {
+        	        window.location.reload();
+        	      });
+        	    }
+        	  }
+        	});
+        };
         Toast.loading({
-          message: dq.$t('message.frienchOtc.submiting'),
+          message: '提交中。。。',
           forbidClick: true,
-          loadingType: "spinner",
+          loadingType: 'spinner',
         });
         addajax();
       }
       //Release order
       function addajax() {
         Toast.loading({
-          message: dq.$t('message.frienchOtc.confirm'),
+          message: '请确认提交内容。。。',
           forbidClick: true,
-          loadingType: "spinner",
+          loadingType: 'spinner',
         });
 
-        var postpro =
-          "0x7573647400000000000000000000000000000000000000000000000000000000";
-        var postfi = "";
-        var postd = "";
-        var posta = "";
-        var postb = "";
-        var postc = "";
+        var postpro = '0x7573647400000000000000000000000000000000000000000000000000000000';
+        var postfi = '';
+        var postd = '';
+        var posta = '';
+        var postb = '';
+        var postc = '';
 
         var num_bs = 0;
 
         for (let index = 0; index < fabi_arr.length; index++) {
-          if (fabi_arr[index]["id"] == dq.fi + "") {
-            postfi = fabi_arr[index]["key"];
+          if (fabi_arr[index]['id'] == dq.fi + "") {
+            postfi = fabi_arr[index]['key'];
             break;
           }
         }
 
         for (let index = 0; index < huobi_arr.length; index++) {
-          if (huobi_arr[index]["id"] == dq.pro + "") {
-            num_bs = huobi_arr[index]["num"];
-            postpro = huobi_arr[index]["key"];
+          if (huobi_arr[index]['id'] == dq.pro + "") {
+            num_bs = huobi_arr[index]['num'];
+            postpro = huobi_arr[index]['key'];
             break;
           }
         }
 
-        postd = Number(dq.form["dj"]) * 100;
+        postd = Number(dq.form['dj']) * 100;
 
-        posta = parseFloat(dq.form["num"]) * 10 ** num_bs;
-        postb = parseFloat(dq.form["zd_num"]) * 10 ** num_bs;
-        postc = parseFloat(dq.form["zg_num"]) * 10 ** num_bs;
-        dotsconn.methods
-          .setMerch(
-            postpro,
-            dq.m,
-            dq.getFNum(posta) + "",
-            dq.getFNum(postb) + "",
-            dq.getFNum(postc) + "",
-            postfi,
-            postd + "",
-            dq.form["user_bzj"] * 10 ** 16 + ""
-          )
-          .send(
-            {
-              from: dq.user["user"],
-            },
-            (err, ret) => {
-              console.log(err, ret, dq.user["user"]);
-              if (!ret) {
-                Toast.clear();
-                Toast({
-                  message: dq.$t('message.frienchOtc.submit'),
-                  icon: "cross",
-                  duration: 2000,
-                });
-              } else {
-                Toast.clear();
-                Toast.loading({
-                  message: dq.$t('message.frienchOtc.sendingOrder'),
-                  forbidClick: true,
-                  loadingType: "spinner",
-                });
-                // setTimeout(() => {              Toast.clear();
-                //   Dialog.alert({
-                //     title: 'Published successfully',
-                //     message: 'Can be viewed or modified in my order',
-                //   }).then(() => {
-                //     this.$router.push('./ddguanli');
-                //   });
-                // }, 5000);
-              }
-            }
-          );
+        posta = parseFloat(dq.form['num']) * (10 ** num_bs);
+        postb = parseFloat(dq.form['zd_num']) * (10 ** num_bs);
+        postc = parseFloat(dq.form['zg_num']) * (10 ** num_bs);
+        dotsconn.methods.setMerch(
+          postpro,
+          dq.m,
+          dq.getFNum(posta) + "",
+          dq.getFNum(postb) + "",
+          dq.getFNum(postc) + "",
+          postfi,
+          postd + "",
+          (dq.form['user_bzj'] * (10 ** 16)) + ""
+        ).send({
+          from: dq.user['user']
+        }, (err, ret) => {
+          console.log(err, ret, dq.user['user'])
+          if (!ret) {
+            Toast.clear();
+            Toast({
+              message: '请点击授权！',
+              icon: 'cross',
+              duration: 2000
+            });
+          } else {
+            Toast.clear();
+            Toast.loading({
+              message: '发布订单中...',
+              forbidClick: true,
+              loadingType: 'spinner',
+            });
+            setTimeout(() => {              
+				Toast.clear();
+                Dialog.alert({
+                title: '发布成功',
+                message: '可以在我的订单页面修改',
+              }).then(() => {
+                // this.$router.push('./ddguanli');
+              });
+            }, 5000);
+          }
+        });
       }
     },
     //保证金计算
     jsbzj() {
       var dq = this;
-      if (this.form["dj"] && this.form["num"]) {
+      if (this.form['dj'] && this.form['num']) {
         //保证金计算单位
-        var bzj_num = config["hyue"][config["key"]]["Bzj"]["num"];
-        var pro_key = config["hbi"][config["key"]][dq.pro]["key"];
+        var bzj_num = config['hyue'][config['key']]['Bzj']['num'];
+        var pro_key = config['hbi'][config['key']][dq.pro]['key'];
 
         var prosconn = new web3.eth.Contract(dotc_abi, dotc_key);
         prosconn.methods.pros(pro_key).call((err, ret) => {
@@ -718,22 +692,19 @@ export default {
             if ((dq.user['balancemar'] / (10 ** bzj_num)) >= jisuan) {
               dq.isform['sjbzj'] = false;
             } else {
-              dq.isform["sjbzj"] = true;
+              dq.isform['sjbzj'] = true;
             }
           }
         });
         //获取当前用户选择的资产进行查询 判断是买家与卖家
-        if (
-          this.m ==
-          "0x73616c6500000000000000000000000000000000000000000000000000000000"
-        ) {
-          var pro_num = config["hbi"][config["key"]][dq.pro]["num"];
-          var inum = Number(dq.form["num"]) * 10 ** pro_num;
-          if (inum > dq.user["balancepro"]) {
-            dq.isform["zcye"] = true;
-            dq.user["num"] = dq.user["balancepro"] / 10 ** pro_num;
+        if (this.m == '0x73616c6500000000000000000000000000000000000000000000000000000000') {
+          var pro_num = config['hbi'][config['key']][dq.pro]['num'];
+          var inum = Number(dq.form['num']) * (10 ** pro_num);
+          if (inum > dq.user['balancepro']) {
+            dq.isform['zcye'] = true;
+            dq.user['num'] = (dq.user['balancepro']) / (10 ** pro_num);
           } else {
-            dq.isform["zcye"] = false;
+            dq.isform['zcye'] = false;
           }
         }
       }
@@ -741,6 +712,7 @@ export default {
         var z = x * y;
         return z;
       }
+
     },
     //如果过亿请转换
     getFNum(num_str) {
@@ -807,52 +779,45 @@ export default {
         return num_str;
       }
     },
-    // 提交 备注修改
-    setNote() {
-      var that = this;
-      var loading = Toast.loading({
-        message: that.$t('message.frienchOtc.changing'),
-        closeOnClick: false,
-        closeOnClickOverlay: false,
-        loadingType: "spinner",
-        getContainer: "body",
-        duration: 0,
-      });
-      var beizhucon = new web3.eth.Contract(
-        config["hyue"][config["key"]]["dotc"]["abi"],
-        config["hyue"][config["key"]]["dotc"]["heyue"]
-      );
-      beizhucon.methods
-        .commun(6 + "", Base64.encode(that.form.beizhu + ""))
-        .send(
-          {
-            from: address,
-          },
-          (err, ret) => {
-            if (ret && !err) {
-              loading.clear();
-              that.maskDis = true;
-              Dialog.alert({
-                title: that.$t("message.prompt"),
-                message: that.$t("message.success"),
-              }).then(() => {
-                // on close
-              });
-            } else {
-              loading.clear();
-              that.maskDis = true;
-              Dialog.alert({
-                title: that.$t("message.prompt"),
-                message: that.$t("message.failed"),
-              }).then(() => {
-                // on close
-              });
-            }
-          }
-        );
-    },
-  },
-};
+	// 提交 备注修改
+	setNote(){
+			  var that = this
+			  var loading = Toast.loading({
+			    message: '修改中... ',
+			    closeOnClick: false,
+			    closeOnClickOverlay: false,
+			    loadingType: 'spinner',
+			    getContainer: "body",
+			    duration: 0
+			  });
+			  var beizhucon = new web3.eth.Contract(config['hyue'][config['key']]['dotc']['abi'], config['hyue'][config['key']]['dotc']['heyue']);
+			  beizhucon.methods.commun(6 + "", Base64.encode(that.form.beizhu + "")).send({
+			    from: address
+			  }, (err, ret) => {
+			    if (ret && !err) {
+			      loading.clear();
+				  that.maskDis = true
+			      Dialog.alert({
+			        title: that.$t('message.prompt'),
+			        message: that.$t('message.success'),
+			      }).then(() => {
+			        // on close
+			      });
+			    } else {
+			      loading.clear();
+				  that.maskDis = true
+			      Dialog.alert({
+			        title: that.$t('message.prompt'),
+			        message: that.$t('message.failed'),
+			      }).then(() => {
+			        // on close
+			      });
+			    }
+			  
+			  });
+	}
+  }
+}
 </script>
 
 <style lang="less">
@@ -944,9 +909,9 @@ export default {
   font-size: 12px;
   color: #409eff;
 }
-.el-textarea {
-  textarea {
-    min-height: 100px !important;
-  }
+.el-textarea{
+	textarea{
+		min-height: 100px !important;
+	}
 }
 </style>
