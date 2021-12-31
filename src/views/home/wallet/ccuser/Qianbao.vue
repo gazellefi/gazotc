@@ -207,7 +207,7 @@
 		    this.$router.push(url);
 		  },
 		  async getqblist(flag) {
-		    Toast.loading({ message: this.$t('message.Waiting') });
+		    Toast.loading({ message: this.$t('message.arbitration.waiting') });
 		    var list = [];
 		    var binum = config['hyue'][config['key']]['Bzj']['num'];
 		    if(flag){
