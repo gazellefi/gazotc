@@ -128,7 +128,6 @@ export default {
         // { title: 'Transaction rules', route: '/Transactionrules' },
         // { title: 'Arbitration rules', route: '/Arbitrationrules' },
         // { title: 'DAPP', route: '/Exchange' },
-        // { title: 'Public sale', route: '/Activities' },
 		{ title: 'Home', route: '/Homepage',value: 1 },
 		{ title: 'About', route: '/about',value: 2 },
 		{ title: 'Document', route: '/file',value: 3 },
@@ -137,6 +136,7 @@ export default {
 		{ title: 'Dapp', route: '/Exchange',value: 6 },
 		{ title: 'Paper', route: '/GazOTC',value: 7 },
 		{ title: 'Contact', route: '/contact',value: 8 },
+        { title: 'Activities', route: '/Activities',value: 9 },
       ],
 	  activeIndex: 1
     };

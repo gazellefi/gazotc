@@ -217,6 +217,8 @@ export default {
 				exceedLimit:'The withdrawal amount cannot exceed the limit amount',
 			},
 			home: {
+				
+				Activities: 'Activities',
 				Home: 'Home',
 				About: 'About',
 				Document: 'Document',
@@ -476,6 +478,7 @@ export default {
 				enterNick: 'Please enter a nickname',
 				enterName: 'Please enter your name',
 				enterIdCard: 'Please enter your ID number.',
+				qualification:'Granted NFT whitelist',
 			},
 			dapp: {
 				payTime: 'Payment time',
@@ -877,6 +880,7 @@ export default {
 				exceedLimit:'支取金额不能超过支取限额',
 			},
 			home: {
+				Activities: '活动',
 				Home: '主页',
 				About: '关于',
 				Document: '文档',
@@ -1137,6 +1141,7 @@ export default {
 				enterNick: '请输入昵称',
 				enterName: '请输入姓名',
 				enterIdCard: '请输入身份证号',
+				qualification:'你已获得头像NFT白名单资格',
 			},
 			dapp: {
 				PrivateMessage: '私信信息',

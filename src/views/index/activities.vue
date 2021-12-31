@@ -38,6 +38,7 @@
         <span @click="showPopFn" class="btn">{{
           $t("message.activit.title")
         }}</span>
+		<span style="font-size: 11px;">{{content}}</span>
         <div class="addr fontS">
           {{ $t("message.activit.addr") }}:{{ user }}
         </div>
@@ -310,7 +311,8 @@ export default {
       gazfree: "",
       recommend_er: "",
       str1: "",
-	  transactionStatus: '' // 实名认证 返回状态
+	  transactionStatus: '', // 实名认证 返回状态
+	  content:''
     };
   },
   mounted() {
@@ -618,7 +620,8 @@ export default {
 		var that = this
 		axios.post('https://gazotc.com:8083/member/jnmioURL?address='+address).then((res)=>{
 			if(res.result.state== 'SUCCESS'){ // 已实名认证
-				this.regList[2].text='已认证'
+				this.regList[2].text='已认证';
+				this.content=this.$t("message.activit.qualification")
 			}else{
 			}
 		})

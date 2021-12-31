@@ -1,9 +1,11 @@
 <template>
   <div class='index'>
 	  <div class="f a_c c_c carouser_nav">
-	  	<el-carousel :autoplay="false"  arrow="nerver"  indicator-position="none" height="100%">
+	  	<el-carousel :autoplay="false"  arrow="nerver"  indicator-position="none" height="100%"style="width: 100%;margin-top: 20px;"  >
 	  	  <el-carousel-item style="position:relative">
-	  	    <img src="../../assets/img/giphy.gif" alt="" style="width: 100%;">
+	  	    <!-- <img src="../../assets/img/giphy.gif" alt="" style="width: 100%;"> -->
+	  	    <img :src="bannerSrc" alt="" style="width: 100%;" @click="goAct">
+			<!-- <img src="../../assets/img/banner00.jpg" > -->
 	  	  </el-carousel-item>
 	  	</el-carousel>
 	  </div>
@@ -191,15 +193,27 @@ export default {
 		  {color:'#fff',background:require('../../assets/img/logo6.jpg')},
 		  {color:'#fff',background:require('../../assets/img/logo7.jpg')},
 		  {color:'#fff',background:require('../../assets/img/logo8.jpg')},
-	  ]
+	  ],
+	  bannerSrc:''
     };
   },
-  mounted() { },
+  mounted() {
+	  let lang = localStorage.getItem('lang')
+	  console.log(lang);
+	  if(lang == 'zh'){
+	  	this.bannerSrc=require('../../assets/img/banner01.jpg')
+	  }else{
+	  	this.bannerSrc=require('../../assets/img/banner00.jpg')
+	  }
+  },
   watch: {},
   computed: {},
   methods: {
 	  goDapp(){
 		this.$router.push('/home');
+	  },
+	  goAct(){
+		  this.$router.push('/Activities');
 	  }
   },
   components: {}
