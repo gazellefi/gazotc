@@ -102,13 +102,13 @@ export default {
         {
           text: 'telegram',
           img: require('@/assets/link/6.png'),
-          href: 'https://t.me/gaztwo',
+          href: 'https://t.me/gazotcE',
         },
-        {
-          text: 'telegram',
-          img: require('@/assets/link/7.png'),
-          href: 'https://t.me/gazotcCN',
-        },
+        // {
+        //   text: 'telegram',
+        //   img: require('@/assets/link/7.png'),
+        //   href: 'https://t.me/gazotcCN',
+        // },
         {
           text: 'discord',
           img: require('@/assets/link/8.png'),
@@ -488,7 +488,7 @@ export default {
   }
   .topNav {
 	  
-    height: 140px !important;
+    /* height: 140px !important; */
     position: relative;
 	
 	.el-carousel {
@@ -596,12 +596,13 @@ export default {
       margin-bottom: 8px !important;
       .left {
         display: flex;
-        justify-content: flex-start;
+        justify-content: space-around;
 		flex-wrap: wrap;
       }
       .item {
 		position: relative;
-		width: 20%;
+		/* width: 20%; */
+		font-size: 11px;
         margin: 0px !important;
 		margin-top: 8px !important;
         img {
