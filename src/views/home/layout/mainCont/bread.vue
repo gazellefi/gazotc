@@ -60,6 +60,7 @@ export default {
 	    if (document.execCommand('copy')) {
 	      document.execCommand('copy');
 	      this.$toast('联系方式已复制')
+		  this.showTel = false
 	    }
 	    document.body.removeChild(input);
 	  

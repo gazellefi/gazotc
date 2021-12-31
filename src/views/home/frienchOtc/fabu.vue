@@ -150,8 +150,8 @@ import Web3 from "web3"
 import Web3Modal from "web3modal"
 let Base64 = require('js-base64').Base64;
 import { Dialog, Toast, Notify } from 'vant';
-// import VConsole from "vconsole";
-// new VConsole();
+import VConsole from "vconsole";
+new VConsole();
 
 //公共变量
 var web3 = "";
@@ -535,8 +535,8 @@ export default {
           getContainer: "body",
         })
           .then(() => {
-            // 此处要加个保证金
-            // dq.$router.push('./baozhengjin');
+            // 此处要加个保证金  跳转钱包
+            dq.$router.push({name:'wallet'});
           })
           .catch(() => {
             isdingdan();
@@ -562,7 +562,7 @@ export default {
               Dialog.alert({
                 title: dq.$t('message.frienchOtc.publishen'),
                 message:
-                  "The order number is:" + ret["returnValues"]["order"] + "",
+                  "订单号:" + ret["returnValues"]["order"] + "",
               }).then(() => {
                 window.location.reload();
               });
@@ -570,7 +570,7 @@ export default {
               Dialog.alert({
                 title: dq.$t('message.frienchOtc.publishen'),
                 message:
-                  "The order number is:" + ret["returnValues"]["order"] + "",
+                  "订单号:" + ret["returnValues"]["order"] + "",
               }).then(() => {
                 window.location.reload();
               });

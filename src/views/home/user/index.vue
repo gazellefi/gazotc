@@ -52,16 +52,16 @@
               <span>{{ $t("message.modify") }}</span>
             </div>
             <div class="btn" style="margin-top: 10px" @click="ruleHideAuth">
-              <span>{{ $t("message.activit.IDnumber") }}</span>
+              <span>{{ $t("message.activit.authIdcard") }}</span>
             </div>
-            <div
+          <!--  <div
               class="btn"
               style="margin-top: 10px"
               @click="ruleHideAuth"
               v-if="false"
             >
               <span>{{ $t("message.activit.IDnumber") }}</span>
-            </div>
+            </div> -->
           </div>
         </div>
         <!-- 仲裁员昵称 -->
