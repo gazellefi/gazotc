@@ -36,11 +36,11 @@ export default {
 					value:0,
 				},
 				{
-					title:'保证金',
+					title:this.$t("message.arbitration.margin"),
 					value:0,
 				},
 				{
-					title:'保证金比例',
+					title:this.$t("message.dapp.blandAsk"),
 					value:0,
 				}
 			],
