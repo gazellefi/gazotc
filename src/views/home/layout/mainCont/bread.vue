@@ -3,12 +3,21 @@
   	<el-breadcrumb id="breadcrumb" separator=">">
   	  <el-breadcrumb-item v-for="(v,i) in breadcrumbList" :to="{ path:i==0? v.path=v.redirect:v.path }">{{$t(v.meta.name)}}</el-breadcrumb-item>
   	</el-breadcrumb>
-	<div class="fc a_e c_a fz14" style="padding-right: 15px;">
+	<div class="fc a_e c_a fz14 hidden-sm-and-down" style="padding-right: 15px;">
 		<div class="f a_c">
 			<i class="el-icon-s-promotion" style="color: #333;font-size: 16px;margin-top: -4px;margin-right: 5px;"></i>
 			<span >{{$t('message.service')}}</span>
 		</div>
 		<span > {{$t('message.telAccount')}}</span>
+	</div>
+	<div class="hidden-sm-and-up f a_c" style="padding: 5px 15px 0 0;">
+		<div class="f a_c" v-if="showTel" @click="copy">
+			<span > {{$t('message.telAccount')}}</span>
+		</div>
+		<div class="f a_c" @click="showTel = true" v-else>
+			<i class="el-icon-s-promotion" style="color: #333;font-size: 16px;margin-top: -4px;margin-right: 5px;"></i>
+			<span >{{$t('message.service')}}</span>
+		</div>
 	</div>
   </div>
 </template>
@@ -16,7 +25,9 @@
 export default {
   name: 'app',
   data() {
-    return {};
+    return {
+		showTel: false
+	};
   },
   mounted() {
 
@@ -38,7 +49,22 @@ export default {
       return this.$store.state.breadcrumb.matched && this.$store.state.breadcrumb.matched.slice(1)
     }
   },
-  methods: {},
+  methods: {
+	  async copy() {
+	    await this.$nextTick(e => { })
+	    var Url2 = document.querySelector(".copy .van-field__control");
+	    const input = document.createElement('input');
+	    document.body.appendChild(input);
+	    input.setAttribute('value', this.$t('message.telAccount'));
+	    input.select();
+	    if (document.execCommand('copy')) {
+	      document.execCommand('copy');
+	      this.$toast('联系方式已复制')
+	    }
+	    document.body.removeChild(input);
+	  
+	  },
+  },
   components: {},
   props: []
 };

@@ -51,6 +51,12 @@ export default [
 	      import('@/views/index/GazOTC'),
 	  },
 	  {
+	    path: '/file',
+	    name: 'file',
+	    component: () =>
+	      import('@/views/index/file'),
+	  },
+	  {
 	    path: '/news',
 	    name: 'news',
 	    component: () =>
