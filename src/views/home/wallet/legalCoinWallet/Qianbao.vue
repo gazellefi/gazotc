@@ -104,7 +104,7 @@
 
 	var dotc_abi = config['hyue'][config['key']]['dotc']['abi'];
 	var dotc_key = config['hyue'][config['key']]['dotc']['heyue'];
-	var Gaz_key = config['hbi'][config['key']]['Gaz']['heyue'];
+	var Gaz_key = config['hbi'][config['key']]['GAZ']['heyue'];
 	var bzj_num = config['hyue'][config['key']]['Bzj']['num'];
 
 	//new VConsole();

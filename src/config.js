@@ -96,9 +96,9 @@ var config = {
                 abi:ethabi,
                 deling:false
             },
-            Gaz:{
+            GAZ:{
                 show:true,
-                id:"Gaz",
+                id:"GAZ",
                 key:"0x67617a0000000000000000000000000000000000000000000000000000000000",
                 num:18,
                 heyue:"0xCE5C72a775A3e4D032Fbb08C66c8BdfA9A5d216F",

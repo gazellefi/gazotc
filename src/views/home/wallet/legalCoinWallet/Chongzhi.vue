@@ -35,17 +35,19 @@ import config from "@/config";
 import usdtapi from "@/api/usdt.json";
 import dotcapi from "@/api/dots.json";
 import wethapi from "@/api/weth.json";
-var hbilist = config['hbi'][config['key']];
+// import VConsole from "vconsole";
+// new VConsole();
+var hbilist1 = config['hbi'][config['key']];
 var hbarr = [];
 var i = 1;
-for (const key in hbilist) {
+for (const key in hbilist1) {
   i++;
   hbarr.push({
     id: i,
-    key: hbilist[key]['heyue'],
-    abi: hbilist[key]['abi'],
-    title: hbilist[key]['id'],
-    num: hbilist[key]['num']
+    key: hbilist1[key]['heyue'],
+    abi: hbilist1[key]['abi'],
+    title: hbilist1[key]['id'],
+    num: hbilist1[key]['num']
   });
 }
 var address = '';
@@ -73,6 +75,7 @@ export default {
 	if(this.type){
 		this.changeSelect(this.type)
 	}
+	console.log('type1');
   },
   watch:{
 	  type(){
@@ -81,6 +84,7 @@ export default {
 	  	if(this.type){
 	  		this.changeSelect(this.type)
 	  	}
+		console.log('type2');
 	  }
   },
   mounted() {
@@ -134,25 +138,22 @@ export default {
 				this.hbindex = i
 				setTimeout(()=>{
 					this.getBalane()
-				},300)
+				},1000)
 			}
 		}
 	},
 	async getBalane(){
-		var dq = this
-		const providerOptions = {
-		  /* See Provider Options Section */
-		};
-		const web3Modal = new Web3Modal({
-		  // network: "mainnet",
-		  // cacheProvider: true,
-		  providerOptions,
-		});
-		var provider = await web3Modal.connect();
-		web3 = new Web3(provider);
-		// console.log(web3);
+		var dq = this;
+		// console.log('获取余额');
+		// console.log(dq.hbindex);
+		// console.log(config);
+		// console.log(dq.hbilist[dq.hbindex]['title']);
+		// console.log(config['hbi'][config['key']][dq.hbilist[dq.hbindex]['title']]['abi']);
+		// console.log(config['hbi'][config['key']][dq.hbilist[dq.hbindex]['title']]['heyue']);
 		var proconn = new web3.eth.Contract(config['hbi'][config['key']][dq.hbilist[dq.hbindex]['title']]['abi'],config['hbi'][config['key']][dq.hbilist[dq.hbindex]['title']]['heyue']);
+		// console.log('proconn');
 		dq.balance = await proconn.methods.balanceOf(address).call();
+		// console.log('余额:'+ dq.balance);
 		this.$forceUpdate()
 	},
     //如果过亿请转换
@@ -239,12 +240,17 @@ export default {
         var usdt_yue = 0;
         //开始充值 监测授权余额 
             //查询代币初始余额
+		// console.log('开始充值');
         dotcconn.methods.balancepro(address+"",proust).call((err,ret)=>{
+			    // console.log('balancepro:返回');
                 if (ret) {
                     usdt_yue = Number(ret) /dec;
+					// 检测余额
+					// console.log('检测余额');
                     proconn.methods.balanceOf(address+"").call((errb,retb)=>{
                         if (retb) {
                             var balanceOf = Number(retb) /dec;
+							// 判断余额 是否大于 输入金额
                             if (balanceOf < Number(dq.je)) {
                                 Toast.clear();
                                 Dialog.alert({
@@ -255,6 +261,8 @@ export default {
                                 });
                                 return;
                             }else{
+								// 去授权
+								// console.log('去授权');
                                 get_shouquan();
                             }
                         }
@@ -268,11 +276,11 @@ export default {
                 message: dq.$t('message.wallet.depositing')
             });
             var cznum = dq.getFNum((Number(dq.je) * dec));
-            console.log("充值中")
+            // console.log("充值中")
             dotcconn.methods.deposit(proust,cznum+"").send({
                 from:address
             },(err,ret)=>{
-				console.log(ret);
+				// console.log(ret);
                 if (ret) {
                     chongzhi_lx();
                 }else{
@@ -321,19 +329,24 @@ export default {
         }
         //查询授权余额
         function get_shouquan() {
+			// console.log('获取授权');
             proconn.methods.allowance(address+"",dotcust).call((err,ret)=>{
                 if (ret) {
                     Toast.clear();
                     var allowance = Number(ret) /dec;
+					// console.log('判断大小');
                     if (allowance < Number(dq.je)) {
                         set_shouquan();
                     }else 
                         chongzhiajax();                          
-                }
+                }else{ //授权失败
+					// Toast('授权失败');
+				}
             });
         }
         //授权
         function set_shouquan() {
+			// console.log('拉起钱包');
             Toast.loading({
                 message: pro +dq.$t('message.wallet.submit'),
             });
@@ -351,6 +364,7 @@ export default {
     
         //轮询
         function lunxun(c) {
+			// console.log('轮询');
             proconn.methods.allowance(address+"",dotcust).call((err,ret)=>{
                 if (ret) {
                     var allowance = Number(ret) /dec;
