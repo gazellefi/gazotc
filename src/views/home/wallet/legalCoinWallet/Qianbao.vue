@@ -7,7 +7,7 @@
 						<img src="@/assets/img/money1.png" style="width: 20px;" class="marr-10">
 						<div> {{ $t("message.dapp.capitalAsset")}}</div>
 					</div>
-					<div class="num">{{ user_zc.toFixed(2) }}</div>
+					<!-- <div class="num">{{ user_zc.toFixed(2) }}</div> -->
 				</div>
 			</el-col>
 			<el-col :sm="24" :md="10" class="f c_r a_c">
@@ -29,7 +29,7 @@
 						<img src="@/assets/img/money1.png" style="width: 20px;" class="marr-10">
 						<div> {{ $t("message.dapp.capitalAsset")}}</div>
 					</div>
-					<div class="num">{{ user_zc.toFixed(2) }}</div>
+					<!-- <div class="num">{{ user_zc.toFixed(2) }}</div> -->
 				</div>
 			</el-col>
 			<el-col :sm="24" :md="10" class="f a_c">
@@ -59,7 +59,7 @@
 				<div class="item_nav"><span class="fz16 fwb">{{$t('message.operation')}}</span></div>
 			</el-col>
 		</el-row>
-		<el-row v-for="(item,index) in list" :key="index">
+		<el-row v-for="(item,index) in list" :key="index" type="flex" align="middle">
 			<el-col :span="6">
 				<div class="item_nav c6"><span>{{item.name}}</span></div>
 			</el-col>
@@ -71,12 +71,12 @@
 			</el-col>
 			<el-col :span="6">
 				<div class="item_nav" v-if="item.key == 'baozhengjing'">
-					<span class="cba cursor" @click="showRu(item)">{{$t('message.changeInto')}}</span>
-					<span class="c935 cursor" @click="showOutPop(item)" style="margin-left: 5px;">{{$t('message.changeOut')}}</span>
+					<span class="cba cursor " @click="showRu(item)">{{$t('message.changeInto')}}</span>
+					<span class="c935 cursor aa" @click="showOutPop(item)" style="margin-left: 5px;">{{$t('message.changeOut')}}</span>
 				</div>
 				<div class="item_nav" v-else>
 					<span class="cba cursor" @click="showChongzhi(item)">{{$t('message.ChargeMoney')}}</span>
-					<span class="c935 cursor" @click="showTixian(item)" style="margin-left: 5px;">{{$t('message.WithdrawMoney')}}</span>
+					<span class="c935 cursor aa" @click="showTixian(item)" style="margin-left: 5px;">{{$t('message.WithdrawMoney')}}</span>
 				</div>
 			</el-col>
 		</el-row>
@@ -711,15 +711,27 @@
 		}
 
 		.item_nav {
+			width: 100%;
 			background-color: #FFF;
-			padding: 20px 10px;
+			padding: 20px 0;
 			margin-top: 5px;
 			font-size: 14px;
+			display: flex;
+			justify-content: center;
+			flex-wrap: wrap;
 		}
 	}
 	@media only screen and (min-width: 991px){
 		.item_nav{
 			padding: 20px 0 20px 50px !important;
+		}
+	}
+	@media only screen and (max-width: 991px){
+		.item_nav{
+			padding: 0;
+		}
+		.aa{
+			margin: 05px 0 0 0;
 		}
 	}
 </style>

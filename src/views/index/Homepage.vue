@@ -1,9 +1,9 @@
 <template>
   <div class='index'>
-	  <div class="f a_c c_c" style="height: 500px;">
+	  <div class="f a_c c_c carouser_nav">
 	  	<el-carousel :autoplay="false"  arrow="nerver"  indicator-position="none" height="100%">
 	  	  <el-carousel-item style="position:relative">
-	  	    <img src="../../assets/img/giphy.gif" alt="">
+	  	    <img src="../../assets/img/giphy.gif" alt="" style="width: 100%;">
 	  	  </el-carousel-item>
 	  	</el-carousel>
 	  </div>
@@ -212,6 +212,9 @@ export default {
   width: 1200px;
 }
 .index {
+	.carouser_nav{
+		padding: 50px 0;
+	}
   .topNav {
     height: 410px;
     text-align: center;
@@ -785,6 +788,9 @@ export default {
       font-size: 18px !important;
       padding: 10px 0 !important;
     }
+  }
+  .carouser_nav{
+  	padding: 0;
   }
   .rightText{
 	  .title{

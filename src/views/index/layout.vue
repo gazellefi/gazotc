@@ -30,7 +30,7 @@
         <div class="item" v-for="v in 3"></div>
       </div>
       <lang class="lang"></lang>
-      <!-- <el-carousel :autoplay="false"  arrow="nerver"  indicator-position="none" height="100%">
+     <!-- <el-carousel :autoplay="false"  arrow="nerver"  indicator-position="none" height="100%">
         <el-carousel-item style="position:relative">
           <img src="../../assets/img/giphy.gif" alt="">
         </el-carousel-item>
@@ -131,7 +131,7 @@ export default {
         // { title: 'Public sale', route: '/Activities' },
 		{ title: 'Home', route: '/Homepage',value: 1 },
 		{ title: 'About', route: '/about',value: 2 },
-		{ title: 'Document', route: '/Homepage',value: 3 },
+		{ title: 'Document', route: '/file',value: 3 },
 		{ title: 'Rule', route: '/rule',value: 4 },
 		{ title: 'News', route: '/news',value: 5 },
 		{ title: 'Dapp', route: '/Exchange',value: 6 },
@@ -172,9 +172,14 @@ export default {
         this.$router.push('/GAZ');
       } else if (v.route == '/Exchange') {
         this.$router.push('/home');
-      } else if (v.route == '/Paper') {
-        this.$router.push(v.route);
-        this.currentRoute = v.route
+      } else if (v.route == '/GazOTC') {
+		let lang = localStorage.getItem('lang')
+		if(lang == 'zh'){
+			window.location.href = '/GazOTC_ZH.pdf'
+		}else{
+			window.location.href = '/GazOTC_EN.pdf'
+		}
+        // this.currentRoute = v.route
       } else if (v.route == "/Activities") {
         this.$router.push('/Activities');
       } else {
