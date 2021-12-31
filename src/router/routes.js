@@ -115,6 +115,23 @@ export default [
     component: () =>
       import('@/components/yjzhuce'),
   },
+  
+  {
+	  path: '/verifyIdentity',
+	  name: 'verifyIdentity',
+	  component: () => import('@/views/home/verifyIdentity'),
+	  meta: {
+		name: 'message.dapp.wallet',
+		icon: require('@/assets/dappImg/2.png')
+	  },
+	  children: [
+		{
+		  path: "/home/verifyIdentity/start",
+		  meta: { name: 'message.dapp.legalWallet' },
+		  component: () => import("@/views/home/wallet/legalCoinWallet/Qianbao.vue"),
+		},
+	  ]
+  },
   // 3 home 页面 dapp页面
   {
     path: '/home',
