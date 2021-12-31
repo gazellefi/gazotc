@@ -105,7 +105,7 @@
 		</div>
 		<!-- WAP -->
 		<div class="hidden-sm-and-up ddgl_fabu_wapview">
-			<el-row style="border-bottom: 1px solid #EEEEEE;">
+			<!-- <el-row style="border-bottom: 1px solid #EEEEEE;">
 				<el-col :span="12">
 					<div class="ddgl_fabu_p_head_sxan_i">
 						<span>{{ $t("message.dapp.currency")}}：</span>
@@ -154,7 +154,7 @@
 						</el-dropdown>
 					</div>
 				</el-col>
-			</el-row>
+			</el-row> -->
 			<!-- 列表 -->
 			<el-row>
 				<div v-if="list.length<1" class="fc a_c">
@@ -170,7 +170,7 @@
 								<span class="fwb">{{ item.Mmark =='for sale' ? $t("message.dapp.sell") : $t("message.dapp.buy") }}</span>
 								<span class="fwb">{{item.pro}}</span>
 								<div class="f c_c marty_nav">
-									<span>保证金Margin{{item.mar}}%</span>
+									<span>{{$t('message.arbitration.margin')}}{{item.mar}}%</span>
 								</div>
 							</div>
 						</div>
@@ -207,7 +207,7 @@
 				<el-form-item :label="$t('message.dapp.ModifyType')">
 					<el-select v-model="set_form.tcode" :placeholder="$t('message.SelectType')">
 						<el-option
-							v-for="item in [{code:1,name: $t('message.dapp.ModifyPrice')},{code:2,name:$t('message.dapp.ModifiedQuantity')},{code:3,name: set_form.mlive == 1 ? $t('message.undercarriage'): $t('message.Shelf')}]"
+							v-for="item in [{code:1,name: $t('message.dapp.ModifyPrice')},{code:2,name:$t('message.dapp.ModifiedQuantity')},{code:3,name: set_form.mlive == 1 ? $t('message.undercarriage'): $t('message.grounding')}]"
 							:key="item.code" :label="item.name" :value="item.code">
 						</el-option>
 					</el-select>
@@ -455,9 +455,9 @@
 					}, (err, ret) => {
 						Toast.clear();
 						if (ret) {
-							Toast.success('修改请求已提交！');
+							Toast('修改请求已提交！');
 						} else {
-							Toast.fail('请点击同意授权！');
+							Toast('请点击同意授权！');
 						}
 					});
 				}
@@ -475,9 +475,9 @@
 					}, (err, ret) => {
 						Toast.clear();
 						if (ret) {
-							Toast.success('修改请求已提交！');
+							Toast('修改请求已提交！');
 						} else {
-							Toast.fail('请点击同意授权！');
+							Toast('请点击同意授权！');
 						}
 					});
 				}
@@ -506,9 +506,9 @@
 					}, (err, ret) => {
 						Toast.clear();
 						if (ret) {
-							Toast.success('修改请求已提交！');
+							Toast('修改请求已提交！');
 						} else {
-							Toast.fail('请点击同意授权！');
+							Toast('请点击同意授权！');
 						}
 					});
 				}

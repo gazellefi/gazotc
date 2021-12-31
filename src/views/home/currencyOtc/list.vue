@@ -5,12 +5,12 @@
 			<div class="bblist_table">
 				<div class="bblist_table_left">
 					<span class="typeSelect">{{ $t("message.dapp.currency")}}：</span>
-					<el-select size="mini"placeholder="Please select" @change="changeH">
+					<el-select size="mini" v-model="huobi" placeholder="Please select" @change="changeH">
 						<el-option v-for="item in hbarr" :key="item.key" :label="item.id" :value="item.key">
 						</el-option>
 					</el-select>
 					<span class="typeSelect">{{ $t("message.dapp.unit")}}：</span>
-					<el-select size="mini" placeholder="Please select" @change="changeH">
+					<el-select size="mini" v-model="fabi" placeholder="Please select" @change="changeH">
 						<el-option v-for="item in hbarr" :key="item.key" :label="item.id" :value="item.key">
 						</el-option>
 					</el-select>

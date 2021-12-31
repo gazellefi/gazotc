@@ -61,7 +61,7 @@
 		</el-row>
 		<el-row v-for="(item,index) in list" :key="index" type="flex" align="middle">
 			<el-col :span="6">
-				<div class="item_nav c6"><span>{{item.name}}</span></div>
+				<div class="item_nav c6"><span>{{item.name == 'bond' ? $t(`message.bond`) : item.name}}</span></div>
 			</el-col>
 			<el-col :span="6">
 				<div class="item_nav c6"><span>{{item.balancepro}}</span></div>
@@ -72,11 +72,11 @@
 			<el-col :span="6">
 				<div class="item_nav" v-if="item.key == 'baozhengjing'">
 					<span class="cba cursor " @click="showRu(item)">{{$t('message.changeInto')}}</span>
-					<span class="c935 cursor aa" @click="showOutPop(item)" style="margin-left: 5px;">{{$t('message.changeOut')}}</span>
+					<span class="c935 cursor" @click="showOutPop(item)" style="margin-left: 5px;">{{$t('message.changeOut')}}</span>
 				</div>
 				<div class="item_nav" v-else>
 					<span class="cba cursor" @click="showChongzhi(item)">{{$t('message.ChargeMoney')}}</span>
-					<span class="c935 cursor aa" @click="showTixian(item)" style="margin-left: 5px;">{{$t('message.WithdrawMoney')}}</span>
+					<span class="c935 cursor" @click="showTixian(item)" style="margin-left: 5px;">{{$t('message.WithdrawMoney')}}</span>
 				</div>
 			</el-col>
 		</el-row>
@@ -483,26 +483,15 @@
 							for (let index = 0; index < dq.huobi.length; index++) {
 								var num = Number(dq.huobi[index]['num']);
 								
-								if(dq.huobi[index]['id']=='bond'){
-									dq.list.push({
-										id: index,
-										key: dq.huobi[index]['hyue'],
-										name: dq.$t('message.arbitration.margin'),
-										balancepro: (Number(yue_arr[index]) / (10 ** num)).toFixed(2),
-										lockpro: (Number(lock_yue_arr[index]) / (10 ** num)).toFixed(2)
-									});
-								}else{
-									dq.list.push({
-										id: index,
-										key: dq.huobi[index]['hyue'],
-										name: dq.huobi[index]['id'],
-										balancepro: (Number(yue_arr[index]) / (10 ** num)).toFixed(2),
-										lockpro: (Number(lock_yue_arr[index]) / (10 ** num)).toFixed(2)
-									});
-								}
+								dq.list.push({
+									id: index,
+									key: dq.huobi[index]['hyue'],
+									name: dq.huobi[index]['id'],
+									balancepro: (Number(yue_arr[index]) / (10 ** num)).toFixed(2),
+									lockpro: (Number(lock_yue_arr[index]) / (10 ** num)).toFixed(2)
+								});
 								
 							}
-							console.log(dq.list)
 							for (let index = 0; index < dq.huobi.length - 1; index++) {
 								var num_a = Number(dq.huobi[index]['num']);
 								//var zhic = dq.huobi[index]['key'];
@@ -719,6 +708,7 @@
 			display: flex;
 			justify-content: center;
 			flex-wrap: wrap;
+			align-items: center;
 		}
 	}
 	@media only screen and (min-width: 991px){
@@ -730,8 +720,8 @@
 		.item_nav{
 			padding: 0;
 		}
-		.aa{
-			margin: 05px 0 0 0;
-		}
+		// .aa{
+		// 	padding: 5px 0 0 0;
+		// }
 	}
 </style>
