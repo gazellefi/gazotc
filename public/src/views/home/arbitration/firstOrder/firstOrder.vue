@@ -21,7 +21,7 @@
 			  </el-table-column>
 			  <el-table-column align="center" prop="mma" :label="$t('message.arbitration.merchantMargin')">
 			    <template slot-scope="scope">
-			      {{ scope.row.mma }} USDT
+			      {{ scope.row.mma }} USDT USDT
 			    </template>
 			  </el-table-column>
 			  <el-table-column align="center" prop="uma" :label="$t('message.arbitration.userMargin')">
