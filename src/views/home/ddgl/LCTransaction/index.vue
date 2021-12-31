@@ -271,7 +271,7 @@
 					<!-- 私信 -->
 					<van-button plain type="info"  class="marr-10" color="#FDC500" size="small"  @click="pcxiugaidd(2,item)">{{$t('message.dapp.privateLetter')}}</van-button>
 					<!-- 详情 -->
-					<van-button plain type="info" color="#FDC500" size="small"  @click="openinfo(item,ddid)">{{$t('message.details')}}</van-button>
+					<van-button plain type="info" color="#FDC500" size="small"  @click="openinfo(item.ddid)">{{$t('message.details')}}</van-button>
 				</div>
       		</div>
       	</el-col>
@@ -483,6 +483,7 @@ export default {
 	  	  	})
 	  	  },
 	  openinfo(ddid) {
+		  console.log(ddid);
 	    this.$router.push({
 	      name: 'Ddinfow',
 	      query: {
