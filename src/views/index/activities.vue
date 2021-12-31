@@ -664,20 +664,20 @@ export default {
       let name = Sha256(this.regForm.name).toString().substring(0, 10);
       let identity = Sha256(this.regForm.identity).toString().substring(0, 15);
       let data = `${nickname}|${name}|${identity}|${this.recommender}`;
-      dotc.methods.commun(0, data).send(
-        {
-          from: address,
-        },
-        (err, ret) => {
-          if (ret) {
-            zcchaxun();
-          } else {
-            Toast.clear();
-            Toast.fail("注册失败");
-          }
-        }
-      );
-
+      // dotc.methods.commun(0, data).send(
+      //   {
+      //     from: address,
+      //   },
+      //   (err, ret) => {
+      //     if (ret) {
+      //       zcchaxun();
+      //     } else {
+      //       Toast.clear();
+      //       Toast.fail("注册失败");
+      //     }
+      //   }
+      // );
+		zcchaxun();
       //轮询注册是否成功
       function zcchaxun() {
         setTimeout(() => {
