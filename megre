@@ -1,0 +1,230 @@
+[1mdiff --git a/dist.zip b/dist.zip[m
+[1mnew file mode 100644[m
+[1mindex 0000000..495708f[m
+Binary files /dev/null and b/dist.zip differ
+[1mdiff --git a/src/config.js b/src/config.js[m
+[1mindex 3b9f425..9920828 100644[m
+[1m--- a/src/config.js[m
+[1m+++ b/src/config.js[m
+[36m@@ -96,9 +96,9 @@[m [mvar config = {[m
+                 abi:ethabi,[m
+                 deling:false[m
+             },[m
+[31m-            Gaz:{[m
+[32m+[m[32m            GAZ:{[m
+                 show:true,[m
+[31m-                id:"Gaz",[m
+[32m+[m[32m                id:"GAZ",[m
+                 key:"0x67617a0000000000000000000000000000000000000000000000000000000000",[m
+                 num:18,[m
+                 heyue:"0xCE5C72a775A3e4D032Fbb08C66c8BdfA9A5d216F",[m
+[1mdiff --git a/src/views/home/wallet/ccuser/Chongzhi.vue b/src/views/home/wallet/ccuser/Chongzhi.vue[m
+[1mindex b87b730..0cb2091 100644[m
+[1m--- a/src/views/home/wallet/ccuser/Chongzhi.vue[m
+[1m+++ b/src/views/home/wallet/ccuser/Chongzhi.vue[m
+[36m@@ -291,7 +291,9 @@[m [mexport default {[m
+         }, (err, ret) => {[m
+           if (ret) {[m
+             sq_lunxun(code);[m
+[31m-          }[m
+[32m+[m[32m          }else{[m
+[32m+[m			[32m  Toast('授权失败')[m
+[32m+[m		[32m  }[m
+         });[m
+       }[m
+     [m
+[1mdiff --git a/src/views/home/wallet/ccuser/Qianbao.vue b/src/views/home/wallet/ccuser/Qianbao.vue[m
+[1mindex daa5eb4..dcf8e35 100644[m
+[1m--- a/src/views/home/wallet/ccuser/Qianbao.vue[m
+[1m+++ b/src/views/home/wallet/ccuser/Qianbao.vue[m
+[36m@@ -207,7 +207,7 @@[m
+ 		    this.$router.push(url);[m
+ 		  },[m
+ 		  async getqblist(flag) {[m
+[31m-		    Toast.loading({ message: this.$t('message.Waiting') });[m
+[32m+[m		[32m    Toast.loading({ message: this.$t('message.arbitration.waiting') });[m
+ 		    var list = [];[m
+ 		    var binum = config['hyue'][config['key']]['Bzj']['num'];[m
+ 		    if(flag){[m
+[1mdiff --git a/src/views/home/wallet/legalCoinWallet/Chongzhi.vue b/src/views/home/wallet/legalCoinWallet/Chongzhi.vue[m
+[1mindex 4875d18..85be3ab 100644[m
+[1m--- a/src/views/home/wallet/legalCoinWallet/Chongzhi.vue[m
+[1m+++ b/src/views/home/wallet/legalCoinWallet/Chongzhi.vue[m
+[36m@@ -35,17 +35,19 @@[m [mimport config from "@/config";[m
+ import usdtapi from "@/api/usdt.json";[m
+ import dotcapi from "@/api/dots.json";[m
+ import wethapi from "@/api/weth.json";[m
+[31m-var hbilist = config['hbi'][config['key']];[m
+[32m+[m[32m// import VConsole from "vconsole";[m
+[32m+[m[32m// new VConsole();[m
+[32m+[m[32mvar hbilist1 = config['hbi'][config['key']];[m
+ var hbarr = [];[m
+ var i = 1;[m
+[31m-for (const key in hbilist) {[m
+[32m+[m[32mfor (const key in hbilist1) {[m
+   i++;[m
+   hbarr.push({[m
+     id: i,[m
+[31m-    key: hbilist[key]['heyue'],[m
+[31m-    abi: hbilist[key]['abi'],[m
+[31m-    title: hbilist[key]['id'],[m
+[31m-    num: hbilist[key]['num'][m
+[32m+[m[32m    key: hbilist1[key]['heyue'],[m
+[32m+[m[32m    abi: hbilist1[key]['abi'],[m
+[32m+[m[32m    title: hbilist1[key]['id'],[m
+[32m+[m[32m    num: hbilist1[key]['num'][m
+   });[m
+ }[m
+ var address = '';[m
+[36m@@ -73,6 +75,7 @@[m [mexport default {[m
+ 	if(this.type){[m
+ 		this.changeSelect(this.type)[m
+ 	}[m
+[32m+[m	[32mconsole.log('type1');[m
+   },[m
+   watch:{[m
+ 	  type(){[m
+[36m@@ -81,6 +84,7 @@[m [mexport default {[m
+ 	  	if(this.type){[m
+ 	  		this.changeSelect(this.type)[m
+ 	  	}[m
+[32m+[m		[32mconsole.log('type2');[m
+ 	  }[m
+   },[m
+   mounted() {[m
+[36m@@ -134,25 +138,22 @@[m [mexport default {[m
+ 				this.hbindex = i[m
+ 				setTimeout(()=>{[m
+ 					this.getBalane()[m
+[31m-				},300)[m
+[32m+[m				[32m},1000)[m
+ 			}[m
+ 		}[m
+ 	},[m
+ 	async getBalane(){[m
+[31m-		var dq = this[m
+[31m-		const providerOptions = {[m
+[31m-		  /* See Provider Options Section */[m
+[31m-		};[m
+[31m-		const web3Modal = new Web3Modal({[m
+[31m-		  // network: "mainnet",[m
+[31m-		  // cacheProvider: true,[m
+[31m-		  providerOptions,[m
+[31m-		});[m
+[31m-		var provider = await web3Modal.connect();[m
+[31m-		web3 = new Web3(provider);[m
+[31m-		// console.log(web3);[m
+[32m+[m		[32mvar dq = this;[m
+[32m+[m		[32m// console.log('获取余额');[m
+[32m+[m		[32m// console.log(dq.hbindex);[m
+[32m+[m		[32m// console.log(config);[m
+[32m+[m		[32m// console.log(dq.hbilist[dq.hbindex]['title']);[m
+[32m+[m		[32m// console.log(config['hbi'][config['key']][dq.hbilist[dq.hbindex]['title']]['abi']);[m
+[32m+[m		[32m// console.log(config['hbi'][config['key']][dq.hbilist[dq.hbindex]['title']]['heyue']);[m
+ 		var proconn = new web3.eth.Contract(config['hbi'][config['key']][dq.hbilist[dq.hbindex]['title']]['abi'],config['hbi'][config['key']][dq.hbilist[dq.hbindex]['title']]['heyue']);[m
+[32m+[m		[32m// console.log('proconn');[m
+ 		dq.balance = await proconn.methods.balanceOf(address).call();[m
+[32m+[m		[32m// console.log('余额:'+ dq.balance);[m
+ 		this.$forceUpdate()[m
+ 	},[m
+     //如果过亿请转换[m
+[36m@@ -239,12 +240,17 @@[m [mexport default {[m
+         var usdt_yue = 0;[m
+         //开始充值 监测授权余额 [m
+             //查询代币初始余额[m
+[32m+[m		[32m// console.log('开始充值');[m
+         dotcconn.methods.balancepro(address+"",proust).call((err,ret)=>{[m
+[32m+[m			[32m    // console.log('balancepro:返回');[m
+                 if (ret) {[m
+                     usdt_yue = Number(ret) /dec;[m
+[32m+[m					[32m// 检测余额[m
+[32m+[m					[32m// console.log('检测余额');[m
+                     proconn.methods.balanceOf(address+"").call((errb,retb)=>{[m
+                         if (retb) {[m
+                             var balanceOf = Number(retb) /dec;[m
+[32m+[m							[32m// 判断余额 是否大于 输入金额[m
+                             if (balanceOf < Number(dq.je)) {[m
+                                 Toast.clear();[m
+                                 Dialog.alert({[m
+[36m@@ -254,6 +260,8 @@[m [mexport default {[m
+                                 });[m
+                                 return;[m
+                             }else{[m
+[32m+[m								[32m// 去授权[m
+[32m+[m								[32m// console.log('去授权');[m
+                                 get_shouquan();[m
+                             }[m
+                         }[m
+[36m@@ -267,11 +275,11 @@[m [mexport default {[m
+                 message: dq.$t('message.wallet.depositing')[m
+             });[m
+             var cznum = dq.getFNum((Number(dq.je) * dec));[m
+[31m-            console.log("充值中")[m
+[32m+[m[32m            // console.log("充值中")[m
+             dotcconn.methods.deposit(proust,cznum+"").send({[m
+                 from:address[m
+             },(err,ret)=>{[m
+[31m-				console.log(ret);[m
+[32m+[m				[32m// console.log(ret);[m
+                 if (ret) {[m
+                     chongzhi_lx();[m
+                 }else{[m
+[36m@@ -320,19 +328,24 @@[m [mexport default {[m
+         }[m
+         //查询授权余额[m
+         function get_shouquan() {[m
+[32m+[m			[32m// console.log('获取授权');[m
+             proconn.methods.allowance(address+"",dotcust).call((err,ret)=>{[m
+                 if (ret) {[m
+                     Toast.clear();[m
+                     var allowance = Number(ret) /dec;[m
+[32m+[m					[32m// console.log('判断大小');[m
+                     if (allowance < Number(dq.je)) {[m
+                         set_shouquan();[m
+                     }else [m
+                         chongzhiajax();                          [m
+[31m-                }[m
+[32m+[m[32m                }else{ //授权失败[m
+[32m+[m					[32m// Toast('授权失败');[m
+[32m+[m				[32m}[m
+             });[m
+         }[m
+         //授权[m
+         function set_shouquan() {[m
+[32m+[m			[32m// console.log('拉起钱包');[m
+             Toast.loading({[m
+                 message: pro +dq.$t('message.wallet.submit'),[m
+             });[m
+[36m@@ -350,6 +363,7 @@[m [mexport default {[m
+     [m
+         //轮询[m
+         function lunxun(c) {[m
+[32m+[m			[32m// console.log('轮询');[m
+             proconn.methods.allowance(address+"",dotcust).call((err,ret)=>{[m
+                 if (ret) {[m
+                     var allowance = Number(ret) /dec;[m
+[1mdiff --git a/src/views/home/wallet/legalCoinWallet/Qianbao.vue b/src/views/home/wallet/legalCoinWallet/Qianbao.vue[m
+[1mindex 255cc58..e30a30b 100644[m
+[1m--- a/src/views/home/wallet/legalCoinWallet/Qianbao.vue[m
+[1m+++ b/src/views/home/wallet/legalCoinWallet/Qianbao.vue[m
+[36m@@ -104,7 +104,7 @@[m
+ [m
+ 	var dotc_abi = config['hyue'][config['key']]['dotc']['abi'];[m
+ 	var dotc_key = config['hyue'][config['key']]['dotc']['heyue'];[m
+[31m-	var Gaz_key = config['hbi'][config['key']]['Gaz']['heyue'];[m
+[32m+[m	[32mvar Gaz_key = config['hbi'][config['key']]['GAZ']['heyue'];[m
+ 	var bzj_num = config['hyue'][config['key']]['Bzj']['num'];[m
+ [m
+ 	//new VConsole();[m
+[1mdiff --git a/upload.txt b/upload.txt[m
+[1mindex 182fd15..46436d9 100644[m
+[1m--- a/upload.txt[m
+[1m+++ b/upload.txt[m
+[36m@@ -1,5 +1,7 @@[m
+ npm run build[m
+ sudo su[m
+[32m+[m[32mcd /tmp[m
+[32m+[m[32munzip dist.zip[m
+ docker stop nginx[m
+ docker rm nginx[m
+ rm -r /home/nginx/dist[m
