@@ -11,6 +11,9 @@
 				<button type="button">重置</button>
 			</div>
 		</div>
+		<div class="cover" v-show="showModel" @click="changeShow">
+			
+		</div>
 	</div>
 </template>
 <script>
@@ -45,7 +48,7 @@ export default {
 			arr:[],
 			arr1:[],
 			arr2:[],
-			arr3:[]
+			arr3:[],
 	};
   },
   mounted() { },
@@ -97,12 +100,6 @@ export default {
 };
 </script>
 <style lang='less' scoped='scoped'>
-/deep/.el-dropdown {
-  color: #ffffff !important;
-}
-/* /deep/.el-dropdown {
-  color: #333 !important;
-} */
 .chooseMain{
 	position: relative;
 	display: flex;
@@ -150,6 +147,73 @@ export default {
 		border-right: 1px solid #333;
 		transform: rotate(45deg);
 		margin-left: 3px;
+	}
+	.cover{
+		display: none;
+	}
+}
+@media only screen and (max-width: 991px){
+	.chooseMain{
+		position: static;
+		display: flex;
+		align-items: center;
+		.chooseModel{
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			width: 200px;
+			right: 0;
+			z-index: 999;
+			border: 1px solid #eee;
+			background-color: #eee;
+			padding: 20px;
+			border-radius: 0;
+			.choose{
+				.textInput{
+					width: 100%;
+					margin-top: 5px;
+					border-radius: 5px;
+					border: 1px solid #DCDFE6;
+					padding: 5px;
+				}
+			}
+			.choose:not(:first-of-type){
+				margin-top: 10px;
+			}
+			.butBox{
+				margin-top:10px;
+				display: flex;
+				justify-content: space-around;
+				button{
+					padding: 5px 20px;
+					border-radius: 3px;
+				}
+				button:first-of-type{
+					background-color: rgb(64, 158, 255);
+					color: #fff;
+				}
+			}
+		}
+		.arrow{
+			display: inline-block;
+			width: 10px;
+			height: 10px;
+			border-bottom: 1px solid #333;
+			border-right: 1px solid #333;
+			transform: rotate(45deg);
+			margin-left: 3px;
+		}
+		.cover{
+			position: fixed;
+			/* display: none; */
+			display: block;
+			left: 0;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #333;
+			opacity: 0.8;
+		}
 	}
 }
 </style>

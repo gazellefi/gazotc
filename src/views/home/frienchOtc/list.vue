@@ -125,6 +125,7 @@
             </el-option>
           </el-select>
         </div>
+		<Choose :Ldata='dataList' @getdata='getLists'></Choose>
 
       </div>
 	  <!-- 列表 -->

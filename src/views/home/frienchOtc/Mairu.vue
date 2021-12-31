@@ -44,7 +44,7 @@
 			    </div>
 			      <div class="view_ul_li_l beizhuTtile">{{$t('message.remarks')}}：</div>
 			    <div class="view_ul_li bordd beizhu">
-			      <div>{{ ddinfo.beizhu == '' ? $t('message.notFill') : ddinfo.beizhu}}</div>
+			      <div>{{ ddinfo.beizhu == 'No remarks are filled in' ? $t('message.notFill') : ddinfo.beizhu}}</div>
 			    </div>
 			   <!-- <div class="view_ul_li beizhu_conn">
 			      <el-button type="text" @click="openlxfs">{{$t('message.contactDes')}}</el-button>
@@ -124,7 +124,7 @@
         </div>
         <div class="view_ul_li beizhu">
 			<div class="view_ul_li_l">{{$t('message.remarks')}}：</div>
-          <span>{{$t('message.remarks')}}：{{ ddinfo.beizhu == '' ? $t('message.notFill') : ddinfo.beizhu}}</span>
+          <span>{{$t('message.remarks')}}：{{ ddinfo.beizhu == 'No remarks are filled in' ? $t('message.notFill') : ddinfo.beizhu}}</span>
         </div>
        <!-- <div class="view_ul_li beizhu_conn">
           <el-button type="text" @click="openlxfs">{{$t('message.contactDes')}}</el-button>
@@ -261,8 +261,8 @@ export default {
   props:['did'],
   watch: {
 	ddid(){
-		// console.log('1111')
-		// this.getddinfo()
+		console.log('1111')
+		this.getddinfo()
 	},
     'form.num'(e) {
       if (!e) {
@@ -336,7 +336,7 @@ export default {
       address = "";
       if (dq.ddid) {
         //判断是否传入订单号
-        // dq.getddinfo();
+        dq.getddinfo();
       }
     } else {
       webinit();
@@ -470,7 +470,6 @@ export default {
     },
     getddinfo() {
       var dq = this;
-	  // console.log(this.ddid);
       if (this.ddid) {
         var jiazai = Toast.loading({
           message: dq.$t('message.frienchOtc.requesting'),
@@ -537,8 +536,9 @@ export default {
               dotsconn.methods.balancemar(address + "").call((errc, balancemar) => {
                 dq.user['balancemar'] = Number(balancemar);
               });
-              getddbeizhu(ret['Mowner']);
-              // getddsjusername(ret['Mowner']);
+
+              // getddbeizhu(ret['Mowner']);
+              getddsjusername(ret['Mowner']);
               getpros();
             }
           } else {
@@ -553,32 +553,25 @@ export default {
 
       //获取用户名 + 备注
       function getddbeizhu(uaddress) {
-        // var beizhucon = new web3.eth.Contract(dotc_abi, dotc_key);
-        // beizhucon.methods.message(uaddress + "", "0").call((error, ret) => {
-        //   if (ret && !error) {
-        //     dq.ddinfo.username = Base64.decode(ret);
-        //   } else {
-        //     dq.ddinfo.username = dq.$t('message.frienchOtc.noNickname');
-        //   }
-        // });
-		//读取会员资料
-		var dotsconn = new web3.eth.Contract(dotc_abi, dotc_key);
-		dotsconn.methods.message(uaddress + "", "6").call((err, ret) => {
-		  if (ret) {
-		    dq.ddinfo.beizhu = Base64.decode(ret);
-		  }
-		});
+        var beizhucon = new web3.eth.Contract(dotc_abi, dotc_key);
+        beizhucon.methods.message(uaddress + "", "0").call((error, ret) => {
+          if (ret && !error) {
+            dq.ddinfo.username = Base64.decode(ret);
+          } else {
+            dq.ddinfo.username = dq.$t('message.frienchOtc.noNickname');
+          }
+        });
       }
-      // function getddsjusername(uaddress) {
-      //   var beizhucon = new web3.eth.Contract(dotc_abi, dotc_key);
-      //   beizhucon.methods.message(uaddress + "", "6").call((error, ret) => {
-      //     if (ret && !error) {
-      //       dq.ddinfo.beizhu = Base64.decode(ret);
-      //     } else {
-      //       dq.ddinfo.beizhu = dq.$t('message.frienchOtc.noRemarks');
-      //     }
-      //   });
-      // }
+      function getddsjusername(uaddress) {
+        var beizhucon = new web3.eth.Contract(dotc_abi, dotc_key);
+        beizhucon.methods.message(uaddress + "", "6").call((error, ret) => {
+          if (ret && !error) {
+            dq.ddinfo.beizhu = Base64.decode(ret);
+          } else {
+            dq.ddinfo.beizhu = this.$t('message.frienchOtc.noRemark');
+          }
+        });
+      }
 
       //查询 pros pri
       function getpri() {

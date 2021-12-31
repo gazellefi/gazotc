@@ -45,7 +45,7 @@
 			return {
 				huobi: hbarr,
 				hbindex: 0,
-				je: '',
+				je: 0,
 				form: {
 					region: ''
 				}
@@ -54,7 +54,7 @@
 		props: ['type'],
 		created() {
 			this.form.region = this.type
-			this.je = ''
+			this.je = 0
 			if(this.type){
 				this.changeSelect(this.type)
 			}
@@ -62,7 +62,7 @@
 		watch: {
 			type(){
 				this.form.region = this.type
-				this.je = ''
+				this.je = 0
 				if(this.type){
 					this.changeSelect(this.type)
 				}
@@ -250,7 +250,7 @@
 			          // Toast.success('Successful withdrawal');
 					  Toast.success(this.$t('message.wallet.withdrawSuccess'));
 			          dq.huobi[dq.hbindex]['je'] = tk_je;
-					  dq.je = ''
+					  dq.je = 0
 					  dq.$emit('drawal')
 			        } else {
 			          setTimeout(() => {

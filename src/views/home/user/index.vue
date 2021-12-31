@@ -54,14 +54,14 @@
             <div class="btn" style="margin-top: 10px" @click="ruleHideAuth">
               <span>{{ $t("message.activit.IDnumber") }}</span>
             </div>
-          <!--  <div
+            <div
               class="btn"
               style="margin-top: 10px"
               @click="ruleHideAuth"
               v-if="false"
             >
               <span>{{ $t("message.activit.IDnumber") }}</span>
-            </div> -->
+            </div>
           </div>
         </div>
         <!-- 仲裁员昵称 -->
@@ -415,48 +415,45 @@ export default {
             dq.address.substr(dq.address.length - 4);
         }
         //读取用户默认备注
-        // var beizhucon = new web3.eth.Contract(
-        //   config["hyue"][config["key"]]["dotc"]["abi"],
-        //   config["hyue"][config["key"]]["dotc"]["heyue"]
-        // );
-        // for (let index = 0; index < Beizhujson.length; index++) {
-        //   beizhucon.methods
-        //     .message(dq.user ? dq.user : address + "", Beizhujson[index]["id"])
-        //     .call((err, ret) => {
-        //       if (ret) {
-        //         ret = Base64.decode(ret);
-        //         if (
-        //           Beizhujson[index]["id"] == 5 ||
-        //           Beizhujson[index]["id"] == 9
-        //         ) {
-        //           ret = CryptoJs.AES.decrypt(ret, "gazotc");
-        //           ret = ret.toString(CryptoJs.enc.Utf8);
-        //         }
-        //         dq.beizhu_arr[Beizhujson[index]["key"]] = ret;
-        //       }
-        //     });
-        // }
+        var beizhucon = new web3.eth.Contract(
+          config["hyue"][config["key"]]["dotc"]["abi"],
+          config["hyue"][config["key"]]["dotc"]["heyue"]
+        );
+        for (let index = 0; index < Beizhujson.length; index++) {
+          beizhucon.methods
+            .message(dq.user ? dq.user : address + "", Beizhujson[index]["id"])
+            .call((err, ret) => {
+              if (ret) {
+                ret = Base64.decode(ret);
+                if (
+                  Beizhujson[index]["id"] == 5 ||
+                  Beizhujson[index]["id"] == 9
+                ) {
+                  ret = CryptoJs.AES.decrypt(ret, "gazotc");
+                  ret = ret.toString(CryptoJs.enc.Utf8);
+                }
+                dq.beizhu_arr[Beizhujson[index]["key"]] = ret;
+              }
+            });
+        }
 
         //查询仲裁备注
-      //   var zc_conn = new web3.eth.Contract(
-      //     config["hyue"][config["key"]]["ArbOne"]["abi"],
-      //     config["hyue"][config["key"]]["ArbOne"]["heyue"]
-      //   );
-      //   for (let index = 0; index < Beizhujson.length; index++) {
-      //     if (Beizhujson[index]["id"] == 8) {
-      //       zc_conn.methods
-      //         .message(dq.user ? dq.user : address + "", 0 + "")
-      //         .call((err, ret) => {
-				  // console.log(ret);
-      //           if (ret) {
-      //             dq.beizhu_arr[Beizhujson[index]["key"]] = Base64.decode(ret);
-				  // console.log(dq.beizhu_arr[Beizhujson[index]["key"]]);
-      //           }
-      //         });
-      //       break;
-      //     }
-      //   }
-		dotc = new web3.eth.Contract(dotc_abi, dotc_key);
+        var zc_conn = new web3.eth.Contract(
+          config["hyue"][config["key"]]["ArbOne"]["abi"],
+          config["hyue"][config["key"]]["ArbOne"]["heyue"]
+        );
+        for (let index = 0; index < Beizhujson.length; index++) {
+          if (Beizhujson[index]["id"] == 8) {
+            zc_conn.methods
+              .message(dq.user ? dq.user : address + "", 0 + "")
+              .call((err, ret) => {
+                if (ret) {
+                  dq.beizhu_arr[Beizhujson[index]["key"]] = Base64.decode(ret);
+                }
+              });
+            break;
+          }
+        }
         dq.getsczc();
         dq.getBz();
         dq.ruleChangeHideAuth();

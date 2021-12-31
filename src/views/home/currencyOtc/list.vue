@@ -5,12 +5,12 @@
 			<div class="bblist_table">
 				<div class="bblist_table_left">
 					<span class="typeSelect">{{ $t("message.dapp.currency")}}：</span>
-					<el-select size="mini" v-model="huobi" placeholder="Please select" @change="changeH">
+					<el-select size="mini"placeholder="Please select" @change="changeH">
 						<el-option v-for="item in hbarr" :key="item.key" :label="item.id" :value="item.key">
 						</el-option>
 					</el-select>
 					<span class="typeSelect">{{ $t("message.dapp.unit")}}：</span>
-					<el-select size="mini" v-model="fabi" placeholder="Please select" @change="changeH">
+					<el-select size="mini" placeholder="Please select" @change="changeH">
 						<el-option v-for="item in hbarr" :key="item.key" :label="item.id" :value="item.key">
 						</el-option>
 					</el-select>
@@ -49,15 +49,15 @@
 			<el-row style="border-bottom: 1px solid #EEEEEE;">
 				<el-col :span="12">
 					<span class="typeSelect">{{ $t("message.dapp.currency")}}：</span>
-					<el-select size="mini" v-model="form.type" placeholder="Please select" style="width: 50%;">
+					<el-select size="mini" v-model="huobi"  placeholder="Please select" style="width: 50%;"  @change="changeH">
 						<el-option v-for="item in hbarr" :key="item.key" :label="item.id" :value="item.key">
 						</el-option>
 					</el-select>
 				</el-col>
 				<el-col :span="12">
 					<span class="typeSelect">{{ $t("message.dapp.unit")}}：</span>
-					<el-select size="mini" placeholder="Please select" style="margin-left: 15px;width: 50%;"
-						v-model="form.type_b">
+					<el-select size="mini" v-model="fabi" placeholder="Please select" style="margin-left: 15px;width: 50%;"
+						 @change="changeH">
 						<el-option v-for="item in hbarr" :key="item.key" :label="item.id" :value="item.key">
 						</el-option>
 					</el-select>

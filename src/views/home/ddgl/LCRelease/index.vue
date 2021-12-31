@@ -105,7 +105,7 @@
 		</div>
 		<!-- WAP -->
 		<div class="hidden-sm-and-up ddgl_fabu_wapview">
-		<!-- 	<el-row style="border-bottom: 1px solid #EEEEEE;">
+			<el-row style="border-bottom: 1px solid #EEEEEE;">
 				<el-col :span="12">
 					<div class="ddgl_fabu_p_head_sxan_i">
 						<span>{{ $t("message.dapp.currency")}}：</span>
@@ -154,7 +154,7 @@
 						</el-dropdown>
 					</div>
 				</el-col>
-			</el-row> -->
+			</el-row>
 			<!-- 列表 -->
 			<el-row>
 				<div v-if="list.length<1" class="fc a_c">
@@ -170,7 +170,7 @@
 								<span class="fwb">{{ item.Mmark =='for sale' ? $t("message.dapp.sell") : $t("message.dapp.buy") }}</span>
 								<span class="fwb">{{item.pro}}</span>
 								<div class="f c_c marty_nav">
-									<span>{{$t('message.arbitration.margin')}}{{item.mar}}%</span>
+									<span>保证金Margin{{item.mar}}%</span>
 								</div>
 							</div>
 						</div>

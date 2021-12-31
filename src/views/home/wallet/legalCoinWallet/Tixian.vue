@@ -41,7 +41,7 @@ var ethereum = window.ethereum;
 			return {
 				huobi: hbarr,
 				hbindex: 0,
-				je: '',
+				je: 0,
 				form: {
 					region: ''
 				}
@@ -50,7 +50,7 @@ var ethereum = window.ethereum;
 		props: ['type'],
 		created() {
 			this.form.region = this.type
-			this.je = ''
+			this.je = 0
 			if(this.type){
 				this.changeSelect(this.type)
 			}
@@ -58,7 +58,7 @@ var ethereum = window.ethereum;
 		watch: {
 			type(){
 				this.form.region = this.type
-				this.je = ''
+				this.je = 0
 				if(this.type){
 					this.changeSelect(this.type)
 				}
@@ -248,8 +248,9 @@ var ethereum = window.ethereum;
 			                    Toast.clear();
 			                    Toast.success(this.$t('message.wallet.withdrawSuccess'));
 			                    dq.gethuobizichan();
-								dq.je = ''
+								dq.je = 0
 								dq.$emit('drawal')
+			                    dq.je = 0;
 			                }else{
 								mm++
 								if(mm > 3){
@@ -259,7 +260,7 @@ var ethereum = window.ethereum;
 									    title: this.$t('message.wallet.withdrawSuccess'),
 									}).then(() => {
 										dq.gethuobizichan();
-										dq.je = ''
+										dq.je = 0
 										dq.$emit('drawal')
 									});
 								}
