@@ -22,6 +22,7 @@
   </div>
 </template>
 <script>
+	import { Toast } from 'vant';
 export default {
   name: 'app',
   data() {
@@ -59,7 +60,7 @@ export default {
 	    input.select();
 	    if (document.execCommand('copy')) {
 	      document.execCommand('copy');
-	      this.$toast('联系方式已复制')
+		  Toast('联系方式已复制');
 		  this.showTel = false
 	    }
 	    document.body.removeChild(input);

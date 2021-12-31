@@ -75,13 +75,18 @@
 					</div>
 				</div>
 				<div class="f a_c cursor fz14 mart-10" style="color: #000000;">
-					<span>{{$t('message.join1')}}</span>
+					<!-- <span>{{$t('message.join1')}}</span> -->
+					<!-- <span class="c3c" style="text-decoration:underline ;" @click="toDiscard">discard</span> -->
+					<!-- <img @click="toDiscard" src="../../../assets/img/discard.png" style="width: 24px;"> -->
+					<!-- <span>{{$t('message.join2')}}</span> -->
+					<!-- <span class="c3c" style="text-decoration:underline ;">Telegram</span> -->
+					<!-- <i @click="toGazOTC" class="el-icon-s-promotion" style="color: #333;font-size: 24px;margin-top: -4px;margin-right: 5px;"></i> -->
+					<!-- <span>{{$t('message.join3')}}</span> -->
+					<span>请加入 </span>
 					<span class="c3c" style="text-decoration:underline ;" @click="toDiscard">discard</span>
-					<img @click="toDiscard" src="../../../assets/img/discard.png" style="width: 24px;">
-					<span>{{$t('message.join2')}}</span>
+					<span> {{' 或者 '}} </span>
 					<span class="c3c" style="text-decoration:underline ;">Telegram</span>
-					<i @click="toGazOTC" class="el-icon-s-promotion" style="color: #333;font-size: 24px;margin-top: -4px;margin-right: 5px;"></i>
-					<span>{{$t('message.join3')}}</span>
+					<span>联系仲裁员</span>
 				</div>
 			</div>
 			<div class="listWap" v-for="(item,index) in zc_list" :key="index">

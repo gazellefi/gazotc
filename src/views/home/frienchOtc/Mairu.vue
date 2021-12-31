@@ -262,7 +262,7 @@ export default {
   watch: {
 	ddid(){
 		console.log('1111')
-		this.getddinfo()
+		// this.getddinfo()
 	},
     'form.num'(e) {
       if (!e) {
@@ -334,10 +334,6 @@ export default {
     if (typeof ethereum === 'undefined') {
       web3 = new Web3(config['hyue'][config['key']]['Url']);
       address = "";
-      if (dq.ddid) {
-        //判断是否传入订单号
-        dq.getddinfo();
-      }
     } else {
       webinit();
     }
@@ -568,7 +564,7 @@ export default {
           if (ret && !error) {
             dq.ddinfo.beizhu = Base64.decode(ret);
           } else {
-            dq.ddinfo.beizhu = this.$t('message.frienchOtc.noRemark');
+            dq.ddinfo.beizhu = dq.$t('message.notFill');
           }
         });
       }
