@@ -972,6 +972,7 @@ export default {
 	}
 
   .therefore {
+	margin-top: 0px !important;
     height: auto !important;
     /* background: #ededed !important; */
     background: #fff !important;

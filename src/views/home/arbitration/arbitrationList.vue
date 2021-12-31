@@ -75,7 +75,8 @@
 					</div>
 				</div>
 				<div class="f a_c cursor fz14 mart-10" style="color: #000000;">
-					<span>{{$t('message.join1')}}<span class="c3c" style="text-decoration:underline ;" @click="toDiscard">discard</span></span>
+					<span>{{$t('message.join1')}}</span>
+					<span class="c3c" style="text-decoration:underline ;" @click="toDiscard">discard</span>
 					<img @click="toDiscard" src="../../../assets/img/discard.png" style="width: 24px;">
 					<span>{{$t('message.join2')}}</span>
 					<span class="c3c" style="text-decoration:underline ;">Telegram</span>
@@ -86,12 +87,12 @@
 			<div class="listWap" v-for="(item,index) in zc_list" :key="index">
 				<div class="listItem">
 					<div class="topWap">
-						<span class="topLabel fwb">{{$t('message.arbitration.arbitrator')}}:</span>
 						<!-- {{ item.username }} -->
 						<div class="topMain">
+							<span class="topLabel fwb">{{$t('message.arbitration.arbitrator')}}:</span>
 							<div class="topUser">{{ item.username }}</div>
-							<div class="topUsername">{{ item.user_b }}</div>
 						</div>
+							<div class="topUsername">{{ item.user_b }}</div>
 					</div>
 					<div class="mainWap" style="margin-top: 10px;">
 						<div class="mainLeft">
@@ -423,7 +424,7 @@
 				window.open("https://discord.gg/2DVfmvUBgH")
 			},
 			toGazOTC(){
-				window.open("https://t.me/GazotcArb")
+				window.open("https://t.me/gazotcE")
 			},
 			getList(){
 				var dq = this;
@@ -1021,16 +1022,18 @@
 	}
 	.topWap{
 		display: flex;
+		justify-content: space-between;
 	}
 	.topMain{
 		display: flex;
-		flex: 1;
+		justify-content: space-between;
+		flex: 2;
 	}
 	.topUser{
 		flex: 1;
 	}
 	.topUsername{
-		flex: 6;
+		flex: 1;
 	}
 	.mainWap{
 		display: flex;

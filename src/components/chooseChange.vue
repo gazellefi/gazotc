@@ -1,14 +1,14 @@
 <template>
 	<div class="chooseMain">
-		<div class="chooseClick" @click="changeShow">更多筛选<div class="arrow"></div></div>
+		<div class="chooseClick" @click="changeShow">{{$t('message.frienchOtc.moreFilter')}}<div class="arrow"></div></div>
 		<div class="chooseModel" v-show="showModel">
 			<div class="choose" v-for="(v,i) in chooseList" :key="i">
 				<div class="title">{{v.title}}:</div>
 				<input class="textInput" type="text" name="" v-model="v.value" />
 			</div>
 			<div class="butBox">
-				<button type="button" @click="filter()">确认</button>
-				<button type="button">重置</button>
+				<button type="button" @click="filter()">{{$t('message.confrim')}}</button>
+				<button type="button" @click="reset()">{{$t('message.frienchOtc.reset')}}</button>
 			</div>
 		</div>
 		<div class="cover" v-show="showModel" @click="changeShow">
@@ -28,19 +28,19 @@ export default {
     return {
 		chooseList:[
 				{
-					title:'数量',
+					title:this.$t('message.dapp.amount'),
 					value:0,
 				},
 				{
-					title:'限额',
+					title:this.$t('message.dapp.limit'),
 					value:0,
 				},
 				{
-					title:'保证金',
+					title:this.$t("message.arbitration.margin"),
 					value:0,
 				},
 				{
-					title:'保证金比例',
+					title:this.$t("message.dapp.blandAsk"),
 					value:0,
 				}
 			],
@@ -94,6 +94,11 @@ export default {
 		this.$emit("getdata",this.arr3)
 		this.showModel=false
 		console.log(this.arr3)
+	  },
+	  reset(){
+		 for(let k in this.chooseList) {
+			 this.chooseList[k].value=0;
+		 }
 	  }
   },
   components: {}
@@ -213,6 +218,7 @@ export default {
 			height: 100%;
 			background-color: #333;
 			opacity: 0.8;
+			z-index: 998;
 		}
 	}
 }

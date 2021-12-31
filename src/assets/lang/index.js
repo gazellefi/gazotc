@@ -169,6 +169,8 @@ export default {
 				clickOk:'Please click OK',
 				confirm:'Confirm Submission',
 				publishen:'Published successfully',
+				moreFilter:'More Filter',
+				reset:'Reset'
 			},
 			currencyOtc:{
 				buySuccess:'Buy Successfully!',
@@ -551,7 +553,7 @@ export default {
 				CurrencyIssue: 'Crypto Order',
 				CurrencyTransaction: 'Crypto Transaction',
 
-				arbitratorsLister: '1st Arbitration',
+				arbitratorsLister: 'Arbitrators List',
 				ArbitrationList: 'Arbitration List',
 				firstOrders: 'List',
 				firstOrdersList: '1st Arbitration List',
@@ -827,6 +829,8 @@ export default {
 				clickOk:'请确认',
 				confirm:'请确认提交内容',
 				publishen:'发布成功',
+				moreFilter:'更多筛选',
+				reset:'重置'
 			},
 			currencyOtc:{
 				buySuccess:'购买成功',
