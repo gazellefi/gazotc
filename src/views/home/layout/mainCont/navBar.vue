@@ -82,10 +82,10 @@ export default {
 	  morenkey_text: '',
       option1: [
         { text: 'coinNet', value: 'bian' },
-        { text: 'HecoNet', value: 'huobi' },
-        { text: 'EthereumRinkeby', value: 'etfcshi' },
-      		{ text: 'EthereumNet', value: 'etf' },
-      		{ text: 'WaveNet', value: 'tron' },
+        // { text: 'HecoNet', value: 'huobi' },
+        // { text: 'EthereumRinkeby', value: 'etfcshi' },
+      		// { text: 'EthereumNet', value: 'etf' },
+      		// { text: 'WaveNet', value: 'tron' },
       ],
 
       title: process.env.VUE_APP_TITLE,

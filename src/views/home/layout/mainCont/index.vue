@@ -1,7 +1,8 @@
 <template>
   <div class='mainCont'>
     <navBar></navBar>
-    <bread class="hidden-sm-and-down"></bread>
+    <!-- <bread class="hidden-sm-and-down"></bread> -->
+	<bread></bread>
     <mainItem></mainItem>
   </div>
 </template>

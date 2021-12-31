@@ -2,10 +2,10 @@
   <div class="sideBar">
     <div class="nav hidden-sm-and-down">
       <span>{{morenkey_lang}}</span>
-	  <img class="img" src="@/assets/img/option.png" >
-      <div class="list" :class="{ishow:imgClick}">
+	  <!-- <img class="img" src="@/assets/img/option.png" > -->
+     <!-- <div class="list" :class="{ishow:imgClick}">
         <li v-for="(item,index) in option1" :key="index"  @click="wlxuanze(item.value)">{{$t(`message.dapp.${item.text}`)}}</li>
-      </div>
+      </div> -->
     </div>
     <el-menu unique-opened router mode="vertical" :show-timeout="200" :default-active="$route.path" class="el-menu-vertical-demo" :collapse="isCollapse">
       <sideBarItem :sideBarMenus="sideBarMenus"></sideBarItem>

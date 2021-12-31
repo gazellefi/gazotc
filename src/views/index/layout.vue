@@ -172,9 +172,14 @@ export default {
         this.$router.push('/GAZ');
       } else if (v.route == '/Exchange') {
         this.$router.push('/home');
-      } else if (v.route == '/Paper') {
-        this.$router.push(v.route);
-        this.currentRoute = v.route
+      } else if (v.route == '/GazOTC') {
+		let lang = localStorage.getItem('lang')
+		if(lang == 'zh'){
+			window.location.href = '/GazOTC_ZH.pdf'
+		}else{
+			window.location.href = '/GazOTC_EN.pdf'
+		}
+        // this.currentRoute = v.route
       } else if (v.route == "/Activities") {
         this.$router.push('/Activities');
       } else {
