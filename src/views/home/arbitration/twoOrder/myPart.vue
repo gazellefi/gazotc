@@ -8,7 +8,7 @@
 			  <el-table-column align="center" prop="uad_b" :label="$t('message.arbitration.user')"> </el-table-column>
 			  <el-table-column align="center" prop="uoa" :label="$t('message.arbitration.assetsNum')">
 			    <template slot-scope="scope">
-			      <div>{{ scope.row.uoa }} - {{ scope.row.pro }}</div>
+			      <div>{{ scope.row.uoa }} --- {{ scope.row.pro }}</div>
 			    </template>
 			  </el-table-column>
 			  <el-table-column align="center" prop="mma" :label="$t('message.arbitration.merchantMargin')">
