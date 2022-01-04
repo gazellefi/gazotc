@@ -93,8 +93,7 @@
 <script>
 	import Chongzhi from './Chongzhi'
 	import Tixian from './Tixian'
-	import Web3 from "web3";
-	import Web3Modal from "web3modal";
+	import tools from '@/api/public.js'
 	import {
 		Notify, Toast, Dialog
 	} from 'vant';
@@ -136,14 +135,6 @@
 			}
 		},
 		mounted() {
-			//监测用户是否安装MASK
-			if (typeof ethereum === "undefined") {
-				alert(this.$t('message.currencyOtc.install'));
-			} else {
-				//初始化
-				webinit();
-			}
-
 			//初始化货币
 			var hbar = config['hbi'][config['key']];
 			for (const key in hbar) {
@@ -161,41 +152,16 @@
 				overlay: true
 			});
 			var dq = this;
-			async function webinit() {
-				const providerOptions = {
-					/* See Provider Options Section */
-				};
-				const web3Modal = new Web3Modal({
-					network: "mainnet",
-					cacheProvider: true,
-					providerOptions,
-				});
-				var provider = await web3Modal.connect();
-				web3 = new Web3(provider);
-				if (web3 && provider) {
-					address = provider.selectedAddress;
-					//其他钱包使用测试网络
-					// if (window.ethereum.isImToken || window.ethereum.isMetaMask || window.ethereum.isHbWallet) {
-					//     var wlcode = window.ethereum.networkVersion;
-					//     //imtoken只能查看 无法操作 出发是ETF主网
-					//     if (window.ethereum.isImToken) {
-					//         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-					//     }
-					//     //检测是否是火币钱包
-					//     if (window.ethereum.isHbWallet) {
-					//         address = window.ethereum.address;
-					//         web3.setProvider(config["hyue"]['huobi']["Url"]);
-					//     }
-					//     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-					//     if (window.ethereum.isMetaMask && wlcode != 4) {
-					//         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-					//     }
-					// }else{
-					//     web3.setProvider(config["hyue"][config["key"]]["Url"]);
-					// }
-					dq.getqblist();
-				}
-			}
+			//监测用户是否安装MASK
+			tools.testMASK().then(res=>{
+				let {web,id} = res
+				web3 = web
+				address = id
+				// 获取钱包数据
+				dq.getqblist();
+			}).catch((err)=>{
+				console.log(err);
+			})
 		},
 		methods: {
 			// 关闭提现弹框
@@ -300,7 +266,7 @@
 			    message: dq.$t('message.wallet.transferring')
 			  });
 			  var lx_time = "";
-			  let str = dq.getFNum(Number(this.numRu) * (10 ** bzj_num))
+			  let str = tools.getnume(Number(this.numRu) * (10 ** bzj_num))
 			  //开始转入保证金
 			  var doctconn = new web3.eth.Contract(dotc_abi, dotc_key);
 			  doctconn.methods.transfer("1",str).send({
@@ -383,7 +349,7 @@
 			  var lx_time = "";
 			  //开始转出保证金
 			  var doctconn = new web3.eth.Contract(dotc_abi, dotc_key);
-			  let str = dq.getFNum(Number(this.numRu) * (10 ** bzj_num))
+			  let str = tools.getnume(Number(this.numRu) * (10 ** bzj_num))
 			  doctconn.methods.transfer("2", str).send({
 			    from: address
 			  }, (error, ret) => {
@@ -549,89 +515,6 @@
 					  }
 					});
 				})
-			},
-			opencztk(e, index) {
-				var htitle = this.huobi[index]['id'];
-				if (e == 1) {
-					this.$router.push({
-						path: './chongzhi',
-						query: {
-							title: htitle + ""
-						}
-					});
-				} else {
-					this.$router.push({
-						path: './tixian',
-						query: {
-							title: htitle + ""
-						}
-					});
-				}
-			},
-			// 数字过大转换
-			getFNum(num_str) {
-			  num_str = num_str.toString();
-			  if (num_str.indexOf("+") != -1) {
-			    num_str = num_str.replace("+", "");
-			  }
-			  if (num_str.indexOf("E") != -1 || num_str.indexOf("e") != -1) {
-			    var resValue = "",
-			      power = "",
-			      result = null,
-			      dotIndex = 0,
-			      resArr = [],
-			      sym = "";
-			    var numStr = num_str.toString();
-			    if (numStr[0] == "-") {
-			      // 如果为负数，转成正数处理，先去掉‘-’号，并保存‘-’.
-			      numStr = numStr.substr(1);
-			      sym = "-";
-			    }
-			    if (numStr.indexOf("E") != -1 || numStr.indexOf("e") != -1) {
-			      var regExp = new RegExp(
-			        "^(((\\d+.?\\d+)|(\\d+))[Ee]{1}((-(\\d+))|(\\d+)))$",
-			        "ig"
-			      );
-			      result = regExp.exec(numStr);
-			      if (result != null) {
-			        resValue = result[2];
-			        power = result[5];
-			        result = null;
-			      }
-			      if (!resValue && !power) {
-			        return false;
-			      }
-			      dotIndex = resValue.indexOf(".") == -1 ? 0 : resValue.indexOf(".");
-			      resValue = resValue.replace(".", "");
-			      resArr = resValue.split("");
-			      if (Number(power) >= 0) {
-			        var subres = resValue.substr(dotIndex);
-			        var length = dotIndex == 0 ? 0 : subres.length;
-			        power = Number(power);
-			        //幂数大于小数点后面的数字位数时，后面加0
-			        for (var i = 0; i < power - length; i++) {
-			          resArr.push("0");
-			        }
-			        if (power - subres.length < 0) {
-			          resArr.splice(dotIndex + power, 0, ".");
-			        }
-			      } else {
-			        power = power.replace("-", "");
-			        power = Number(power);
-			        //幂数大于等于 小数点的index位置, 前面加0
-			        for (let i = 0; i < power - dotIndex; i++) {
-			          resArr.unshift("0");
-			        }
-			        var n = power - dotIndex >= 0 ? 1 : -(power - dotIndex);
-			        resArr.splice(n, 0, ".");
-			      }
-			    }
-			    resValue = resArr.join("");
-			
-			    return sym + resValue;
-			  } else {
-			    return num_str;
-			  }
 			},
 		},
 		components: {

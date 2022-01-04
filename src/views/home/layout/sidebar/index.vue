@@ -1,6 +1,6 @@
 <template>
   <div class="sideBar">
-    <div class="nav hidden-sm-and-down">
+    <div class="nav hidden-md-and-down">
       <span>{{morenkey_lang}}</span>
 	  <!-- <img class="img" src="@/assets/img/option.png" > -->
      <!-- <div class="list" :class="{ishow:imgClick}">

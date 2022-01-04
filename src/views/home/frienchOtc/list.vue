@@ -175,20 +175,18 @@
       </div>
     </div>
 
-    <myDialog :width="isphone ? '90%':'30%'" :isShowFooter="false" :title="tcode == 1 ?$t('message.dapp.sell'):$t('message.dapp.buy')" :closeModal="false" :closePress="false" :visible.sync="visibleDialogShow">
+<!--    <myDialog :width="isphone ? '90%':'30%'" :isShowFooter="false" :title="tcode == 1 ?$t('message.dapp.sell'):$t('message.dapp.buy')" :closeModal="false" :closePress="false" :visible.sync="visibleDialogShow">
       <Mairu :did='did' @visibleDialogShowFn="visibleDialogShow=false"></Mairu>
-    </myDialog>
+    </myDialog> -->
   </div>
 </template>
 <script>
-import Mairu from './Mairu'
+import tools from '@/api/public.js'
+// import Mairu from './Mairu'
 import myDialog from '@/components/myDialog'
 import config from "@/config";
 
 let Base64 = require("js-base64").Base64;
-
-import Web3 from "web3";
-import Web3Modal from "web3modal";
 import Choose from '../../../components/chooseChange.vue'
 
 var Address = "";
@@ -210,16 +208,15 @@ export default{
   },
   mounted() {
     var dq = this;
-	var dq = this;
 	if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
 	  dq.isphone = true;
-				this.formLabelWidth = '100px'
+	  this.formLabelWidth = '100px'
 	} else {
 	  dq.isphone = false;
 	}
     var hbarr = config["hbi"][config["key"]];
     for (const key in hbarr) {
-      console.log(hbarr[key])
+      // console.log(hbarr[key])
       if(hbarr[key].id=='Gaz'){
         hbarr[key].id='GAZ';
         this.hbarr.push(hbarr[key]);
@@ -233,56 +230,14 @@ export default{
     }
 
     // 监测用户是否安装MASK
-    if (typeof ethereum === "undefined") {
-      web3 = new Web3(config["hyue"][config["key"]]["Url"]);
-      Address = "";
-      this.getlist(dq.tcode, dq.huobi, dq.fabi);
-    } else {
-      //初始化
-      webinit();
-    }
-
-
-    async function webinit() {
-      console.log("检测有钱包");
-      const providerOptions = {
-        /* See Provider Options Section */
-      };
-      const web3Modal = new Web3Modal({
-        network: "mainnet",
-        cacheProvider: true,
-        providerOptions,
-      });
-      var provider = await web3Modal.connect();
-      web3 = new Web3(provider);
-      if (web3 && provider) {
-        Address = provider.selectedAddress;
-        //其他钱包使用测试网络
-        if (
-          window.ethereum.isImToken ||
-          window.ethereum.isMetaMask ||
-          window.ethereum.isHbWallet
-        ) {
-          var wlcode = window.ethereum.networkVersion;
-          //imtoken只能查看 无法操作 出发是ETF主网
-          if (window.ethereum.isImToken) {
-            web3.setProvider(config["hyue"][config["key"]]["Url"]);
-          }
-          //检测是否是火币钱包
-          if (window.ethereum.isHbWallet) {
-            Address = window.ethereum.address;
-            web3.setProvider(config["hyue"]["huobi"]["Url"]);
-          }
-          //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-          if (window.ethereum.isMetaMask && wlcode != 4) {
-            web3.setProvider(config["hyue"][config["key"]]["Url"]);
-          }
-        } else {
-          web3.setProvider(config["hyue"][config["key"]]["Url"]);
-        }
-        dq.getlist(dq.tcode, dq.huobi, dq.fabi);
-      }
-    }
+	tools.testMASK().then(res=>{
+		let {web,id} = res
+		web3 = web
+		Address = id
+		dq.getlist(dq.tcode, dq.huobi, dq.fabi);
+	}).catch((err)=>{
+		console.log(err);
+	})
   },
   data() {
     return {
@@ -383,7 +338,7 @@ export default{
               for (let index = 0; index < ret[0].length; index++) {
 				  if(Number(ret[0][index][0])!=0){
 					var obj = {};
-					console.log(ret[2][index]);
+					// console.log(ret[2][index]);
 					let arr = ret[2][index].split("|")
 					obj["username"] = Base64.decode(arr[0]);
 					obj["user"] =
@@ -611,7 +566,8 @@ export default{
 	
   },
   components: {
-    Mairu, myDialog,Choose
+	  // Mairu,
+     myDialog,Choose
   }
 };
 </script>

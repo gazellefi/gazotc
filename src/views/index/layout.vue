@@ -203,11 +203,11 @@ export default {
 };
 </script>
 <style lang='less' scoped='scoped'>
-	div{
+/* 	div{
 		/deep/ .el-carousel__arrow{
 			display: none;
 		}
-	}
+	} */
 	.mask{
 		background: #fff;
 		width: 100%;
@@ -223,11 +223,11 @@ export default {
 			width: 25%;
 		}
 	}
-/deep/.el-carousel__button {
+/* /deep/.el-carousel__button {
   height: 6px;
   border-radius: 2px;
   opacity: 1;
-}
+} */
 /deep/.is-active {
   .el-carousel__button {
     background: #ffcc00;
@@ -501,7 +501,7 @@ export default {
       // background: red;
       width: 40px;
       height: 40px;
-      top: 30px;
+      top: 20px;
       left: 20px;
       z-index: 1000;
       .item {

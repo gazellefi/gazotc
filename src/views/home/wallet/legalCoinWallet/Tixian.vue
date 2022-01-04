@@ -25,8 +25,7 @@
 <script>
 import { Toast,Dialog  } from 'vant';
 
-import Web3 from "web3";
-import Web3Modal from "web3modal";
+import tools from '@/api/public.js'
 import config from "@/config";
 var hbarr = [];
 for (const key in config['hbi'][config['key']]) {
@@ -65,52 +64,16 @@ var ethereum = window.ethereum;
 			}
 		},
 		mounted() {
-			//监测用户是否安装MASK
-			if (typeof ethereum === "undefined") {
-			    alert(this.$t('message.currencyOtc.install'));
-			} else {
-			    //初始化
-			    webinit();
-			}
-			
-			Toast.setDefaultOptions(this.$t('message.wallet.loading'),{
-			    forbidClick:false,
-			    closeOnClickOverlay:false,
-			    duration:0,
-			    overlay:true
-			});
-			
 			var dq = this;
-			async function webinit() {
-			    const providerOptions = {
-			        /* See Provider Options Section */
-			    };
-			    const web3Modal = new Web3Modal({
-			        network: "mainnet",
-			        cacheProvider: true,
-			        providerOptions,
-			    });
-			    var provider = await web3Modal.connect();
-			    web3 = new Web3(provider);
-			    if (web3 && provider) {
-			        //其他钱包使用测试网络
-			        // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-			        //     var wlcode = window.ethereum.networkVersion;
-			        //     //imtoken只能查看 无法操作 出发是ETF主网
-			        //     if (window.ethereum.isImToken) {
-			        //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-			        //     }
-			        //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-			        //     if (window.ethereum.isMetaMask && wlcode != 4) {
-			        //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-			        //     }
-			        // }else{
-			        //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
-			        // }
-			        address = provider.selectedAddress; 
-			        dq.gethuobizichan();
-			    }
-			}
+			//监测用户是否安装MASK
+			tools.testMASK().then(res=>{
+				let {web,id} = res
+				web3 = web
+				address = id
+				dq.gethuobizichan();
+			}).catch((err)=>{
+				console.log(err);
+			})
 
 		},
 		methods: {
@@ -118,10 +81,10 @@ var ethereum = window.ethereum;
 				for (let i = 0; i < this.huobi.length; i++) {
 					if (this.huobi[i].id == e) {
 						this.hbindex = i
+						setTimeout(()=>{
+							this.gethuobizichan();
+						},500)
 					}
-					setTimeout(()=>{
-						this.gethuobizichan();
-					},500)
 				}
 			},
 			//如果过亿请转换
@@ -199,7 +162,6 @@ var ethereum = window.ethereum;
 			            if (ret) {
 			            this.huobi[this.hbindex]['je'] = ret;
 			             console.log(ret)
-			             console.log(213)
 			            }
 			        });    
 			},

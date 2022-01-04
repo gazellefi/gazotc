@@ -28,8 +28,7 @@
 </template>
 <script>
 import { Notify, Dialog, Toast } from 'vant';
-import Web3 from "web3";
-import Web3Modal from "web3modal";
+import tools from '@/api/public.js'
 
 import config from "@/config";
 import usdtapi from "@/api/usdt.json";
@@ -89,12 +88,6 @@ export default {
   },
   mounted() {
 	  var dq = this
-    Toast.setDefaultOptions(dq.$t('message.wallet.loading'), {
-      forbidClick: false,
-      closeOnClickOverlay: false,
-      duration: 0,
-      overlay: true
-    });
     if (this.$route.query.title) {
       for (let index = 0; index < this.hbilist.length; index++) {
         if (this.hbilist[index]['title'] == this.$route.query.title) {
@@ -104,28 +97,13 @@ export default {
       }
     }
     //监测用户是否安装MASK
-    if (typeof ethereum === "undefined") {
-      alert(dq.$t('message.currencyOtc.install'));
-    } else {
-      //初始化
-      webinit();
-    }
-    async function webinit() {
-      const providerOptions = {
-        /* See Provider Options Section */
-      };
-      const web3Modal = new Web3Modal({
-        // network: "mainnet",
-        // cacheProvider: true,
-        providerOptions,
-      });
-      var provider = await web3Modal.connect();
-      web3 = new Web3(provider);
-      const accounts = await web3.eth.getAccounts();
-      if (web3 && provider) {
-        address = provider.selectedAddress;
-      }
-    }
+    tools.testMASK().then(res=>{
+    	let {web,id} = res
+    	web3 = web
+    	address = id
+    }).catch((err)=>{
+    	console.log(err);
+    })
   },
   methods: {
     goback() {
