@@ -171,7 +171,7 @@ export default {
       if (v.route == '/Publicsale') {
         this.$router.push('/GAZ');
       } else if (v.route == '/Exchange') {
-        this.$router.push('/home');
+        this.$router.push('/home/frienchOtc');
       } else if (v.route == '/GazOTC') {
 		let lang = localStorage.getItem('lang')
 		if(lang == 'zh'){
