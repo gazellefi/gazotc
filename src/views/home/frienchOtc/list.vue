@@ -187,7 +187,7 @@ import myDialog from '@/components/myDialog'
 import config from "@/config";
 
 let Base64 = require("js-base64").Base64;
-import Choose from '../../../components/chooseChange.vue'
+import Choose from '@/components/chooseChange.vue'
 
 var Address = "";
 var web3 = "";

@@ -13,25 +13,25 @@
     id:"资产名称"
 */
 
-import huobi from "./abi/huobi";
-import bian from "./abi/bian";
-import etfcshiarr from "./abi/etfcshi";
+import huobi from "@/abi/huobi";
+import bian from "@/abi/bian";
+import etfcshiarr from "@/abi/etfcshi";
 
 //以太坊测试网ABI资产地址
-import usdtabi from "./abi/etfcshi/proabi/usdtabi.json";
-import wethabi from "./abi/etfcshi/proabi/wethabi.json";
+import usdtabi from "@/abi/etfcshi/proabi/usdtabi.json";
+import wethabi from "@/abi/etfcshi/proabi/wethabi.json";
 
 //火币资产ABI地址
-import usdtabihb from "./abi/huobi/proabi/usdtabi.json";
-import whtabi from "./abi/huobi/proabi/whtabi.json";
-import testabi from "./abi/huobi/proabi/testabi.json";
-import gazabi from "./abi/huobi/gaz.json";
+import usdtabihb from "@/abi/huobi/proabi/usdtabi.json";
+import whtabi from "@/abi/huobi/proabi/whtabi.json";
+import testabi from "@/abi/huobi/proabi/testabi.json";
+import gazabi from "@/abi/huobi/gaz.json";
 
 //币安资产ABI地址
-import usdtabib from "./abi/bian/proabi/usdtabi.json";
-import btcabi from "./abi/bian/proabi/btcabi.json";
-import ethabi from "./abi/bian/proabi/ethabi.json";
-import gazabib from "./abi/bian/gaz.json";
+import usdtabib from "@/abi/bian/proabi/usdtabi.json";
+import btcabi from "@/abi/bian/proabi/btcabi.json";
+import ethabi from "@/abi/bian/proabi/ethabi.json";
+import gazabib from "@/abi/bian/gaz.json";
 
 var mr_key = !localStorage.morenkey ? 'bian':localStorage.morenkey; 
 /*

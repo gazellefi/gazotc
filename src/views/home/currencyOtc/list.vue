@@ -131,15 +131,14 @@
 </template>
 <script>
 	import config from "@/config";
-
+    import Web3 from "web3";
 	var ccdotc_abi = config["hyue"][config["key"]]["Ccdotc"]["abi"];
 	var ccdotc_key = config["hyue"][config["key"]]["Ccdotc"]["heyue"];
 
 	//货币
 	var huoarr = config["hbi"][config["key"]];
 
-	import Web3 from "web3";
-	import Web3Modal from "web3modal";
+	import tools from '@/api/public.js'
 
 	var ccdotconn, web3, address;
 
@@ -158,47 +157,18 @@
 
 			dq.fabi = dq.hbarr[0]["key"];
 			dq.huobi = dq.hbarr.length >= 1 ? dq.hbarr[3]["key"] : dq.hbarr[0]["key"];
-			console.log(dq.huobi);
-			//初始化WEB3
 			//监测用户是否安装MASK
-			if (typeof ethereum === "undefined") {
+			tools.testMASK().then(res=>{
+				let {web,id} = res
+				web3 = web
+				address = id
+				ccdotconn = new web3.eth.Contract(ccdotc_abi, ccdotc_key);
+				dq.listajax();
+			}).catch((err)=>{
 				web3 = new Web3(config["hyue"][config["key"]]["Url"]);
 				ccdotconn = new web3.eth.Contract(ccdotc_abi, ccdotc_key);
 				dq.listajax();
-			} else {
-				webinit();
-			}
-			async function webinit() {
-				const providerOptions = {
-					/* See Provider Options Section */
-				};
-				const web3Modal = new Web3Modal({
-					network: "mainnet",
-					cacheProvider: true,
-					providerOptions,
-				});
-				var provider = await web3Modal.connect();
-				web3 = await new Web3(provider);
-				if (web3 && provider) {
-					//其他钱包使用测试网络
-					// if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-					//   var wlcode = window.ethereum.networkVersion;
-					//   //imtoken只能查看 无法操作 出发是ETF主网
-					//   if (window.ethereum.isImToken) {
-					//     web3.setProvider(config["hyue"][config["key"]]["Url"]);
-					//   }
-					//   //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-					//   if (window.ethereum.isMetaMask && wlcode != 4) {
-					//     web3.setProvider(config["hyue"][config["key"]]["Url"]);
-					//   }
-					// } else {
-					//   web3.setProvider(config["hyue"][config["key"]]["Url"]);
-					// }
-					address = provider.selectedAddress;
-					ccdotconn = new web3.eth.Contract(ccdotc_abi, ccdotc_key);
-					dq.listajax();
-				}
-			}
+			})
 		},
 		data() {
 			return {
@@ -318,11 +288,11 @@
 				// if (dq.form["zdnum"]) {
 				// 	sounum = dq.getFNum(dq.form["zdnum"] * 10 ** js_num);
 				// }
-				console.log(sounum)
+				// console.log(sounum)
 				//加载列表数据
 				ccdotconn.methods.sort(dq.huobi, dq.fabi, 30, 30, sounum + "")
 					.call((error, ret) => {
-						console.log(ret)
+						// console.log(ret)
 						dq.jiazai = false;
 						if (ret) {
 							var list = [];
@@ -339,7 +309,7 @@
 								};
 								list.push(obj);
 							}
-							console.log(list);
+							// console.log(list);
 							dq.list = list;
 						}
 					});

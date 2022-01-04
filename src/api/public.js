@@ -34,19 +34,20 @@ var webinit = (use_metamask)=>{
 		      },
 		    },
 		});
-		web3Modal.connect().then(res=>{
+		try{
 			console.log('初始化web3');
-			let web3 = new Web3(res);
-			let address = ''
-			if(web3 && res){
-				address = res.selectedAddress || res.accounts[0];
+			let data =  web3Modal.connect().then(res=>{
+				let web3 = new Web3(res);
+				let address = res.selectedAddress || res.accounts[0];
 				resolve({
 					web:web3,id:address
 				})
-			}else{
+			}).catch((err)=>{
 				reject('初始化失败')
-			}
-		})
+			})
+		}catch(e){
+			reject('初始化失败')
+		}
 	})
 } 
 export default{
@@ -60,7 +61,7 @@ export default{
 				  console.log('初始化成功');
 				  resolve(res)
 			  }).catch((err)=>{
-				  console.log('初始化失败');
+				  // console.log(err);
 				  reject(err)
 			  })
 			} else {
@@ -68,7 +69,7 @@ export default{
 				  console.log('初始化成功');
 				  resolve(res)
 			  }).catch((err)=>{
-				  console.log(err);
+				  // console.log(err);
 				  reject(err)
 			  })
 			}
