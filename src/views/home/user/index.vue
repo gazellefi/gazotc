@@ -406,53 +406,12 @@ export default {
         address = provider.selectedAddress;
         dq.address = address;
         dq.address = address;
-        console.log(dq.address.length);
         if (dq.address.length > 20) {
           let stars = "****";
           dq.addressRm =
             dq.address.substr(0, 4) +
             stars +
             dq.address.substr(dq.address.length - 4);
-        }
-        //读取用户默认备注
-        var beizhucon = new web3.eth.Contract(
-          config["hyue"][config["key"]]["dotc"]["abi"],
-          config["hyue"][config["key"]]["dotc"]["heyue"]
-        );
-        for (let index = 0; index < Beizhujson.length; index++) {
-          beizhucon.methods
-            .message(dq.user ? dq.user : address + "", Beizhujson[index]["id"])
-            .call((err, ret) => {
-              if (ret) {
-                ret = Base64.decode(ret);
-                if (
-                  Beizhujson[index]["id"] == 5 ||
-                  Beizhujson[index]["id"] == 9
-                ) {
-                  ret = CryptoJs.AES.decrypt(ret, "gazotc");
-                  ret = ret.toString(CryptoJs.enc.Utf8);
-                }
-                dq.beizhu_arr[Beizhujson[index]["key"]] = ret;
-              }
-            });
-        }
-
-        //查询仲裁备注
-        var zc_conn = new web3.eth.Contract(
-          config["hyue"][config["key"]]["ArbOne"]["abi"],
-          config["hyue"][config["key"]]["ArbOne"]["heyue"]
-        );
-        for (let index = 0; index < Beizhujson.length; index++) {
-          if (Beizhujson[index]["id"] == 8) {
-            zc_conn.methods
-              .message(dq.user ? dq.user : address + "", 0 + "")
-              .call((err, ret) => {
-                if (ret) {
-                  dq.beizhu_arr[Beizhujson[index]["key"]] = Base64.decode(ret);
-                }
-              });
-            break;
-          }
         }
         dq.getsczc();
         dq.getBz();

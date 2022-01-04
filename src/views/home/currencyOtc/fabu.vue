@@ -30,6 +30,10 @@
 					<div class="add_form_item">
 					  <div class="add_form_item_t">{{$t('message.dapp.amount')}}</div>
 					  <div class="add_form_item_input">
+						  <div style="font-size: 11px;color: #999;padding-bottom: 10px;">
+							  <span>可用余额</span>
+							  <span style="color: orangered;">{{'  '+balancepro}}</span>
+						  </div>
 					    <el-input :placeholder="$t('message.enterAmount')" v-model="form['num']">
 					      <template slot="append">
 							  <div style="width: 40px;text-align: center;">
@@ -39,7 +43,7 @@
 					    </el-input>
 					  </div>
 					  <div class="add_form_item_input errormsg" v-if="balancepro < form['num']">
-					    {{$t('message.exceedTips')}}（ {{ balancepro }} ）！
+					    {{$t('message.exceedTips')}}{{$t('message.balance')}}！
 					  </div>
 					  <div class="add_form_item_input errormsg" v-if="balancepro == 0">
 					    {{$t('message.rechargeTips')}}
@@ -94,8 +98,7 @@ import config from "@/config";
 var ccdotc_abi = config["hyue"][config["key"]]["Ccdotc"]["abi"];
 var ccdotc_key = config["hyue"][config["key"]]["Ccdotc"]["heyue"];
 
-import Web3 from "web3";
-import Web3Modal from "web3modal";
+import tools from '@/api/public.js'
 import { Dialog, Toast, Notify } from "vant";
 
 var address, ccdotconn, web3;
@@ -109,50 +112,19 @@ export default {
     }
     this.pro = this.proarr[3]["id"];
     this.prob = this.proarr[0]["id"];
-	// var fbarr = config["fabi"][config["key"]];
-	// for (const key in fbarr) {
-	//   this.fbarr.push(fbarr[key]);
-	// }
-    //初始化WEB3
     //监测用户是否安装MASK
-    if (typeof ethereum === "undefined") {
-      alert(this.$t('message.currencyOtc.install'));
-    } else {
-      webinit();
-    }
-    var dq = this;
-    async function webinit() {
-      const providerOptions = {
-        /* See Provider Options Section */
-      };
-      const web3Modal = new Web3Modal({
-        network: "mainnet",
-        cacheProvider: true,
-        providerOptions,
-      });
-      var provider = await web3Modal.connect();
-      web3 = new Web3(provider);
-      if (web3 && provider) {
-        //其他钱包使用测试网络
-        // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-        //     var wlcode = window.ethereum.networkVersion;
-        //     //imtoken只能查看 无法操作 出发是ETF主网
-        //     if (window.ethereum.isImToken) {
-        //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-        //     }
-        //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-        //     if (window.ethereum.isMetaMask && wlcode != 4) {
-        //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-        //     }
-        // }else{
-        //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
-        // }
-        address = provider.selectedAddress;
-        ccdotconn = new web3.eth.Contract(ccdotc_abi, ccdotc_key);
-        //监听是否发布成功
-        dq.getproyue();
-      }
-    }
+	var dq = this;
+	tools.testMASK().then(res=>{
+		let {web,id} = res
+		web3 = web
+		address = id
+		console.log(res);
+		ccdotconn = new web3.eth.Contract(ccdotc_abi, ccdotc_key);
+		// 获取余额
+		dq.getproyue();
+	}).catch((err)=>{
+		console.log(2222);
+	})
   },
   mounted() {
     Toast.setDefaultOptions({
@@ -178,13 +150,19 @@ export default {
       },
 
       balancepro: 0,
+	  isFrist: false
     };
   },
   watch: {
-    "form.num"() {
-      this.getproyue();
-    },
-  },
+    pro (val) {
+        this.getproyue()
+      }
+   },
+  // watch: {
+  //   pro() {
+  //     this.getproyue();
+  //   },
+  // },
   methods: {
     //如果过亿请转换
     getFNum(num_str) {
@@ -251,24 +229,36 @@ export default {
         return num_str;
       }
     },
+	//  获取余额
     getproyue() {
-      var heyue = "";
-      var num = 0;
-      var dq = this;
-      for (let index = 0; index < this.proarr.length; index++) {
-        if (this.proarr[index]["id"] == this.pro) {
-          heyue = this.proarr[index]["heyue"];
-          num = this.proarr[index]["num"];
-          break;
-        }
-      }
-      ccdotconn.methods.balancepro(address, heyue).call((err, ret) => {
-        if (ret) {
-          var balancepro = Number(ret);
-          dq.balancepro = balancepro / 10 ** num;
-        }
-      });
+		if(this.isFrist){
+			this.getBalace()
+		}else{
+			setTimeout(()=>{
+				this.getBalace()
+			},200)
+		}
+      
     },
+	getBalace(){
+		var heyue = "";
+		var num = 0;
+		var dq = this;
+		for (let index = 0; index < this.proarr.length; index++) {
+		  if (this.proarr[index]["id"] == dq.pro) {
+		    heyue = this.proarr[index]["heyue"];
+		    num = this.proarr[index]["num"];
+		    break;
+		  }
+		}
+		ccdotconn.methods.balancepro(address, heyue).call((err, ret) => {
+		  if (ret) {
+		    var balancepro = Number(ret);
+		    dq.balancepro = balancepro / 10 ** num;
+			dq.isFrist = true
+		  }
+		});
+	},
     async fabuajax() {
       await this.getproyue();
       //判断资产余额是否足够

@@ -5,7 +5,7 @@
       <img src="@/assets/img/title.png" alt="">
       <span class="hidden-sm-and-down">{{ $t("message.dapp.website") }}</span>
     </div>
-    <div class="selectType hidden-sm-and-up">
+    <div class="selectType hidden-md-and-up">
       <!-- <van-dropdown-menu @change="changeDrop">
         <van-dropdown-item v-model="morenkey" :options="option1" />
       </van-dropdown-menu> -->
@@ -35,9 +35,9 @@
         <div>{{queryAddr}}</div>
       </div>
 
-      <div class="menu hidden-sm-and-up" @click="show=true" style="width: 30px;">{{$t('message.menu')}}</div>
+      <div class="menu hidden-md-and-up" @click="show=true" style="width: 30px;">{{$t('message.menu')}}</div>
 
-      <van-popup class="nav2" v-model="show" position="right" :style="{ width: '50%' ,height:'100%'}">
+      <van-popup class="nav2" v-model="show" position="right" :style="{ width: '240px' ,height:'100%'}">
         <sidebar></sidebar>
       </van-popup>
     </div>

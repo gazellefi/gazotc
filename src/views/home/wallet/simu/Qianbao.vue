@@ -24,8 +24,7 @@
   </div>
 </template>
 <script>
-import Web3 from "web3";
-import Web3Modal from "web3modal";
+import tools from '@/api/public.js'
 import { Toast } from 'vant';
 
 
@@ -72,112 +71,24 @@ export default {
     }
   },
   mounted() {
-    //监测用户是否安装MASK
-    console.log("111")
-    if (typeof ethereum === "undefined") {
-      alert(this.$t('message.currencyOtc.install'));
-    } else {
-      //初始化
-      webinit();
-    }
 
     for (const key in huobiarr) {
       this.huobi.push(huobiarr[key]);
     }
 
-    Toast.setDefaultOptions(this.$t('message.wallet.loading'), {
-      forbidClick: false,
-      closeOnClickOverlay: false,
-      duration: 0,
-      overlay: true
-    });
     var dq = this;
-    async function webinit() {
-      const providerOptions = {
-        /* See Provider Options Section */
-      };
-      const web3Modal = new Web3Modal({
-        network: "mainnet",
-        cacheProvider: true,
-        providerOptions,
-      });
-      var provider = await web3Modal.connect();
-      web3 = new Web3(provider);
-
-      if (web3 && provider) {
-        address = provider.selectedAddress;
-        console.log(address)
-        simuonn = new web3.eth.Contract(simu_abi, simu_key);
-        dq.getsczc();
-      }
-    }
+	//监测用户是否安装MASK
+	tools.testMASK().then(res=>{
+		let {web,id} = res
+		web3 = web
+		address = id
+		simuonn = new web3.eth.Contract(simu_abi, simu_key);
+		dq.getsczc();
+	}).catch((err)=>{
+		console.log(err);
+	})
   },
   methods: {
-    //如果过亿请转换
-    getFNum(num_str) {
-      num_str = num_str.toString();
-      if (num_str.indexOf("+") != -1) {
-        num_str = num_str.replace("+", "");
-      }
-      if (num_str.indexOf("E") != -1 || num_str.indexOf("e") != -1) {
-        var resValue = "",
-          power = "",
-          result = null,
-          dotIndex = 0,
-          resArr = [],
-          sym = "";
-        var numStr = num_str.toString();
-        if (numStr[0] == "-") {
-          // 如果为负数，转成正数处理，先去掉‘-’号，并保存‘-’.
-          numStr = numStr.substr(1);
-          sym = "-";
-        }
-        if (numStr.indexOf("E") != -1 || numStr.indexOf("e") != -1) {
-          var regExp = new RegExp(
-            "^(((\\d+.?\\d+)|(\\d+))[Ee]{1}((-(\\d+))|(\\d+)))$",
-            "ig"
-          );
-          result = regExp.exec(numStr);
-          if (result != null) {
-            resValue = result[2];
-            power = result[5];
-            result = null;
-          }
-          if (!resValue && !power) {
-            return false;
-          }
-          dotIndex = resValue.indexOf(".") == -1 ? 0 : resValue.indexOf(".");
-          resValue = resValue.replace(".", "");
-          resArr = resValue.split("");
-          if (Number(power) >= 0) {
-            var subres = resValue.substr(dotIndex);
-            var length = dotIndex == 0 ? 0 : subres.length;
-            power = Number(power);
-            //幂数大于小数点后面的数字位数时，后面加0
-            for (var i = 0; i < power - length; i++) {
-              resArr.push("0");
-            }
-            if (power - subres.length < 0) {
-              resArr.splice(dotIndex + power, 0, ".");
-            }
-          } else {
-            power = power.replace("-", "");
-            power = Number(power);
-            //幂数大于等于 小数点的index位置, 前面加0
-            for (let i = 0; i < power - dotIndex; i++) {
-              resArr.unshift("0");
-            }
-            var n = power - dotIndex >= 0 ? 1 : -(power - dotIndex);
-            resArr.splice(n, 0, ".");
-          }
-        }
-        resValue = resArr.join("");
-
-        return sym + resValue;
-      } else {
-        return num_str;
-      }
-    },
     goback() {
       this.$router.go(-1);
     },
@@ -195,7 +106,7 @@ export default {
     },
     tixianajax() {
       Toast.loading({ message: this.$t('message.wallet.withdrawing1') });
-      var tkje = this.getFNum(free);
+      var tkje = tools.getnume(free);
       simuonn.methods.withdraw(tkje).send({
         from: address
       }, (err, ret) => {

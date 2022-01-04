@@ -180,16 +180,15 @@
 			</el-col>
 			<el-col :span="24" class="item mart-10">
 				<span>{{$t('message.arbitration.balandCountdown')}}：</span>
-				<van-count-down :time="ddifo['djs_val']" format="DD day HH hour mm minute ss second"
-					v-if="ddifo['timc'] > 0 && ddifo['time'] == 0" />
-				<van-count-down time="0" format="DD day HH hour mm minute ss second"
-					v-if="ddifo['timc'] > 0 && ddifo['time'] != 0" />
+				<van-count-down :time="ddifo['djs_val']" format="DD day HH hour mm minute ss second" v-if="ddifo['timc'] > 0 && ddifo['time'] == 0" />
+				<van-count-down time="0" format="DD day HH hour mm minute ss second" v-if="ddifo['timc'] > 0 && ddifo['time'] != 0" />
 				<div class="ddinfo_w_djs_msg_djs" v-if="ddifo['timc'] == 0 || !ddifo['timc']">
 					<!-- 判断是否暂停 或者取消 -->
 					<span v-if="ddifo['pau'] != 0">{{$t('message.dapp.orderSuspended')}}</span>
 					<span v-if="ddifo['release'] != 0">{{$t('message.dapp.orederCancelled')}}</span>
 				</div>
 			</el-col>
+			 <!-- 当前登录为商家   订单类型为购买 -->
 			<el-col :span="24" v-if="ddifo['myuser'] == ddifo['Madd'] && ddifo['Umark_b'] == 'buy' ">
 				<!-- 购买 -->
 				<el-row style="padding-bottom: 20px;">
@@ -226,11 +225,11 @@
 					</el-col>
 				</el-row>
 			</el-col>
-			<el-col :span="24" v-if=" ddifo['myuser'] == ddifo['Uadd'] && ddifo['Umark_b'] == 'sell'">
+			<!-- 当前登录为商家   订单类型为出售 -->
+			<el-col :span="24" v-if=" ddifo['myuser'] == ddifo['Madd'] && ddifo['Umark_b'] == 'sell'">
 				<el-row style="padding-bottom: 20px;">
 					<el-col :sm="24" :lg="8" class="f c_c">
-						<van-button class="btnStyle" plain type="pr	imary" @click="setddcode('fb_ddajax')" :dis<strong>
-							</strong>abled="anarr('fb_ddajax')">{{$t('message.putMoney')}}</van-button>
+						<van-button class="btnStyle" plain type="pr	imary" @click="setddcode('fb_ddajax')" :disabled="anarr('fb_ddajax')">{{$t('message.putMoney')}}</van-button>
 					</el-col>
 					<el-col :sm="24" :lg="8" class="fc c_c a_c">
 						<van-button class="btnStyle" plain type="primary" @click="setddcode('zt_ddajax',2)"
@@ -242,7 +241,7 @@
 					</el-col>
 					<el-col :sm="24" :lg="8" class="fc c_c a_c">
 						<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')"
-							:disabled="anarr('tq_ddajax','Uadd',1)">{{$t('message.MerchantAgreesRelease')}}</van-button>
+							:disabled="anarr('tq_ddajax','Madd',1)">{{$t('message.MerchantAgreesRelease')}}</van-button>
 						<div class="msg">
 							<span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
 							<span v-if="ddifo.agree == 2">{{$t('message.MerchantAgreesRelease')}}</span>
@@ -259,7 +258,8 @@
 					</el-col>
 				</el-row>
 			</el-col>
-			<el-col :span="24" v-if="ddifo['myuser'] == ddifo['Madd'] && ddifo['Umark_b'] == 'sell'">
+			<!-- 当前登录为用户  订单类型为出售 -->
+			<el-col :span="24" v-if=" ddifo['myuser'] == ddifo['Uadd'] && ddifo['Umark_b'] == 'sell' ">
 				<el-row style="padding-bottom: 20px;">
 					<el-col :sm="24" :lg="8" class="f c_c">
 						<van-button class="btnStyle" plain type="primary" @click="setddcode('fb_ddajax')"
@@ -275,7 +275,7 @@
 					</el-col>
 					<el-col :sm="24" :lg="8" class="f c_c a_c">
 						<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')"
-							:disabled="anarr('tq_ddajax','Madd')">{{$t('message.MerchantAgreesRelease')}}</van-button>
+							:disabled="anarr('tq_ddajax','Uadd')">{{$t('message.MerchantAgreesRelease')}}</van-button>
 						<div class="msg">
 							<span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
 							<span v-if="ddifo.agree == 2">{{$t('message.MerchantAgreesRelease')}}</span>
@@ -292,7 +292,8 @@
 					</el-col>
 				</el-row>
 			</el-col>
-			<el-col :span="24" v-if=" ddifo['myuser'] == ddifo['Uadd'] && ddifo['Umark_b'] == 'buy' ">
+			<!-- 当前登录为用户   订单类型为出售 -->
+			<el-col :span="24" v-if="ddifo['myuser'] == ddifo['Uadd'] && ddifo['Umark_b'] == 'buy'">
 				<el-row style="padding-bottom: 20px;">
 					<el-col class="f c_c" :sm="24" :lg="8">
 						<van-button class="btnStyle" plain type="primary" @click="setddcode('qx_ddajax')"
@@ -309,7 +310,7 @@
 					</el-col>
 					<el-col class="fc c_c a_c" :sm="24" :lg="8">
 						<van-button class="btnStyle" plain type="primary" @click="setddcode('tq_ddajax')"
-							:disabled="anarr('tq_ddajax','Madd',2)">{{$t('message.UserAgreesRelease')}}</van-button>
+							:disabled="anarr('tq_ddajax','Uadd',2)">{{$t('message.UserAgreesRelease')}}</van-button>
 						<div class="msg">
 							<span v-if="ddifo.agree == 1">{{$t('message.UserAgreesRelease')}}</span>
 							<span v-if="ddifo.agree == 2">{{$t('message.MerchantAgreesRelease')}}</span>
@@ -416,7 +417,8 @@
 				input1: '',
 				dquser: '',
 				letter: '',
-				ddifo: ddinfomodel
+				ddifo: ddinfomodel,
+				traState: 0,  //  1:当前登录为商家   订单类型为购买  2:当前登录为商家   订单类型为出售   3:当前登录为用户  订单类型为购买   4: 当前登录为用户   订单类型为出售   5:不是商家也不是卖家
 			}
 		},
 		watch: {
@@ -726,6 +728,7 @@
 						dq.ddifo['Madd'] = ret['Madd'].toLowerCase();
 						dq.ddifo['release'] = ret['release'];
 						dq.ddifo['timc'] = ret['timc'];
+						console.log(ret['timc']);
 						dq.ddifo['agree'] = Number(ret['agree']);
 						dq.ddifo['pau'] = ret['pau'];
 						dq.ddifo['uma'] = Number(ret['uma']) / (10 ** bzj_num);
@@ -786,12 +789,14 @@
 					dq.ddifo['timb'] = Number(timb);
 					dq.ddifo['tima'] = Number(tima);
 					dq.ddifo['time'] = Number(time);
+					console.log(time);
 
 					dq.ddifo['Timc'] = Number(Timc);
 					dq.ddifo['faddid'] = faddid;
 					//倒计时 tc + Tc - 当前时间  = 倒计时
 					var djs = (Number(dq.ddifo['timc']) + dq.ddifo['Timc']) - Math.round(new Date() / 1000);
 					dq.ddifo['djs_val'] = djs * 1000;
+					console.log(dq.ddifo['djs_val']);
 				}
 			},
 
@@ -808,12 +813,13 @@
 					//     alert('The order cannot be cancelled');
 					//     return;
 					// }
-					console.log('The order cannot be cancelled')
+					console.log('订单不能取消')
 					qx_ddajax();
 				}
 				if (type == 'fk_ddajax') {
 					if (dq.ddifo['timb']) {
-						alert('This order cannot be paid');
+						alert('此订单无法付款');
+						// alert('This order cannot be paid');
 						return;
 					}
 					fk_ddajax();

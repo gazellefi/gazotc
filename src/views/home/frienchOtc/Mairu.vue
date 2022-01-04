@@ -177,10 +177,9 @@
   </div>
 </template>
 <script>
-import Web3 from "web3";
-import Web3Modal from "web3modal";
 let Base64 = require('js-base64').Base64;
 import { Dialog, Notify, Toast } from 'vant';
+import tools from '@/api/public.js'
 
 import config from "@/config";
 var dotc_abi = config['hyue'][config['key']]['dotc']['abi'];
@@ -261,27 +260,11 @@ export default {
   props:['did'],
   watch: {
 	ddid(){
-		console.log('1111')
+		// console.log('1111')
 		// this.getddinfo()
 	},
     'form.num'(e) {
-      if (!e) {
-        return;
-      }
-
-      if (e < Number(this.ddinfo['zer'])) {
-        Notify({ type: 'warning', message: this.$t('message.frienchOtc.noLess') + this.ddinfo['zer'] });
-        return;
-      }
-
-      if (e > Number(this.ddinfo['mal'])) {
-        Notify({ type: 'warning', message: this.$t('message.frienchOtc.noLess') + this.ddinfo['mal'] });
-        return;
-      }
-      if (e > Number(this.ddinfo['Moa'])) {
-        Notify({ type: 'warning', message: this.$t('message.frienchOtc.noLess') + this.ddinfo['Moa'] });
-        return;
-      }
+      
       var sxf = 0;
       var shuere = (e * Number(this.pros['rati'])) / (10 ** 6);
       // var bilie = (1 / Number(this.pros['uni'])) * 10 ** 6;
@@ -308,7 +291,7 @@ export default {
         var z = x * y;
         return z;
       }
-      this.form['bzj'] = Number(this.getnume(mul(mul(e, this.pros.uni), this.pros.mar) / mul(this.pros.pri, (10 ** 18)))).toFixed(2);
+      this.form['bzj'] = Number(tools.getnume(mul(mul(e, this.pros.uni), this.pros.mar) / mul(this.pros.pri, (10 ** 18)))).toFixed(2);
     },
     'form.je'(e) {
       if (!e) {
@@ -330,47 +313,17 @@ export default {
       this.ddshow = true;
     }
     var dq = this;
-    // 监测用户是否安装MASK
-    if (typeof ethereum === 'undefined') {
-      web3 = new Web3(config['hyue'][config['key']]['Url']);
-      address = "";
-    } else {
-      webinit();
-    }
-
-    async function webinit() {
-      const providerOptions = {
-        /* See Provider Options Section */
-      };
-      const web3Modal = new Web3Modal({
-        network: "mainnet",
-        cacheProvider: true,
-        providerOptions,
-      });
-      var provider = await web3Modal.connect();
-      web3 = new Web3(provider);
-      if (web3 && provider) {
-        //其他钱包使用测试网络
-        // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-        //     var wlcode = window.ethereum.networkVersion;
-        //     //imtoken只能查看 无法操作 出发是ETF主网
-        //     if (window.ethereum.isImToken) {
-        //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-        //     }
-        //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-        //     if (window.ethereum.isMetaMask && wlcode != 4) {
-        //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-        //     }
-        // }else{
-        //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
-        // }
-        address = provider.selectedAddress;
-        if (dq.ddid) {
-          //判断是否传入订单号
-          dq.getddinfo();
-        }
-      }
-    }
+	tools.testMASK().then(res=>{
+		let {web,id} = res
+		web3 = web
+		address = id
+		if (dq.ddid) {
+		  //判断是否传入订单号
+		  dq.getddinfo();
+		}
+	}).catch((err)=>{
+		console.log(err);
+	})
   },
 
   methods: {
@@ -396,72 +349,6 @@ export default {
         return result;
       } else {
         return Number(result);
-      }
-    },
-
-    //数值E转换
-    getnume(num_str) {
-      num_str = num_str.toString();
-      if (num_str.indexOf("+") != -1) {
-        num_str = num_str.replace("+", "");
-      }
-      if (num_str.indexOf("E") != -1 || num_str.indexOf("e") != -1) {
-        var resValue = "",
-          power = "",
-          result = null,
-          dotIndex = 0,
-          resArr = [],
-          sym = "";
-        var numStr = num_str.toString();
-        if (numStr[0] == "-") {
-          // 如果为负数，转成正数处理，先去掉‘-’号，并保存‘-’.
-          numStr = numStr.substr(1);
-          sym = "-";
-        }
-        if (numStr.indexOf("E") != -1 || numStr.indexOf("e") != -1) {
-          var regExp = new RegExp(
-            "^(((\\d+.?\\d+)|(\\d+))[Ee]{1}((-(\\d+))|(\\d+)))$",
-            "ig"
-          );
-          result = regExp.exec(numStr);
-          if (result != null) {
-            resValue = result[2];
-            power = result[5];
-            result = null;
-          }
-          if (!resValue && !power) {
-            return false;
-          }
-          dotIndex = resValue.indexOf(".") == -1 ? 0 : resValue.indexOf(".");
-          resValue = resValue.replace(".", "");
-          resArr = resValue.split("");
-          if (Number(power) >= 0) {
-            var subres = resValue.substr(dotIndex);
-            var length = dotIndex == 0 ? 0 : subres.length;
-            power = Number(power);
-            //幂数大于小数点后面的数字位数时，后面加0
-            for (var i = 0; i < power - length; i++) {
-              resArr.push("0");
-            }
-            if (power - subres.length < 0) {
-              resArr.splice(dotIndex + power, 0, ".");
-            }
-          } else {
-            power = power.replace("-", "");
-            power = Number(power);
-            //幂数大于等于 小数点的index位置, 前面加0
-            for (let i = 0; i < power - dotIndex; i++) {
-              resArr.unshift("0");
-            }
-            var n = power - dotIndex >= 0 ? 1 : -(power - dotIndex);
-            resArr.splice(n, 0, ".");
-          }
-        }
-        resValue = resArr.join("");
-
-        return sym + resValue;
-      } else {
-        return num_str;
       }
     },
     getddinfo() {
@@ -595,6 +482,19 @@ export default {
         Notify({ type: 'warning', message: this.$t('message.frienchOtc.quantity') });
         return;
       }
+	  if (dq.form['num'] < Number(this.ddinfo['zer'])) {
+	    Notify({ type: 'warning', message: this.$t('message.frienchOtc.noLess') + this.ddinfo['zer'] });
+	    return;
+	  }
+	  
+	  if (dq.form['num'] > Number(this.ddinfo['mal'])) {
+	    Notify({ type: 'warning', message: this.$t('message.frienchOtc.noLess') + this.ddinfo['mal'] });
+	    return;
+	  }
+	  if (dq.form['num'] > Number(this.ddinfo['Moa'])) {
+	    Notify({ type: 'warning', message: this.$t('message.frienchOtc.noLess') + this.ddinfo['Moa'] });
+	    return;
+	  }
       if (!dq.form['je']) {
         Notify({ type: 'warning', message: this.$t('message.frienchOtc.enterAmount') });
         return;
@@ -618,7 +518,7 @@ export default {
           getContainer: 'body'
         })
           .catch(() => {
-            dq.$router.push('./chongzhi');
+            dq.$router.push({name: 'wallet'});
           });
         return;
       }
@@ -663,7 +563,7 @@ export default {
             break;
           }
         }
-		num = dq.getnume(num);
+		num = tools.getnume(num);
 		console.log(num);
         var doctconn = new web3.eth.Contract(dotc_abi, dotc_key);
         doctconn.methods.taker(dq.ddid, num + "").send({
