@@ -479,6 +479,7 @@ export default {
 				enterName: 'Please enter your name',
 				enterIdCard: 'Please enter your ID number.',
 				qualification:'Granted NFT whitelist',
+				realTips:'Real-name authentication is not enabled',
 			},
 			dapp: {
 				payTime: 'Payment time',
@@ -870,7 +871,7 @@ export default {
 				authorized:'授权余额中...',
 				insufficientFund:'资金不足',
 				requesting:'请求中...',
-				withdrawing1:'正在撤回...',
+				withdrawing1:'正在提现...',
 				selectCurrency:'选择货币',
 				rechargeAmount:'充值金额',
 				recharge:'充值',
@@ -898,7 +899,7 @@ export default {
 				noLicense: '便捷',
 				noLicenseContent: '交易双方通过第三方社交软件和验证接口，相互KYC，个人留存信息',
 				daoAutonomy: '社区自治',
-				daoAutonomyContent: '如有争议，由链上中心化仲裁机制决定；平台参数由自治社区投票决定',
+				daoAutonomyContent: '如有争议，由链上去中心化仲裁机制决定；平台参数由自治社区投票决定',
 				market: '市场参与者',
 				business: '商家',
 				businessContent: '发布订单需抵押平台币',
@@ -1142,6 +1143,7 @@ export default {
 				enterName: '请输入姓名',
 				enterIdCard: '请输入身份证号',
 				qualification:'你已获得头像NFT白名单资格',
+				realTips:'实名认证暂未开通',
 			},
 			dapp: {
 				PrivateMessage: '私信信息',

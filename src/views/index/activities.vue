@@ -94,7 +94,7 @@
     </div>
     <!-- 注册 -->
     <div class="reg">
-      <div class="item" :id="dongtaiId(i)" @click="clickFn(v, i)" v-for="(v, i) in regList">
+      <div class="item" :id="dongtaiId(i)" @click="clickFn(v, i)" v-for="(v, i) in regList" v-if="v.text!='领取空投' && v.text!='Get points'">
         <img :src="v.img" alt="" />
         <div>{{ v.text }}</div>
         <img v-if="i != 3" class="jt" src="~@/assets/img/jt.png" alt="" />
@@ -445,7 +445,8 @@ export default {
         this.ruleHideAuth();
       }
       if (i == 3) {
-        this.$router.push("/yjzhuce");
+		  alert('认证成功后发放');
+        // this.$router.push("/yjzhuce");
       }
     },
     async bindQRCode() {
@@ -459,15 +460,22 @@ export default {
         colorLight: "#ffffff", //二维码背景色
         correctLevel: QRCode.CorrectLevel.L, //容错率，L/M/H
       });
+	  console.log(this.friendUrl)
     },
     showPopFn() {
-      if (
-        !this.str1 &&
-        this.recommend_er == "0x0000000000000000000000000000000000000000"
-      )
-        return this.$toast("请先注册");
-      this.showPop = true;
-      this.bindQRCode();
+      // if (
+      //   !this.str1 &&
+      //   this.recommend_er == "0x0000000000000000000000000000000000000000"
+      // )
+	  console.log(this.air);
+	  if(this.air != 20){
+		  return this.$toast("请先注册");
+	  }else{
+		  this.showPop = true;
+		  this.bindQRCode();
+	  }
+        
+      
     },
     async copyFn() {
       await this.$nextTick((e) => { });
@@ -573,14 +581,50 @@ export default {
       }
     },
     async getsczc() {
-      Toast.loading({ message: "查询中..." });
-      var data = await dotc.methods.message(address, 0).call();
-      this.str1 = data;
-      let arr = data.split("|");
-      this.nickname = Base64.decode(arr[0]);
-      this.name = arr[1];
-      this.identity = arr[2];
-      this.recom = arr[3];
+      // Toast.loading({ message: "查询中..." });
+      // var data = await dotc.methods.message(address, 0).call();
+	  axios({
+	    method: "post",
+	    url: "https://gazotc.com:8083/member/selectOne",
+	    data: { address: address },
+	    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+	    transformRequest: function (obj) {
+	      var str = [];
+	      for (var p in obj) {
+	        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+	      }
+	      return str.join("&");
+	    },
+	  })
+	    .then((res) => {
+			console.log(address);
+			console.log(res)
+			if(res.result!=null){
+				this.nickname = res.result.nickname;
+				this.name = '***';
+				this.identity = res.result.idNo;
+				if (this.identity.length > 10) {
+				  let stars = "****";
+				  this.identity =
+					this.identity.substr(0, 4) +
+					stars +
+					this.identity.substr(this.identity.length - 4);
+				}
+				this.air = 20;
+				this.rec = res.result.score-20;
+			}
+	      // window.location.href = res;
+	    })
+	    .catch(function (error) {
+	      alert("error");
+	    });
+   //    this.str1 = data;
+   //    let arr = data.split("|");
+	  // // console.log(arr)
+   //    this.nickname = Base64.decode(arr[0]);
+   //    this.name = arr[1];
+   //    this.identity = arr[2];
+   //    this.recom = arr[3];
 
       Toast.clear();
       let index;
@@ -588,8 +632,8 @@ export default {
         index = item - 3;
       }
       this.user = address.substring(0, 5) + "***" + address.substring(index);
-      this.air = await pri.methods.balanceAd(address).call();
-      this.rec = await pri.methods.balanceRe(address).call();
+      // this.air = await pri.methods.balanceAd(address).call();
+      // this.rec = await pri.methods.balanceRe(address).call();
       this.numberHb = await usdt.methods.balanceOf(address).call();
       this.gazone = await pri.methods.balanceOne(address).call();
       this.gazlock = await pri.methods.balanceOf(address).call();
@@ -628,44 +672,47 @@ export default {
 	},
     ruleHideAuth() {
 		var that = this
-		Toast.loading({ message: "数据请求中..." });
-		axios.post('https://gazotc.com:8083/member/jnmioURL?address='+address).then((res)=>{
-			// that.msss = res
-			let url = res.result.redirectUrl
-			// console.log(code);
-			Toast.clear()
-			if(res.result.state== 'SUCCESS'){ // 已实名认证
-				that.$confirm('您已实名认证', '', {
-				  confirmButtonText: '确定',
-				  cancelButtonText: '取消',
-				  type: 'success',
-				  callback: action => {
-					if (action === 'confirm') {
-					  console.log('按下 确定')
-					}
-					else {
-					  console.log('按下 取消')
-					}
-				  }
-				})
-			}else if(res.result.redirectUrl){ //未实名认证
-				window.location.href = url
+		// Toast.loading({ message: "数据请求中..." });
+		window.alert(that.$t('message.activit.realTips'));
+		// axios.post('https://gazotc.com:8083/member/jnmioURL?address='+address).then((res)=>{
+		// 	// that.msss = res
+		// 	let url = res.result.redirectUrl
+		// 	// console.log(code);
+		// 	Toast.clear()
+		// 	if(res.result.state== 'SUCCESS'){ // 已实名认证
+		// 		that.$confirm('您已实名认证', '', {
+		// 		  confirmButtonText: '确定',
+		// 		  cancelButtonText: '取消',
+		// 		  type: 'success',
+		// 		  callback: action => {
+		// 			if (action === 'confirm') {
+		// 			  console.log('按下 确定')
+		// 			}
+		// 			else {
+		// 			  console.log('按下 取消')
+		// 			}
+		// 		  }
+		// 		})
+		// 	}else if(res.result.redirectUrl){ //未实名认证
+		// 		window.location.href = url
 				
-				// this.$router.push({
-				// 	name: 'RealName',
-				// 	query: {
-				// 	  url: url
-				// 	}
-				// })
-			}
-		})
+		// 		// this.$router.push({
+		// 		// 	name: 'RealName',
+		// 		// 	query: {
+		// 		// 	  url: url
+		// 		// 	}
+		// 		// })
+		// 	}
+		// })
     },
     async register() {
 		var that = this
       Toast.loading({ message: "注册中..." });
       let nickname = Base64.encode(this.regForm.nickname);
       let name = Sha256(this.regForm.name).toString().substring(0, 10);
+      // let name = Base64.encode(this.regForm.name);
       let identity = Sha256(this.regForm.identity).toString().substring(0, 15);
+      // let identity = this.regForm.identity;
       let data = `${nickname}|${name}|${identity}|${this.recommender}`;
       // dotc.methods.commun(0, data).send(
       //   {
@@ -685,7 +732,9 @@ export default {
       function zcchaxun() {
         setTimeout(() => {
           Toast.clear();
-          Toast.success("注册成功");
+          // Toast.success("注册成功");
+		  console.log(that.air);
+		  // that.showPop3=false;
 		  let data = {
 			  idNo: that.regForm.identity, 
 			  name: that.regForm.name, 
@@ -694,30 +743,61 @@ export default {
 			  parentAddress: that.recommender || 0
 		  }
 		  // 存数据库
+		  
+		  // axios({
+		  //   method: "post",
+		  //   url: "https://192.168.0.48:8083/member/register",
+		  //   data: { member: data },
+		  //   headers: { "Content-Type": "application/x-www-form-urlencoded" },
+		  //   transformRequest: function (obj) {
+		  //     var str = [];
+		  //     for (var p in obj) {
+		  //       str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+		  //     }
+		  //     return str.join("&");
+		  //   },
+		  // })
+		  //   .then((res) => {
+		  // 			console.log(address);
+		  // 			console.log(res)
+		  //   })
+		  //   .catch(function (error) {
+		  //     alert("error");
+		  //   });
+			
 		  api.register(data).then((res)=>{
 			  console.log('注册数据存储结果：'+res);
 			  console.log(res.code);
-			  if(res.code == 0){
+			   if(res.code == 0){
+				  that.getsczc();
+				  console.log(222);
+				  Toast.success("注册成功");
+				  console.log(that.air);
+				  that.showPop3=false;
 				  // 注册成功后 调用实名认证
-				  that.ruleHideAuth()
+				  // that.ruleHideAuth()
 			  }else{
-				  that.$confirm( res.result, '', {
-				    confirmButtonText: '确定',
-				    cancelButtonText: '取消',
-				    type: 'success',
-				    callback: action => {
-				  	if (action === 'confirm') {
-				  	  console.log('按下 确定')
-				  	}
-				  	else {
-				  	  console.log('按下 取消')
-				  	}
-				    }
-				  })
+				  console.log(111);
+				  Toast.success("注册失败");
+				  console.log(that.air);
+				  that.showPop3=false;
+				  // that.$confirm( res.result, '', {
+				  //   confirmButtonText: '确定',
+				  //   cancelButtonText: '取消',
+				  //   type: 'success',
+				  //   callback: action => {
+				  // 	if (action === 'confirm') {
+				  // 	  console.log('按下 确定')
+				  // 	}
+				  // 	else {
+				  // 	  console.log('按下 取消')
+				  // 	}
+				  //   }
+				  // })
 			  }
 		  })
-		  
         }, 3000);
+			  
       }
     },
     async exchange() {

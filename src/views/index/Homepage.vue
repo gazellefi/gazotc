@@ -1,13 +1,16 @@
 <template>
   <div class='index'>
 	  <div class="f a_c c_c carouser_nav">
-	  	<el-carousel :autoplay="false"  arrow="nerver"  indicator-position="none" height="100%"style="width: 100%;margin-top: 20px;"  >
-	  	  <el-carousel-item style="position:relative">
-	  	    <!-- <img src="../../assets/img/giphy.gif" alt="" style="width: 100%;"> -->
-	  	    <img :src="bannerSrc" alt="" style="width: 100%;" @click="goAct">
-			<!-- <img src="../../assets/img/banner00.jpg" > -->
+	<!--  	<el-carousel :autoplay="false"  arrow="nerver"  indicator-position="none" height="100%"style="width: 100%;margin-top: 20px;"  >
+	  	  <el-carousel-item style="position:relative" v-for="(item,index) in bannerSrc" :key="index">
+	  	    <img :src="item" alt="" style="width: 100%;" @click="goAct">
 	  	  </el-carousel-item>
-	  	</el-carousel>
+	  	</el-carousel> -->
+		<van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+		  <van-swipe-item  v-for="(item,index) in bannerSrc" :key="index">
+			  <img :src="item" alt="" style="width: 100%;" @click="goAct">
+		  </van-swipe-item>
+		</van-swipe>
 	  </div>
     <!-- therefore -->
     <div class="therefore ">
@@ -134,6 +137,7 @@
   </div>
 </template>
 <script>
+import { Swipe, SwipeItem } from 'vant';
 export default {
   name: 'index',
   data() {
@@ -194,17 +198,20 @@ export default {
 		  {color:'#fff',background:require('../../assets/img/logo7.jpg')},
 		  {color:'#fff',background:require('../../assets/img/logo8.jpg')},
 	  ],
-	  bannerSrc:''
+	  bannerSrc: [
+		  require('../../assets/img/banner01.jpg'),
+		  require('../../assets/img/banner00.jpg')
+	  ]
     };
   },
   mounted() {
-	  let lang = localStorage.getItem('lang')
-	  console.log(lang);
-	  if(lang == 'zh'){
-	  	this.bannerSrc=require('../../assets/img/banner01.jpg')
-	  }else{
-	  	this.bannerSrc=require('../../assets/img/banner00.jpg')
-	  }
+	  // let lang = localStorage.getItem('lang')
+	  // console.log(lang);
+	  // if(lang == 'zh'){
+	  // 	this.bannerSrc=require('../../assets/img/banner01.jpg')
+	  // }else{
+	  // 	this.bannerSrc=require('../../assets/img/banner00.jpg')
+	  // }
   },
   watch: {},
   computed: {},
@@ -216,7 +223,7 @@ export default {
 		  this.$router.push('/Activities');
 	  }
   },
-  components: {}
+  components: {Swipe, SwipeItem}
 };
 </script>
 <style lang='less' scoped='scoped'>
