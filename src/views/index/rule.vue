@@ -1,9 +1,9 @@
 <template>
 	<div>
-		<div class="f a_c c_c hidden-sm-and-down" style="height: 315px;margin-top: 3.75rem;">
+		<div class="f a_c c_c" style="height: 315px;margin-top: 3.75rem;width: 100%;">
 			<el-carousel :autoplay="false"  arrow="nerver"  indicator-position="none" height="100%">
 			  <el-carousel-item style="position:relative">
-			    <img src="../../assets/img/giphy.gif" alt="">
+			    <img src="../../assets/img/giphy.gif" alt="" style="width:100%;">
 			  </el-carousel-item>
 			</el-carousel>
 		</div>
@@ -137,6 +137,9 @@
 </script>
 
 <style scoped="scoped" lang="less">
+	/deep/.el-carousel__arrow{
+		opacity: 0;
+	}
 	.rule_content{
 		width: 100%;
 		display: flex;flex-direction: column;
@@ -171,4 +174,10 @@
 		  }
 		}
 	}
+	@media screen and (max-width:991px) {
+		.a_c{
+			margin-top: 0px !important;
+		}
+	}
+	
 </style>

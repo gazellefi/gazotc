@@ -72,8 +72,8 @@
 				
 				<div class="photoBox" v-show="showPhoto">
 					<img class="imgFace" :src="srcImg1" id="img"/>
-					<button type="button" class="faceBox" v-show="srcImg1==''">上传身份证正面</button>
-					<input id="fileBtn" type="file" @change="upload1('#fileBtn', '#img');" accept="image/*" multiple  v-show="srcImg1==''"/>
+					<button type="button" class="faceBox" v-show="srcImg1==''" @click="showStepGo(5)">上传身份证正面</button>
+					<!-- <input id="fileBtn" type="file" @change="upload1('#fileBtn', '#img');" accept="image/*" multiple  v-show="srcImg1==''"/> -->
 					<button type="button" class="faceBox"  v-show="srcImg1!=''" @click="showStepGo(5)">下一步</button>
 				</div>
 				
@@ -230,11 +230,13 @@
 				}else if(e==3){
 					this.showStepThree=false;
 					this.showStepFour=true;
+					this.showFourBtn=true;
 				}else if(e==4){
 					this.showFourBtn=false;
 					this.showPhoto=true;
 					
 				}else if(e==5){
+					// navigator.getUserMedia({ "video": true }, function (stream) {video.src = stream;video.play();}, ()=>{console.log(111);})
 				  let verifyData={
 				  	address:address,
 				  	front: this.srcImg1,
@@ -252,7 +254,7 @@
 						if(res.code==0){
 							this.showPhotoTwo=true;
 							this.showPhoto=false;
-						}
+						}else{}
 					  // window.location.href = res;
 					})
 					.catch(function (error) {

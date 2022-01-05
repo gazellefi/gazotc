@@ -1,13 +1,23 @@
 <template>
-	<el-row class="news_contetn" type="flex" justify="center">
-		<el-col :sm="24" :md="12" :lg="12">
-			<el-collapse v-model="activeName" accordion>
-			  <el-collapse-item :title="item.title" :name="(index+1)" v-for="(item,index) in list" :key="index">
-			    <div  v-html="item.content"></div>
-			  </el-collapse-item>
-			</el-collapse>
-		</el-col>
-	</el-row>
+	<div class="">
+		<div class="f a_c c_c" style="height: 315px;margin-top: 3.75rem;width: 100%;">
+			<el-carousel :autoplay="false"  arrow="nerver"  indicator-position="none" height="100%">
+			  <el-carousel-item style="position:relative">
+			    <img src="../../assets/img/giphy.gif" alt="" style="width:100%;">
+			  </el-carousel-item>
+			</el-carousel>
+		</div>
+		<el-row class="news_contetn" type="flex" justify="center">
+			<el-col :sm="24" :md="12" :lg="12">
+				<el-collapse v-model="activeName" accordion>
+				  <el-collapse-item :title="item.title" :name="(index+1)" v-for="(item,index) in list" :key="index">
+					<div  v-html="item.content"></div>
+				  </el-collapse-item>
+				</el-collapse>
+			</el-col>
+		</el-row>
+	</div>
+	
 </template>
 
 <script>
@@ -16,7 +26,7 @@
 			return {
 				list: [
 					{
-						title: '圣诞快乐！！！',
+						title: this.$t('message.home.merryChristmas'),
 						// content: `<img src="https://only.cam/images/ambassador2.jpg" />`
 					}
 				],
@@ -27,6 +37,9 @@
 </script>
 
 <style lang="less" scoped="scoped">
+	/deep/.el-carousel__arrow{
+		opacity: 0;
+	}
 	.news_contetn{
 		width: 100%;
 		padding: 80px 20px;
@@ -43,6 +56,12 @@
 	@media screen and (min-width: 1200px) {
 		.news_contetn {
 			min-height: 700px;
+		}
+	}
+	
+	@media screen and (max-width:991px) {
+		.a_c{
+			margin-top: 0px !important;
 		}
 	}
 </style>
