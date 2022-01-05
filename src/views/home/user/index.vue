@@ -174,7 +174,7 @@
                   word-wrap: break-word;
                 "
               >
-                <span>{{ form.publickey }}</span>
+                <span>{{ form.publickeyCopy }}</span>
               </div>
               <el-form
                 ref="form"
@@ -211,31 +211,101 @@
             <div class="btn" @click="apply_password">
               <span>{{ $t("message.set") }}</span>
             </div>
-            <el-form ref="form" :model="form" class="form_nav">
-              <el-form-item>
-                <div style="border: 1px solid #dcdcdc">
-                  <van-field
-                    v-model="form.msg_encrypt"
-                    :placeholder="$t('message.setEncrypt')"
-                  />
-                </div>
-              </el-form-item>
-            </el-form>
-            <div class="btn" @click="encrypt_message">
-              <span>{{ $t("message.sumbmit") }}</span>
+			<!-- 加密 -->
+			<div style="border: 1px solid #dcdcdc;padding: 10px;">
+				<div class="">
+					<el-radio-group v-model="radio" @change="changeRadio" style="width: 100%;">
+						<el-row>
+							<el-col :sm="24" :md="6" style="margin-top: 10px;">
+								<el-radio :label="1">公钥</el-radio>
+							</el-col>
+							<el-col :sm="24" :md="6" style="margin-top: 10px;">
+								<el-radio :label="2">地址</el-radio>
+							</el-col>
+							<el-col :sm="24" :md="6" style="margin-top: 10px;">
+								<el-radio :label="3">发布订单号</el-radio>
+							</el-col>
+							<el-col :sm="24" :md="6" style="margin-top: 10px;">
+								<el-radio :label="4">交易订单号</el-radio>
+							</el-col>
+						</el-row>
+					</el-radio-group>
+				</div>
+				<div class="" style="border: 1px solid #dcdcdc;margin-top: 20px;">
+					<van-field v-model="inputs.orderId" :placeholder="$t('message.enterOrderId')" v-if="radio == 3 || radio == 4"/>
+					<van-field v-model="inputs.address" :placeholder="$t('message.enterAdress')" v-if="radio == 2"/>
+					<van-field v-model="inputs.publicKey" :placeholder="$t('message.enterPublicKey')" v-if="radio == 1"/>
+				</div>
+				<el-form ref="form" :model="form" class="form_nav">
+				  <el-form-item>
+				    <div style="border: 1px solid #dcdcdc">
+				      <van-field
+				        v-model="form.msg_encrypt"
+				        :placeholder="$t('message.setEncrypt')"
+				      />
+				    </div>
+				  </el-form-item>
+				</el-form>
+				<div class="" v-if="ciphertext != ''">
+					<span>{{$t('message.ciphertext')}}</span>
+					<div style="width: 100%;word-wrap: break-word;font-size: 11px;color: #666;margin-top: 10px;">
+						<span >{{ciphertext}}</span>
+						<el-link type="primary" class="marl-10" @click="copy(0)">{{$t('message.copy')}}</el-link>
+					</div>
+					
+				</div>
+			</div>
+            <div class="btn">
+              <span @click="encrypt_message">{{ $t("message.encryption") }}</span>
             </div>
-            <el-form ref="form" :model="form" class="form_nav">
-              <el-form-item>
-                <div style="border: 1px solid #dcdcdc">
-                  <van-field
-                    v-model="form.msg_decrypt"
-                    :placeholder="$t('message.encrypt')"
-                  />
-                </div>
-              </el-form-item>
-            </el-form>
-            <div class="btn" @click="decrypt_message">
-              <span>{{ $t("message.sumbmit") }}</span>
+			<!-- 解密 -->
+			<div style="border: 1px solid #dcdcdc;padding: 10px;">
+				<!-- <div class="">
+					<el-radio-group v-model="radio1" @change="changeRadio1" style="width: 100%;">
+						<el-row>
+							<el-col :sm="24" :md="6" style="margin-top: 10px;">
+								<el-radio :label="1">公钥</el-radio>
+							</el-col>
+							<el-col :sm="24" :md="6" style="margin-top: 10px;">
+								<el-radio :label="2">地址</el-radio>
+							</el-col>
+							<el-col :sm="24" :md="6" style="margin-top: 10px;">
+								<el-radio :label="3">发布订单号</el-radio>
+							</el-col>
+							<el-col :sm="24" :md="6" style="margin-top: 10px;">
+								<el-radio :label="4">交易订单号</el-radio>
+							</el-col>
+						</el-row>
+					</el-radio-group>
+				</div> -->
+				<div class="" style="border: 1px solid #dcdcdc;margin-top: 20px;">
+					<!-- <van-field v-model="inputs1.orderId" :placeholder="$t('message.enterOrderId')" v-if="radio1 == 3 || radio1 == 4"/>
+					<van-field v-model="inputs1.address" :placeholder="$t('message.enterAdress')" v-if="radio1 == 2"/>
+					<van-field v-model="inputs1.publicKey" :placeholder="$t('message.enterPublicKey')" v-if="radio1 == 1"/> -->
+					<van-field v-model="inputs1.password" :placeholder="$t('message.enterPrivateTips')"/>
+				</div>
+				<el-form ref="form" :model="form" class="form_nav">
+				  <el-form-item>
+				    <div style="border: 1px solid #dcdcdc">
+				      <van-field
+				        v-model="form.msg_decrypt"
+				        :placeholder="$t('message.encrypt')"
+				      />
+				    </div>
+				  </el-form-item>
+				</el-form>
+				<div class="" v-if="Plaintext != ''">
+					<span>{{$t('message.Plaintext')}}</span>
+					<div style="width: 100%;word-wrap: break-word;font-size: 11px;color: #666;margin-top: 10px;">
+						<span >{{Plaintext}}</span>
+						<el-link type="primary" class="marl-10" @click="copy(1)">{{$t('message.copy')}}</el-link>
+					</div>
+					
+				</div>
+			</div>
+            
+            <div class="btn">
+              <span @click="decrypt_message">{{ $t("message.decrypt") }}</span>
             </div>
           </div>
         </div>
@@ -386,6 +456,13 @@ export default {
 		dq.getNode()
 		dq.getNick_a()
 		dq.ruleChangeHideAuth();
+		dq.getPubKey(address).then(res=>{
+			// console.log(res);
+			dq.form.publickey = res
+			dq.form.publickeyCopy = res.replace("-----BEGIN PUBLIC KEY-----","").replace("-----END PUBLIC KEY-----","");
+		}).catch((err)=>{
+			console.log('获取公钥失败');
+		})
 	}).catch((err)=>{
 		web3 = new Web3(config["hyue"][config["key"]]["Url"]);
 		console.log(err);
@@ -416,6 +493,7 @@ export default {
         password: "",
         passwordAggin: "",
         publickey: "",
+		publickeyCopy: '',
 		privatekey: ""
       },
       regForm: {
@@ -438,6 +516,21 @@ export default {
         id: "",
         beizhu: "",
       },
+	  radio: 1,
+	  inputs:{
+		  orderId: '',
+		  publicKey: '',
+		  address: ''
+	  },
+	  radio1: 1,
+	  inputs1:{
+	  		  orderId: '',
+	  		  publicKey: '',
+	  		  address: '',
+			  password: ''
+	  },
+	  ciphertext: '',
+	  Plaintext: ''
     };
   },
   watch: {
@@ -454,6 +547,39 @@ export default {
     },
   },
   methods: {
+	async copy(val) {
+		await this.$nextTick(e => {})
+		var Url2 = document.querySelector(".copy .van-field__control");
+		if (val == 1  && !this.Plaintext) return
+		if(val == 0 && !this.ciphertext) return
+		const input = document.createElement('input');
+		document.body.appendChild(input);
+		input.setAttribute('value', val ==0 ? this.ciphertext : this.Plaintext);
+		input.select();
+		if (document.execCommand('copy')) {
+			document.execCommand('copy');
+			this.$toast('复制成功')
+		}
+		document.body.removeChild(input);
+	
+	},
+	// 通过用户id 获取公钥
+	  getPubKey(id){
+		  var beizhucon = new web3.eth.Contract(
+			config["hyue"][config["key"]]["Letter"]["abi"],
+			config["hyue"][config["key"]]["Letter"]["heyue"]
+		  );
+		  return new Promise((resolve,reject)=>{
+			  beizhucon.methods.message(id,15).call(function(error, ret) {
+				if (ret) {
+					let key = ret
+					resolve(key)
+				}else{
+					reject(error)
+				}
+			  });
+		  })
+	  },
     //读取用户默认备注
     getBz() {
       var dq = this;
@@ -803,37 +929,219 @@ export default {
         );
     },
     async apply_password() {
+	  var rep = /^[a-zA-Z\d_]{8,}$/
+	  if(!rep.test(this.form.password)){
+		  Toast('密码必须大于8位')
+		  return
+	  }
       if (this.form.password != this.form.passwordAggin) {
         alert(this.$t("message.applyPwd"));
         // alert("password mismatched")
       } else {
         const key = new SeededRSA(this.form.password);
-        console.log(key);
         const value = await key.generate(2048).catch(console.log);
-        console.log(value.publicKey);
-        this.form.publickey = value.publicKey;
-		this.form.privatekey = value.privateKey;
+		// 存到链上   15
+		var beizhucon = new web3.eth.Contract(
+		  config["hyue"][config["key"]]["Letter"]["abi"],
+		  config["hyue"][config["key"]]["Letter"]["heyue"]
+		);
+		var that = this
+		Toast.loading({ message: that.$t("message.loading")+'...' });
+		that.setPublicKey(beizhucon,value.publicKey).then(()=>{
+			Dialog.alert({
+			  title: that.$t("message.prompt"),
+			  message: that.$t("message.success"),
+			}).then(() => {
+				that.form.publickey = value.publicKey;
+				that.form.publickeyCopy = res.replace("-----BEGIN PUBLIC KEY-----","").replace("-----END PUBLIC KEY-----","")
+				that.form.privatekey = value.privateKey;
+				Toast.clear();
+			});
+		}).catch(()=>{
+				Dialog.alert({
+				  title: that.$t("message.prompt"),
+				  message: that.$t("message.failed"),
+				}).then(() => {
+				  Toast.clear();
+				});
+		})
       }
     },
-	encrypt_message() {
-	  console.log(Crypto)
-	  if (this.form.publickey == "" || this.form.msg_encrypt == "") {
-	    alert("empty publickey and message");
-	  }
-	  let pubkey = new JSEncrypt();
-	  pubkey.setPublicKey(this.form.publickey);
-	  let msg = pubkey.encrypt(this.form.msg_encrypt);
-	  this.form.msg_decrypt = msg
+	// 存公钥到链
+	setPublicKey(beizhucon,publicKey){
+		return new Promise((resolve,reject)=>{
+			beizhucon.methods .commun(15 + "", publicKey) .send( { from: address, }, (err, ret) => {
+				  if (ret && !err) {
+					resolve()
+				  } else {
+					reject()
+				  }
+				}
+			  );
+		})
 	},
-	decrypt_message() {
-	  if (this.form.privatekey == "" || this.form.msg_decrypt == "") {
-	    alert("empty publickey and message")
+	// 选择 获取公钥的方式
+	changeRadio(e){
+		this.inputs = {
+		  orderId: '',
+		  publicKey: '',
+		  address: ''
+		}
+	},
+	// 选择 公钥的方式
+	changeRadio1(e){
+		this.inputs1 = {
+		  orderId: '',
+		  publicKey: '',
+		  address: ''
+		}
+	},
+	// 点击加密
+	encrypt_message() {
+		if(this.radio == 1){  // 公钥加密
+			if(this.inputs.publicKey == "" || this.form.msg_encrypt == ""){
+				Toast('请输入明文或公钥')
+				return
+			}else{
+				let msg = this.encryption(this.inputs.publicKey,this.form.msg_encrypt)
+				if(!msg){
+					Toast('请输入正确的公钥')
+					return
+				}
+				this.ciphertext = msg
+			}
+		}else if(this.radio == 2){ // 地址获取公钥加密
+		    if(this.inputs.address == "" || this.form.msg_encrypt == ""){
+		    	Toast('请输入明文或地址')
+		    	return
+		    }else{
+				this.getPubKey(this.inputs.address).then(res=>{
+					let msg = this.encryption(res,this.form.msg_encrypt)
+					this.ciphertext = msg
+				}).catch((err)=>{
+					Toast('对方没有设置公钥')
+					console.log('获取公钥失败');
+				})
+			}
+			
+		}else if(this.radio == 3){   // 发布订单号者地址 获取公钥加密
+			if(this.inputs.orderId == "" || this.form.msg_encrypt == ""){
+				Toast('请输入明文或发布订单号')
+				return
+			}else{
+				let dotsconn = new web3.eth.Contract(dotc_abi, dotc_key);
+				dotsconn.methods.merch(this.inputs.orderId).call((error, ret) => {
+					if(ret.iorder>0){   //获取到了数据
+						// 获取到商家 地址
+						let address = ret.Mowner
+						this.getPubKey(address).then(res=>{
+							let msg = this.encryption(res,this.form.msg_encrypt)
+							this.ciphertext = msg
+						}).catch((err)=>{
+							Toast('对方没有设置公钥')
+							console.log('获取公钥失败');
+						})
+					}else{
+						Toast('订单号不存在')
+					}
+					
+				});
+			}
+		}else if(this.radio == 4){  // 交易订单号 获取对方公钥加密
+			if(this.inputs.orderId == "" || this.form.msg_encrypt == ""){
+				Toast('请输入明文或交易订单号')
+				return
+			}else{
+				this.getId(this.inputs.orderId).then(res => {
+					let {Uadd,Madd} = res
+					var id = ''
+					// 判断 当前用户是商家还是用户(转小写比较)    ？不是商家或用户
+					// 不是商家或用户
+					if(address != Uadd.toLowerCase() && address != Madd.toLowerCase()){
+						Toast('在该订单中不存在角色')
+						return
+					}
+					if (address == Uadd.toLowerCase()) {
+						id = Madd
+					} else {
+						id = Uadd
+					}
+					// console.log(Madd);
+					// console.log(Uadd);
+					// console.log(address);
+					this.getPubKey(id).then(res=>{
+						let msg = this.encryption(res,this.form.msg_encrypt)
+						this.ciphertext = msg
+					}).catch((err)=>{
+						Toast('对方没有设置公钥')
+						console.log('获取公钥失败');
+					})	
+				}).catch((err) => {
+					console.log('获取商家id和用户id失败');
+				})
+			}
+		}
+	},
+	// 加密
+	encryption(key,val){
+		let pubkey = new JSEncrypt();
+		pubkey.setPublicKey(key);
+		let msg = pubkey.encrypt(val);
+		return msg
+	},
+	// 解密
+	async decrypt_message() {
+	  if (this.inputs1.password == "" || this.form.msg_decrypt == "") {
+	    Toast('请输入私信密码或密文')
+	  }else{
+		  const key = new SeededRSA(this.inputs1.password);
+		  console.log(key);
+		  const value = await key.generate(2048).catch(console.log);
+		  let { publicKey,privateKey} = value
+		  let privkey = new JSEncrypt()
+		  privkey.setPrivateKey(privateKey)
+		  let origin = privkey.decrypt(this.form.msg_decrypt)
+		  let jsonOrigin = JSON.parse(Base64.decode(origin))
+		  let str = ''
+		  if (jsonOrigin.hasOwnProperty('phoneNuber')) {
+		  	str += this.$t('message.phoneNumber') + '：' + jsonOrigin.phoneNuber + ' '
+		  }
+		  if (jsonOrigin.hasOwnProperty('eMail')) {
+		  	str += this.$t('message.email') + '：' + jsonOrigin.eMail + ' '
+		  }
+		  if (jsonOrigin.hasOwnProperty('tele')) {
+		  	str += 'Tele：' + jsonOrigin.tele
+		  }
+		  if (jsonOrigin.hasOwnProperty('wechat')) {
+		  	str += this.$t('message.WeChat') + '：' + jsonOrigin.wechat + ' '
+		  }
+		  if (jsonOrigin.hasOwnProperty('other')) {
+		  	str += this.$t('message.other') + '：' + jsonOrigin.other + ' '
+		  }
+		  this.Plaintext = str
 	  }
-	  let privkey = new JSEncrypt()
-	  privkey.setPrivateKey(this.form.privatekey)
-	  let origin = privkey.decrypt(this.form.msg_decrypt)
-	  console.log("origin: ", origin)
-	}
+	  
+	},
+	
+	
+	
+	// 通过交易id  获取商家和用户id
+	getId(id) {
+		return new Promise((resolve, reject) => {
+			var dotsconn = new web3.eth.Contract(dotc_abi, dotc_key);
+			dotsconn.methods.users(id).call(function(error, ret) {
+				if (ret) {
+					let ids = {
+						Uadd: ret.Uadd,
+						Madd: ret.Madd
+					}
+					resolve(ids)
+				} else {
+					reject()
+				}
+			});
+		})
+	},
   },
 };
 </script>
