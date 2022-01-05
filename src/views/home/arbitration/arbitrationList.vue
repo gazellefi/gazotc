@@ -243,7 +243,7 @@
 	//模块
 	let Base64 = require('js-base64').Base64;
 	import Web3 from "web3";
-	import Web3Modal from "web3modal";
+	import tools from '@/api/public.js'
 	var address, web3, ArbOne, ArbTwo, GazConn, Dotc, Arbdate;
 	import { Dialog, Toast } from 'vant';
 	var hbilist = config['hbi'][config['key']];
@@ -350,65 +350,37 @@
 		  }
 		  
 		  //监测用户是否安装MASK
-		  if (typeof ethereum === "undefined") {
-		    web3 = new Web3(config['hyue'][config['key']]['Url']);
-		  } else {
-		    //初始化
-		    webinit();
-		  }
-		  async function webinit() {
-		    const providerOptions = {
-		      /* See Provider Options Section */
-		    };
-		    const web3Modal = new Web3Modal({
-		      network: "mainnet",
-		      cacheProvider: true,
-		      providerOptions,
-		    });
-		    var provider = await web3Modal.connect();
-		    web3 = new Web3(provider);
-		    if (web3 && provider) {
-		      //其他钱包使用测试网络
-		      // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-		      //     var wlcode = window.ethereum.networkVersion;
-		      //     //imtoken只能查看 无法操作 出发是ETF主网
-		      //     if (window.ethereum.isImToken) {
-		      //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-		      //     }
-		      //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-		      //     if (window.ethereum.isMetaMask && wlcode != 4) {
-		      //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-		      //     }
-		      // }else{
-		      //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
-		      // }
-		      address = provider.selectedAddress;
-		      ArbOne = new web3.eth.Contract(
-		        config['hyue'][config['key']]['ArbOne']['abi'],
-		        config['hyue'][config['key']]['ArbOne']['heyue']
-		      );
-		      ArbTwo = new web3.eth.Contract(
-		        config['hyue'][config['key']]['arbTwo']['abi'],
-		        config['hyue'][config['key']]['arbTwo']['heyue']
-		      );
-		      GazConn = new web3.eth.Contract(
-		        config['hyue'][config['key']]['gaz']['abi'],
-		        config['hyue'][config['key']]['gaz']['heyue']
-		      );
-		      Dotc = new web3.eth.Contract(
-		        config['hyue'][config['key']]['dotc']['abi'],
-		        config['hyue'][config['key']]['dotc']['heyue']
-		      );
-		      Arbdate = new web3.eth.Contract(
-		        config['hyue'][config['key']]['Arbdate']['abi'],
-		        config['hyue'][config['key']]['Arbdate']['heyue']
-		      );
-		      dq.getList()
-		      dq.user = address.toLowerCase();
-			  dq.getBalane()
-		      dq.tabindex = "3";
-		    }
-		  }
+		  tools.testMASK().then(res=>{
+		  	let {web,id} = res
+		  	web3 = web
+		  	address = id
+		  	ArbOne = new web3.eth.Contract(
+		  	  config['hyue'][config['key']]['ArbOne']['abi'],
+		  	  config['hyue'][config['key']]['ArbOne']['heyue']
+		  	);
+		  	ArbTwo = new web3.eth.Contract(
+		  	  config['hyue'][config['key']]['arbTwo']['abi'],
+		  	  config['hyue'][config['key']]['arbTwo']['heyue']
+		  	);
+		  	GazConn = new web3.eth.Contract(
+		  	  config['hyue'][config['key']]['gaz']['abi'],
+		  	  config['hyue'][config['key']]['gaz']['heyue']
+		  	);
+		  	Dotc = new web3.eth.Contract(
+		  	  config['hyue'][config['key']]['dotc']['abi'],
+		  	  config['hyue'][config['key']]['dotc']['heyue']
+		  	);
+		  	Arbdate = new web3.eth.Contract(
+		  	  config['hyue'][config['key']]['Arbdate']['abi'],
+		  	  config['hyue'][config['key']]['Arbdate']['heyue']
+		  	);
+		  	dq.getList()
+		  	dq.user = address.toLowerCase();
+		  	dq.getBalane()
+		  }).catch((err)=>{
+		  	web3 = new Web3(config["hyue"][config["key"]]["Url"]);
+		  	console.log(err);
+		  })
 		},
 		methods:{
 			async copy(value) {
@@ -436,7 +408,7 @@
 				var list = [];
 				ArbOne.methods.list_arbitrators().call((err, ret) => {
 				  if (ret) {
-					  console.log(ret)
+					  // console.log(ret)
 				    if (ret[2].length > 0) {
 				      var userarr = ret[0];
 				      var namearr = ret[1];
@@ -458,9 +430,9 @@
 				        obj['appl'] = Number(infoarr[index][4]);
 				        list.push(obj);
 				      }
-					  console.log(list)
+					  // console.log(list)
 				      dq.zc_list = list;
-					  console.log(dq.zc_list)
+					  // console.log(dq.zc_list)
 				    }
 				  }
 				});
@@ -468,91 +440,10 @@
 			
 			async getBalane(){
 				var dq = this
-				const providerOptions = {
-				  /* See Provider Options Section */
-				};
-				const web3Modal = new Web3Modal({
-				  // network: "mainnet",
-				  // cacheProvider: true,
-				  providerOptions,
-				});
-				var provider = await web3Modal.connect();
-				web3 = new Web3(provider);
-				// console.log(web3);
 				var proconn = new web3.eth.Contract(config['hbi'][config['key']][dq.hbilist[3]['title']]['abi'],config['hbi'][config['key']][dq.hbilist[3]['title']]['heyue']);
 				dq.balance = await proconn.methods.balanceOf(address).call();
-				console.log(dq.balance)
+				// console.log(dq.balance)
 			},
-    //如果过亿请转换
-    getFNum(num_str) {
-      num_str = num_str.toString();
-      if (num_str.indexOf("+") != -1) {
-        num_str = num_str.replace("+", "");
-      }
-      if (num_str.indexOf("E") != -1 || num_str.indexOf("e") != -1) {
-        var resValue = "",
-          power = "",
-          result = null,
-          dotIndex = 0,
-          resArr = [],
-          sym = "";
-        var numStr = num_str.toString();
-        if (numStr[0] == "-") {
-          // 如果为负数，转成正数处理，先去掉‘-’号，并保存‘-’.
-          numStr = numStr.substr(1);
-          sym = "-";
-        }
-        if (numStr.indexOf("E") != -1 || numStr.indexOf("e") != -1) {
-          var regExp = new RegExp(
-            "^(((\\d+.?\\d+)|(\\d+))[Ee]{1}((-(\\d+))|(\\d+)))$",
-            "ig"
-          );
-          result = regExp.exec(numStr);
-          console.log(1324)
-          console.log(result)
-          if (result != null) {
-            resValue = result[2];
-            power = result[5];
-            result = null;
-          }
-          console.log(!resValue)
-          console.log(!power)
-          if (!resValue && !power) {
-            return false;
-          }
-          dotIndex = resValue.indexOf(".") == -1 ? 0 : resValue.indexOf(".");
-          resValue = resValue.replace(".", "");
-          resArr = resValue.split("");
-          console.log(resArr)
-          if (Number(power) >= 0) {
-            var subres = resValue.substr(dotIndex);
-            var length = dotIndex == 0 ? 0 : subres.length;
-            power = Number(power);
-            //幂数大于小数点后面的数字位数时，后面加0
-            for (var i = 0; i < power - length; i++) {
-              resArr.push("0");
-            }
-            if (power - subres.length < 0) {
-              resArr.splice(dotIndex + power, 0, ".");
-            }
-          } else {
-            power = power.replace("-", "");
-            power = Number(power);
-            //幂数大于等于 小数点的index位置, 前面加0
-            for (let i = 0; i < power - dotIndex; i++) {
-              resArr.unshift("0");
-            }
-            var n = power - dotIndex >= 0 ? 1 : -(power - dotIndex);
-            resArr.splice(n, 0, ".");
-          }
-        }
-        resValue = resArr.join("");
-
-        return sym + resValue;
-      } else {
-        return num_str;
-      }
-    },
 			//邀请仲裁者
 			async yaoqingajax(row) {
 			  this.btnType = 1
@@ -676,7 +567,7 @@
 			      }).then(() => { }).catch(() => { });
 			      return;
 			    }
-			    var tk_je = dq.getFNum(this.sq_zc_data['je'] * (10 ** bzjnum));
+			    var tk_je = tools.getnume(this.sq_zc_data['je'] * (10 ** bzjnum));
 				console.log(this.sq_zc_data['je'])
 			    console.log(tk_je,bzjnum)
 			    //执行提款AJAX exitArb
@@ -754,8 +645,8 @@
 			
 			  //提交申请
 			  function add_sq_ajax() {
-			    var num = dq.getFNum(Number(dq.sq_zc_data['je']) * (10 ** bzjnum));
-			    //var cznum = dq.getFNum(Number(dq.je) * (10**dq.hbilist[dq.hbindex]['num']));
+			    var num = tools.getnume(Number(dq.sq_zc_data['je']) * (10 ** bzjnum));
+			    //var cznum = tools.getnume(Number(dq.je) * (10**dq.hbilist[dq.hbindex]['num']));
 			    //执行报名 arbApply
 			    ArbOne.methods.arbApply(num + "").send({
 			      from: address

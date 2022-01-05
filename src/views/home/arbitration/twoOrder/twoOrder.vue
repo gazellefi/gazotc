@@ -193,8 +193,8 @@
 	var bzjnum = config['hyue'][config['key']]['Bzj']['num'];
 	//模块
 	let Base64 = require('js-base64').Base64;
+	import tools from '@/api/public.js'
 	import Web3 from "web3";
-	import Web3Modal from "web3modal";
 	import {
 		Dialog,
 		Toast
@@ -250,13 +250,36 @@
 		},
 		created() {
 			var dq = this;
-			//监测用户是否安装MASK
-			if (typeof ethereum === "undefined") {
+			tools.testMASK().then(res=>{
+				let {web,id} = res
+				web3 = web
+				address = id
+				ArbOne = new web3.eth.Contract(
+					config['hyue'][config['key']]['ArbOne']['abi'],
+						config['hyue'][config['key']]['ArbOne']['heyue']
+					);
+					ArbTwo = new web3.eth.Contract(
+						config['hyue'][config['key']]['arbTwo']['abi'],
+						config['hyue'][config['key']]['arbTwo']['heyue']
+					);
+				// 	GazConn = new web3.eth.Contract(
+				// 		config['hyue'][config['key']]['gaz']['abi'],
+				// 		config['hyue'][config['key']]['gaz']['heyue']
+				// );
+				// Dotc = new web3.eth.Contract(
+				// 		config['hyue'][config['key']]['dotc']['abi'],
+				// 		config['hyue'][config['key']]['dotc']['heyue']
+				// 	);
+				// 	Arbdate = new web3.eth.Contract(
+				// 		config['hyue'][config['key']]['Arbdate']['abi'],
+				// 		config['hyue'][config['key']]['Arbdate']['heyue']
+				// 	);
+					dq.getList()
+					dq.user = address.toLowerCase();
+			}).catch((err)=>{
 				web3 = new Web3(config['hyue'][config['key']]['Url']);
-			} else {
-				//初始化
-				this.webinit();
-			}
+				console.log(err);
+			})
 		},
 		methods: {
 			openqb(e) {

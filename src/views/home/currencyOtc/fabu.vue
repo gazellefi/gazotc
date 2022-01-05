@@ -94,7 +94,7 @@
 </template>
 <script>
 import config from "@/config";
-
+import Web3 from "web3";
 var ccdotc_abi = config["hyue"][config["key"]]["Ccdotc"]["abi"];
 var ccdotc_key = config["hyue"][config["key"]]["Ccdotc"]["heyue"];
 
@@ -118,12 +118,13 @@ export default {
 		let {web,id} = res
 		web3 = web
 		address = id
-		console.log(res);
 		ccdotconn = new web3.eth.Contract(ccdotc_abi, ccdotc_key);
 		// 获取余额
 		dq.getproyue();
 	}).catch((err)=>{
-		console.log(2222);
+		web3 = new Web3(config["hyue"][config["key"]]["Url"]);
+		ccdotconn = new web3.eth.Contract(ccdotc_abi, ccdotc_key);
+		console.log(err);
 	})
   },
   mounted() {
@@ -164,71 +165,6 @@ export default {
   //   },
   // },
   methods: {
-    //如果过亿请转换
-    getFNum(num_str) {
-      num_str = num_str.toString();
-      if (num_str.indexOf("+") != -1) {
-        num_str = num_str.replace("+", "");
-      }
-      if (num_str.indexOf("E") != -1 || num_str.indexOf("e") != -1) {
-        var resValue = "",
-          power = "",
-          result = null,
-          dotIndex = 0,
-          resArr = [],
-          sym = "";
-        var numStr = num_str.toString();
-        if (numStr[0] == "-") {
-          // 如果为负数，转成正数处理，先去掉‘-’号，并保存‘-’.
-          numStr = numStr.substr(1);
-          sym = "-";
-        }
-        if (numStr.indexOf("E") != -1 || numStr.indexOf("e") != -1) {
-          var regExp = new RegExp(
-            "^(((\\d+.?\\d+)|(\\d+))[Ee]{1}((-(\\d+))|(\\d+)))$",
-            "ig"
-          );
-          result = regExp.exec(numStr);
-          if (result != null) {
-            resValue = result[2];
-            power = result[5];
-            result = null;
-          }
-          if (!resValue && !power) {
-            return false;
-          }
-          dotIndex = resValue.indexOf(".") == -1 ? 0 : resValue.indexOf(".");
-          resValue = resValue.replace(".", "");
-          resArr = resValue.split("");
-          if (Number(power) >= 0) {
-            var subres = resValue.substr(dotIndex);
-            var length = dotIndex == 0 ? 0 : subres.length;
-            power = Number(power);
-            //幂数大于小数点后面的数字位数时，后面加0
-            for (var i = 0; i < power - length; i++) {
-              resArr.push("0");
-            }
-            if (power - subres.length < 0) {
-              resArr.splice(dotIndex + power, 0, ".");
-            }
-          } else {
-            power = power.replace("-", "");
-            power = Number(power);
-            //幂数大于等于 小数点的index位置, 前面加0
-            for (let i = 0; i < power - dotIndex; i++) {
-              resArr.unshift("0");
-            }
-            var n = power - dotIndex >= 0 ? 1 : -(power - dotIndex);
-            resArr.splice(n, 0, ".");
-          }
-        }
-        resValue = resArr.join("");
-
-        return sym + resValue;
-      } else {
-        return num_str;
-      }
-    },
 	//  获取余额
     getproyue() {
 		if(this.isFrist){
@@ -292,9 +228,9 @@ export default {
           break;
         }
       }
-      var a = this.getFNum(this.form.num * 10 ** num);
-      var b = this.getFNum(this.form.danj * 10 ** 6);
-      var c = this.getFNum(this.form["zdnum"] * 10 ** num);
+      var a = tools.getnume(this.form.num * 10 ** num);
+      var b = tools.getnume(this.form.danj * 10 ** 6);
+      var c = tools.getnume(this.form["zdnum"] * 10 ** num);
 
       ccdotconn.methods.setccotc(heyue, heyue_b, a + "", b + "", c + "").send(
         {

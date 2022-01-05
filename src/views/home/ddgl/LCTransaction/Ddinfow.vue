@@ -400,8 +400,7 @@
 	var bzj_num = config["hyue"][config["key"]]["Bzj"]["num"];
 	var uarm;
 
-	import Web3 from "web3"
-	import Web3Modal from "web3modal"
+	import tools from '@/api/public.js'
 	import moment from "moment";
 	import {
 		Dialog
@@ -435,78 +434,50 @@
 			} else {
 				this.ddidcode = true;
 			}
-
-			if (typeof ethereum === 'undefined') {
-				alert('Please install the metamask plug-in first');
-			} else {
-				//初始化
-				webinit();
-			}
-			async function webinit() {
-				const providerOptions = {
-					/* See Provider Options Section */
-				};
-				const web3Modal = new Web3Modal({
-					network: "mainnet",
-					cacheProvider: true,
-					providerOptions
-				});
-				var provider = await web3Modal.connect();
-				web3 = new Web3(provider);
-				if (web3 && provider) {
-					//其他钱包使用测试网络
-					// if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-					//     var wlcode = window.ethereum.networkVersion;
-					//     //imtoken只能查看 无法操作 出发是ETF主网
-					//     if (window.ethereum.isImToken) {
-					//         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-					//     }
-					//     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-					//     if (window.ethereum.isMetaMask && wlcode != 4) {
-					//         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-					//     }
-					// }else{
-					//     web3.setProvider(config["hyue"][config["key"]]["Url"]);
-					// }
-					address = provider.selectedAddress;
-					dq.dquser = address;
-					if (dq.ddid) {
-						dq.getddinfo(dq.ddid);
-						dq.getId(dq.ddid).then(res => {
-							let {
-								Uadd,
-								Madd
-							} = res
-							var id = ''
-							// 判断 当前用户是商家还是用户(转小写比较)
-							if (address == Uadd.toLowerCase()) {
-								id = Madd
-							} else {
-								id = Uadd
+			
+			tools.testMASK().then(res=>{
+				let {web,id} = res
+				web3 = web
+				address = id
+				dq.dquser = address;
+				if (dq.ddid) {
+					dq.getddinfo(dq.ddid);
+					dq.getId(dq.ddid).then(res => {
+						let {
+							Uadd,
+							Madd
+						} = res
+						var id = ''
+						// 判断 当前用户是商家还是用户(转小写比较)
+						if (address == Uadd.toLowerCase()) {
+							id = Madd
+						} else {
+							id = Uadd
+						}
+						// 通过对方id 获取返回id
+						dq.getHasLetter(id).then(res => {
+							//  返回id 等于 此订单id  获取公钥
+							console.log(res);
+							if (res == dq.ddid) {
+								// 获取 私信内容
+								dq.getLetter(id).then(res => {
+									dq.letter = res
+								}).catch((err) => {
+									console.log('获取私信失败');
+								})
 							}
-							// 通过对方id 获取返回id
-							dq.getHasLetter(id).then(res => {
-								//  返回id 等于 此订单id  获取公钥
-								console.log(res);
-								if (res == dq.ddid) {
-									// 获取 私信内容
-									dq.getLetter(id).then(res => {
-										dq.letter = res
-									}).catch((err) => {
-										console.log('获取私信失败');
-									})
-								}
-							}).catch((err) => {
-								console.log('获取id失败');
-							})
-
-
 						}).catch((err) => {
-							console.log('获取商家id和用户id失败');
+							console.log('获取id失败');
 						})
-					}
+				
+				
+					}).catch((err) => {
+						console.log('获取商家id和用户id失败');
+					})
 				}
-			}
+			}).catch((err)=>{
+				console.log(err);
+			})
 
 
 		},

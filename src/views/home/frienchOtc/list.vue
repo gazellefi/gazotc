@@ -182,6 +182,7 @@
 </template>
 <script>
 import tools from '@/api/public.js'
+import Web3 from "web3"
 // import Mairu from './Mairu'
 import myDialog from '@/components/myDialog'
 import config from "@/config";
@@ -191,7 +192,7 @@ import Choose from '@/components/chooseChange.vue'
 
 var Address = "";
 var web3 = "";
-
+var dotsconn;
 var dotc_abi = config["hyue"][config["key"]]["dotc"]["abi"];
 var dotc_heyue = config["hyue"][config["key"]]["dotc"]["heyue"];
 var huobiarr = config["hbi"][config["key"]];
@@ -234,8 +235,12 @@ export default{
 		let {web,id} = res
 		web3 = web
 		Address = id
+		dotsconn = new web3.eth.Contract(dotc_abi, dotc_heyue);
 		dq.getlist(dq.tcode, dq.huobi, dq.fabi);
 	}).catch((err)=>{
+		web3 = new Web3(config["hyue"][config["key"]]["Url"]);
+		dotsconn = new web3.eth.Contract(dotc_abi, dotc_heyue);
+		dq.getlist(dq.tcode, dq.huobi, dq.fabi);
 		console.log(err);
 	})
   },
@@ -301,7 +306,7 @@ export default{
     getlist(tcode, huobi, fabi) {
       var dq = this;
       dq.loading = true;
-      var dotsconn = new web3.eth.Contract(dotc_abi, dotc_heyue);
+      
       var order_type = "";
       var asset_type = "";
       var money_type = "";

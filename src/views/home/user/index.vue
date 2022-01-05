@@ -320,6 +320,7 @@
   </div>
 </template>
 <script>
+import Web3 from "web3";
 import api from "@/api/api";
 import Sha256 from "crypto-js/sha256";
 import { Base64 } from "js-base64";
@@ -334,8 +335,7 @@ import QRCodeModal from "@walletconnect/qrcode-modal";
 import { Notify, Dialog, Toast } from "vant";
 import CryptoJs from "crypto-js";
 import Beizhujson from "@/conn/Beizhu.json";
-import Web3 from "web3";
-import Web3Modal from "web3modal";
+import tools from '@/api/public.js'
 import config from "@/config";
 
 var web3 = "";
@@ -357,13 +357,6 @@ export default {
     if (Beizhujson) {
       this.clist = Beizhujson;
     }
-    //监测用户是否安装MASK
-    if (typeof ethereum === "undefined") {
-      web3 = new Web3(config["hyue"][config["key"]]["Url"]);
-    } else {
-      //初始化
-      webinit();
-    }
     var dq = this;
     if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
       dq.isphone = true;
@@ -377,47 +370,26 @@ export default {
     if (dq.$route.query.ref) {
       dq.recommender = dq.$route.query.user;
     }
-    async function webinit() {
-      const providerOptions = {
-        /* See Provider Options Section */
-      };
-      const web3Modal = new Web3Modal({
-        network: "mainnet",
-        cacheProvider: true,
-        providerOptions,
-      });
-      var provider = await web3Modal.connect();
-      web3 = new Web3(provider);
-      if (web3 && provider) {
-        //其他钱包使用测试网络
-        // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-        //     var wlcode = window.ethereum.networkVersion;
-        //     //imtoken只能查看 无法操作 出发是ETF主网
-        //     if (window.ethereum.isImToken) {
-        //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-        //     }
-        //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-        //     if (window.ethereum.isMetaMask && wlcode != 4) {
-        //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-        //     }
-        // }else{
-        //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
-        // }
-        address = provider.selectedAddress;
-        dq.address = address;
-        dq.address = address;
-        if (dq.address.length > 20) {
-          let stars = "****";
-          dq.addressRm =
-            dq.address.substr(0, 4) +
-            stars +
-            dq.address.substr(dq.address.length - 4);
-        }
-        dq.getsczc();
-        dq.getBz();
-        dq.ruleChangeHideAuth();
-      }
-    }
+	tools.testMASK().then(res=>{
+		let {web,id} = res
+		web3 = web
+		address = dq.address = id
+		if (dq.address.length > 20) {
+		  let stars = "****";
+		  dq.addressRm =
+		    dq.address.substr(0, 4) +
+		    stars +
+		    dq.address.substr(dq.address.length - 4);
+		}
+		dq.getsczc();
+		dq.getBz();
+		dq.getNode()
+		dq.getNick_a()
+		dq.ruleChangeHideAuth();
+	}).catch((err)=>{
+		web3 = new Web3(config["hyue"][config["key"]]["Url"]);
+		console.log(err);
+	})
   },
   data() {
     return {
@@ -498,13 +470,40 @@ export default {
           }
         });
     },
+	// 获取节点
+	getNode(){
+		var dq = this;
+		var beizhucon = new web3.eth.Contract(
+		  config["hyue"][config["key"]]["dotc"]["abi"],
+		  config["hyue"][config["key"]]["dotc"]["heyue"]
+		);
+		beizhucon.methods
+		  .message(dq.user ? dq.user : address + "", 7)
+		  .call((err, ret) => {
+		    if (ret) {
+		      let str = Base64.decode(ret);
+		      dq.beizhu_arr.team_beizhu = str;
+		    }
+		  });
+	},
+	// 获取仲裁昵称
+	async getNick_a(){
+		var dq = this;
+		var ArbOne = new web3.eth.Contract(
+		  config['hyue'][config['key']]['ArbOne']['abi'],
+		  config['hyue'][config['key']]['ArbOne']['heyue']
+		);
+		var uname = await ArbOne.methods.message(address + "", "0").call();
+		dq.beizhu_arr.zc_beizhu = uname ? Base64.decode(uname) : '未填写';
+		// console.log(str);
+	},
 
     // 获取 基本信息
     async getsczc() {
       Toast.loading({ message: "查询中..." });
       var dotc = new web3.eth.Contract(dotc_abi, dotc_key);
       var data = await dotc.methods.message(address, 0).call();
-      console.log(data);
+      // console.log(data);
       // this.str1 = data;
       let arr = data.split("|");
       this.nickname = Base64.decode(arr[0]);
@@ -725,6 +724,7 @@ export default {
           config["hyue"][config["key"]]["ArbOne"]["abi"],
           config["hyue"][config["key"]]["ArbOne"]["heyue"]
         );
+		console.log(this.regForm.zc_beizhu);
         zcbeizhucon.methods
           .commun(0 + "", Base64.encode(this.regForm.zc_beizhu + ""))
           .send(
