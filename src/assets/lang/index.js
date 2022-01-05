@@ -151,6 +151,11 @@ export default {
 			hour:'H',
 			minute:'M',
 			second:'S',
+			PagecontactDes:"Send us your suggestions, comments and concerns by filling out this form. Please keep in mind that while we do review all emails that come in, we can't respond to every one of them.",
+			userName:'Your name',
+			userEmail:'Your email address*',
+			enterEmail:'Required',
+			leaveMessage:'Subject',
 			frienchOtc:{
 				select:'Please Select',
 				submiting:'Submiting',
@@ -266,6 +271,13 @@ export default {
 				companyNum: 'Company Number 13702258',
 				address: 'Address: 69, Aberdeen Avenue, Cambridge, England, CB2 8DL',
 				terms: 'Terms Privacy CA Privacy Copyright Cookies',
+				aboutUs:'About Us',
+				aboutUsContent:'Gazelle is committed to providing users with a small, sophisticated DOTC platform that is secure, convenient, and community-governed.  Solve an integral part of the DEFI ecosystem: OTC legal coin business.  GAZOTC takes advantage of the high efficiency of network execution on BSC and operates with Dapp smart contracts, which are peer-to-peer transactions between users.  The platform has three mechanisms: 1. Asset security mechanism.  2. Dispute resolution mechanism.  3. Anti-money laundering mechanisms.  GAZOTC provides highly rated audit reports through Certik contract audit. In addition, GAZOTC covers the whole security aspect, including anti-black money mechanism, anti-freeze card mechanism and arbitration committee mechanism to ensure the safe conduct of transactions.  Security deposit + distributed arbitration system is adopted to ensure the security of user assets.',
+				cooperator:'Cooperator',
+				textD:'Text Document',
+				videoD:'Video Document',
+				otherD:'Other Document'
+				
 			},
 			arbitration: {
 				invitetion: 'Invitation of arbitrators',
@@ -817,6 +829,12 @@ export default {
 			hour:'时',
 			minute:'分',
 			second:'秒',
+			PagecontactDes:"请填写此表格，将您的建议、意见和关注事项发送给我们。 请记住，虽然我们会审阅所有收到的电子邮件，但我们不可能回复每一封。",
+			userName:'你的名字',
+			userEmail:'你的电子邮件地址*',
+			enterEmail:'请输入电子邮件地址',
+			leaveMessage:'主题',
+			
 			frienchOtc:{
 				select:'请选择',
 				submiting:'提交中...',
@@ -930,6 +948,12 @@ export default {
 				companyNum: '公司编号 13702258',
 				address: '地址：69, Aberdeen Avenue, Cambridge, England, CB2 8DL',
 				terms: '服务条款   欧洲隐私保护 美国隐私隐私 版权 Cookies',
+				aboutUs:'关于我们',
+				aboutUsContent:'Gazelle致力于为用户提供小而精的DOTC服务，打造安全、便捷、社区自治的DOTC平台。解决D EFI生态中不可或缺的环节：OTC法币业务。GAZOTC利用在BSC上的网络执行的高效性，采取Dapp智能合约运行，用户与用户 之间采取点对点对应的交易方式。平台具有三大机制：3.资产安全机制。2.争议解决机制。3.反洗钱机制。GAZOTC经由Certik合 约专业审计给出评价较高的审计报告，同时GAZOTC在整个安全方面涵盖了防黑钱机制，防冻卡机制以及仲裁委员会机制下保证交易 安全的进行。采用保证金+分布式仲裁制度，确保用户资产安全。',
+				cooperator:'合作者',
+				textD:'文本文档',
+				videoD:'视频文档',
+				otherD:'其他文档'
 			},
 			arbitration: {
 

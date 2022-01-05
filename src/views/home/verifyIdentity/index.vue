@@ -108,7 +108,6 @@
 	import config from "../../../config.js";
 	import { Toast } from "vant";
 	import axios from "axios";
-	import lang from "@/components/lang";
 	import QRCode from "qrcodejs2";
 	import WalletConnectProvider from "@walletconnect/web3-provider";
 	import QRCodeModal from "@walletconnect/qrcode-modal";
@@ -132,11 +131,11 @@
 	export default {
 		data(){
 			return{
-				showStepOne:false,
+				showStepOne:true,
 				showStepTwo:false,
 				showStepThree:false,
-				showStepFour:true,
-				showFourBtn:true,
+				showStepFour:false,
+				showFourBtn:false,
 				showPhoto:false,
 				showPhotoTwo:false,
 				showPhotoThree:false,
@@ -251,7 +250,6 @@
 				  })
 					.then((res) => {
 						if(res.code==0){
-							console.log(111);
 							this.showPhotoTwo=true;
 							this.showPhoto=false;
 						}
@@ -279,7 +277,6 @@
 						console.log(res)
 						console.log('success');
 						if(res.code==0){
-							console.log(111);
 							this.showPhotoTwo=false;
 							this.showPhotoThree=true;
 						}

@@ -136,7 +136,7 @@ export default {
 		{ title: 'Dapp', route: '/Exchange',value: 6 },
 		{ title: 'Paper', route: '/GazOTC',value: 7 },
 		{ title: 'Contact', route: '/contact',value: 8 },
-        { title: 'Activities', route: '/Activities',value: 9 },
+        // { title: 'Activities', route: '/Activities',value: 9 },
       ],
 	  activeIndex: 1
     };
