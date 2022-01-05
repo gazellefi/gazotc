@@ -278,12 +278,16 @@ export default {
 				address: 'Address: 69, Aberdeen Avenue, Cambridge, England, CB2 8DL',
 				terms: 'Terms Privacy CA Privacy Copyright Cookies',
 				aboutUs:'About Us',
-				aboutUsContent:'Gazelle is committed to providing users with a small, sophisticated DOTC platform that is secure, convenient, and community-governed.  Solve an integral part of the DEFI ecosystem: OTC legal coin business.  GAZOTC takes advantage of the high efficiency of network execution on BSC and operates with Dapp smart contracts, which are peer-to-peer transactions between users.  The platform has three mechanisms: 1. Asset security mechanism.  2. Dispute resolution mechanism.  3. Anti-money laundering mechanisms.  GAZOTC provides highly rated audit reports through Certik contract audit. In addition, GAZOTC covers the whole security aspect, including anti-black money mechanism, anti-freeze card mechanism and arbitration committee mechanism to ensure the safe conduct of transactions.  Security deposit + distributed arbitration system is adopted to ensure the security of user assets.',
+				aboutUsContent1:'Gazelle is committed to providing users with a small, sophisticated DOTC platform that is secure, convenient, and community-governed.  Solve an integral part of the DEFI ecosystem: OTC legal coin business.  GAZOTC takes advantage of the high efficiency of network execution on BSC and operates with Dapp smart contracts, which are peer-to-peer transactions between users.  The platform has three mechanisms:',
+				aboutUsContent2:'1. Asset security mechanism.',
+				aboutUsContent3:'2. Dispute resolution mechanism.',
+				aboutUsContent4:'3. Anti-money laundering mechanisms.',
+				aboutUsContent5:'GAZOTC provides highly rated audit reports through Certik contract audit. In addition, GAZOTC covers the whole security aspect, including anti-black money mechanism, anti-freeze card mechanism and arbitration committee mechanism to ensure the safe conduct of transactions.  Security deposit + distributed arbitration system is adopted to ensure the security of user assets.',
 				cooperator:'Cooperator',
 				textD:'Text Document',
 				videoD:'Video Document',
-				otherD:'Other Document'
-				
+				otherD:'Other Document',
+				merryChristmas:'Merry Christmas！！！',
 			},
 			arbitration: {
 				invitetion: 'Invitation of arbitrators',
@@ -961,11 +965,16 @@ export default {
 				address: '地址：69, Aberdeen Avenue, Cambridge, England, CB2 8DL',
 				terms: '服务条款   欧洲隐私保护 美国隐私隐私 版权 Cookies',
 				aboutUs:'关于我们',
-				aboutUsContent:'Gazelle致力于为用户提供小而精的DOTC服务，打造安全、便捷、社区自治的DOTC平台。解决D EFI生态中不可或缺的环节：OTC法币业务。GAZOTC利用在BSC上的网络执行的高效性，采取Dapp智能合约运行，用户与用户 之间采取点对点对应的交易方式。平台具有三大机制：3.资产安全机制。2.争议解决机制。3.反洗钱机制。GAZOTC经由Certik合 约专业审计给出评价较高的审计报告，同时GAZOTC在整个安全方面涵盖了防黑钱机制，防冻卡机制以及仲裁委员会机制下保证交易 安全的进行。采用保证金+分布式仲裁制度，确保用户资产安全。',
+				aboutUsContent1:'Gazelle致力于为用户提供小而精的DOTC服务，打造安全、便捷、社区自治的DOTC平台。解决D EFI生态中不可或缺的环节：OTC法币业务。GAZOTC利用在BSC上的网络执行的高效性，采取Dapp智能合约运行，用户与用户 之间采取点对点对应的交易方式。平台具有三大机制：',
+				aboutUsContent2:'1.资产安全机制。',
+				aboutUsContent3:'2.争议解决机制。',
+				aboutUsContent4:'3.反洗钱机制。',
+				aboutUsContent5:'GAZOTC经由Certik合 约专业审计给出评价较高的审计报告，同时GAZOTC在整个安全方面涵盖了防黑钱机制，防冻卡机制以及仲裁委员会机制下保证交易 安全的进行。采用保证金+分布式仲裁制度，确保用户资产安全。',
 				cooperator:'合作者',
 				textD:'文本文档',
 				videoD:'视频文档',
-				otherD:'其他文档'
+				otherD:'其他文档',
+				merryChristmas:'圣诞快乐！！！',
 			},
 			arbitration: {
 

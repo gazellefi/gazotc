@@ -1,9 +1,20 @@
 <template>
 	<div class="about_content fc a_c">
+		<div class="f a_c c_c" style="height: 315px;margin-top: 3.75rem;width:100%;">
+			<el-carousel :autoplay="false"  arrow="nerver"  indicator-position="none" height="100%">
+			  <el-carousel-item style="position:relative">
+			    <img src="../../assets/img/giphy.gif" alt="" style="width:100%;">
+			  </el-carousel-item>
+			</el-carousel>
+		</div>
 		<el-row type="flex" justify="center">
 			<el-col :sm="24" :md="12" class="des_nav fc fz18">
 				<span class="fwb" style="font-size: 30px;">{{$t('message.home.aboutUs')}}：</span>
-				<span class="des_text">{{$t('message.home.aboutUsContent')}}</span>
+				<span class="des_text">{{$t('message.home.aboutUsContent1')}}</span><br>
+				<span class="des_text">{{$t('message.home.aboutUsContent2')}}</span><br>
+				<span class="des_text">{{$t('message.home.aboutUsContent3')}}</span><br>
+				<span class="des_text">{{$t('message.home.aboutUsContent4')}}</span><br>
+				<span class="des_text">{{$t('message.home.aboutUsContent5')}}</span>
 			</el-col>
 			<el-col :sm="24" :md="12" class="des_nav fc fz14 des_img">
 				<img src="../../assets/img/aboutUs.png"  style="width: 100%;">
@@ -74,6 +85,9 @@
 </script>
 
 <style lang="less" scoped="scoped">
+	/deep/.el-carousel__arrow{
+		opacity: 0;
+	}
 	.about_content{
 	  margin: 80px auto;
 	  height: 100%;
@@ -82,10 +96,12 @@
 			padding: 0 20px;
 			.des_text{
 				display: block;
-				padding-top: 20px;
 				text-indent: 2em;
 				line-height: 150%;
 				color: #333;
+			}
+			.des_text:first-of-type{
+				padding-top: 20px;
 			}
 		}
 	}
@@ -97,6 +113,7 @@
 	}
 	.mediaBox{
 		margin-top: 191px;
+		margin-bottom: 50px;
 		.title{
 			font-size: 36px;
 			font-weight: bold;
@@ -139,6 +156,9 @@
 	@media screen and (max-width: 991px){
 		.des_img{
 			display: none;
+		}
+		.a_c{
+			margin-top: 0px !important;
 		}
 	}
 </style>
