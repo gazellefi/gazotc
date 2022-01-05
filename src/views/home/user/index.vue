@@ -1101,24 +1101,29 @@ export default {
 		  let privkey = new JSEncrypt()
 		  privkey.setPrivateKey(privateKey)
 		  let origin = privkey.decrypt(this.form.msg_decrypt)
-		  let jsonOrigin = JSON.parse(Base64.decode(origin))
-		  let str = ''
-		  if (jsonOrigin.hasOwnProperty('phoneNuber')) {
-		  	str += this.$t('message.phoneNumber') + '：' + jsonOrigin.phoneNuber + ' '
+		  if(origin){
+			  let jsonOrigin = JSON.parse(Base64.decode(origin))
+			  let str = ''
+			  if (jsonOrigin.hasOwnProperty('phoneNuber')) {
+			  	str += this.$t('message.phoneNumber') + '：' + jsonOrigin.phoneNuber + ' '
+			  }
+			  if (jsonOrigin.hasOwnProperty('eMail')) {
+			  	str += this.$t('message.email') + '：' + jsonOrigin.eMail + ' '
+			  }
+			  if (jsonOrigin.hasOwnProperty('tele')) {
+			  	str += 'Tele：' + jsonOrigin.tele
+			  }
+			  if (jsonOrigin.hasOwnProperty('wechat')) {
+			  	str += this.$t('message.WeChat') + '：' + jsonOrigin.wechat + ' '
+			  }
+			  if (jsonOrigin.hasOwnProperty('other')) {
+			  	str += this.$t('message.other') + '：' + jsonOrigin.other + ' '
+			  }
+			  this.Plaintext = str
+		  }else{
+			  Toast('请输入密码有误')
 		  }
-		  if (jsonOrigin.hasOwnProperty('eMail')) {
-		  	str += this.$t('message.email') + '：' + jsonOrigin.eMail + ' '
-		  }
-		  if (jsonOrigin.hasOwnProperty('tele')) {
-		  	str += 'Tele：' + jsonOrigin.tele
-		  }
-		  if (jsonOrigin.hasOwnProperty('wechat')) {
-		  	str += this.$t('message.WeChat') + '：' + jsonOrigin.wechat + ' '
-		  }
-		  if (jsonOrigin.hasOwnProperty('other')) {
-		  	str += this.$t('message.other') + '：' + jsonOrigin.other + ' '
-		  }
-		  this.Plaintext = str
+		  
 	  }
 	  
 	},
