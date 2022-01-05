@@ -80,8 +80,15 @@
 				<div class="photoBox" v-show="showPhotoTwo">
 					<img class="imgFace" :src="srcImg2" id="img"/>
 					<button type="button" class="faceBox" v-show="srcImg2==''">上传身份证背面</button>
-					<input id="fileBtn" type="file" @change="upload2('#fileBtn', '#img');" accept="image/*" multiple  v-show="srcImg2==''"/>
+					<input id="fileBtn1" type="file" @change="upload2('#fileBtn1', '#img');" accept="image/*" multiple  v-show="srcImg2==''"/>
 					<button type="button" class="faceBox"  v-show="srcImg2!=''" @click="showStepGo(6)">下一步</button>
+				</div>
+				
+				<div class="photoBox" v-show="showPhotoThree">
+					<img class="imgFace" :src="srcImg3" id="img"/>
+					<button type="button" class="faceBox" v-show="srcImg3==''">上传人脸照片</button>
+					<input id="fileBtn2" type="file" @change="upload3('#fileBtn2', '#img');" accept="image/*" multiple  v-show="srcImg3==''"/>
+					<button type="button" class="faceBox"  v-show="srcImg3!=''" @click="showStepGo(7)">下一步</button>
 				</div>
 			</div>
 		</div>
@@ -93,16 +100,34 @@
 	// import { ref } from 'vue'
 	
 	// const value = ref('')
-	
-	import api from "@/api/api";
-	import { Base64 } from "js-base64";
-	import axios from "axios";
-	
+	import api from '@/api/api'
 	import Web3 from "web3";
 	import Web3Modal from "web3modal";
+	import Sha256 from "crypto-js/sha256";
+	import { Base64 } from "js-base64";
+	import config from "../../../config.js";
+	import { Toast } from "vant";
+	import axios from "axios";
+	import lang from "@/components/lang";
+	import QRCode from "qrcodejs2";
+	import WalletConnectProvider from "@walletconnect/web3-provider";
+	import QRCodeModal from "@walletconnect/qrcode-modal";
+	// import VConsole from "vconsole";
+	// new VConsole();
 	
 	var web3 = "";
 	var address = "";
+	var dotc;
+	var pri;
+	var usdt;
+	var ethereum = window.ethereum;
+	//var huobiarr = config['hbi'][config['key']];
+	var dotc_abi = config["hyue"]["bian"]["dotc"]["abi"];
+	var dotc_key = config["hyue"]["bian"]["dotc"]["heyue"];
+	var pri_abi = config["hyue"]["bian"]["Pripla"]["abi"];
+	var pri_key = config["hyue"]["bian"]["Pripla"]["heyue"];
+	var u_abi = config["hbi"]["bian"]["USDT"]["abi"];
+	var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 	
 	export default {
 		data(){
@@ -114,6 +139,7 @@
 				showFourBtn:true,
 				showPhoto:false,
 				showPhotoTwo:false,
+				showPhotoThree:false,
 				value:'',
 				options:[{
 					value:'中国',
@@ -121,7 +147,13 @@
 				}],
 				srcImg1:'',
 				srcImg2:'',
+				srcImg3:'',
 				address:'',
+				// forntData:{
+				// 	address:address,
+				// 	front: this.srcImg2,
+				// 	groupId: 0
+				// }
 			}
 		},
 		mounted() {
@@ -156,6 +188,7 @@
 			  });
 			  var provider = await web3Modal.connect();
 			  web3 = new Web3(provider);
+			  
 			  if (web3 && provider) {
 				//其他钱包使用测试网络
 				// if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
@@ -175,6 +208,7 @@
 				dq.address = address;
 				dq.address = address;
 				console.log(dq.address.length);
+				console.log(dq.address);
 				if (dq.address.length > 20) {
 				  let stars = "****";
 				  dq.addressRm =
@@ -200,17 +234,84 @@
 				}else if(e==4){
 					this.showFourBtn=false;
 					this.showPhoto=true;
+					
 				}else if(e==5){
-					this.showPhotoTwo=true;
-					this.showPhoto=false;
+				  let verifyData={
+				  	address:address,
+				  	front: this.srcImg1,
+				  	groupId: 0
+				  }
+				  console.log(verifyData);
+				  axios({
+					method: "post",
+					url: "https://gazotc.com:8083/face/faceAdd",
+					data: verifyData,
+					headers: { "Content-Type": "application/json" }
+					
+				  })
+					.then((res) => {
+						if(res.code==0){
+							console.log(111);
+							this.showPhotoTwo=true;
+							this.showPhoto=false;
+						}
+					  // window.location.href = res;
+					})
+					.catch(function (error) {
+					  alert("error");
+					});
+					
 				}else if(e==6){
 					let verifyData={
 						address:address,
-						back: this.srcImg1,
-					    front: this.srcImg2,
-					    groupId: 0
+						back: this.srcImg2,
+						groupId: 0
 					}
-					console.log(verifyData);
+					console.log(address);
+				  axios({
+					method: "post",
+					url: "https://gazotc.com:8083/face/faceBack",
+					data: verifyData,
+					headers: { "Content-Type": "application/json" },
+					
+				  })
+					.then((res) => {
+						console.log(res)
+						console.log('success');
+						if(res.code==0){
+							console.log(111);
+							this.showPhotoTwo=false;
+							this.showPhotoThree=true;
+						}
+						
+					  // window.location.href = res;
+					})
+					.catch(function (error) {
+					  alert("error");
+					});
+					
+				}else if(e==7){
+					let verifyData={
+						address:address,
+						front: this.srcImg3,
+						groupId: 0
+					}
+				  console.log(verifyData);
+					axios({
+						method: "post",
+						url: "https://gazotc.com:8083/face/faceSearch",
+						data: verifyData,
+						headers: { "Content-Type": "application/json" },
+					})
+					.then((res) => {
+						console.log(address);
+						console.log(res)
+						console.log('success');
+					  // window.location.href = res;
+					})
+					.catch(function (error) {
+					  alert("error");
+					});
 				}
 			},
 			upload1(c, d){
@@ -239,6 +340,22 @@
 						that.$nextTick(()=>{
 							that.srcImg2=e.target.result
 							console.log(address)
+						})
+			        // $d.setAttribute("src", e.target.result);
+			    }
+			},
+			upload3(c, d){
+				var that = this
+			    var c = document.querySelector(c),
+			        d = document.querySelector(d),
+			        file = c.files[0],
+			        reader = new FileReader();
+					console.log(file,c.files);
+					reader.readAsDataURL(file);
+					reader.onload = function(e){
+						that.$nextTick(()=>{
+							console.log(e.target)
+							that.srcImg3=e.target.result
 						})
 			        // $d.setAttribute("src", e.target.result);
 			    }
@@ -342,6 +459,16 @@
 				margin-top: 10px;
 			}
 			#fileBtn{
+				position: absolute;
+				opacity: 0;
+				padding: 15px;
+			}
+			#fileBtn1{
+				position: absolute;
+				opacity: 0;
+				padding: 15px;
+			}
+			#fileBtn2{
 				position: absolute;
 				opacity: 0;
 				padding: 15px;

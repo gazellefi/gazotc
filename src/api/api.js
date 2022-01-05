@@ -27,6 +27,7 @@ export default {
   // 注册 
   register: (params) => axios.post(url + '/member/register', params),
 
-
+  // 身份证正面
+  // faceAdd:(params)=> axios.post(url + '/face/faceAdd', params),
   // getCrowdInfo: (params) => axios.get('/getCrowdInfo', { params }),
 }
