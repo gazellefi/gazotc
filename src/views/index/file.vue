@@ -16,15 +16,15 @@
 			return {
 				list: [
 					{
-						title: '文字文档',
+						title: this.$t('message.home.textD'),
 						content: `<img src="https://only.cam/images/ambassador2.jpg" />`
 					},
 					{
-						title: '视频文档',
+						title: this.$t('message.home.videoD'),
 						content: `<img src="https://only.cam/images/ambassador2.jpg" />`
 					},
 					{
-						title: '其他文档',
+						title: this.$t('message.home.otherD'),
 						content: `<img src="https://only.cam/images/ambassador2.jpg" />`
 					}
 				],
@@ -38,13 +38,16 @@
 	.news_contetn{
 		width: 100%;
 		padding: 80px 20px;
+	    margin: 0 auto;
+	    height: 100%;
+	    width: 1200px;
 	}
 	div{
 		/deep/ .el-collapse-item__header{
 				padding: 15px 0;
 				text-align: center;
 				border-radius: 5px;
-				// font-size: 18px;
+				font-size: 18px;
 				font-weight: bolder;
 			}
 	}

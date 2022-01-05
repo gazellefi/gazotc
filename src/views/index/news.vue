@@ -17,7 +17,7 @@
 				list: [
 					{
 						title: '圣诞快乐！！！',
-						content: `<img src="https://only.cam/images/ambassador2.jpg" />`
+						// content: `<img src="https://only.cam/images/ambassador2.jpg" />`
 					}
 				],
 				activeName:0
