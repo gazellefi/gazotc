@@ -4,7 +4,7 @@ import routes from './routes'
 
 Vue.use(VueRouter)
 
-
+//remove # history
 const router = new VueRouter({
   mode: 'history',
   routes

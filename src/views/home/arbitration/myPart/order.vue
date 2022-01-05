@@ -257,8 +257,7 @@
 	var bzjnum = config['hyue'][config['key']]['Bzj']['num'];
 	//模块
 	let Base64 = require('js-base64').Base64;
-	import Web3 from "web3";
-	import Web3Modal from "web3modal";
+	import tools from '@/api/public.js'
 	import { Dialog, Toast } from 'vant';
 	var address, web3, ArbOne, ArbTwo, GazConn, Dotc, Arbdate;
 	export default{
@@ -301,12 +300,37 @@
 		    dq.isphone = false;
 		  }
 		  //监测用户是否安装MASK
-		  if (typeof ethereum === "undefined") {
-		    web3 = new Web3(config['hyue'][config['key']]['Url']);
-		  } else {
-		    //初始化
-		    this.webinit();
-		  }
+		  tools.testMASK().then(res=>{
+		  	let {web,id} = res
+		  	web3 = web
+		  	address = id
+			address = provider.selectedAddress;
+			ArbOne = new web3.eth.Contract(
+			  config['hyue'][config['key']]['ArbOne']['abi'],
+			  config['hyue'][config['key']]['ArbOne']['heyue']
+			);
+			ArbTwo = new web3.eth.Contract(
+			  config['hyue'][config['key']]['arbTwo']['abi'],
+			  config['hyue'][config['key']]['arbTwo']['heyue']
+			);
+			// GazConn = new web3.eth.Contract(
+			//   config['hyue'][config['key']]['gaz']['abi'],
+			//   config['hyue'][config['key']]['gaz']['heyue']
+			// );
+			// Dotc = new web3.eth.Contract(
+			//   config['hyue'][config['key']]['dotc']['abi'],
+			//   config['hyue'][config['key']]['dotc']['heyue']
+			// );
+			// Arbdate = new web3.eth.Contract(
+			//   config['hyue'][config['key']]['Arbdate']['abi'],
+			//   config['hyue'][config['key']]['Arbdate']['heyue']
+			// );
+			dq.getList()
+			dq.user = address.toLowerCase();
+		  }).catch((err)=>{
+			// web3 = new Web3(config['hyue'][config['key']]['Url']);
+		  	console.log(err);
+		  })
 		},
 		methods:{
 			filterTag () { },
@@ -600,62 +624,6 @@
 			    }
 			  });
 			},
-			
-			
-			
-			async webinit() {
-				var dq = this
-			  const providerOptions = {
-			    /* See Provider Options Section */
-			  };
-			  const web3Modal = new Web3Modal({
-			    network: "mainnet",
-			    cacheProvider: true,
-			    providerOptions,
-			  });
-			  var provider = await web3Modal.connect();
-			  web3 = new Web3(provider);
-			  if (web3 && provider) {
-			    //其他钱包使用测试网络
-			    // if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-			    //     var wlcode = window.ethereum.networkVersion;
-			    //     //imtoken只能查看 无法操作 出发是ETF主网
-			    //     if (window.ethereum.isImToken) {
-			    //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-			    //     }
-			    //     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-			    //     if (window.ethereum.isMetaMask && wlcode != 4) {
-			    //         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-			    //     }
-			    // }else{
-			    //     web3.setProvider(config["hyue"][config["key"]]["Url"]);
-			    // }
-			    address = provider.selectedAddress;
-			    ArbOne = new web3.eth.Contract(
-			      config['hyue'][config['key']]['ArbOne']['abi'],
-			      config['hyue'][config['key']]['ArbOne']['heyue']
-			    );
-			    ArbTwo = new web3.eth.Contract(
-			      config['hyue'][config['key']]['arbTwo']['abi'],
-			      config['hyue'][config['key']]['arbTwo']['heyue']
-			    );
-			    GazConn = new web3.eth.Contract(
-			      config['hyue'][config['key']]['gaz']['abi'],
-			      config['hyue'][config['key']]['gaz']['heyue']
-			    );
-			    Dotc = new web3.eth.Contract(
-			      config['hyue'][config['key']]['dotc']['abi'],
-			      config['hyue'][config['key']]['dotc']['heyue']
-			    );
-			    Arbdate = new web3.eth.Contract(
-			      config['hyue'][config['key']]['Arbdate']['abi'],
-			      config['hyue'][config['key']]['Arbdate']['heyue']
-			    );
-			    dq.getList()
-			    dq.user = address.toLowerCase();
-			    dq.tabindex = "3";
-			  }
-			}
 		}
 	}
 </script>
