@@ -48,8 +48,8 @@
 import lang from "@/components/lang";
 import sidebar from "../sidebar";
 import api from '@/api/api'
-import Web3 from "web3";
-import Web3Modal from "web3modal";
+import Web3 from "web3"
+import tools from '@/api/public.js'
 import Sha256 from "crypto-js/sha256";
 import { Base64 } from "js-base64";
 import config from "@/config";
@@ -98,49 +98,17 @@ export default {
 	  this.changeDrop(this.morenkey)
 	  var dq = this
 	  //监测用户是否安装MASK
-	  if (typeof ethereum === "undefined") {
-	    webinit(false);
-	  } else {
-	    //初始化
-	    webinit(true);
-	  }
-	  Toast.setDefaultOptions("loading", {
-	    forbidClick: false,
-	    closeOnClickOverlay: false,
-	    duration: 0,
-	    overlay: true,
-	  });
-	  
-	  async function webinit(use_metamask) {
-	    const web3Modal = new Web3Modal({
-	      network: use_metamask ? "mainnet" : null,
-	      cacheProvider: false,
-	      providerOptions: use_metamask
-	        ? {}
-	        : {
-	          walletconnect: {
-	            package: WalletConnectProvider,
-	            options: {
-	              rpc: {
-	                56: "https://bsc-dataseed.binance.org/",
-	              },
-	              network: "binance",
-	              qrcodeModal: QRCodeModal,
-	            },
-	          },
-	        },
-	    });
-	    var provider = await web3Modal.connect();
-	    web3 = new Web3(provider);
-	    if (web3 && provider) {
-	      address = provider.selectedAddress;
-	      if (!address) {
-	        address = provider.accounts[0];
-	      }
-		  dotc = new web3.eth.Contract(dotc_abi, dotc_key);
-		  dq.getsczc()
-	    }
-	  }
+	  tools.testMASK().then(res=>{
+	  	let {web,id} = res
+	  	web3 = web
+	  	address = id
+		dotc = new web3.eth.Contract(dotc_abi, dotc_key);
+		dq.getsczc()
+	  }).catch((err)=>{
+		web3 = new Web3(config["hyue"][config["key"]]["Url"]);
+		dotc = new web3.eth.Contract(dotc_abi, dotc_key);
+	  	console.log(err);
+	  })
   },
   methods: {
 	// 修改 网络

@@ -448,6 +448,7 @@
 							Madd
 						} = res
 						var id = ''
+						console.log(Madd);
 						// 判断 当前用户是商家还是用户(转小写比较)
 						if (address == Uadd.toLowerCase()) {
 							id = Madd

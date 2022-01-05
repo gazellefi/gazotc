@@ -244,7 +244,7 @@
 import ddinfomodel from "./ddinfo.json";
 import { Toast } from 'vant';
 
-import config from "../../../config";
+import config from "@/config";
 var dotc_abi = config['hyue'][config['key']]['dotc']['abi'];
 var dotc_key = config['hyue'][config['key']]['dotc']['heyue'];
 var huobijson = {
