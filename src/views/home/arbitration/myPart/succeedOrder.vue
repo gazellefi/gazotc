@@ -331,12 +331,6 @@
 			web3 = new Web3(config['hyue'][config['key']]['Url']);
 		  	console.log(err);
 		  })
-		  if (typeof ethereum === "undefined") {
-		    web3 = new Web3(config['hyue'][config['key']]['Url']);
-		  } else {
-		    //初始化
-		    this.webinit();
-		  }
 		},
 		methods:{
 			filterTag () { },

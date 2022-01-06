@@ -40,17 +40,17 @@
 		  <el-table-column align="center" prop="did" :label="$t('message.arbitration.orderId')"> </el-table-column>
 		  <el-table-column align="center" prop="madd"  :label="$t('message.arbitration.merchant')">
 		    <template slot-scope="scope">
-		      <span :class="uinfo.user == scope.row.madd_b ? 'ac':''">{{ scope.row.madd }}</span>
+		      <span>{{ scope.row.madd }}</span>
 		    </template>
 		  </el-table-column>
 		  <el-table-column align="center" prop="uadd" :label="$t('message.arbitration.buyer')">
 		    <template slot-scope="scope">
-		      <span :class="uinfo.user == scope.row.uadd_b ? 'ac':''">{{ scope.row.uadd }}</span>
+		      <span>{{ scope.row.uadd }}</span>
 		    </template>
 		  </el-table-column>
 		  <el-table-column align="center" :label="$t('message.arbitration.sell')">
 		    <template slot-scope="scope">
-		      {{ scope.row.wad }} {{ scope.row.swap }}
+				<span :class="uinfo.user == scope.row.madd_b ? 'ac':''">{{ scope.row.wad }} {{ scope.row.swap }}</span>
 		    </template>
 		  </el-table-column>
 		  <el-table-column align="center" :label="$t('message.arbitration.buy')">
@@ -230,15 +230,15 @@ export default {
         Address.substr(0, 5) +
         "...." +
         Address.substr(Address.length - 5, Address.length);
-      var dq = this;
-      var contracts = new web3.eth.Contract(dotc_abi, dotc_key);
-      contracts.methods.message(Address + "", "0").call((err, result) => {
-        if (result) {
-          var jiename = Base64.decode(result);
-          dq.uinfo["quan"] = jiename.substr(0, 1);
-          dq.uinfo["username"] = jiename;
-        }
-      });
+      // var dq = this;
+      // var contracts = new web3.eth.Contract(dotc_abi, dotc_key);
+      // contracts.methods.message(Address + "", "0").call((err, result) => {
+      //   if (result) {
+      //     var jiename = Base64.decode(result);
+      //     dq.uinfo["quan"] = jiename.substr(0, 1);
+      //     dq.uinfo["username"] = jiename;
+      //   }
+      // });
     },
 
     //获取列表

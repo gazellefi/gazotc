@@ -297,52 +297,6 @@ export default [
                     },
                     {
                         path: '/home/arbitration/twoOrder',
-                        meta: {name: 'message.dapp.secondOrder'},
-                        component: () => import('@/views/home/arbitration/twoOrder/index'),
-                        children: [
-                            {
-                                path: '/home/arbitration/twoOrder',
-                                meta: {name: 'message.dapp.secondOrderList'},
-                                component: () => import('@/views/home/arbitration/twoOrder/twoOrder')
-                            },
-                            {
-                                path: '/home/arbitration/twoOrder/myPart',
-                                meta: {name: 'message.dapp.myPart2'},
-                                component: () => import('@/views/home/arbitration/twoOrder/myPart')
-                            }
-                        ]
-
-                    },
-
-                ],
-                redirect: '/home/arbitration/arbitration',
-                children: [
-                    {
-                        path: '/home/arbitration/arbitration',
-                        meta: {name: 'message.dapp.arbitratorsLister'},
-                        name: 'arbitrationRoll',
-                        component: () => import('@/views/home/arbitration/arbitrationList')
-                    },
-                    {
-                        path: '/home/arbitration/firstOrder',
-                        meta: {name: 'message.dapp.firstOrdersList'},
-                        component: () => import('@/views/home/arbitration/firstOrder/index'),
-                        children: [
-                            {
-                                path: '/home/arbitration/firstOrder',
-                                meta: {name: 'message.dapp.firstOrders'},
-                                component: () => import('@/views/home/arbitration/firstOrder/firstOrder')
-                            },
-                            {
-                                path: '/home/arbitration/firstOrder/myPart',
-                                meta: {name: 'message.dapp.myPart1'},
-                                component: () => import('@/views/home/arbitration/firstOrder/myPart')
-                            }
-                        ]
-
-                    },
-                    {
-                        path: '/home/arbitration/twoOrder',
                         meta: {name: 'message.dapp.secondOrderList'},
                         component: () => import('@/views/home/arbitration/twoOrder/index'),
                         children: [
