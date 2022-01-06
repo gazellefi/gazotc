@@ -71,24 +71,42 @@
 				</div>
 				
 				<div class="photoBox" v-show="showPhoto">
-					<img class="imgFace" :src="srcImg1" id="img"/>
-					<button type="button" class="faceBox" v-show="srcImg1==''" @click="showStepGo(5)">上传身份证正面</button>
-					<!-- <input id="fileBtn" type="file" @change="upload1('#fileBtn', '#img');" accept="image/*" multiple  v-show="srcImg1==''"/> -->
+					<img class="imgFace" :src="srcImg1" id="img1"/>
+					<button type="button" class="faceBox" v-show="srcImg1==''">上传身份证正面</button>
+					<input id="fileBtn" type="file" @change="upload1($event,'#fileBtn', '#img1');" accept="image/*" multiple capture="camera" v-show="srcImg1==''"/>
 					<button type="button" class="faceBox"  v-show="srcImg1!=''" @click="showStepGo(5)">下一步</button>
 				</div>
 				
 				<div class="photoBox" v-show="showPhotoTwo">
-					<img class="imgFace" :src="srcImg2" id="img"/>
+					<img class="imgFace" :src="srcImg2" id="img2"/>
 					<button type="button" class="faceBox" v-show="srcImg2==''">上传身份证背面</button>
-					<input id="fileBtn1" type="file" @change="upload2('#fileBtn1', '#img');" accept="image/*" multiple  v-show="srcImg2==''"/>
+					<input id="fileBtn1" type="file" @change="upload2('#fileBtn1', '#img2');" accept="image/*" multiple capture="camera" v-show="srcImg2==''"/>
 					<button type="button" class="faceBox"  v-show="srcImg2!=''" @click="showStepGo(6)">下一步</button>
 				</div>
 				
 				<div class="photoBox" v-show="showPhotoThree">
-					<img class="imgFace" :src="srcImg3" id="img"/>
-					<button type="button" class="faceBox" v-show="srcImg3==''">上传人脸照片</button>
-					<input id="fileBtn2" type="file" @change="upload3('#fileBtn2', '#img');" accept="image/*" multiple  v-show="srcImg3==''"/>
-					<button type="button" class="faceBox"  v-show="srcImg3!=''" @click="showStepGo(7)">下一步</button>
+					<img class="imgFace" :src="srcImg3"  id="img3" width="100%"/>
+					<button type="button" class="faceBox" v-show="srcImg3==''" @click="showStepGo(7)">上传人脸照片</button>
+					<!-- <input id="fileBtn2" type="file" @change="upload3('#fileBtn2', '#img3');" accept="image/*" multiple capture="camera"   v-show="srcImg3==''"/> -->
+					<button type="button" class="faceBox"  v-show="srcImg3!=''" @click="showStepGo(9)">下一步</button>
+				</div>
+				<div class="other" v-show="takePhoto">
+					<div class="camera_outer">
+						<video id="videoCamera"  :width="videoWidth" :height="videoHeight" autoplay ></video>
+						<canvas style="display:none;" id="canvasCamera" :width="videoWidth" :height="videoHeight"></canvas>
+						<div v-if="srcImg3" class="img_bg_camera">
+						    <p>效果预览</p>
+						    <img :src="srcImg3" :width="videoWidth" :height="videoHeight" alt class="tx_img" />
+						</div>
+						<div class="button" style="display: flex;justify-content: center;background-color: #fff;padding: 5px 0;">
+					  <el-button @click="getCompetence()">打开摄像头</el-button>
+					  <el-button @click="stopNavigator()">关闭摄像头</el-button>
+							<div class="borderBox" style="background-color: #000;width: 50px;height: 50px;border-radius: 50%;display: flex;justify-content: center;align-items: center;border: none;">
+								<el-button @click="setImage()" style="background-color: #FF3333;width: 40px;height: 40px;border-radius: 50%;border: none;"></el-button>
+							</div>
+						</div>
+				  </div>
+					
 				</div>
 			</div>
 		</div>
@@ -111,8 +129,8 @@
 	import QRCode from "qrcodejs2";
 	import WalletConnectProvider from "@walletconnect/web3-provider";
 	import QRCodeModal from "@walletconnect/qrcode-modal";
-	// import VConsole from "vconsole";
-	// new VConsole();
+	import VConsole from "vconsole";
+	new VConsole();
 	
 	var web3 = "";
 	var address = "";
@@ -131,6 +149,8 @@
 	export default {
 		data(){
 			return{
+		  videoWidth: 350,
+		  videoHeight: 350,
 				showStepOne:true,
 				showStepTwo:false,
 				showStepThree:false,
@@ -139,6 +159,7 @@
 				showPhoto:false,
 				showPhotoTwo:false,
 				showPhotoThree:false,
+				takePhoto:false,
 				value:'',
 				options:[{
 					value:'中国',
@@ -148,6 +169,11 @@
 				srcImg2:'',
 				srcImg3:'',
 				address:'',
+				imgSrc: "",
+				thisCancas: null,
+				thisContext: null,
+				thisVideo: null,
+				openVideo:false
 				// forntData:{
 				// 	address:address,
 				// 	front: this.srcImg2,
@@ -156,66 +182,71 @@
 			}
 		},
 		mounted() {
+			// this.getCompetence()//进入页面就调用摄像头
+			//监测用户是否安装MASK
+			console.log(typeof ethereum);
+			
+			var dq = this;
+			let isGO = location.href.includes("?ref");
+			if (isGO) {
+			  let str = location.href.substring(
+			    location.href.indexOf("?ref=") + 5,
+			    location.href.indexOf("&")
+			  );
+			  let lang = location.href.substring(
+			    location.href.indexOf("&lang=") + 6,
+			    location.href.indexOf("#")
+			  );
+			  this.$i18n.locale = lang.substring(0, 2);
+			  dq.recommender = str.substring(0, 42);
+			}
+			
 			//监测用户是否安装MASK
 			if (typeof ethereum === "undefined") {
-			  web3 = new Web3(config["hyue"][config["key"]]["Url"]);
+			  webinit(false);
 			} else {
 			  //初始化
-			  webinit();
+			  webinit(true);
 			}
-			var dq = this;
-			if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
-			  dq.isphone = true;
-			  this.formLabelWidth = "100px";
-			} else {
-			  dq.isphone = false;
-			}
-			if (dq.$route.query.user) {
-			  dq.user = dq.$route.query.user;
-			}
-			if (dq.$route.query.ref) {
-			  dq.recommender = dq.$route.query.user;
-			}
-			async function webinit() {
-			  const providerOptions = {
-				/* See Provider Options Section */
-			  };
+			Toast.setDefaultOptions("loading", {
+			  forbidClick: false,
+			  closeOnClickOverlay: false,
+			  duration: 0,
+			  overlay: true,
+			});
+			
+			async function webinit(use_metamask) {
 			  const web3Modal = new Web3Modal({
-				network: "mainnet",
-				cacheProvider: true,
-				providerOptions,
+			    network: use_metamask ? "mainnet" : null,
+			    cacheProvider: false,
+			    providerOptions: use_metamask
+			      ? {}
+			      : {
+			        walletconnect: {
+			          package: WalletConnectProvider,
+			          options: {
+			            rpc: {
+			              56: "https://bsc-dataseed.binance.org/",
+			            },
+			            network: "binance",
+			            qrcodeModal: QRCodeModal,
+			          },
+			        },
+			      },
 			  });
 			  var provider = await web3Modal.connect();
 			  web3 = new Web3(provider);
-			  
+			  console.log("walletcounnect", provider);
 			  if (web3 && provider) {
-				//其他钱包使用测试网络
-				// if (window.ethereum.isImToken || window.ethereum.isMetaMask) {
-				//     var wlcode = window.ethereum.networkVersion;
-				//     //imtoken只能查看 无法操作 出发是ETF主网
-				//     if (window.ethereum.isImToken) {
-				//         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-				//     }
-				//     //MetaMask 钱包不等于4  进入专用网络 等于4使用本地钱包
-				//     if (window.ethereum.isMetaMask && wlcode != 4) {
-				//         web3.setProvider(config["hyue"][config["key"]]["Url"]);
-				//     }
-				// }else{
-				//     web3.setProvider(config["hyue"][config["key"]]["Url"]);
-				// }
-				address = provider.selectedAddress;
-				dq.address = address;
-				dq.address = address;
-				console.log(dq.address.length);
-				console.log(dq.address);
-				if (dq.address.length > 20) {
-				  let stars = "****";
-				  dq.addressRm =
-					dq.address.substr(0, 4) +
-					stars +
-					dq.address.substr(dq.address.length - 4);
-				}
-			
+			    address = provider.selectedAddress;
+			    if (!address) {
+			      address = provider.accounts[0];
+			    }
+				console.log(address);
+			    dq.queryAddr = address;
+			    dotc = new web3.eth.Contract(dotc_abi, dotc_key);
+			    pri = new web3.eth.Contract(pri_abi, pri_key);
+			    usdt = new web3.eth.Contract(u_abi, u_key);
 			  }
 			}
 		},
@@ -254,7 +285,10 @@
 						if(res.code==0){
 							this.showPhotoTwo=true;
 							this.showPhoto=false;
-						}else{}
+						}else{
+							this.srcImg1=''
+							alert('脸部数据不详')
+						}
 					  // window.location.href = res;
 					})
 					.catch(function (error) {
@@ -281,6 +315,9 @@
 						if(res.code==0){
 							this.showPhotoTwo=false;
 							this.showPhotoThree=true;
+						}else{
+							this.srcImg2=''
+							alert('脸部数据不详')
 						}
 						
 					  // window.location.href = res;
@@ -290,34 +327,52 @@
 					});
 					
 				}else if(e==7){
-					let verifyData={
-						address:address,
-						front: this.srcImg3,
-						groupId: 0
-					}
-				  console.log(verifyData);
-					axios({
-						method: "post",
-						url: "https://gazotc.com:8083/face/faceSearch",
-						data: verifyData,
-						headers: { "Content-Type": "application/json" },
-					})
-					.then((res) => {
-						console.log(address);
-						console.log(res)
-						console.log('success');
-					  // window.location.href = res;
-					})
-					.catch(function (error) {
-					  alert("error");
-					});
+					this.showPhotoThree=false;
+					this.takePhoto=true;
+				this.getCompetence()//进入页面就调用摄像头
+				}else if(e==8){
+					console.log(this.srcImg3);
+					this.showPhotoThree=true;
+					this.takePhoto=false;
+				}else if(e==9){
+					
+						let verifyData={
+							address:address,
+							front: this.srcImg3,
+							groupId: 0
+						}
+					  console.log(verifyData);
+						axios({
+							method: "post",
+							url: "https://gazotc.com:8083/face/faceSearch",
+							data: verifyData,
+							headers: { "Content-Type": "application/json" },
+						})
+						.then((res) => {
+							console.log(address);
+							console.log(res)
+							console.log('success');
+							if(res.code==0){
+								alert('实名验证成功')
+								this.$router.go(-1) 
+							}else{
+								this.srcImg3=''
+								alert('脸部数据不详')
+							}
+						  // window.location.href = res;
+						})
+						.catch(function (error) {
+						  alert("error");
+						});
 				}
 			},
-			upload1(c, d){
+			upload1(e,c, d){
+				// console.log('111');
 				var that = this
-			    var c = document.querySelector(c),
-			        d = document.querySelector(d),
-			        file = c.files[0],
+				console.log(e);
+			    var $c = document.querySelector(c),
+			        $d = document.querySelector(d),
+			        file = $c.files[0],
 			        reader = new FileReader();
 					reader.readAsDataURL(file);
 					reader.onload = function(e){
@@ -330,9 +385,9 @@
 			},
 			upload2(c, d){
 				var that = this
-			    var c = document.querySelector(c),
-			        d = document.querySelector(d),
-			        file = c.files[0],
+			    var $c = document.querySelector(c),
+			        $d = document.querySelector(d),
+			        file = $c.files[0],
 			        reader = new FileReader();
 					reader.readAsDataURL(file);
 					reader.onload = function(e){
@@ -358,7 +413,89 @@
 						})
 			        // $d.setAttribute("src", e.target.result);
 			    }
-			}
+			},
+			
+			  // 调用权限（打开摄像头功能）
+			  getCompetence() {
+			    var _this = this;
+			    _this.thisCancas = document.getElementById("canvasCamera");
+			    _this.thisContext = this.thisCancas.getContext("2d");
+			    _this.thisVideo = document.getElementById("videoCamera");
+			    _this.thisVideo.style.display = 'block';
+			    // 获取媒体属性，旧版本浏览器可能不支持mediaDevices，我们首先设置一个空对象
+			    if (navigator.mediaDevices === undefined) {
+			      navigator.mediaDevices = {};
+			    }
+			    // 一些浏览器实现了部分mediaDevices，我们不能只分配一个对象
+			    // 使用getUserMedia，因为它会覆盖现有的属性。
+			    // 这里，如果缺少getUserMedia属性，就添加它。
+			    if (navigator.mediaDevices.getUserMedia === undefined) {
+			      navigator.mediaDevices.getUserMedia = function(constraints) {
+			        // 首先获取现存的getUserMedia(如果存在)
+			        var getUserMedia =
+			          navigator.webkitGetUserMedia ||
+			          navigator.mozGetUserMedia ||
+			          navigator.getUserMedia;
+			        // 有些浏览器不支持，会返回错误信息
+			        // 保持接口一致
+			        if (!getUserMedia) {//不存在则报错
+			          return Promise.reject(
+			            new Error("getUserMedia is not implemented in this browser")
+			          );
+			        }
+			        // 否则，使用Promise将调用包装到旧的navigator.getUserMedia
+			        return new Promise(function(resolve, reject) {
+			          getUserMedia.call(navigator, constraints, resolve, reject);
+			        });
+			      };
+			    }
+			    var constraints = {
+			      audio: false,
+			      video: {
+			        width: this.videoWidth,
+			        height: this.videoHeight,
+			        transform: "scaleX(-1)"
+			      }
+			    };
+			    navigator.mediaDevices
+			      .getUserMedia(constraints)
+			      .then(function(stream) {
+			        // 旧的浏览器可能没有srcObject
+			        if ("srcObject" in _this.thisVideo) {
+			          _this.thisVideo.srcObject = stream;
+			        } else {
+			          // 避免在新的浏览器中使用它，因为它正在被弃用。
+			          _this.thisVideo.src = window.URL.createObjectURL(stream);
+			        }
+			        _this.thisVideo.onloadedmetadata = function(e) {
+			          _this.thisVideo.play();
+			        };
+			      })
+			      .catch(err => {
+			        console.log(err);
+			      });
+			  },
+			  //  绘制图片（拍照功能）
+			  setImage() {
+				  console.log(111);
+			    var _this = this;
+				_this.showPhotoThree=true;
+				_this.takePhoto=true;
+			    // canvas画图
+			    _this.thisContext.drawImage(
+			      _this.thisVideo,
+			      0,
+			      0,
+			      _this.videoWidth,
+			      _this.videoHeight
+			    );
+			    // 获取图片base64链接
+			    //var image1 = this.thisCancas.toDataURL("image/png");
+				console.log(this.thisCancas.toDataURL("image/png"));
+			    _this.srcImg3 = this.thisCancas.toDataURL("image/png");//赋值并预览图片
+				console.log(_this.srcImg3);
+				_this.showStepGo(8);
+			  },
 		},
 	}
 </script>

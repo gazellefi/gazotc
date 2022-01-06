@@ -673,7 +673,8 @@ export default {
     ruleHideAuth() {
 		var that = this
 		// Toast.loading({ message: "数据请求中..." });
-		window.alert(that.$t('message.activit.realTips'));
+		// window.alert(that.$t('message.activit.realTips'));
+		this.$router.push('/verifyIdentity');
 		// axios.post('https://gazotc.com:8083/member/jnmioURL?address='+address).then((res)=>{
 		// 	// that.msss = res
 		// 	let url = res.result.redirectUrl
