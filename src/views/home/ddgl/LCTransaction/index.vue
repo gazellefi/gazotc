@@ -262,7 +262,7 @@
       			</div>
 				<div class="mart-10">
 					<span class="marr-10">{{$t('message.arbitration.userMargin')}}</span>
-					<span class="fz14">{{ item.uma }} USDT</span>
+					<span class="fz14">{{ item.uma }} Gaz</span>
 				</div>
       		</div>
       		<div class="fc c_b a_e">

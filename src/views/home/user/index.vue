@@ -1058,7 +1058,7 @@ export default {
 					// 判断 当前用户是商家还是用户(转小写比较)    ？不是商家或用户
 					// 不是商家或用户
 					if(address != Uadd.toLowerCase() && address != Madd.toLowerCase()){
-						Toast('在该订单中不存在角色')
+						Toast('不是该订单的交易者')
 						return
 					}
 					if (address == Uadd.toLowerCase()) {

@@ -150,14 +150,14 @@
       <div class="ysTop">
         <div class="title">{{ $t("message.activit.partSale") }}</div>
         <div class="info">{{ $t("message.activit.630") }}</div>
-        <van-field label-width="50" v-model="USTDVal" label="USDT：" :placeholder="$t('message.activit.enterQuant')" />
+        <van-field label-width="60" v-model="USTDVal" label="USDT：" :placeholder="$t('message.activit.enterQuant')" />
         <div class="tt">
           <span> 1GAZ = 0.5USDT</span>
           {{ $t("message.activit.UseUSDT") }}:{{
             Number(numberHb / 10 ** 18).toFixed(2)
           }}
         </div>
-        <van-field label-width="50" v-model="GAZVal" label="GAZ：" :placeholder="$t('message.activit.enterQuant')" />
+        <van-field label-width="60" v-model="GAZVal" label="GAZ：" :placeholder="$t('message.activit.enterQuant')" />
         <div @click="exchange" class="btn">
           {{ $t("message.activit.exchange") }}
         </div>
@@ -801,6 +801,7 @@ export default {
       }
     },
     async exchange() {
+	  var that = this
       if (this.USTDVal < 1) return Toast.success("低于最低要求额度");
       if (this.USTDVal > this.numberHb / 10 ** 18)
         return Toast.success("usdt大于可用余额");
@@ -877,6 +878,8 @@ export default {
         setTimeout(() => {
           Toast.clear();
           Toast.success("兑换成功");
+		  that.getsczc();
+		  that.ruleChangeHideAuth()
         }, 3000);
       }
     },
@@ -1240,7 +1243,7 @@ export default {
         font-size: 12px;
         color: #ccc;
         text-align: left;
-        margin-left: 80px;
+        margin-left: 90px;
         display: flex;
         flex-direction: column;
         span {

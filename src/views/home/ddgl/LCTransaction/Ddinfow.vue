@@ -1040,8 +1040,25 @@
 				}
 				if (tcode == 'sf_ddajax') {
 					//双方都没有点击
+					if (ddinfo['time'] == 0) {
+						if (ddinfo['agree'] != 3) {
+							if(ddinfo['djs_val']<=0 && ddinfo['timc'] !=0 && ddinfo['pau'] ==0){
+								return false
+							}else{
+								true
+							}
+						}else{
+							return false
+						}
+					}else{
+						return true
+					}
+					
 					if (ddinfo['agree'] == 3) {
 						if (ddinfo['time'] != 0) {
+							if(ddinfo['djs_val']<=0){
+								
+							}
 							return true;
 						} else {
 							return false;
@@ -1052,6 +1069,9 @@
 				}
 
 				if (tcode == 'ss_ddajax') {
+					console.log(ddinfo['release']);
+					console.log(ddinfo['timc']);
+					console.log(ddinfo['time'] );
 					if ((ddinfo['release'] == 0 && ddinfo['timc'] == 0) || ddinfo['time'] == 0) {
 						return false;
 					} else {
