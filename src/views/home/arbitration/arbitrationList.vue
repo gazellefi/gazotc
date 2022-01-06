@@ -379,6 +379,28 @@
 		  	dq.getBalane()
 		  }).catch((err)=>{
 		  	web3 = new Web3(config["hyue"][config["key"]]["Url"]);
+			ArbOne = new web3.eth.Contract(
+			  config['hyue'][config['key']]['ArbOne']['abi'],
+			  config['hyue'][config['key']]['ArbOne']['heyue']
+			);
+			ArbTwo = new web3.eth.Contract(
+			  config['hyue'][config['key']]['arbTwo']['abi'],
+			  config['hyue'][config['key']]['arbTwo']['heyue']
+			);
+			GazConn = new web3.eth.Contract(
+			  config['hyue'][config['key']]['gaz']['abi'],
+			  config['hyue'][config['key']]['gaz']['heyue']
+			);
+			Dotc = new web3.eth.Contract(
+			  config['hyue'][config['key']]['dotc']['abi'],
+			  config['hyue'][config['key']]['dotc']['heyue']
+			);
+			Arbdate = new web3.eth.Contract(
+			  config['hyue'][config['key']]['Arbdate']['abi'],
+			  config['hyue'][config['key']]['Arbdate']['heyue']
+			);
+			dq.getList();
+			// dq.getBalane()
 		  	console.log(err);
 		  })
 		},

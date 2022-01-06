@@ -787,7 +787,7 @@ export default {
 			UserPause: '用户暂停',
 			MerchantSuspension: '商家暂停',
 			earlyReleaseMargin: '提前释放保证金',
-			UserAgreesRelease: '用户同意发布',
+			UserAgreesRelease: '用户同意释放',
 			MerchantAgreesRelease: '商家同意释放',
 			allAgrees: '双方同意释放',
 			ReleaseMargin: '释放保证金',

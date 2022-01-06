@@ -450,7 +450,7 @@ export default {
       return Number(result);
     },
     tijiao() {
-      var dotsconn = new web3.eth.Contract(dotc_abi, dotc_key);
+      
       if (!this.form['dj']) {
         return;
       }
@@ -501,6 +501,7 @@ export default {
       isdingdan();
 
       function isdingdan() {
+		var dotsconn = new web3.eth.Contract(dotc_abi, dotc_key);
         //监听订单发布结果
         dotsconn.events.Merch("", (err, ret) => {
           console.log(err, ret)

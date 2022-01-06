@@ -774,6 +774,7 @@
 
 			//订单操作 cancel 付款 放币等
 			setddcode(type, c = '') {
+				Toast.loading({message: '请求中...',duration: 0,forbidClick:true,overlay:true})
 				var dq = this;
 				var dotsconn = new web3.eth.Contract(dotc_abi, dotc_key);
 				if (JSON.stringify(dq.ddifo).indexOf(address) == -1) {
@@ -781,11 +782,11 @@
 				}
 				if (type == 'qx_ddajax') {
 					//判断是否放币
-					// if (dq.ddifo['timb']) {
-					//     alert('The order cannot be cancelled');
-					//     return;
-					// }
-					console.log('订单不能取消')
+					if (dq.ddifo['timb']) {
+					    alert('订单不能取消');
+					    return;
+					}
+					// console.log('订单不能取消')
 					qx_ddajax();
 				}
 				if (type == 'fk_ddajax') {
@@ -818,8 +819,11 @@
 						from: address
 					}, (err, ret) => {
 						if (ret) {
-							Toast.clear();
-							Toast.success('订单已取消，请稍后查看');
+							setTimeout(()=>{
+								Toast.clear();
+								Toast.success('订单已取消，请稍后查看');
+								dq.getddinfo(dq.ddid);
+							},10000)
 						} else {
 							Toast.clear();
 							Toast.fail('请同意授权！');
@@ -911,8 +915,12 @@
 							from: address
 						}, (err, ret) => {
 							if (ret) {
-								Toast.clear();
-								Toast.success('订单已暂停，请稍后查看');
+								setTimeout(()=>{
+									Toast.clear();
+									Toast.success('订单已暂停，请稍后查看');
+									dq.getddinfo(dq.ddid);
+								},10000)
+								
 							} else {
 								Toast.clear();
 								Toast.fail('请同意授权！');
@@ -925,8 +933,12 @@
 							from: address
 						}, (err, ret) => {
 							if (ret) {
-								Toast.clear();
-								Toast.success('押金已经增加，请稍后再查');
+								setTimeout(()=>{
+									Toast.clear();
+									Toast.success('押金已经增加，请稍后再查');
+									dq.getddinfo(dq.ddid);
+								},10000)
+								
 							} else {
 								Toast.clear();
 								Toast.fail('请同意授权！');
@@ -940,8 +952,12 @@
 						from: address
 					}, (err, ret) => {
 						if (ret) {
-							Toast.clear();
-							Toast.success('同意保证金发放，请稍后查看');
+							setTimeout(()=>{
+								Toast.clear();
+								Toast.success('同意保证金发放，请稍后查看');
+								dq.getddinfo(dq.ddid);
+							},10000)
+							
 						} else {
 							Toast.clear();
 							Toast.fail('请同意授权！');
@@ -954,8 +970,12 @@
 						from: address
 					}, (err, ret) => {
 						if (ret) {
-							Toast.clear();
-							Toast.success('押金已经释放了。请稍后再查');
+							setTimeout(()=>{
+								Toast.clear();
+								Toast.success('押金已经释放了。请稍后再查');
+								dq.getddinfo(dq.ddid);
+							},10000)
+							
 						} else {
 							Toast.clear();
 							Toast.fail('请同意授权！');
@@ -968,8 +988,11 @@
 						from: address
 					}, (err, ret) => {
 						if (ret) {
-							Toast.clear();
-							Toast.success('资产已被释放。请稍后再查');
+							setTimeout(()=>{
+								Toast.clear();
+								Toast.success('资产已被释放。请稍后再查');
+								dq.getddinfo(dq.ddid);
+							},10000)
 						} else {
 							Toast.clear();
 							Toast.fail('请同意授权！');
@@ -1040,8 +1063,25 @@
 				}
 				if (tcode == 'sf_ddajax') {
 					//双方都没有点击
+					if (ddinfo['time'] == 0) {
+						if (ddinfo['agree'] != 3) {
+							if(ddinfo['djs_val']<=0 && ddinfo['timc'] !=0 && ddinfo['pau'] ==0){
+								return false
+							}else{
+								true
+							}
+						}else{
+							return false
+						}
+					}else{
+						return true
+					}
+					
 					if (ddinfo['agree'] == 3) {
 						if (ddinfo['time'] != 0) {
+							if(ddinfo['djs_val']<=0){
+								
+							}
 							return true;
 						} else {
 							return false;
@@ -1052,6 +1092,9 @@
 				}
 
 				if (tcode == 'ss_ddajax') {
+					console.log(ddinfo['release']);
+					console.log(ddinfo['timc']);
+					console.log(ddinfo['time'] );
 					if ((ddinfo['release'] == 0 && ddinfo['timc'] == 0) || ddinfo['time'] == 0) {
 						return false;
 					} else {
