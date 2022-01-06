@@ -1,12 +1,11 @@
-
 <template>
   <div class="activities">
     <div class="vhtml_head_left">
       <div class="vhtml_head">
-        <van-icon @click="$router.push('/HomePage')" style="margin-top: 2px" name="arrow-left" />
+        <van-icon @click="$router.push('/HomePage')" style="margin-top: 2px" name="arrow-left"/>
         <div class="vhtml_head_left_logo">
           <p>
-            <img src="@/assets/img/title.png" alt="GAZOTC" width="48" height="45" />
+            <img src="@/assets/img/title.png" alt="GAZOTC" width="48" height="45"/>
           </p>
         </div>
         <lang class="lang"></lang>
@@ -15,7 +14,7 @@
     <!-- 用户信息 -->
     <div class="userInfo">
       <div class="left">
-        <img src="~@/assets/img/avt.png" alt="" />
+        <img src="~@/assets/img/avt.png" alt=""/>
         <div class="info">
           <div class="nick">
             {{ $t("message.activit.nickname") }}:{{
@@ -36,9 +35,9 @@
       </div>
       <div class="right">
         <span @click="showPopFn" class="btn">{{
-          $t("message.activit.title")
-        }}</span>
-		<span style="font-size: 11px;">{{content}}</span>
+            $t("message.activit.title")
+          }}</span>
+        <span style="font-size: 11px;">{{ content }}</span>
         <div class="addr fontS">
           {{ $t("message.activit.addr") }}:{{ user }}
         </div>
@@ -56,7 +55,7 @@
           </div>
         </div>
         <div class="close" @click="showPop = false">
-          <img src="~@/assets/img/close.png" alt="" />
+          <img src="~@/assets/img/close.png" alt=""/>
         </div>
       </van-popup>
       <van-popup class="urlContent2" v-model="showPop2" round :style="{ height: '80%', width: '73%' }">
@@ -88,23 +87,27 @@
           </div>
         </div>
         <div class="close" @click="showPop2 = false">
-          <img src="~@/assets/img/close.png" alt="" />
+          <img src="~@/assets/img/close.png" alt=""/>
         </div>
       </van-popup>
     </div>
     <!-- 注册 -->
     <div class="reg">
-      <div class="item" :id="dongtaiId(i)" @click="clickFn(v, i)" v-for="(v, i) in regList" v-if="v.text!='领取空投' && v.text!='Get points'">
-        <img :src="v.img" alt="" />
+      <div class="item" :id="dongtaiId(i)" @click="clickFn(v, i)" v-for="(v, i) in regList"
+           v-if="v.text!='领取空投' && v.text!='Get points'">
+        <img :src="v.img" alt=""/>
         <div>{{ v.text }}</div>
-        <img v-if="i != 3" class="jt" src="~@/assets/img/jt.png" alt="" />
+        <img v-if="i != 3" class="jt" src="~@/assets/img/jt.png" alt=""/>
       </div>
       <van-popup class="urlContent3" v-model="showPop3" round :style="{ height: '53%', width: '80%' }">
-        <van-nav-bar :title="$t(`message.activit.register`)" fixed left-arrow @click-left="onClickLeft" />
+        <van-nav-bar :title="$t(`message.activit.register`)" fixed left-arrow @click-left="onClickLeft"/>
         <div class="cont">
-          <van-field v-model="regForm.nickname" :label="'*' + $t('message.activit.nickname')" :placeholder="$t('message.activit.enterNick')" />
-          <van-field v-model="regForm.name" :label="'**' + $t('message.activit.name')" :placeholder="$t('message.activit.enterName')" />
-          <van-field v-model="regForm.identity" :label="'**' + $t('message.activit.IDnumber')" :placeholder="$t('message.activit.enterIdCard')" />
+          <van-field v-model="regForm.nickname" :label="'*' + $t('message.activit.nickname')"
+                     :placeholder="$t('message.activit.enterNick')"/>
+          <van-field v-model="regForm.name" :label="'**' + $t('message.activit.name')"
+                     :placeholder="$t('message.activit.enterName')"/>
+          <van-field v-model="regForm.identity" :label="'**' + $t('message.activit.IDnumber')"
+                     :placeholder="$t('message.activit.enterIdCard')"/>
           <div class="tips">{{ $t("message.activit.61") }}</div>
           <div @click="register" class="btn">
             {{ $t("message.activit.register") }}
@@ -118,14 +121,16 @@
         <div class="left">
           <span class="t">{{ $t("message.activit.First") }}</span>
           <span>{{ $t("message.activit.reg") }}</span>
-          <span class="guanzhu" @click="goTW">{{ $t("message.activit.followWeb")
-            }}<img src="~@/assets/img/t.png" alt="" />{{
+          <span class="guanzhu" @click="goTW">{{
+              $t("message.activit.followWeb")
+            }}<img src="~@/assets/img/t.png" alt=""/>{{
               $t("message.activit.save5")
             }}</span>
         </div>
         <div class="right" @click="showPop2 = true">
-          {{ $t("message.activit.Airdroprules")
-          }}<img src="~@/assets/img/gz.png" alt="" />
+          {{
+            $t("message.activit.Airdroprules")
+          }}<img src="~@/assets/img/gz.png" alt=""/>
         </div>
       </div>
       <div class="bot">
@@ -248,9 +253,9 @@ import api from '@/api/api'
 import Web3 from "web3";
 import Web3Modal from "web3modal";
 import Sha256 from "crypto-js/sha256";
-import { Base64 } from "js-base64";
+import {Base64} from "js-base64";
 import config from "../../config";
-import { Toast } from "vant";
+import {Toast} from "vant";
 import axios from "axios";
 import lang from "@/components/lang";
 import QRCode from "qrcodejs2";
@@ -311,40 +316,40 @@ export default {
       gazfree: "",
       recommend_er: "",
       str1: "",
-	  transactionStatus: '', // 实名认证 返回状态
-	  content:''
+      transactionStatus: '', // 实名认证 返回状态
+      content: ''
     };
   },
   mounted() {
-	  // 判断  url 是否携带 实名认证返回参数
-	  // this.ruleChangeHideAuth()
-	  this.transactionStatus = this.$route.query.transactionStatus
-	  if(this.transactionStatus && this.transactionStatus == "SUCCESS"){  //实名认证成功
-		  let result = {
-			  "customerInternalReference": this.$route.query.customerInternalReference,
-			  "errorCode": this.$route.query.errorCode,
-			  "transactionReference": this.$route.query.transactionReference,
-			  "transactionStatus": this.$route.query.transactionStatus
-			}
-		  api.RealNameAfter(result).then((res)=>{
-			  console.log(res);
-		  })
-	  }
-	  // else if(this.transactionStatus && this.transactionStatus == "ERROR"){  // 实名认证失败
-		 //  this.$confirm('实名认证失败', '', {
-			//   confirmButtonText: '确定',
-			//   cancelButtonText: '取消',
-			//   type: 'warning',
-			//   callback: action => {
-			// 	if (action === 'confirm') {
-			// 	  console.log('按下 确定')
-			// 	}
-			// 	else {
-			// 	  console.log('按下 取消')
-			// 	}
-			//   }
-			// })
-	  // }
+    // 判断  url 是否携带 实名认证返回参数
+    // this.ruleChangeHideAuth()
+    this.transactionStatus = this.$route.query.transactionStatus
+    if (this.transactionStatus && this.transactionStatus == "SUCCESS") {  //实名认证成功
+      let result = {
+        "customerInternalReference": this.$route.query.customerInternalReference,
+        "errorCode": this.$route.query.errorCode,
+        "transactionReference": this.$route.query.transactionReference,
+        "transactionStatus": this.$route.query.transactionStatus
+      }
+      api.RealNameAfter(result).then((res) => {
+        console.log(res);
+      })
+    }
+    // else if(this.transactionStatus && this.transactionStatus == "ERROR"){  // 实名认证失败
+    //  this.$confirm('实名认证失败', '', {
+    //   confirmButtonText: '确定',
+    //   cancelButtonText: '取消',
+    //   type: 'warning',
+    //   callback: action => {
+    // 	if (action === 'confirm') {
+    // 	  console.log('按下 确定')
+    // 	}
+    // 	else {
+    // 	  console.log('按下 取消')
+    // 	}
+    //   }
+    // })
+    // }
 
 
     // let startIdentityVerification = () => {
@@ -356,17 +361,16 @@ export default {
     // startButton.addEventListener('click', startIdentityVerification);
 
 
-
     var dq = this;
     let isGO = location.href.includes("?ref");
     if (isGO) {
       let str = location.href.substring(
-        location.href.indexOf("?ref=") + 5,
-        location.href.indexOf("&")
+          location.href.indexOf("?ref=") + 5,
+          location.href.indexOf("&")
       );
       let lang = location.href.substring(
-        location.href.indexOf("&lang=") + 6,
-        location.href.indexOf("#")
+          location.href.indexOf("&lang=") + 6,
+          location.href.indexOf("#")
       );
       this.$i18n.locale = lang.substring(0, 2);
       dq.recommender = str.substring(0, 42);
@@ -391,19 +395,19 @@ export default {
         network: use_metamask ? "mainnet" : null,
         cacheProvider: false,
         providerOptions: use_metamask
-          ? {}
-          : {
-            walletconnect: {
-              package: WalletConnectProvider,
-              options: {
-                rpc: {
-                  56: "https://bsc-dataseed.binance.org/",
+            ? {}
+            : {
+              walletconnect: {
+                package: WalletConnectProvider,
+                options: {
+                  rpc: {
+                    56: "https://bsc-dataseed.binance.org/",
+                  },
+                  network: "binance",
+                  qrcodeModal: QRCodeModal,
                 },
-                network: "binance",
-                qrcodeModal: QRCodeModal,
               },
             },
-          },
       });
       var provider = await web3Modal.connect();
       web3 = new Web3(provider);
@@ -418,7 +422,7 @@ export default {
         pri = new web3.eth.Contract(pri_abi, pri_key);
         usdt = new web3.eth.Contract(u_abi, u_key);
         dq.getsczc();
-		dq.ruleChangeHideAuth()
+        dq.ruleChangeHideAuth()
       }
     }
   },
@@ -445,12 +449,13 @@ export default {
         this.ruleHideAuth();
       }
       if (i == 3) {
-		  alert('认证成功后发放');
+        alert('认证成功后发放');
         // this.$router.push("/yjzhuce");
       }
     },
     async bindQRCode() {
-      await this.$nextTick((e) => { });
+      await this.$nextTick((e) => {
+      });
       this.$refs.qrCodeDiv.innerHTML = "";
       new QRCode(this.$refs.qrCodeDiv, {
         text: this.friendUrl,
@@ -460,25 +465,26 @@ export default {
         colorLight: "#ffffff", //二维码背景色
         correctLevel: QRCode.CorrectLevel.L, //容错率，L/M/H
       });
-	  console.log(this.friendUrl)
+      console.log(this.friendUrl)
     },
     showPopFn() {
       // if (
       //   !this.str1 &&
       //   this.recommend_er == "0x0000000000000000000000000000000000000000"
       // )
-	  console.log(this.air);
-	  if(this.air != 20){
-		  return this.$toast("请先注册");
-	  }else{
-		  this.showPop = true;
-		  this.bindQRCode();
-	  }
-        
-      
+      console.log(this.air);
+      if (this.air != 20) {
+        return this.$toast("请先注册");
+      } else {
+        this.showPop = true;
+        this.bindQRCode();
+      }
+
+
     },
     async copyFn() {
-      await this.$nextTick((e) => { });
+      await this.$nextTick((e) => {
+      });
       if (!this.friendUrl) return;
       const input = document.createElement("input");
       document.body.appendChild(input);
@@ -523,11 +529,11 @@ export default {
       }
       if (num_str.indexOf("E") != -1 || num_str.indexOf("e") != -1) {
         var resValue = "",
-          power = "",
-          result = null,
-          dotIndex = 0,
-          resArr = [],
-          sym = "";
+            power = "",
+            result = null,
+            dotIndex = 0,
+            resArr = [],
+            sym = "";
         var numStr = num_str.toString();
         if (numStr[0] == "-") {
           // 如果为负数，转成正数处理，先去掉‘-’号，并保存‘-’.
@@ -536,8 +542,8 @@ export default {
         }
         if (numStr.indexOf("E") != -1 || numStr.indexOf("e") != -1) {
           var regExp = new RegExp(
-            "^(((\\d+.?\\d+)|(\\d+))[Ee]{1}((-(\\d+))|(\\d+)))$",
-            "ig"
+              "^(((\\d+.?\\d+)|(\\d+))[Ee]{1}((-(\\d+))|(\\d+)))$",
+              "ig"
           );
           result = regExp.exec(numStr);
           if (result != null) {
@@ -583,48 +589,48 @@ export default {
     async getsczc() {
       // Toast.loading({ message: "查询中..." });
       // var data = await dotc.methods.message(address, 0).call();
-	  axios({
-	    method: "post",
-	    url: "https://gazotc.com:8083/member/selectOne",
-	    data: { address: address },
-	    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-	    transformRequest: function (obj) {
-	      var str = [];
-	      for (var p in obj) {
-	        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-	      }
-	      return str.join("&");
-	    },
-	  })
-	    .then((res) => {
-			console.log(address);
-			console.log(res)
-			if(res.result!=null){
-				this.nickname = res.result.nickname;
-				this.name = '***';
-				this.identity = res.result.idNo;
-				if (this.identity.length > 10) {
-				  let stars = "****";
-				  this.identity =
-					this.identity.substr(0, 4) +
-					stars +
-					this.identity.substr(this.identity.length - 4);
-				}
-				this.air = 20;
-				this.rec = res.result.score-20;
-			}
-	      // window.location.href = res;
-	    })
-	    .catch(function (error) {
-	      alert("error");
-	    });
-   //    this.str1 = data;
-   //    let arr = data.split("|");
-	  // // console.log(arr)
-   //    this.nickname = Base64.decode(arr[0]);
-   //    this.name = arr[1];
-   //    this.identity = arr[2];
-   //    this.recom = arr[3];
+      axios({
+        method: "post",
+        url: "https://gazotc.com:8083/member/selectOne",
+        data: {address: address},
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+        transformRequest: function (obj) {
+          var str = [];
+          for (var p in obj) {
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+          }
+          return str.join("&");
+        },
+      })
+          .then((res) => {
+            console.log(address);
+            console.log(res)
+            if (res.result != null) {
+              this.nickname = res.result.nickname;
+              this.name = '***';
+              this.identity = res.result.idNo;
+              if (this.identity.length > 10) {
+                let stars = "****";
+                this.identity =
+                    this.identity.substr(0, 4) +
+                    stars +
+                    this.identity.substr(this.identity.length - 4);
+              }
+              this.air = 20;
+              this.rec = res.result.score - 20;
+            }
+            // window.location.href = res;
+          })
+          .catch(function (error) {
+            alert("error");
+          });
+      //    this.str1 = data;
+      //    let arr = data.split("|");
+      // // console.log(arr)
+      //    this.nickname = Base64.decode(arr[0]);
+      //    this.name = arr[1];
+      //    this.identity = arr[2];
+      //    this.recom = arr[3];
 
       Toast.clear();
       let index;
@@ -660,54 +666,54 @@ export default {
     ruleHideFull() {
       this.enroll = this.enroll ? false : true;
     },
-	ruleChangeHideAuth() {
-		var that = this
-		axios.post('https://gazotc.com:8083/member/jnmioURL?address='+address).then((res)=>{
-			if(res.result.state== 'SUCCESS'){ // 已实名认证
-				this.regList[2].text='已认证';
-				this.content=this.$t("message.activit.qualification")
-			}else{
-			}
-		})
-	},
+    ruleChangeHideAuth() {
+      var that = this
+      axios.post('https://gazotc.com:8083/member/jnmioURL?address=' + address).then((res) => {
+        if (res.result.state == 'SUCCESS') { // 已实名认证
+          this.regList[2].text = '已认证';
+          this.content = this.$t("message.activit.qualification")
+        } else {
+        }
+      })
+    },
     ruleHideAuth() {
-		var that = this
-		// Toast.loading({ message: "数据请求中..." });
-		window.alert(that.$t('message.activit.realTips'));
-		// axios.post('https://gazotc.com:8083/member/jnmioURL?address='+address).then((res)=>{
-		// 	// that.msss = res
-		// 	let url = res.result.redirectUrl
-		// 	// console.log(code);
-		// 	Toast.clear()
-		// 	if(res.result.state== 'SUCCESS'){ // 已实名认证
-		// 		that.$confirm('您已实名认证', '', {
-		// 		  confirmButtonText: '确定',
-		// 		  cancelButtonText: '取消',
-		// 		  type: 'success',
-		// 		  callback: action => {
-		// 			if (action === 'confirm') {
-		// 			  console.log('按下 确定')
-		// 			}
-		// 			else {
-		// 			  console.log('按下 取消')
-		// 			}
-		// 		  }
-		// 		})
-		// 	}else if(res.result.redirectUrl){ //未实名认证
-		// 		window.location.href = url
-				
-		// 		// this.$router.push({
-		// 		// 	name: 'RealName',
-		// 		// 	query: {
-		// 		// 	  url: url
-		// 		// 	}
-		// 		// })
-		// 	}
-		// })
+      var that = this
+      // Toast.loading({ message: "数据请求中..." });
+      window.alert(that.$t('message.activit.realTips'));
+      // axios.post('https://gazotc.com:8083/member/jnmioURL?address='+address).then((res)=>{
+      // 	// that.msss = res
+      // 	let url = res.result.redirectUrl
+      // 	// console.log(code);
+      // 	Toast.clear()
+      // 	if(res.result.state== 'SUCCESS'){ // 已实名认证
+      // 		that.$confirm('您已实名认证', '', {
+      // 		  confirmButtonText: '确定',
+      // 		  cancelButtonText: '取消',
+      // 		  type: 'success',
+      // 		  callback: action => {
+      // 			if (action === 'confirm') {
+      // 			  console.log('按下 确定')
+      // 			}
+      // 			else {
+      // 			  console.log('按下 取消')
+      // 			}
+      // 		  }
+      // 		})
+      // 	}else if(res.result.redirectUrl){ //未实名认证
+      // 		window.location.href = url
+
+      // 		// this.$router.push({
+      // 		// 	name: 'RealName',
+      // 		// 	query: {
+      // 		// 	  url: url
+      // 		// 	}
+      // 		// })
+      // 	}
+      // })
     },
     async register() {
-		var that = this
-      Toast.loading({ message: "注册中..." });
+      var that = this
+      Toast.loading({message: "注册中..."});
       let nickname = Base64.encode(this.regForm.nickname);
       let name = Sha256(this.regForm.name).toString().substring(0, 10);
       // let name = Base64.encode(this.regForm.name);
@@ -727,77 +733,78 @@ export default {
       //     }
       //   }
       // );
-		zcchaxun();
+      zcchaxun();
+
       //轮询注册是否成功
       function zcchaxun() {
         setTimeout(() => {
           Toast.clear();
           // Toast.success("注册成功");
-		  console.log(that.air);
-		  // that.showPop3=false;
-		  let data = {
-			  idNo: that.regForm.identity, 
-			  name: that.regForm.name, 
-			  nickname: that.regForm.nickname, 
-			  address: address,
-			  parentAddress: that.recommender || 0
-		  }
-		  // 存数据库
-		  
-		  // axios({
-		  //   method: "post",
-		  //   url: "https://192.168.0.48:8083/member/register",
-		  //   data: { member: data },
-		  //   headers: { "Content-Type": "application/x-www-form-urlencoded" },
-		  //   transformRequest: function (obj) {
-		  //     var str = [];
-		  //     for (var p in obj) {
-		  //       str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-		  //     }
-		  //     return str.join("&");
-		  //   },
-		  // })
-		  //   .then((res) => {
-		  // 			console.log(address);
-		  // 			console.log(res)
-		  //   })
-		  //   .catch(function (error) {
-		  //     alert("error");
-		  //   });
-			
-		  api.register(data).then((res)=>{
-			  console.log('注册数据存储结果：'+res);
-			  console.log(res.code);
-			   if(res.code == 0){
-				  that.getsczc();
-				  console.log(222);
-				  Toast.success("注册成功");
-				  console.log(that.air);
-				  that.showPop3=false;
-				  // 注册成功后 调用实名认证
-				  // that.ruleHideAuth()
-			  }else{
-				  console.log(111);
-				  Toast.success("注册失败");
-				  console.log(that.air);
-				  that.showPop3=false;
-				  // that.$confirm( res.result, '', {
-				  //   confirmButtonText: '确定',
-				  //   cancelButtonText: '取消',
-				  //   type: 'success',
-				  //   callback: action => {
-				  // 	if (action === 'confirm') {
-				  // 	  console.log('按下 确定')
-				  // 	}
-				  // 	else {
-				  // 	  console.log('按下 取消')
-				  // 	}
-				  //   }
-				  // })
-			  }
-		  })
+          console.log(that.air);
+          // that.showPop3=false;
+          let data = {
+            idNo: that.regForm.identity,
+            name: that.regForm.name,
+            nickname: that.regForm.nickname,
+            address: address,
+            parentAddress: that.recommender || 0
+          }
+          // 存数据库
+
+          // axios({
+          //   method: "post",
+          //   url: "https://192.168.0.48:8083/member/register",
+          //   data: { member: data },
+          //   headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          //   transformRequest: function (obj) {
+          //     var str = [];
+          //     for (var p in obj) {
+          //       str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+          //     }
+          //     return str.join("&");
+          //   },
+          // })
+          //   .then((res) => {
+          // 			console.log(address);
+          // 			console.log(res)
+          //   })
+          //   .catch(function (error) {
+          //     alert("error");
+          //   });
+
+          api.register(data).then((res) => {
+            console.log('注册数据存储结果：' + res);
+            console.log(res.code);
+            if (res.code == 0) {
+              that.getsczc();
+              console.log(222);
+              Toast.success("注册成功");
+              console.log(that.air);
+              that.showPop3 = false;
+              // 注册成功后 调用实名认证
+              // that.ruleHideAuth()
+            } else {
+              console.log(111);
+              Toast.success("注册失败");
+              console.log(that.air);
+              that.showPop3 = false;
+              // that.$confirm( res.result, '', {
+              //   confirmButtonText: '确定',
+              //   cancelButtonText: '取消',
+              //   type: 'success',
+              //   callback: action => {
+              // 	if (action === 'confirm') {
+              // 	  console.log('按下 确定')
+              // 	}
+              // 	else {
+              // 	  console.log('按下 取消')
+              // 	}
+              //   }
+              // })
+            }
+          })
         }, 3000);
-			  
+
       }
     },
     async exchange() {
@@ -806,36 +813,37 @@ export default {
       if (this.USTDVal > this.numberHb / 10 ** 18)
         return Toast.success("usdt大于可用余额");
       var recommer =
-        this.recommend_er != "0x0000000000000000000000000000000000000000"
-          ? this.recommend_er
-          : this.recom
-            ? this.recom
-            : this.recommender
-              ? this.recommender
-              : "0x0000000000000000000000000000000000000000";
+          this.recommend_er != "0x0000000000000000000000000000000000000000"
+              ? this.recommend_er
+              : this.recom
+                  ? this.recom
+                  : this.recommender
+                      ? this.recommender
+                      : "0x0000000000000000000000000000000000000000";
       var number = this.getFNum(this.USTDVal * 10 ** 18);
       var allo = await usdt.methods.allowance(address, pri_key).call();
       var appve = this.getFNum(Number(number) * 100);
       var usdtlxtime = "";
       if (Number(number) > Number(allo)) set_shouquan();
       else sale();
+
       //授权
       function set_shouquan() {
         Toast.loading({
           message: "usdt授权中....",
         });
         usdt.methods.approve(pri_key, appve).send(
-          {
-            from: address,
-          },
-          (err, ret) => {
-            if (ret) {
-              lunxun(2);
-            } else {
-              Toast.clear();
-              Toast.fail("授权失败");
+            {
+              from: address,
+            },
+            (err, ret) => {
+              if (ret) {
+                lunxun(2);
+              } else {
+                Toast.clear();
+                Toast.fail("授权失败");
+              }
             }
-          }
         );
       }
 
@@ -857,19 +865,19 @@ export default {
       }
 
       function sale() {
-        Toast.loading({ message: "兑换中..." });
+        Toast.loading({message: "兑换中..."});
         pri.methods.publicsale(recommer, number).send(
-          {
-            from: address,
-          },
-          (err, ret) => {
-            if (ret) {
-              getchaxun();
-            } else {
-              Toast.clear();
-              Toast.fail("兑换失败");
+            {
+              from: address,
+            },
+            (err, ret) => {
+              if (ret) {
+                getchaxun();
+              } else {
+                Toast.clear();
+                Toast.fail("兑换失败");
+              }
             }
-          }
         );
       }
 
@@ -890,8 +898,8 @@ export default {
       axios({
         method: "post",
         url: "https://gazotc:8083/member/face",
-        data: { idNo: idNo, name: name },
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        data: {idNo: idNo, name: name},
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
         transformRequest: function (obj) {
           var str = [];
           for (var p in obj) {
@@ -900,39 +908,39 @@ export default {
           return str.join("&");
         },
       })
-        .then((res) => {
-          window.location.href = res;
-        })
-        .catch(function (error) {
-          alert("error");
-        });
+          .then((res) => {
+            window.location.href = res;
+          })
+          .catch(function (error) {
+            alert("error");
+          });
     },
     getpoints() {
       if (!this.str1)
         return Toast.success(this.$t("message.activit.unregistered"));
       if (this.air != 0)
         return Toast.success(this.$t("message.activit.Received"));
-      Toast.loading({ message: this.$t("message.activit.Receiving") });
+      Toast.loading({message: this.$t("message.activit.Receiving")});
       var recommer =
-        this.recommend_er != "0x0000000000000000000000000000000000000000"
-          ? this.recommend_er
-          : this.recom
-            ? this.recom
-            : this.recommender
-              ? this.recommender
-              : "0x0000000000000000000000000000000000000000";
+          this.recommend_er != "0x0000000000000000000000000000000000000000"
+              ? this.recommend_er
+              : this.recom
+                  ? this.recom
+                  : this.recommender
+                      ? this.recommender
+                      : "0x0000000000000000000000000000000000000000";
       pri.methods.receiveair(recommer, 0).send(
-        {
-          from: address,
-        },
-        (err, ret) => {
-          if (ret) {
-            getchaxun();
-          } else {
-            Toast.clear();
-            Toast.fail("领取失败");
+          {
+            from: address,
+          },
+          (err, ret) => {
+            if (ret) {
+              getchaxun();
+            } else {
+              Toast.clear();
+              Toast.fail("领取失败");
+            }
           }
-        }
       );
 
       //轮询是否成功
@@ -949,21 +957,21 @@ export default {
         Toast.success(this.$t("message.activit.notOpen"));
         return;
       }
-      Toast.loading({ message: "提取中..." });
+      Toast.loading({message: "提取中..."});
       var number = this.getFNum(this.gazone);
 
       pri.methods.withdrawOne(number).send(
-        {
-          from: address,
-        },
-        (err, ret) => {
-          if (ret) {
-            getchaxun();
-          } else {
-            Toast.clear();
-            Toast.fail("提取失败");
+          {
+            from: address,
+          },
+          (err, ret) => {
+            if (ret) {
+              getchaxun();
+            } else {
+              Toast.clear();
+              Toast.fail("提取失败");
+            }
           }
-        }
       );
 
       //轮询是否成功
@@ -980,20 +988,20 @@ export default {
         Toast.success(this.$t("message.activit.notOpen"));
         return;
       }
-      Toast.loading({ message: "提取中..." });
+      Toast.loading({message: "提取中..."});
       var number = this.getFNum(this.gazfree);
       pri.methods.withdraw(number).send(
-        {
-          from: address,
-        },
-        (err, ret) => {
-          if (ret) {
-            getchaxun();
-          } else {
-            Toast.clear();
-            Toast.fail("提取失败");
+          {
+            from: address,
+          },
+          (err, ret) => {
+            if (ret) {
+              getchaxun();
+            } else {
+              Toast.clear();
+              Toast.fail("提取失败");
+            }
           }
-        }
       );
 
       //轮询是否成功
@@ -1036,12 +1044,12 @@ export default {
     },
     friendUrl() {
       return (
-        this.ymAddr +
-        "?ref=" +
-        this.queryAddr +
-        "&lang=" +
-        this.$i18n.locale +
-        "#/Activities"
+          this.ymAddr +
+          "?ref=" +
+          this.queryAddr +
+          "&lang=" +
+          this.$i18n.locale +
+          "#/Activities"
       );
     },
   },
@@ -1053,9 +1061,11 @@ export default {
 <style lang="less" scoped>
 .activities {
   height: 100%;
+
   .vhtml_head {
     display: flex;
     align-items: center;
+
     .lang {
       position: absolute;
       right: 10px;
@@ -1064,39 +1074,47 @@ export default {
       color: #fff;
     }
   }
+
   .userInfo {
     background: #202634;
     display: flex;
     justify-content: space-between;
     padding: 10px 10px 15px 10px;
     color: #ffffff;
+
     .left {
       display: flex;
+
       img {
         width: 42px;
         height: 42px;
         margin-right: 10px;
       }
+
       .info {
         .nick {
           font-weight: bold;
           margin-bottom: 15px;
           margin-top: 10px;
         }
+
         .name {
           margin: 8px 0;
         }
       }
     }
+
     .fontS {
       color: #bcbec2;
       font-size: 12px;
     }
+
     .right {
       text-align: right;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+
       .btn {
         display: inline-block;
         border: 1px solid #fff;
@@ -1107,21 +1125,25 @@ export default {
       }
     }
   }
+
   .reg {
     padding: 20px;
     display: flex;
     justify-content: space-between;
     font-size: 12px;
     color: #333333;
+
     .item {
       // flex: 1;
       text-align: center;
       position: relative;
       max-width: 60px;
+
       img {
         width: 42px;
         margin-bottom: 12px;
       }
+
       .jt {
         position: absolute;
         right: -50px;
@@ -1129,10 +1151,12 @@ export default {
       }
     }
   }
+
   .Airdrop {
     padding: 0 20px;
     padding-bottom: 8px;
     color: #fff;
+
     > .top {
       min-height: 80px;
       background: url('~@/assets/img/11.png') no-repeat;
@@ -1142,28 +1166,35 @@ export default {
       display: flex;
       justify-content: space-between;
       position: relative;
+
       > .left {
         display: flex;
         flex-direction: column;
+
         span {
           margin-bottom: 7px;
           font-size: 16px;
+
           &:last-child {
             margin: 0;
           }
         }
+
         .t {
           font-size: 16px;
           font-weight: bold;
         }
+
         img {
           width: 15px;
           vertical-align: middle;
         }
       }
+
       > .right {
         align-self: flex-start;
         white-space: nowrap;
+
         img {
           width: 15px;
           vertical-align: sub;
@@ -1171,10 +1202,12 @@ export default {
         }
       }
     }
+
     > .bot {
       display: flex;
       justify-content: space-between;
       margin-top: 3px;
+
       > .left {
         background: url('~@/assets/img/13.png') no-repeat;
         background-size: 100% 100%;
@@ -1184,19 +1217,23 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
         .item {
           margin-top: 12px;
           display: flex;
           flex-direction: column;
+
           span {
             line-height: 22px;
           }
+
           i {
             font-size: 16px;
             margin-right: 3px;
           }
         }
       }
+
       > .right {
         background: url('~@/assets/img/12.png') no-repeat;
         background-size: 100% 100%;
@@ -1205,13 +1242,16 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
         .item {
           margin-top: 12px;
           display: flex;
           flex-direction: column;
+
           span {
             line-height: 22px;
           }
+
           i {
             font-size: 16px;
             margin-right: 3px;
@@ -1220,6 +1260,7 @@ export default {
       }
     }
   }
+
   .yushou {
     background: url('~@/assets/img/bg@2x.png') no-repeat;
     background-size: cover;
@@ -1227,6 +1268,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
     .ysTop {
       background: #fff;
       flex: 3;
@@ -1239,6 +1281,7 @@ export default {
         font-weight: bold;
         margin-bottom: 10px;
       }
+
       .tt {
         font-size: 12px;
         color: #ccc;
@@ -1246,37 +1289,44 @@ export default {
         margin-left: 90px;
         display: flex;
         flex-direction: column;
+
         span {
           margin-right: 20px;
           line-height: 22px;
         }
       }
+
       .btn {
         line-height: 40px;
         color: #fff;
         background: url('~@/assets/img/btn.png') no-repeat;
         background-size: cover;
       }
-      /deep/.van-field__value {
+
+      /deep/ .van-field__value {
         border: 1px solid #ccc;
         padding-left: 5px;
       }
     }
+
     .ysBot {
       background: #fff;
       flex: 5;
       border-radius: 10px;
       padding: 20px;
+
       .title {
         font-weight: bold;
         font-size: 16px;
         margin-bottom: 10px;
         text-align: center;
       }
+
       .cont {
         .contItem {
           line-height: 26px;
           margin-bottom: 15px;
+
           &:last-child {
             margin-bottom: 0;
           }
@@ -1284,24 +1334,29 @@ export default {
       }
     }
   }
+
   .record {
     padding: 10px;
     min-height: 100px;
+
     .item2 {
       padding: 20px 0;
       border-top: 1px solid #ccc;
       display: flex;
       flex-direction: column;
+
       span {
         line-height: 26px;
         word-break: break-all;
         color: #aaa;
+
         i {
           margin-left: 10px;
           color: #333;
         }
       }
     }
+
     .item {
       padding: 20px 0;
       border-top: 1px solid #ccc;
@@ -1309,9 +1364,11 @@ export default {
       color: #aaa;
       justify-content: space-between;
       align-items: center;
+
       .line {
         line-height: 22px;
       }
+
       .btn {
         background: url('~@/assets/img/btn2.png') no-repeat;
         background-size: 100% 100%;
@@ -1320,11 +1377,13 @@ export default {
         border-radius: 15px;
       }
     }
+
     .tjdz {
       font-size: 12px;
     }
   }
 }
+
 .urlContent {
   top: 45%;
   // padding: 20px;
@@ -1335,11 +1394,13 @@ export default {
   // background-position-y: -30px;
   // padding-top: 180px;
   color: #000 !important;
+
   .cont {
     background: url('~@/assets/img/bg3.png') no-repeat;
     background-position-y: -30px;
     background-size: 100%;
     padding-top: 180px;
+
     #qrCode,
     .copy {
       background-color: #fff;
@@ -1347,6 +1408,7 @@ export default {
       text-align: center;
       border-radius: 0 0 10px 10px;
       transform: translateY(-1px);
+
       span {
         display: inline-block;
         background: url('~@/assets/img/btn2.png') no-repeat;
@@ -1357,16 +1419,19 @@ export default {
         border-radius: 15px;
       }
     }
+
     #qrCode {
       border-radius: 0;
       transform: translateY(0px);
     }
   }
+
   .url {
     word-break: break-all;
     line-height: 24px;
     padding: 0 20px;
   }
+
   .copy {
     // width: 50%;
     //
@@ -1376,6 +1441,7 @@ export default {
 
     // margin-top: 20px;
   }
+
   .disc {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -1383,20 +1449,24 @@ export default {
     text-align: center;
     font-size: 16px;
   }
+
   /deep/ #qrCode {
     text-align: center;
+
     img {
       display: inline-block;
       margin: 10px auto;
       margin-bottom: 0;
     }
   }
+
   .close {
     position: absolute;
     z-index: 99999;
     left: 50%;
     bottom: 0;
     transform: translateX(-50%);
+
     img {
       width: 50px;
     }
@@ -1417,10 +1487,12 @@ export default {
     font-weight: bold;
     margin-bottom: 50px;
   }
+
   .cont {
     margin-top: 10px;
     height: 422px;
     overflow: auto;
+
     .item {
       line-height: 22px;
       margin-bottom: 5px;
@@ -1433,15 +1505,18 @@ export default {
     left: 50%;
     bottom: 0;
     transform: translateX(-50%);
+
     img {
       width: 50px;
     }
   }
 }
+
 .urlContent3 {
   padding: 20px;
 
   padding-top: 80px;
+
   .cont {
     .tips {
       margin-top: 30px;
@@ -1449,6 +1524,7 @@ export default {
       line-height: 24px;
       color: #666666;
     }
+
     .btn {
       width: 80%;
       margin: 0 auto;
@@ -1461,23 +1537,28 @@ export default {
     }
   }
 }
-/deep/.van-nav-bar {
+
+/deep/ .van-nav-bar {
   background: #202634;
+
   .van-nav-bar__title {
     color: #fff;
     font-size: 18px;
     font-weight: bold;
   }
+
   .van-tabs__content {
     max-height: 400px;
     overflow: auto;
   }
 }
-/deep/.van-cell {
+
+/deep/ .van-cell {
   &::after {
     border-bottom: 0;
   }
 }
+
 .guanzhu {
   display: inline-block;
   white-space: nowrap;
