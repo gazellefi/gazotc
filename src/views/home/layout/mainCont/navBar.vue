@@ -98,17 +98,22 @@ export default {
 	  this.changeDrop(this.morenkey)
 	  var dq = this
 	  //监测用户是否安装MASK
-	  tools.testMASK().then(res=>{
-	  	let {web,id} = res
-	  	web3 = web
-	  	address = id
-		dotc = new web3.eth.Contract(dotc_abi, dotc_key);
-		dq.getsczc()
-	  }).catch((err)=>{
-		web3 = new Web3(config["hyue"][config["key"]]["Url"]);
-		dotc = new web3.eth.Contract(dotc_abi, dotc_key);
-	  	console.log(err);
-	  })
+	  if (typeof ethereum === "undefined") {
+	    
+	  } else {
+	    tools.testMASK().then(res=>{
+	    	let {web,id} = res
+	    	web3 = web
+	    	address = id
+	    		dotc = new web3.eth.Contract(dotc_abi, dotc_key);
+	    		dq.getsczc()
+	    }).catch((err)=>{
+	    		web3 = new Web3(config["hyue"][config["key"]]["Url"]);
+	    		dotc = new web3.eth.Contract(dotc_abi, dotc_key);
+	    	console.log(err);
+	    })
+	  }
+	  
   },
   methods: {
 	// 修改 网络

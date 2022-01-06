@@ -278,6 +278,15 @@
 					dq.user = address.toLowerCase();
 			}).catch((err)=>{
 				web3 = new Web3(config['hyue'][config['key']]['Url']);
+				ArbOne = new web3.eth.Contract(
+				config['hyue'][config['key']]['ArbOne']['abi'],
+					config['hyue'][config['key']]['ArbOne']['heyue']
+				);
+				ArbTwo = new web3.eth.Contract(
+					config['hyue'][config['key']]['arbTwo']['abi'],
+					config['hyue'][config['key']]['arbTwo']['heyue']
+				);
+				dq.getList()
 				console.log(err);
 			})
 		},
