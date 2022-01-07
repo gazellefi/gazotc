@@ -706,6 +706,7 @@ export default {
           Toast.clear();
           Toast.success("注册成功");
           that.dialogVisible = false;
+		  Toast.clear();
           return;
           let data = {
             idNo: that.regForm.identity,
