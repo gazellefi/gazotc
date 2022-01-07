@@ -227,7 +227,7 @@ export default [
                     },
                     {
                         path: '/home/orderCenter/LCRelease/Ddinfow',
-                        meta: {name: '详情', isHideChild: true},
+                        meta: {name: 'message.details', isHideChild: true},
                         name: 'Ddinfow',
                         component: () =>
                             import('@/views/home/ddgl/LCTransaction/Ddinfow')

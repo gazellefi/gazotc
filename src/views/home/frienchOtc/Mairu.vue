@@ -488,11 +488,11 @@ export default {
 	  }
 	  
 	  if (dq.form['num'] > Number(this.ddinfo['mal'])) {
-	    Notify({ type: 'warning', message: this.$t('message.frienchOtc.noLess') + this.ddinfo['mal'] });
+	    Notify({ type: 'warning', message: this.$t('message.exceedTips') + this.ddinfo['mal'] });
 	    return;
 	  }
 	  if (dq.form['num'] > Number(this.ddinfo['Moa'])) {
-	    Notify({ type: 'warning', message: this.$t('message.frienchOtc.noLess') + this.ddinfo['Moa'] });
+	    Notify({ type: 'warning', message: this.$t('message.frienchOtc.exceedTips') + this.ddinfo['Moa'] });
 	    return;
 	  }
       if (!dq.form['je']) {
@@ -507,21 +507,7 @@ export default {
         Notify({ type: 'warning', message: this.$t('message.NotMinNum') });
         return;
       }
-      //判断User deposit 与 资产
-      if (dq.form['num'] > dq.user['balancepro']) {
-        Dialog.confirm({
-          title: dq.$t('message.prompt'),
-          message: dq.$t('message.assetRchargeTips') ,
-          confirmButtonText: dq.$t('message.cancel'),
-          cancelButtonText: dq.$t('message.Recharge'),
-          cancelButtonColor: '',
-          getContainer: 'body'
-        })
-          .catch(() => {
-            dq.$router.push({name: 'wallet'});
-          });
-        return;
-      }
+      
       if (dq.form['bzj'] > dq.user['balancemar']) {
         Dialog.confirm({
           title: dq.$t('message.prompt'),
@@ -532,7 +518,7 @@ export default {
           getContainer: 'body'
         })
           .catch(() => {
-            // dq.$router.push('./baozhengjin');
+            dq.$router.push('/home/wallet/legalCoinWallet');
 			console.log('dq.$router.push(./baozhengjin)');
           });
         return;
@@ -541,13 +527,28 @@ export default {
       if (dq.ddinfo['Mmark'] != '0x6275790000000000000000000000000000000000000000000000000000000000') {
         adddingdanajax('Buying');
       } else {
+		  //判断User deposit 与 资产
+		  if (dq.form['num'] > dq.user['balancepro']) {
+				Dialog.confirm({
+				  title: dq.$t('message.prompt'),
+				  message: dq.$t('message.assetRchargeTips') ,
+				  confirmButtonText: dq.$t('message.cancel'),
+				  cancelButtonText: dq.$t('message.Recharge'),
+				  cancelButtonColor: '',
+				  getContainer: 'body'
+				})
+				  .catch(() => {
+					dq.$router.push('/home/wallet/legalCoinWallet');
+				  });
+				return;
+		  }
         adddingdanajax('On sale');
       }
 
       //提交订单
       function adddingdanajax(msg) {
         var jiazai = Toast.loading({
-          message: '' + msg + '...',
+          message: msg == 'Buying' ? dq.$t('message.dapp.buy') + '...' : dq.$t('message.dapp.sell') + '...',
           closeOnClick: false,
           closeOnClickOverlay: false,
           loadingType: 'spinner',

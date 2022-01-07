@@ -35,29 +35,44 @@
       </div>
       <div class="right">
         <span @click="showPopFn" class="btn">{{
-            $t("message.activit.title")
+            $t("message.InviteAwards")
           }}</span>
         <span style="font-size: 11px;">{{ content }}</span>
         <div class="addr fontS">
           {{ $t("message.activit.addr") }}:{{ user }}
         </div>
       </div>
-      <van-popup class="urlContent" v-model="showPop" round :style="{ height: '75%', width: '80%' }">
-        <div class="cont">
-          <div class="disc">{{ $t("message.activit.share") }}</div>
-          <div class="url">URL:{{ friendUrl }}</div>
-
-          <div id="qrCode" ref="qrCodeDiv"></div>
+      <van-popup class="urlContent" v-model="showPop" round :style="{ 'padding-bottom': '70px', width: '80%' }">
+        <div class="pop_content">
+			<div class="cont" id="cont">
+				<div class="disc">{{ $t("message.activit.share") }}</div>
+				<div class="url">URL:{{ friendUrl }}</div>
+				
+				<div id="qrCode" ref="qrCodeDiv"></div>
+			</div>
+          
           <div class="copy">
-            <span @click="copyFn">
+            <span @click="copyFn" style="width: 100px;">
               {{ $t("message.activit.copyURL") }}
             </span>
+			<span @click="toSave" style="width: 100px;margin-left: 20px;">
+			  截 图
+			</span>
           </div>
         </div>
         <div class="close" @click="showPop = false">
           <img src="~@/assets/img/close.png" alt=""/>
         </div>
       </van-popup>
+	  <!-- 截图显示 -->
+	  <van-popup
+	    v-model="posterUrl_show"
+	    closeable
+		round
+		style="padding: 20px;width: 80%;"
+	  >
+	  <img :src="posterUrl" style="width: 100%;">
+	  </van-popup>
       <van-popup class="urlContent2" v-model="showPop2" round :style="{ height: '80%', width: '73%' }">
         <div class="title">{{ $t("message.activit.Airdroprules") }}</div>
         <div class="cont">
@@ -248,7 +263,7 @@
   </div>
 </template>
 <script>
-
+import html2canvas from 'html2canvas'
 import api from '@/api/api'
 import Web3 from "web3";
 import Web3Modal from "web3modal";
@@ -261,8 +276,8 @@ import lang from "@/components/lang";
 import QRCode from "qrcodejs2";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import QRCodeModal from "@walletconnect/qrcode-modal";
-// import VConsole from "vconsole";
-// new VConsole();
+import VConsole from "vconsole";
+new VConsole();
 
 var web3 = "";
 var address = "";
@@ -317,7 +332,9 @@ export default {
       recommend_er: "",
       str1: "",
       transactionStatus: '', // 实名认证 返回状态
-      content: ''
+      content: '',
+	  posterUrl: '',  // 截图地址
+	  posterUrl_show: false
     };
   },
   mounted() {
@@ -364,16 +381,8 @@ export default {
     var dq = this;
     let isGO = location.href.includes("?ref");
     if (isGO) {
-      let str = location.href.substring(
-          location.href.indexOf("?ref=") + 5,
-          location.href.indexOf("&")
-      );
-      let lang = location.href.substring(
-          location.href.indexOf("&lang=") + 6,
-          location.href.indexOf("#")
-      );
-      this.$i18n.locale = lang.substring(0, 2);
-      dq.recommender = str.substring(0, 42);
+      this.$i18n.locale = this.$route.query.lang
+      dq.recommender = this.$route.query.ref
     }
 
     //监测用户是否安装MASK
@@ -465,14 +474,9 @@ export default {
         colorLight: "#ffffff", //二维码背景色
         correctLevel: QRCode.CorrectLevel.L, //容错率，L/M/H
       });
-      console.log(this.friendUrl)
+      console.log(this.$refs.qrCodeDiv)
     },
     showPopFn() {
-      // if (
-      //   !this.str1 &&
-      //   this.recommend_er == "0x0000000000000000000000000000000000000000"
-      // )
-      console.log(this.air);
       if (this.air != 20) {
         return this.$toast("请先注册");
       } else {
@@ -488,6 +492,7 @@ export default {
       if (!this.friendUrl) return;
       const input = document.createElement("input");
       document.body.appendChild(input);
+	  //  + this.$t('message.codeDes')
       input.setAttribute("value", this.friendUrl);
       input.select();
       if (document.execCommand("copy")) {
@@ -677,41 +682,39 @@ export default {
       })
     },
     ruleHideAuth() {
-		var that = this
-		// Toast.loading({ message: "数据请求中..." });
-		// window.alert(that.$t('message.activit.realTips'));
-		this.$router.push('/verifyIdentity');
-		// axios.post('https://gazotc.com:8083/member/jnmioURL?address='+address).then((res)=>{
-		// 	// that.msss = res
-		// 	let url = res.result.redirectUrl
-		// 	// console.log(code);
-		// 	Toast.clear()
-		// 	if(res.result.state== 'SUCCESS'){ // 已实名认证
-		// 		that.$confirm('您已实名认证', '', {
-		// 		  confirmButtonText: '确定',
-		// 		  cancelButtonText: '取消',
-		// 		  type: 'success',
-		// 		  callback: action => {
-		// 			if (action === 'confirm') {
-		// 			  console.log('按下 确定')
-		// 			}
-		// 			else {
-		// 			  console.log('按下 取消')
-		// 			}
-		// 		  }
-		// 		})
-		// 	}else if(res.result.redirectUrl){ //未实名认证
-		// 		window.location.href = url
-				
-		// 		// this.$router.push({
-		// 		// 	name: 'RealName',
-		// 		// 	query: {
-		// 		// 	  url: url
-		// 		// 	}
-		// 		// })
-		// 	}
-		// })
+      var that = this
+      // Toast.loading({ message: "数据请求中..." });
+      window.alert(that.$t('message.activit.realTips'));
+      // axios.post('https://gazotc.com:8083/member/jnmioURL?address='+address).then((res)=>{
+      // 	// that.msss = res
+      // 	let url = res.result.redirectUrl
+      // 	// console.log(code);
+      // 	Toast.clear()
+      // 	if(res.result.state== 'SUCCESS'){ // 已实名认证
+      // 		that.$confirm('您已实名认证', '', {
+      // 		  confirmButtonText: '确定',
+      // 		  cancelButtonText: '取消',
+      // 		  type: 'success',
+      // 		  callback: action => {
+      // 			if (action === 'confirm') {
+      // 			  console.log('按下 确定')
+      // 			}
+      // 			else {
+      // 			  console.log('按下 取消')
+      // 			}
+      // 		  }
+      // 		})
+      // 	}else if(res.result.redirectUrl){ //未实名认证
+      // 		window.location.href = url
 
+      // 		// this.$router.push({
+      // 		// 	name: 'RealName',
+      // 		// 	query: {
+      // 		// 	  url: url
+      // 		// 	}
+      // 		// })
+      // 	}
+      // })
     },
     async register() {
       var that = this
@@ -1014,6 +1017,36 @@ export default {
         }, 3000);
       }
     },
+	 // 点击截图
+	toSave () {
+	    let that = this;
+		that.isshow = !that.isshow;
+		Toast.loading({
+		  duration: 0, // 持续展示 toast
+		  forbidClick: true,
+		  message: that.$t('message.Postering'),
+		});
+		setTimeout(() => {
+		  // DOM节点主体
+		  let main = document.getElementById("cont");
+		  // context.scale(1, 1);
+		  //useCORS允许网络地址图片跨域
+		  html2canvas(main, {
+			//dpi: window.devicePixelRatio * 2,
+			width: parseInt(main.offsetWidth),
+			height: parseInt(main.offsetHeight),
+			scale: 1,
+			useCORS: true,
+		  }).then((canvas) => {
+			var dataUrl = canvas.toDataURL("image/png", 1.0);
+			that.showPop = false
+			that.posterUrl = dataUrl;
+			that.posterUrl_show = true
+			Toast.clear();
+			Toast({message : that.$t('message.posterSuccer'),duration:3000});
+		  });
+		}, 1500);
+	},
   },
   watch: {
     USTDVal(newval) {
@@ -1046,12 +1079,12 @@ export default {
     },
     friendUrl() {
       return (
-          this.ymAddr +
-          "?ref=" +
+          this.ymAddr + "/Activities?ref=" +
           this.queryAddr +
           "&lang=" +
-          this.$i18n.locale +
-          "#/Activities"
+          this.$i18n.locale
+          
+          
       );
     },
   },
@@ -1385,7 +1418,33 @@ export default {
     }
   }
 }
-
+.pop_content{
+	#qrCode,
+	.copy {
+	  background-color: #fff;
+	  padding: 10px 0;
+	  text-align: center;
+	  border-radius: 0 0 10px 10px;
+	  transform: translateY(-1px);
+	
+	  
+	}
+	
+	#qrCode {
+	  border-radius: 0;
+	  transform: translateY(0px);
+	}
+	span {
+	  display: inline-block;
+	  background: url('~@/assets/img/btn2.png') no-repeat;
+	  background-size: 100% 100%;
+	  // line-height: 38px;
+	  color: #fff;
+	  padding: 10px 10px;
+	  border-radius: 15px;
+	  text-align: center;
+	}
+}
 .urlContent {
   top: 45%;
   // padding: 20px;
@@ -1403,29 +1462,7 @@ export default {
     background-size: 100%;
     padding-top: 180px;
 
-    #qrCode,
-    .copy {
-      background-color: #fff;
-      padding: 10px 0;
-      text-align: center;
-      border-radius: 0 0 10px 10px;
-      transform: translateY(-1px);
-
-      span {
-        display: inline-block;
-        background: url('~@/assets/img/btn2.png') no-repeat;
-        background-size: 100% 100%;
-        // line-height: 38px;
-        color: #fff;
-        padding: 10px 10px;
-        border-radius: 15px;
-      }
-    }
-
-    #qrCode {
-      border-radius: 0;
-      transform: translateY(0px);
-    }
+    
   }
 
   .url {
@@ -1466,7 +1503,7 @@ export default {
     position: absolute;
     z-index: 99999;
     left: 50%;
-    bottom: 0;
+    bottom: -0px;
     transform: translateX(-50%);
 
     img {

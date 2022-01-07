@@ -38,7 +38,7 @@
       <!-- 表格 -->
       <div class="listul" v-loading="loading">
         <el-table :fixed="true" :data="arrList" style="width: 100%; overflow: auto">
-          <el-table-column align="center"  :render-header="askMerchant" :label="$t('message.dapp.Merchant')">
+          <el-table-column align="center" :label="$t('message.dapp.Merchant')">
             <template slot-scope="scope">
               <div class="listul_user">
                 <div class="listul_user_name">{{ scope.row.username }}</div>
@@ -544,30 +544,6 @@ export default{
 		                ),
 		            ]);
 	},
-  
-	askMerchant(h,{column,$index}){
-		let str = this.$t("message.dapp.Merchant")
-		let str1 = this.$t("message.dapp.MerchantAsk")
-		return h('div', [
-		                h('span', str),
-		                h(
-		                    'el-tooltip',
-		                    {
-		                        props: {
-		                            effect: 'dark',
-		                            content: str1,
-		                            placement: 'top',
-		                        },
-		                    },
-		                    [
-		                        h('i', {
-		                            class: 'el-icon-question',
-		                            style: 'color:#409eff;margin-left:5px;',
-		                        }),
-		                    ],
-		                ),
-		            ]);
-	}
 	
   },
   components: {
