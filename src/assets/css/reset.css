@@ -292,6 +292,9 @@ button {
 .marr-5{
 	margin-right: 5px;
 }
+.mart-20{
+	margin-top: 20px;
+}
 
 
 .cursor{
@@ -299,4 +302,8 @@ button {
 }
 .fwb{
 	font-weight: bold;
+}
+@font-face {
+    font-family: 'thin';
+    src: url('../font/BebasNeue-Regular.ttf');
 }

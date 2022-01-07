@@ -9,7 +9,7 @@
 			</el-carousel>
 		</div>
 		<el-row class="news_contetn" type="flex" justify="center">
-			<el-col :sm="24" :md="12" :lg="12">
+			<el-col :sm="24" :md="24" :lg="24">
 				<el-collapse v-model="activeName" accordion>
 				  <el-collapse-item :title="item.title" :name="(index+1)" v-for="(item,index) in list" :key="index">
 					<!-- <div  v-html="item.content"></div> -->

@@ -8,11 +8,12 @@
 			  </el-carousel-item>
 			</el-carousel>
 		</div>
+		<div class="fc a_c" style="line-height: 150%;">
+			<span class="fwb" style=" max-width: 60%;">{{$t('message.PagecontactDes')}}</span>
+		</div>
 		<el-row class="fc a_c contact_content">
-			<el-col :sm="24" :md="12" :lg="6">
-				<div style="line-height: 150%;">
-					<span class="fwb">{{$t('message.PagecontactDes')}}</span>
-				</div>
+			<el-col :sm="24" :md="12" :lg="8">
+				
 				<div class="mart-20">
 					<span>{{$t('message.userName')+':'}}</span>
 				</div>
@@ -69,9 +70,10 @@
 		opacity: 0;
 	}
 	.contact_content{
-		padding: 80px 20px 80px;
+		// font-family: wfont_0fdfff_8589388c04414d99904b08953fbf0fcb,wf_8589388c04414d99904b08953,orig_arizone_unicase_regular;
+		padding: 20px 20px 80px;
 		.input_nav{
-			padding: 0 10px;
+			padding: 1px 10px;
 			border: 1px solid #DCDCDC;
 			border-radius: 8px;
 		}

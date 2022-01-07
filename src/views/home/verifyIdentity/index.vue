@@ -73,24 +73,24 @@
 				<div class="photoBox" v-show="showPhoto">
 					<img class="imgFace" :src="srcImg1" id="img1"/>
 					<button type="button" class="faceBox" v-show="srcImg1==''">上传身份证正面</button>
-					<input id="fileBtn" type="file" @change="upload1($event,'#fileBtn', '#img1');" accept="image/*" multiple capture="camera" v-show="srcImg1==''"/>
+					<input id="fileBtn" type="file" @change="upload1($event,'#fileBtn', '#img1');" accept="image/*"  capture="camera"  multiple v-show="srcImg1==''"/>
 					<button type="button" class="faceBox"  v-show="srcImg1!=''" @click="showStepGo(5)">下一步</button>
 				</div>
 				
 				<div class="photoBox" v-show="showPhotoTwo">
 					<img class="imgFace" :src="srcImg2" id="img2"/>
 					<button type="button" class="faceBox" v-show="srcImg2==''">上传身份证背面</button>
-					<input id="fileBtn1" type="file" @change="upload2('#fileBtn1', '#img2');" accept="image/*" multiple capture="camera" v-show="srcImg2==''"/>
+					<input id="fileBtn1" type="file" @change="upload2('#fileBtn1', '#img2');" accept="image/*" capture="camera"  multiple v-show="srcImg2==''"/>
 					<button type="button" class="faceBox"  v-show="srcImg2!=''" @click="showStepGo(6)">下一步</button>
 				</div>
 				
 				<div class="photoBox" v-show="showPhotoThree">
-					<img class="imgFace" :src="srcImg3"  id="img3" width="100%"/>
-					<button type="button" class="faceBox" v-show="srcImg3==''" @click="showStepGo(7)">上传人脸照片</button>
-					<!-- <input id="fileBtn2" type="file" @change="upload3('#fileBtn2', '#img3');" accept="image/*" multiple capture="camera"   v-show="srcImg3==''"/> -->
+					<img class="imgFace" :src="srcImg3"  id="img3"/>
+					<button type="button" class="faceBox" v-show="srcImg3==''">上传人脸照片</button>
+					<input id="fileBtn2" type="file" @change="upload3('#fileBtn2', '#img3');" accept="image/*" multiple capture="camera"  v-show="srcImg3==''"/>
 					<button type="button" class="faceBox"  v-show="srcImg3!=''" @click="showStepGo(9)">下一步</button>
 				</div>
-				<div class="other" v-show="takePhoto">
+				<!-- <div class="other" v-show="takePhoto">
 					<div class="camera_outer">
 						<video id="videoCamera"  :width="videoWidth" :height="videoHeight" autoplay ></video>
 						<canvas style="display:none;" id="canvasCamera" :width="videoWidth" :height="videoHeight"></canvas>
@@ -107,7 +107,7 @@
 						</div>
 				  </div>
 					
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>
@@ -118,10 +118,8 @@
 	// import { ref } from 'vue'
 	
 	// const value = ref('')
-	import api from '@/api/api'
 	import Web3 from "web3";
 	import Web3Modal from "web3modal";
-	import Sha256 from "crypto-js/sha256";
 	import { Base64 } from "js-base64";
 	import config from "../../../config.js";
 	import { Toast } from "vant";
@@ -169,7 +167,6 @@
 				srcImg2:'',
 				srcImg3:'',
 				address:'',
-				imgSrc: "",
 				thisCancas: null,
 				thisContext: null,
 				thisVideo: null,
@@ -273,27 +270,32 @@
 				  	front: this.srcImg1,
 				  	groupId: 0
 				  }
+				  // console.log(verifyData);
+				  setTimeout(()=>{
 				  console.log(verifyData);
-				  axios({
-					method: "post",
-					url: "https://gazotc.com:8083/face/faceAdd",
-					data: verifyData,
-					headers: { "Content-Type": "application/json" }
-					
-				  })
-					.then((res) => {
-						if(res.code==0){
-							this.showPhotoTwo=true;
-							this.showPhoto=false;
-						}else{
-							this.srcImg1=''
-							alert('脸部数据不详')
-						}
-					  // window.location.href = res;
-					})
-					.catch(function (error) {
-					  alert("error");
-					});
+					axios({
+						method: "post",
+						url: "https://192.168.0.48:8083/face/faceAdd",
+						data: verifyData,
+						headers: { "Content-Type": "application/json"},
+						
+					  })
+						.then((res) => {
+							console.log(res);
+							if(res.code==0){
+								this.showPhotoTwo=true;
+								this.showPhoto=false;
+							}else{
+								this.srcImg1=''
+								alert('脸部数据不详')
+							}
+						  // window.location.href = res;
+						})
+						.catch((err)=> {
+						  console.log(err,111);
+						});
+				},300)
+				
 					
 				}else if(e==6){
 					let verifyData={
@@ -304,7 +306,7 @@
 					console.log(address);
 				  axios({
 					method: "post",
-					url: "https://gazotc.com:8083/face/faceBack",
+					url: "https://192.168.0.48:8083/face/faceBack",
 					data: verifyData,
 					headers: { "Content-Type": "application/json" },
 					
@@ -344,7 +346,7 @@
 					  console.log(verifyData);
 						axios({
 							method: "post",
-							url: "https://gazotc.com:8083/face/faceSearch",
+							url: "https://192.168.0.48:8083/face/faceSearch",
 							data: verifyData,
 							headers: { "Content-Type": "application/json" },
 						})

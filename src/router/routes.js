@@ -120,17 +120,11 @@ export default [
         path: '/verifyIdentity',
         name: 'verifyIdentity',
         component: () => import('@/views/home/verifyIdentity'),
-        meta: {
-            name: 'message.dapp.wallet',
-            icon: require('@/assets/dappImg/2.png')
-        },
-        children: [
-            {
-                path: "/home/verifyIdentity/start",
-                meta: {name: 'message.dapp.legalWallet'},
-                component: () => import("@/views/home/wallet/legalCoinWallet/Qianbao.vue"),
-            },
-        ]
+    },
+	{
+        path: '/verifyIdentity/camera',
+        name: 'camera',
+        component: () => import('@/views/home/verifyIdentity/camera'),
     },
     // 3 home 页面 dapp页面
     {

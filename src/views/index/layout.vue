@@ -143,6 +143,7 @@ export default {
   },
   created() {
 	  this.loading()
+	  this.getActive()
 	// setTimeout(this.maskShow=false,2000000)
   },
   mounted() {
@@ -161,6 +162,15 @@ export default {
 	  }
   },
   methods: {
+	getActive(){
+		console.log(this.$route.path);
+		for(let k in this.navRoutes){
+			if(this.navRoutes[k].route==this.$route.path){
+				this.activeIndex=this.navRoutes[k].value;
+			}
+		}
+	},
+	
     goLink(v) {
       window.open(v.href, '_blank')
     },

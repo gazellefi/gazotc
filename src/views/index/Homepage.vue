@@ -1231,4 +1231,8 @@ export default {
 	width: 100%;
 	margin-top: 20px;
 }
+.index{
+	
+		font-family: thin !important;
+}
 </style>

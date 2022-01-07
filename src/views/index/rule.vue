@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="fc a_c">
 		<div class="f a_c c_c" style="height: 315px;margin-top: 3.75rem;width: 100%;">
 			<el-carousel :autoplay="false"  arrow="nerver"  indicator-position="none" height="100%">
 			  <el-carousel-item style="position:relative">
@@ -7,47 +7,47 @@
 			  </el-carousel-item>
 			</el-carousel>
 		</div>
-			<el-row class="rule_content">
-				<el-col :sm="24" :md="12">
-					<el-collapse v-model="activeName" accordion>
-					  <el-collapse-item :title="$t('message.dapp.TransactionRules')" name="1">
-					    <div class="list">
-					      <div class="listItem" v-for="(v,i) in langList">
-					        {{ $t(`message.dapp.`+v)}}
-					      </div>
-					    </div>
-					  </el-collapse-item>
-					  <el-collapse-item :title="$t('message.dapp.MarginRules')" name="2">
-					    <div class="list">
-					      <div class="listItem" v-for="(v,i) in langList1">
-					        {{ $t(`message.dapp.`+v)}}
-					      </div>
-					    </div>
-					  </el-collapse-item>
-					  <el-collapse-item :title="$t('message.dapp.QualificationArbitrators')" name="3">
-					    <div class="list">
-					      <div class="listItem" v-for="(v,i) in langList2">
-					        {{ $t(`message.dapp.`+v)}}
-					      </div>
-					    </div>
-					  </el-collapse-item>
-					  <el-collapse-item :title="$t('message.dapp.firstRules')" name="4">
-					    <div class="list">
-					      <div class="listItem" v-for="(v,i) in langList3">
-					        {{ $t(`message.dapp.`+v)}}
-					      </div>
-					    </div>
-					  </el-collapse-item>
-					  <el-collapse-item :title="$t('message.dapp.twoRules')" name="5">
-						  <div class="list">
-						    <div class="listItem" v-for="(v,i) in langList4">
-						      {{ $t(`message.dapp.`+v)}}
-						    </div>
-						  </div>
-					  </el-collapse-item>
-					</el-collapse>
-				</el-col>
-			</el-row>
+		<el-row class="rule_content">
+			<el-col :sm="24" :md="24">
+				<el-collapse v-model="activeName" accordion>
+				  <el-collapse-item :title="$t('message.dapp.TransactionRules')" name="1">
+					<div class="list">
+					  <div class="listItem" v-for="(v,i) in langList">
+						{{ $t(`message.dapp.`+v)}}
+					  </div>
+					</div>
+				  </el-collapse-item>
+				  <el-collapse-item :title="$t('message.dapp.MarginRules')" name="2">
+					<div class="list">
+					  <div class="listItem" v-for="(v,i) in langList1">
+						{{ $t(`message.dapp.`+v)}}
+					  </div>
+					</div>
+				  </el-collapse-item>
+				  <el-collapse-item :title="$t('message.dapp.QualificationArbitrators')" name="3">
+					<div class="list">
+					  <div class="listItem" v-for="(v,i) in langList2">
+						{{ $t(`message.dapp.`+v)}}
+					  </div>
+					</div>
+				  </el-collapse-item>
+				  <el-collapse-item :title="$t('message.dapp.firstRules')" name="4">
+					<div class="list">
+					  <div class="listItem" v-for="(v,i) in langList3">
+						{{ $t(`message.dapp.`+v)}}
+					  </div>
+					</div>
+				  </el-collapse-item>
+				  <el-collapse-item :title="$t('message.dapp.twoRules')" name="5">
+					  <div class="list">
+						<div class="listItem" v-for="(v,i) in langList4">
+						  {{ $t(`message.dapp.`+v)}}
+						</div>
+					  </div>
+				  </el-collapse-item>
+				</el-collapse>
+			</el-col>
+		</el-row>
 			<!-- <div class="in_nav">
 				
 			</div> -->
@@ -142,6 +142,7 @@
 	}
 	.rule_content{
 		width: 100%;
+		max-width: 1200px;
 		display: flex;flex-direction: column;
 		align-items: center;
 		min-height: 450px;

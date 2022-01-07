@@ -1,5 +1,5 @@
 <template>
-	<div class="">
+	<div class="fc a_c">
 		<div class="f a_c c_c" style="height: 315px;margin-top: 3.75rem;width: 100%;">
 			<el-carousel :autoplay="false"  arrow="nerver"  indicator-position="none" height="100%">
 			  <el-carousel-item style="position:relative">
@@ -8,7 +8,7 @@
 			</el-carousel>
 		</div>
 		<el-row class="news_contetn" type="flex" justify="center">
-			<el-col :sm="24" :md="12" :lg="12">
+			<el-col :sm="24" :md="24" :lg="24">
 				<el-collapse v-model="activeName" accordion>
 				  <el-collapse-item :title="item.title" :name="(index+1)" v-for="(item,index) in list" :key="index">
 					<div  v-html="item.content"></div>
@@ -43,13 +43,14 @@
 	.news_contetn{
 		width: 100%;
 		padding: 80px 20px;
+		max-width: 1200px;
 	}
 	div{
 		/deep/ .el-collapse-item__header{
 				padding: 15px 0;
 				text-align: center;
 				border-radius: 5px;
-				// font-size: 18px;
+				font-size: 18px;
 				font-weight: bolder;
 			}
 	}
