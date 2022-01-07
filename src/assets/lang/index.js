@@ -872,7 +872,7 @@ export default {
 				noRemarks:'没有标记，请输入',
 				quantity:'数量不可以为空',
 				enterAmount:'请输入金额',
-				insufficient:'押金不足，请先补足押金！',
+				insufficient:'保证金不足，请先充值！',
 				successful:'交易成功',
 				check:'可在"订单中心>法币交易"查看',
 				fail:'交易失败',

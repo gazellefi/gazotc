@@ -492,7 +492,8 @@ export default {
       if (!this.friendUrl) return;
       const input = document.createElement("input");
       document.body.appendChild(input);
-      input.setAttribute("value", this.friendUrl + this.$t('message.codeDes'));
+	  //  + this.$t('message.codeDes')
+      input.setAttribute("value", this.friendUrl);
       input.select();
       if (document.execCommand("copy")) {
         document.execCommand("copy");
@@ -681,41 +682,39 @@ export default {
       })
     },
     ruleHideAuth() {
-		var that = this
-		// Toast.loading({ message: "数据请求中..." });
-		// window.alert(that.$t('message.activit.realTips'));
-		this.$router.push('/verifyIdentity');
-		// axios.post('https://gazotc.com:8083/member/jnmioURL?address='+address).then((res)=>{
-		// 	// that.msss = res
-		// 	let url = res.result.redirectUrl
-		// 	// console.log(code);
-		// 	Toast.clear()
-		// 	if(res.result.state== 'SUCCESS'){ // 已实名认证
-		// 		that.$confirm('您已实名认证', '', {
-		// 		  confirmButtonText: '确定',
-		// 		  cancelButtonText: '取消',
-		// 		  type: 'success',
-		// 		  callback: action => {
-		// 			if (action === 'confirm') {
-		// 			  console.log('按下 确定')
-		// 			}
-		// 			else {
-		// 			  console.log('按下 取消')
-		// 			}
-		// 		  }
-		// 		})
-		// 	}else if(res.result.redirectUrl){ //未实名认证
-		// 		window.location.href = url
-				
-		// 		// this.$router.push({
-		// 		// 	name: 'RealName',
-		// 		// 	query: {
-		// 		// 	  url: url
-		// 		// 	}
-		// 		// })
-		// 	}
-		// })
+      var that = this
+      // Toast.loading({ message: "数据请求中..." });
+      window.alert(that.$t('message.activit.realTips'));
+      // axios.post('https://gazotc.com:8083/member/jnmioURL?address='+address).then((res)=>{
+      // 	// that.msss = res
+      // 	let url = res.result.redirectUrl
+      // 	// console.log(code);
+      // 	Toast.clear()
+      // 	if(res.result.state== 'SUCCESS'){ // 已实名认证
+      // 		that.$confirm('您已实名认证', '', {
+      // 		  confirmButtonText: '确定',
+      // 		  cancelButtonText: '取消',
+      // 		  type: 'success',
+      // 		  callback: action => {
+      // 			if (action === 'confirm') {
+      // 			  console.log('按下 确定')
+      // 			}
+      // 			else {
+      // 			  console.log('按下 取消')
+      // 			}
+      // 		  }
+      // 		})
+      // 	}else if(res.result.redirectUrl){ //未实名认证
+      // 		window.location.href = url
 
+      // 		// this.$router.push({
+      // 		// 	name: 'RealName',
+      // 		// 	query: {
+      // 		// 	  url: url
+      // 		// 	}
+      // 		// })
+      // 	}
+      // })
     },
     async register() {
       var that = this
