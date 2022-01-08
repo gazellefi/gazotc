@@ -598,6 +598,7 @@ export default {
         posta = parseFloat(dq.form['num']) * (10 ** num_bs);
         postb = parseFloat(dq.form['zd_num']) * (10 ** num_bs);
         postc = parseFloat(dq.form['zg_num']) * (10 ** num_bs);
+		var dotsconn = new web3.eth.Contract(dotc_abi, dotc_key);
         dotsconn.methods.setMerch(
           postpro,
           dq.m,

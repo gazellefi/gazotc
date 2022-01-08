@@ -46,7 +46,7 @@
         <div class="pop_content">
 			<div class="cont" id="cont">
 				<div class="disc">{{ $t("message.activit.share") }}</div>
-				<div class="url">URL:{{ friendUrl }}</div>
+				<div class="url">{{$t('message.invitaGAZ')}}{{ friendUrl }}</div>
 				
 				<div id="qrCode" ref="qrCodeDiv"></div>
 			</div>
@@ -276,8 +276,8 @@ import lang from "@/components/lang";
 import QRCode from "qrcodejs2";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import QRCodeModal from "@walletconnect/qrcode-modal";
-import VConsole from "vconsole";
-new VConsole();
+// import VConsole from "vconsole";
+// new VConsole();
 
 var web3 = "";
 var address = "";
@@ -493,7 +493,7 @@ export default {
       const input = document.createElement("input");
       document.body.appendChild(input);
 	  //  + this.$t('message.codeDes')
-      input.setAttribute("value", this.friendUrl);
+      input.setAttribute("value", this.$t('message.invitaGAZ')+this.friendUrl);
       input.select();
       if (document.execCommand("copy")) {
         document.execCommand("copy");

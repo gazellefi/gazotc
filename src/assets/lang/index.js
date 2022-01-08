@@ -166,6 +166,7 @@ export default {
 			userEmail:'Your email address*',
 			enterEmail:'Required',
 			leaveMessage:'Subject',
+			invitaGAZ:'Select GAZ for WEB3 decentralized secured transaction, scan the code to log in to receive the blind box NFT, Dapp address',
 			frienchOtc:{
 				select:'Please Select',
 				submiting:'Submiting',
@@ -858,6 +859,7 @@ export default {
 			userEmail:'你的电子邮件地址*',
 			enterEmail:'请输入电子邮件地址',
 			leaveMessage:'主题',
+			invitaGAZ:'WEB3去中心化担保交易就选GAZ,扫码登录即可领盲盒NFT,Dapp地址',
 			
 			frienchOtc:{
 				select:'请选择',
