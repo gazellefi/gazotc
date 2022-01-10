@@ -470,10 +470,10 @@ export default {
         Notify({ type: 'warning', message: this.$t('message.NotcannotMinNum') });
         return;
       }
-      if (Number(this.form['zg_num']) > Number(this.form['num'])) {
-        Notify({ type: 'warning', message: this.$t('message.NotcannotManNum') });
-        return;
-      }
+      // if (Number(this.form['zg_num']) > Number(this.form['num'])) {
+      //   Notify({ type: 'warning', message: this.$t('message.NotcannotManNum') });
+      //   return;
+      // }
       if (Number(this.form['user_bzj']) > 100) {
         Notify({ type: 'warning', message: this.$t('message.NotCannotDesposit') });
         return;

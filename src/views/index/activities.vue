@@ -476,7 +476,6 @@ export default {
         colorLight: "#ffffff", //二维码背景色
         correctLevel: QRCode.CorrectLevel.L, //容错率，L/M/H
       });
-      console.log(this.friendUrl)
     },
     showPopFn() {
       if (this.air != 20) {
@@ -1050,23 +1049,27 @@ export default {
 		}, 1500);
 	},
 	getShortUrl(){
+		var dq = this
 		let str = this.ymAddr + "/Activities?ref=" + this.queryAddr + "&lang=" + this.$i18n.locale
 		let param = {
 		  "apikey": "a04c01ade69d0d345ff070b1df53246e2ccc8409",
 		  "target_url": str,
-		  "group_id": 1000,
 		  "chain_title": "邀请分享"
 		}
-		// axios.post(`https://openapi.aifabu.com/v1/chain/createChain`,param).then(res=>{
-		// 	console.log(res);
-		// })
 		axios({
 		    method: "post",
 		    url: "https://openapi.aifabu.com/v1/chain/createChain",
 		    data: param,
 		    headers: {"Content-Type": "application/json; charset=utf-8"}
 		  }).then((res) => {
-		        console.log(res);
+			  let {code} = res
+		        switch (code){
+		        	case 1:
+					    dq.friendUrl = res.result.render_url
+		        		break;
+		        	default:
+		        		break;
+		        }
 		      }).catch(function (error) {
 		        alert("error");
 		      });
