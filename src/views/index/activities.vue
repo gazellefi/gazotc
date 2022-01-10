@@ -334,7 +334,8 @@ export default {
       transactionStatus: '', // 实名认证 返回状态
       content: '',
 	  posterUrl: '',  // 截图地址
-	  posterUrl_show: false
+	  posterUrl_show: false,
+	  friendUrl: ''  //长链接地址
     };
   },
   mounted() {
@@ -420,7 +421,7 @@ export default {
       });
       var provider = await web3Modal.connect();
       web3 = new Web3(provider);
-      console.log("walletcounnect", provider);
+      // console.log("walletcounnect", provider);
       if (web3 && provider) {
         address = provider.selectedAddress;
         if (!address) {
@@ -432,6 +433,7 @@ export default {
         usdt = new web3.eth.Contract(u_abi, u_key);
         dq.getsczc();
         dq.ruleChangeHideAuth()
+		dq.getShortUrl()
       }
     }
   },
@@ -474,7 +476,7 @@ export default {
         colorLight: "#ffffff", //二维码背景色
         correctLevel: QRCode.CorrectLevel.L, //容错率，L/M/H
       });
-      console.log(this.$refs.qrCodeDiv)
+      console.log(this.friendUrl)
     },
     showPopFn() {
       if (this.air != 20) {
@@ -608,8 +610,8 @@ export default {
         },
       })
           .then((res) => {
-            console.log(address);
-            console.log(res)
+            // console.log(address);
+            // console.log(res)
             if (res.result != null) {
               this.nickname = res.result.nickname;
               this.name = '***';
@@ -1047,6 +1049,28 @@ export default {
 		  });
 		}, 1500);
 	},
+	getShortUrl(){
+		let str = this.ymAddr + "/Activities?ref=" + this.queryAddr + "&lang=" + this.$i18n.locale
+		let param = {
+		  "apikey": "a04c01ade69d0d345ff070b1df53246e2ccc8409",
+		  "target_url": str,
+		  "group_id": 1000,
+		  "chain_title": "邀请分享"
+		}
+		// axios.post(`https://openapi.aifabu.com/v1/chain/createChain`,param).then(res=>{
+		// 	console.log(res);
+		// })
+		axios({
+		    method: "post",
+		    url: "https://openapi.aifabu.com/v1/chain/createChain",
+		    data: param,
+		    headers: {"Content-Type": "application/json; charset=utf-8"}
+		  }).then((res) => {
+		        console.log(res);
+		      }).catch(function (error) {
+		        alert("error");
+		      });
+	}
   },
   watch: {
     USTDVal(newval) {
@@ -1076,16 +1100,6 @@ export default {
           text: this.$t("message.activit.AirDis"),
         },
       ];
-    },
-    friendUrl() {
-      return (
-          this.ymAddr + "/Activities?ref=" +
-          this.queryAddr +
-          "&lang=" +
-          this.$i18n.locale
-          
-          
-      );
     },
   },
   components: {

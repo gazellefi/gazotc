@@ -564,8 +564,8 @@ export default {
               } else {
                  ttype = umark_c==this.$t('message.dapp.forSale') ? this.$t('message.dapp.buy'):this.$t('message.dapp.forSale');
               }
-			  console.log(mid);
-			  console.log(ttype);
+			  // console.log(mid);
+			  // console.log(ttype);
               var zcsf_msg = '';
               var bzj_msg = '...';
               if (result[0][index][5] == 0 && result[0][index][4] == 0) {
@@ -596,6 +596,8 @@ export default {
                 agree: result[0][index][6],
                 pau: result[0][index][7],
                 unit: Number(result[0][index][8]) / 100,
+				mid: this.lowerCase(result[2][index][0]),
+				uid: this.lowerCase(result[2][index][1]),
     
                 zcsf_msg: zcsf_msg,
                 bzj_msg: bzj_msg,
@@ -627,8 +629,15 @@ export default {
 	//  商家时候改变 table row 颜色
 	addClass({row, column, rowIndex, columnIndex }) {
 	  // console.log(columnIndex)
-	  if(row.type == this.$t('message.dapp.forSale') && columnIndex == 4) {
-		return 'weightCell';
+	 //  if(row.type == this.$t('message.dapp.forSale') && columnIndex == 4) {
+		// return 'weightCell';
+	 //  }
+	 console.log(row.mid);
+	  if(row.mid == Address && columnIndex == 5){
+		  return 'weightCell';
+	  }
+	  if(row.uid == Address && columnIndex == 4){
+	  		  return 'weightCell';
 	  }
 	},
 	
