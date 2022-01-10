@@ -558,11 +558,13 @@ export default {
                 }
               }
 			  let mid = this.lowerCase(result[2][index][0])
+			  let umark_c =  this.lowerCase(result[1][index][0]) == '0x6275790000000000000000000000000000000000000000000000000000000000' ? this.$t('message.dapp.buy'):this.$t('message.dapp.forSale');
               if (mid != Address) {
-				  ttype = this.$t('message.dapp.forSale')
+				  ttype = umark_c
               } else {
-                 ttype = this.$t('message.dapp.buy')
+                 ttype = umark_c==this.$t('message.dapp.forSale') ? this.$t('message.dapp.buy'):this.$t('message.dapp.forSale');
               }
+			  console.log(mid);
 			  console.log(ttype);
               var zcsf_msg = '';
               var bzj_msg = '...';
