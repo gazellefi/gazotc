@@ -23,12 +23,12 @@
 		<div class="ChooseCountry" v-show="showStepTwo">
 			<div class="verification">
 				<div class="title">Choose issuing country/region</div>
-				<el-select v-model="value" class="m-2 selectCountry" placeholder="Select" size="large">
+				<el-select v-model="value" @change="ChooseCountrys($event)" class="m-2 selectCountry" placeholder="Select" size="large">
 				    <el-option
 				      v-for="item in options"
 				      :key="item.value"
 				      :label="item.label"
-				      :value="item.value"
+				      :value="item.groupId"
 				    >
 				    </el-option>
 			    </el-select>
@@ -159,10 +159,624 @@
 				showPhotoThree:false,
 				takePhoto:false,
 				value:'',
-				options:[{
-					value:'中国',
-					label:'中国',
-				}],
+				options:[
+					{
+						value:'阿尔巴尼亚',
+						label:'阿尔巴尼亚',
+					},
+					{
+						value:'阿富汗',
+						label:'阿富汗',
+					},
+					{
+						value:'阿拉伯联',
+						label:'阿拉伯联',
+					},
+					{
+						value:'阿曼',
+						label:'阿曼',
+					},
+					{
+						value:'阿塞拜疆',
+						label:'阿塞拜疆',
+					},
+					{
+						value:'埃塞俄比亚',
+						label:'埃塞俄比亚',
+					},
+					{
+						value:'爱尔兰',
+						label:'爱尔兰',
+					},
+					{
+						value:'安道尔',
+						label:'安道尔',
+					},
+					{
+						value:'安哥拉',
+						label:'安哥拉',
+					},
+					{
+						value:'安圭拉',
+						label:'安圭拉',
+					},
+					{
+						value:'安提瓜和巴布达',
+						label:'安提瓜和巴布达',
+					},
+					{
+						value:'奥地利',
+						label:'奥地利',
+					},
+					{
+						value:'巴巴多斯',
+						label:'巴巴多斯',
+					},
+					{
+						value:'巴布亚新几内亚',
+						label:'巴布亚新几内亚',
+					},
+					{
+						value:'巴哈马',
+						label:'巴哈马',
+					},
+					{
+						value:'巴西',
+						label:'巴西',
+					},
+					{
+						value:'百慕大',
+						label:'百慕大',
+					},
+					{
+						value:'保加利亚',
+						label:'保加利亚',
+					},
+					{
+						value:'贝宁',
+						label:'贝宁',
+					},
+					{
+						value:'比利时',
+						label:'比利时',
+					},
+					{
+						value:'冰岛',
+						label:'冰岛',
+					},
+					{
+						value:'波多黎各',
+						label:'波多黎各',
+					},
+					{
+						value:'波斯尼亚和黑塞哥维那',
+						label:'波斯尼亚和黑塞哥维那',
+					},
+					{
+						value:'玻利维亚',
+						label:'玻利维亚',
+					},
+					{
+						value:'伯利兹',
+						label:'伯利兹',
+					},
+					{
+						value:'博茨瓦纳',
+						label:'博茨瓦纳',
+					},
+					{
+						value:'不丹',
+						label:'不丹',
+					},
+					{
+						value:'布隆迪',
+						label:'布隆迪',
+					},
+					{
+						value:'赤道几内亚',
+						label:'赤道几内亚',
+					},
+					{
+						value:'丹麦',
+						label:'丹麦',
+					},
+					{
+						value:'多米尼',
+						label:'多米尼',
+					},
+					{
+						value:'厄瓜多尔',
+						label:'厄瓜多尔',
+					},
+					{
+						value:'法罗群岛',
+						label:'法罗群岛',
+					},
+					{
+						value:'菲律宾',
+						label:'菲律宾',
+					},
+					{
+						value:'斐济',
+						label:'斐济',
+					},
+					{
+						value:'芬兰',
+						label:'芬兰',
+					},
+					{
+						value:'佛得角',
+						label:'佛得角',
+					},
+					{
+						value:'冈比亚',
+						label:'冈比亚',
+					},
+					{
+						value:'刚果（布）',
+						label:'刚果（布）',
+					},
+					{
+						value:'哥斯达黎加',
+						label:'哥斯达黎加',
+					},
+					{
+						value:'格鲁吉亚',
+						label:'格鲁吉亚',
+					},
+					{
+						value:'古巴',
+						label:'古巴',
+					},
+					{
+						value:'圭亚那',
+						label:'圭亚那',
+					},
+					{
+						value:'哈萨克斯坦',
+						label:'哈萨克斯坦',
+					},
+					{
+						value:'韩国',
+						label:'韩国',
+					},
+					{
+						value:'荷兰',
+						label:'荷兰',
+					},
+					{
+						value:'洪都拉斯',
+						label:'洪都拉斯',
+					},
+					{
+						value:'吉布提',
+						label:'吉布提',
+					},
+					{
+						value:'吉尔吉斯斯坦',
+						label:'吉尔吉斯斯坦',
+					},
+					{
+						value:'几内亚',
+						label:'几内亚',
+					},
+					{
+						value:'几内亚比绍',
+						label:'几内亚比绍',
+					},
+					{
+						value:'加拿大',
+						label:'加拿大',
+					},
+					{
+						value:'捷克',
+						label:'捷克',
+					},
+					{
+						value:'津巴布韦',
+						label:'津巴布韦',
+					},
+					{
+						value:'喀麦隆',
+						label:'喀麦隆',
+					},
+					{
+						value:'卡塔尔',
+						label:'卡塔尔',
+					},
+					{
+						value:'开曼群岛',
+						label:'开曼群岛',
+					},
+					{
+						value:'科摩罗',
+						label:'科摩罗',
+					},
+					{
+						value:'科索沃',
+						label:'科索沃',
+					},
+					{
+						value:'科特迪瓦',
+						label:'科特迪瓦',
+					},
+					{
+						value:'科威特',
+						label:'科威特',
+					},
+					{
+						value:'克罗地亚',
+						label:'克罗地亚',
+					},
+					{
+						value:'肯尼亚',
+						label:'肯尼亚',
+					},
+					{
+						value:'库拉索',
+						label:'库拉索',
+					},
+					{
+						value:'莱索托',
+						label:'莱索托',
+					},
+					{
+						value:'老挝',
+						label:'老挝',
+					},
+					{
+						value:'黎巴嫩',
+						label:'黎巴嫩',
+					},
+					{
+						value:'立陶宛',
+						label:'立陶宛',
+					},
+					{
+						value:'利比里亚',
+						label:'利比里亚',
+					},
+					{
+						value:'利比亚',
+						label:'利比亚',
+					},
+					{
+						value:'列支敦士登',
+						label:'列支敦士登',
+					},
+					{
+						value:'卢森堡',
+						label:'卢森堡',
+					},
+					{
+						value:'卢旺达',
+						label:'卢旺达',
+					},
+					{
+						value:'罗马尼亚',
+						label:'罗马尼亚',
+					},
+					{
+						value:'马尔代夫',
+						label:'马尔代夫',
+					},
+					{
+						value:'马耳他',
+						label:'马耳他',
+					},
+					{
+						value:'马绍尔群岛',
+						label:'马绍尔群岛',
+					},
+					{
+						value:'毛里塔尼亚',
+						label:'毛里塔尼亚',
+					},
+					{
+						value:'美属维',
+						label:'美属维',
+					},
+					{
+						value:'秘鲁',
+						label:'秘鲁',
+					},
+					{
+						value:'密克罗尼西亚',
+						label:'密克罗尼西亚',
+					},
+					{
+						value:'缅甸',
+						label:'缅甸',
+					},
+					{
+						value:'摩洛哥',
+						label:'摩洛哥',
+					},
+					{
+						value:'摩纳哥',
+						label:'摩纳哥',
+					},
+					{
+						value:'莫桑比克',
+						label:'莫桑比克',
+					},
+					{
+						value:'纳米比亚',
+						label:'纳米比亚',
+					},
+					{
+						value:'南非',
+						label:'南非',
+					},
+					{
+						value:'南苏丹',
+						label:'南苏丹',
+					},
+					{
+						value:'尼加拉瓜',
+						label:'尼加拉瓜',
+					},
+					{
+						value:'尼泊尔',
+						label:'尼泊尔',
+					},
+					{
+						value:'尼日尔',
+						label:'尼日尔',
+					},
+					{
+						value:'尼日利亚',
+						label:'尼日利亚',
+					},
+					{
+						value:'帕劳',
+						label:'帕劳',
+					},
+					{
+						value:'葡萄牙',
+						label:'葡萄牙',
+					},
+					{
+						value:'日本',
+						label:'日本',
+					},
+					{
+						value:'瑞士',
+						label:'瑞士',
+					},
+					{
+						value:'塞尔维亚',
+						label:'塞尔维亚',
+					},
+					{
+						value:'塞拉利昂',
+						label:'塞拉利昂',
+					},
+					{
+						value:'塞内加尔',
+						label:'塞内加尔',
+					},
+					{
+						value:'塞舌尔',
+						label:'塞舌尔',
+					},
+					{
+						value:'沙特阿拉伯',
+						label:'沙特阿拉伯',
+					},
+					{
+						value:'圣多美和普林西比',
+						label:'圣多美和普林西比',
+					},
+					{
+						value:'圣基茨',
+						label:'圣基茨',
+					},
+					{
+						value:'圣文森特和格',
+						label:'圣文森特和格',
+					},
+					{
+						value:'斯洛伐克',
+						label:'斯洛伐克',
+					},
+					{
+						value:'苏丹',
+						label:'苏丹',
+					},
+					{
+						value:'苏里南',
+						label:'苏里南',
+					},
+					{
+						value:'索马里',
+						label:'索马里',
+					},
+					{
+						value:'塔吉克斯坦',
+						label:'塔吉克斯坦',
+					},
+					{
+						value:'台湾',
+						label:'台湾',
+					},
+					{
+						value:'泰国',
+						label:'泰国',
+					},
+					{
+						value:'坦桑尼亚',
+						label:'坦桑尼亚',
+					},
+					{
+						value:'汤加',
+						label:'汤加',
+					},
+					{
+						value:'特克斯和凯科斯群岛',
+						label:'特克斯和凯科斯群岛',
+					},
+					{
+						value:'特立尼达和多巴哥',
+						label:'特立尼达和多巴哥',
+					},
+					{
+						value:'突尼斯',
+						label:'突尼斯',
+					},
+					{
+						value:'土耳其',
+						label:'土耳其',
+					},
+					{
+						value:'土库曼斯坦',
+						label:'土库曼斯坦',
+					},
+					{
+						value:'瓦努阿图',
+						label:'瓦努阿图',
+					},
+					{
+						value:'危地马拉',
+						label:'危地马拉',
+					},
+					{
+						value:'委内瑞拉',
+						label:'委内瑞拉',
+					},
+					{
+						value:'文莱',
+						label:'文莱',
+					},
+					{
+						value:'乌干达',
+						label:'乌干达',
+					},
+					{
+						value:'乌克兰',
+						label:'乌克兰',
+					},
+					{
+						value:'乌拉圭',
+						label:'乌拉圭',
+					},
+					{
+						value:'乌兹别克斯坦',
+						label:'乌兹别克斯坦',
+					},
+					{
+						value:'西班牙',
+						label:'西班牙',
+					},
+					{
+						value:'希腊',
+						label:'希腊',
+					},
+					{
+						value:'新加坡',
+						label:'新加坡',
+					},
+					{
+						value:'新西兰',
+						label:'新西兰',
+					},
+					{
+						value:'匈牙利',
+						label:'匈牙利',
+					},
+					{
+						value:'叙利亚',
+						label:'叙利亚',
+					},
+					{
+						value:'牙买加',
+						label:'牙买加',
+					},
+					{
+						value:'亚美尼亚',
+						label:'亚美尼亚',
+					},
+					{
+						value:'也门',
+						label:'也门',
+					},
+					{
+						value:'伊拉克',
+						label:'伊拉克',
+					},
+					{
+						value:'伊朗',
+						label:'伊朗',
+					},
+					{
+						value:'以色列',
+						label:'以色列',
+					},
+					{
+						value:'意大利',
+						label:'意大利',
+					},
+					{
+						value:'印度',
+						label:'印度',
+					},
+					{
+						value:'印度尼西亚',
+						label:'印度尼西亚',
+					},
+					{
+						value:'英国',
+						label:'英国',
+					},
+					{
+						value:'英属维尔京群岛',
+						label:'英属维尔京群岛',
+					},
+					{
+						value:'约旦',
+						label:'约旦',
+					},
+					{
+						value:'越南',
+						label:'越南',
+					},
+					{
+						value:'赞比亚',
+						label:'赞比亚',
+					},
+					{
+						value:'泽西岛',
+						label:'泽西岛',
+					},
+					{
+						value:'乍得',
+						label:'乍得',
+					},
+					{
+						value:'直布罗陀',
+						label:'直布罗陀',
+					},
+					{
+						value:'智利',
+						label:'智利',
+					},
+					{
+						value:'中非共和国',
+						label:'中非共和国',
+					},
+					{
+						value:'中国',
+						label:'中国',
+					},
+					{
+						value:'中国澳门特别行政区',
+						label:'中国澳门特别行政区',
+					},
+					{
+						value:'中国香港特别行政区',
+						label:'中国香港特别行政区',
+					},
+				],
 				srcImg1:'',
 				srcImg2:'',
 				srcImg3:'',
@@ -170,15 +784,20 @@
 				thisCancas: null,
 				thisContext: null,
 				thisVideo: null,
-				openVideo:false
+				openVideo:false,
 				// forntData:{
 				// 	address:address,
 				// 	front: this.srcImg2,
 				// 	groupId: 0
 				// }
+				groupId:''
 			}
 		},
 		mounted() {
+			for(let k in this.options){
+				this.options[k]['groupId']=k;
+			}
+			// console.log(this.options);
 			// this.getCompetence()//进入页面就调用摄像头
 			//监测用户是否安装MASK
 			console.log(typeof ethereum);
@@ -253,8 +872,12 @@
 					this.showStepOne=false;
 					this.showStepTwo=true;
 				}else if(e==2){
-					this.showStepTwo=false;
-					this.showStepThree=true;
+					if(this.groupId==''){
+						alert('请选择国家或地区')
+					}else{
+						this.showStepTwo=false;
+						this.showStepThree=true;
+					}
 				}else if(e==3){
 					this.showStepThree=false;
 					this.showStepFour=true;
@@ -268,7 +891,7 @@
 				  let verifyData={
 				  	address:address,
 				  	front: this.srcImg1,
-				  	groupId: 0
+				  	groupId: this.groupId
 				  }
 				  // console.log(verifyData);
 				  setTimeout(()=>{
@@ -301,7 +924,7 @@
 					let verifyData={
 						address:address,
 						back: this.srcImg2,
-						groupId: 0
+						groupId: this.groupId
 					}
 					console.log(address);
 				  axios({
@@ -341,7 +964,7 @@
 						let verifyData={
 							address:address,
 							front: this.srcImg3,
-							groupId: 0
+							groupId: this.groupId
 						}
 					  console.log(verifyData);
 						axios({
@@ -416,7 +1039,11 @@
 			        // $d.setAttribute("src", e.target.result);
 			    }
 			},
-			
+			ChooseCountrys(e){
+				console.log(e);
+				this.groupId=Number(e)
+				console.log(this.groupId);
+			},
 			  // 调用权限（打开摄像头功能）
 			  getCompetence() {
 			    var _this = this;
@@ -695,6 +1322,29 @@
 			}
 		}
 		
+			.verification{
+				background-color: #fff;
+				width: 100%;
+				height: 100%;
+			    margin: 0 !important;
+				display: flex;
+				border-radius: 0px;
+				padding: 10%;
+				flex-direction: column;
+				text-align: center;
+				align-items: center;
+				justify-content: center;
+			}
+			.photoBox{
+				width: 100%;
+			}
+			.faceBox{
+				padding: 20px;
+				width: 100%;
+				background-color: rgb(151, 190, 13);
+				color: #fff;
+				text-shadow: rgba(0, 0, 0, 0.4) 0px 0px 3px;
+			}
 		.ChooseCountry{
 			text-align: center;
 			position: fixed;
@@ -762,7 +1412,6 @@
 			}
 		}
 	}
-	
 	// 相机
 	 .camera_outer{
 	    position: relative;
@@ -819,4 +1468,8 @@
 	      }
 	    }
 	  }
+	.selectCountry{
+		margin-top: 20px;
+		width: 100%;
+	}
 </style>
