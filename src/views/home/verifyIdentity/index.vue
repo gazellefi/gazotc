@@ -2,12 +2,14 @@
 	<div class="verifyPage">
 		<div class="start" style="opacity: 1;height: 100%;" v-show="showStepOne">
 			<div class="verification">
+				<lang style="position: absolute;left: 3%;top: 4%;cursor: pointer;"></lang>
 				<div class="content">
 					<div class="title">
 						Start verification
 					</div>
 					<div class="main">
 						<div class="topMain">
+							<!-- <img src="../../../assets/img/id.png" > -->
 							This process is designed to verify your identity and protect you from identity theft.
 						</div>
 						<div class="bottomMain">
@@ -18,10 +20,12 @@
 						<button type="button" @click="showStepGo(1)">Start</button>
 					</div>
 				</div>
+				<div  style="position: absolute;left: 0;right:0;bottom:4%;">Powered by GazOTC</div>
 			</div>
 		</div>
 		<div class="ChooseCountry" v-show="showStepTwo">
 			<div class="verification">
+				<span style="position: absolute;left: 4%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(1)"> < </span>
 				<div class="title">Choose issuing country/region</div>
 				<el-select v-model="value" @change="ChooseCountrys($event)" class="m-2 selectCountry" placeholder="Select" size="large">
 				    <el-option
@@ -41,23 +45,40 @@
 						<button class="mainItem" @click='showStepGo(2)'>Identity card</button>
 					</div>
 				</div>
+				<div  style="position: absolute;left: 0;right:0;bottom:4%;">Powered by GazOTC</div>
 			</div>
 		</div>
 		<div class="ChooseCountry" v-show="showStepThree">
 			<div class="verification">
+				<span style="position: absolute;left: 4%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(2)"> < </span>
 				<div class="title">Choose an upload method</div>
 				<div class="main">
 					<div class="mainList">
-						<!-- <button class="mainItem" @click='showStepGo(3)'>Continue on mobile</button> -->
-						<button class="mainItem" @click='showStepGo(3)'>Take photo using webcam</button>
+						<button class="mainItem" @click='showStepGo(10)'>
+							<img src="../../../assets/img/chat.png" width="21px" style="margin-right: 10px;">
+							Continue on mobile
+						</button>
+						<button class="mainItem" @click='showStepGo(3)'>
+							<img src="../../../assets/img/camera.png"  width="21px" style="margin-right: 10px;">
+							Take photo using webcam
+						</button>
 					</div>
 				</div>
+				<div  style="position: absolute;left: 0;right:0;bottom:4%;">Powered by GazOTC</div>
+			</div>
+		</div>
+		<div class="ChooseCountry" v-show="showStepFive">
+			<div class="verification">
+				<span style="position: absolute;left: 4%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(4)"> < </span>
+				<div class="title">Continue on mobile</div>
+				<div id="qrCode" ref="qrCodeDiv"></div>
 			</div>
 		</div>
 		<div class="ChooseCountry" v-show="showStepFour">
 			<div class="verification">
+				<span style="position: absolute;left: 4%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(3)"> < </span>
 				<div class="title">Photo page of passport</div>
-				
+				<img src="../../../assets/img/id.png"  width="150px" v-show="srcImg1==''">
 				<div class="main" v-show="showFourBtn">
 					<div class="mainTips">
 						Step 1 of 2
@@ -86,7 +107,7 @@
 				
 				<div class="photoBox" v-show="showPhotoThree">
 					<img class="imgFace" :src="srcImg3"  id="img3"/>
-					<button type="button" class="faceBox" v-show="srcImg3==''">上传人脸照片</button>
+					<button type="button" class="faceBox" v-show="srcImg3==''">人脸识别</button>
 					<input id="fileBtn2" type="file" @change="upload3('#fileBtn2', '#img3');" accept="image/*" multiple capture="camera"  v-show="srcImg3==''"/>
 					<button type="button" class="faceBox"  v-show="srcImg3!=''" @click="showStepGo(9)">下一步</button>
 				</div>
@@ -108,6 +129,7 @@
 				  </div>
 					
 				</div> -->
+				<div  style="position: absolute;left: 0;right:0;bottom:4%;">Powered by GazOTC</div>
 			</div>
 		</div>
 	</div>
@@ -116,7 +138,7 @@
 
 <script>
 	// import { ref } from 'vue'
-	
+	import lang from "../../../components/lang.vue"
 	// const value = ref('')
 	import Web3 from "web3";
 	import Web3Modal from "web3modal";
@@ -145,6 +167,7 @@
 	var u_key = config["hbi"]["bian"]["USDT"]["heyue"];
 	
 	export default {
+  components: { lang },
 		data(){
 			return{
 		  videoWidth: 350,
@@ -158,6 +181,7 @@
 				showPhotoTwo:false,
 				showPhotoThree:false,
 				takePhoto:false,
+				showStepFive:false,
 				value:'',
 				options:[
 					{
@@ -790,7 +814,8 @@
 				// 	front: this.srcImg2,
 				// 	groupId: 0
 				// }
-				groupId:''
+				groupId:'',
+				verifyUrl:'https://192.168.0.33:8080/verifyIdentity'
 			}
 		},
 		mounted() {
@@ -867,12 +892,32 @@
 			}
 		},
 		methods:{
+			back(e){
+				if(e==1){
+					this.showStepOne=true;
+					this.showStepTwo=false;
+				}else if(e==2){
+						this.showStepTwo=true;
+						this.showStepThree=false;
+				}else if(e==3){
+					this.showStepThree=true;
+					this.showStepFour=false;
+					this.showFourBtn=false;
+					this.showPhoto=false;
+					this.showPhotoTwo=false;
+					this.showPhotoThree=false;
+					this.takePhoto=false;
+				}else if(e==4){
+					this.showStepThree=true;
+					this.showStepFive=false
+				}
+			},
 			showStepGo(e){
 				if(e==1){
 					this.showStepOne=false;
 					this.showStepTwo=true;
 				}else if(e==2){
-					if(this.groupId==''){
+					if(this.groupId===''){
 						alert('请选择国家或地区')
 					}else{
 						this.showStepTwo=false;
@@ -894,30 +939,41 @@
 				  	groupId: this.groupId
 				  }
 				  // console.log(verifyData);
-				  setTimeout(()=>{
 				  console.log(verifyData);
-					axios({
-						method: "post",
-						url: "https://192.168.0.48:8083/face/faceAdd",
-						data: verifyData,
-						headers: { "Content-Type": "application/json"},
+				  axios.post("https://192.168.0.48:8083/face/faceAdd",verifyData)
+				  .then((res)=>{
+					  console.log(res);
+						if(res.code==0){
+							this.showPhotoTwo=true;
+							this.showPhoto=false;
+						}else{
+							this.srcImg1=''
+							alert('脸部数据不详')
+						}
+				  }).catch((err)=>{
+					  console.log(err);
+				  })
+					// axios({
+					// 	method: "post",
+					// 	url: "https://192.168.0.48:8083/face/faceAdd",
+					// 	data: verifyData,
+					// 	headers: { "Content-Type": "application/json"},
 						
-					  })
-						.then((res) => {
-							console.log(res);
-							if(res.code==0){
-								this.showPhotoTwo=true;
-								this.showPhoto=false;
-							}else{
-								this.srcImg1=''
-								alert('脸部数据不详')
-							}
-						  // window.location.href = res;
-						})
-						.catch((err)=> {
-						  console.log(err,111);
-						});
-				},300)
+					//   })
+					// 	.then((res) => {
+					// 		console.log(res);
+					// 		if(res.code==0){
+					// 			this.showPhotoTwo=true;
+					// 			this.showPhoto=false;
+					// 		}else{
+					// 			this.srcImg1=''
+					// 			alert('脸部数据不详')
+					// 		}
+					// 	  // window.location.href = res;
+					// 	})
+					// 	.catch((err)=> {
+					// 	  console.log(err,111);
+					// 	});
 				
 					
 				}else if(e==6){
@@ -927,16 +983,10 @@
 						groupId: this.groupId
 					}
 					console.log(address);
-				  axios({
-					method: "post",
-					url: "https://192.168.0.48:8083/face/faceBack",
-					data: verifyData,
-					headers: { "Content-Type": "application/json" },
 					
-				  })
-					.then((res) => {
-						console.log(res)
-						console.log('success');
+					axios.post("https://192.168.0.48:8083/face/faceBack",verifyData)
+					.then((res)=>{
+					  console.log(res);
 						if(res.code==0){
 							this.showPhotoTwo=false;
 							this.showPhotoThree=true;
@@ -944,12 +994,9 @@
 							this.srcImg2=''
 							alert('脸部数据不详')
 						}
-						
-					  // window.location.href = res;
+					}).catch((err)=>{
+					  console.log(err);
 					})
-					.catch(function (error) {
-					  alert("error");
-					});
 					
 				}else if(e==7){
 					this.showPhotoThree=false;
@@ -967,28 +1014,45 @@
 							groupId: this.groupId
 						}
 					  console.log(verifyData);
-						axios({
-							method: "post",
-							url: "https://192.168.0.48:8083/face/faceSearch",
-							data: verifyData,
-							headers: { "Content-Type": "application/json" },
-						})
-						.then((res) => {
-							console.log(address);
-							console.log(res)
-							console.log('success');
-							if(res.code==0){
-								alert('实名验证成功')
-								this.$router.go(-1) 
-							}else{
-								this.srcImg3=''
-								alert('脸部数据不详')
-							}
-						  // window.location.href = res;
-						})
-						.catch(function (error) {
-						  alert("error");
-						});
+					axios.post("https://192.168.0.48:8083/face/faceSearch",verifyData)
+					.then((res)=>{
+					  console.log(res);
+						if(res.code==0){
+							alert('实名验证成功')
+							this.$router.go(-1) 
+						}else{
+							this.srcImg3=''
+							alert('脸部数据不详')
+						}
+					}).catch((err)=>{
+					  console.log(err);
+					})
+						// axios({
+						// 	method: "post",
+						// 	url: "https://192.168.0.48:8083/face/faceSearch",
+						// 	data: verifyData,
+						// 	headers: { "Content-Type": "application/json" },
+						// })
+						// .then((res) => {
+						// 	console.log(address);
+						// 	console.log(res)
+						// 	console.log('success');
+						// 	if(res.code==0){
+						// 		alert('实名验证成功')
+						// 		this.$router.go(-1) 
+						// 	}else{
+						// 		this.srcImg3=''
+						// 		alert('脸部数据不详')
+						// 	}
+						//   // window.location.href = res;
+						// })
+						// .catch(function (error) {
+						//   alert("error");
+						// });
+				}else if(e==10){
+					this.bindQRCode();
+					this.showStepThree=false;
+					this.showStepFive=true;
 				}
 			},
 			upload1(e,c, d){
@@ -1038,6 +1102,20 @@
 						})
 			        // $d.setAttribute("src", e.target.result);
 			    }
+			},
+			async bindQRCode() {
+				console.log(111);
+			  await this.$nextTick((e) => {
+			  });
+			  this.$refs.qrCodeDiv.innerHTML = "";
+			  new QRCode(this.$refs.qrCodeDiv, {
+				text: this.verifyUrl,
+				width: 100,
+				height: 100,
+				colorDark: "#333333", //二维码颜色
+				colorLight: "#ffffff", //二维码背景色
+				correctLevel: QRCode.CorrectLevel.L, //容错率，L/M/H
+			  });
 			},
 			ChooseCountrys(e){
 				console.log(e);
@@ -1275,6 +1353,7 @@
 					box-shadow: 0 0.1rem 0.2rem rgba(0,0,0,.2);
 					cursor: pointer;
 					text-align: left;
+					display: flex;
 				}
 				.mainItem:hover{
 					background-color: #dfdfdf;
@@ -1471,5 +1550,20 @@
 	.selectCountry{
 		margin-top: 20px;
 		width: 100%;
+	}
+	#qrCode,
+	.copy {
+	  background-color: #fff;
+	  padding: 10px 0;
+	  text-align: center;
+	  border-radius: 0 0 10px 10px;
+	  transform: translateY(-1px);
+	
+	  
+	}
+	
+	#qrCode {
+	  border-radius: 0;
+	  transform: translateY(0px);
 	}
 </style>
