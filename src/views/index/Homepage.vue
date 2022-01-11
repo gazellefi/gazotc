@@ -17,6 +17,9 @@
 		  </van-swipe-item>
 		</van-swipe>
 	  </div>
+	  <div class="activte" style="text-align: center;" @click="goAct">
+	  	预售,空投，NFT盲盒请点击详情页面
+	  </div>
     <!-- therefore -->
     <div class="therefore ">
       <div class="content c_c">
@@ -126,6 +129,8 @@
       </div>
     </div>
 	<img src="../../assets/img/show.svg" style="display: none;">
+	<img src="../../assets/img/link.jpg" style="display: none;">
+	
     <!-- blackInfo -->
     <!-- <div class="blackInfo ">
       <div class="content">
@@ -804,6 +809,10 @@ export default {
     order: 1 !important;
   }
 }
+.activte{
+	text-align: center;
+	cursor: pointer !important;
+}
 @media screen and (max-width: 1200px) {
   .blackInfo,
   .grayInfo {
@@ -1231,8 +1240,7 @@ export default {
 	width: 100%;
 	margin-top: 20px;
 }
-.index{
-	
+/* .index{
 		font-family: thin !important;
-}
+} */
 </style>
