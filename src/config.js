@@ -32,6 +32,7 @@ import usdtabib from "@/abi/bian/proabi/usdtabi.json";
 import btcabi from "@/abi/bian/proabi/btcabi.json";
 import ethabi from "@/abi/bian/proabi/ethabi.json";
 import gazabib from "@/abi/bian/gaz.json";
+import sx from "@/abi/bian/sx.json";
 
 var mr_key = !localStorage.morenkey ? 'bian':localStorage.morenkey; 
 /*
@@ -104,7 +105,16 @@ var config = {
                 heyue:"0xCE5C72a775A3e4D032Fbb08C66c8BdfA9A5d216F",
                 abi:gazabib,
                 deling:false
-            }           
+            },
+			SX:{
+			    show:true,
+			    id:"SX",
+			    key:"0x53580000000000000000000000000000000000000000000000000000000000",
+			    num:18,
+			    heyue:"0x6C625df902bfd1Ef0247403966B3f2223F436BF0",
+			    abi:sx,
+			    deling:false
+			}   
         },
         huobi:{
             USDT:{
@@ -255,7 +265,12 @@ var config = {
                 show:true,
                 key:"0x7275620000000000000000000000000000000000000000000000000000000000",
                 id:"RUB"
-            }
+            },
+			CAD:{
+				show:true,
+				key:"0x43414400000000000000000000000000000000000000000000000000000000",
+				id:"CAD"
+			}
         }
     }
 };

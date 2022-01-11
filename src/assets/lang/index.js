@@ -827,7 +827,7 @@ export default {
 			keyp: '公钥',
 			service: '联系客服',
 			telAccount: '电报账号：+447536334816、@GazotcServer',
-			applyPwd: '密码不匹配',
+			applyPwd: '请输入正确的密码',
 			amount: '总数',
 			minOrder: '最低数',
 			node: '节点',
