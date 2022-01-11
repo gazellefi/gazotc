@@ -470,10 +470,10 @@ export default {
         Notify({ type: 'warning', message: this.$t('message.NotcannotMinNum') });
         return;
       }
-      if (Number(this.form['zg_num']) > Number(this.form['num'])) {
-        Notify({ type: 'warning', message: this.$t('message.NotcannotManNum') });
-        return;
-      }
+      // if (Number(this.form['zg_num']) > Number(this.form['num'])) {
+      //   Notify({ type: 'warning', message: this.$t('message.NotcannotManNum') });
+      //   return;
+      // }
       if (Number(this.form['user_bzj']) > 100) {
         Notify({ type: 'warning', message: this.$t('message.NotCannotDesposit') });
         return;
@@ -598,6 +598,7 @@ export default {
         posta = parseFloat(dq.form['num']) * (10 ** num_bs);
         postb = parseFloat(dq.form['zd_num']) * (10 ** num_bs);
         postc = parseFloat(dq.form['zg_num']) * (10 ** num_bs);
+		var dotsconn = new web3.eth.Contract(dotc_abi, dotc_key);
         dotsconn.methods.setMerch(
           postpro,
           dq.m,

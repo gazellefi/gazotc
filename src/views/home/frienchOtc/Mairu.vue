@@ -507,6 +507,11 @@ export default {
         Notify({ type: 'warning', message: this.$t('message.NotMinNum') });
         return;
       }
+	  // 判断商家保证金
+	  if(dq.form['num'] * 0.2 / 0.5 > dq.ddinfo.bMar){
+		  Notify({ type: 'warning', message: this.$t('message.notMar') });
+		  return;
+	  }
       
       if (dq.form['bzj'] > dq.user['balancemar']) {
         Dialog.confirm({

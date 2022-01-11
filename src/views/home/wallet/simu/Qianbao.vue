@@ -48,6 +48,7 @@ export default {
       huobi: [],
       user_sc: 0,
       user_fr: 0,
+	  gazone: 0,
 	  items:[
 		  {
 			  bg: require('@/assets/img/bg1.png'),
@@ -98,9 +99,11 @@ export default {
     async getsczc() {
       Toast.loading({ message: this.$t('message.wallet.requesting') });
       var scze = await simuonn.methods.balanceOf(address).call();
-      this.items[0].num = scze / (10 ** 18);
+      this.items[0].num = Math.round(scze / (10 ** 18));
       free = await simuonn.methods.callfree(address).call();
-      this.items[1].num = free / (10 ** 18);
+      this.items[1].num = Math.round(free / (10 ** 18));
+	  let gazone = await simuonn.methods.balanceOne(address).call();
+	  this.items[2].num = Math.round(free / (10 ** 18))
       Toast.clear();
 
     },

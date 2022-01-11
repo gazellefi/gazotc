@@ -84,7 +84,7 @@ video {
   border: 0;
   font-size: 100%;
   font: inherit;
-  font-weight: normal;
+  /* font-weight: normal; */
   vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
@@ -250,6 +250,12 @@ button {
 }
 .c935{
 	color: #EA4935;
+}
+.c361{
+	color: #FF7361;
+}
+.c6e{
+	color: #6E6E6E;
 }
 
 .fz10{

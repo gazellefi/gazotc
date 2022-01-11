@@ -19,7 +19,7 @@
 	  </div>
     <!-- therefore -->
     <div class="therefore ">
-      <div class="content">
+      <div class="content c_c">
         <!-- <div class="title "><span>The birth</span> of gazotc</div>
         <div class="info">
           Once, we thought that the world’s top centralized exchange was safe and trustworthy, and was the first choice for digital currency in and out of gold.Until one day, a world-famous Exchange suspended currency withdrawal… Now, the business sector of the centralized exchange is eroded step by step by the decentralized exchange, and only OTC trading is spared temporarily. For this reason, OTC trading involves assets under the chain, and the blockchain cannot actively identify it, so the transaction will be controversial. Other defi services are atomic exchange and will not be controversial. The dispute resolution mechanism of OTC business is a problem that every project team involved in decentralized OTC business must face. China is the most active region of digital currency trading in the world. Then, the Chinese government has not supported digital currency trading. When the three exchanges are about to withdraw from China, how should the problem of cash in and out of Chinese traders be solved? Small exchanges are unreliable and private trading is unsafe. The market urgently needs a decentralized OTC trading platform. In this context, GAZOTC — A completely decentralized OTC trading platform, will be launched into the market after one year of polishing.

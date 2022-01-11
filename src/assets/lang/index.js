@@ -20,6 +20,7 @@ export default {
 				// { title: 'DAPP', route: '/Exchange' },
 				// { title: 'CONTACT', route: '/Activities' },
 			],
+			notMar: 'Insufficient margin of merchants',
 			posterSuccer: 'Generation succeeded, please long press save',
 			Postering: 'Composing Poster',
 			codeDes: 'For Web3 decentralized guarantee transactions, choose gazotc, scan the code and log in to get the blind box NFT',
@@ -166,6 +167,7 @@ export default {
 			userEmail:'Your email address*',
 			enterEmail:'Required',
 			leaveMessage:'Subject',
+			invitaGAZ:'Select GAZ for WEB3 decentralized secured transaction, scan the code to log in to receive the blind box NFT, Dapp address',
 			frienchOtc:{
 				select:'Please Select',
 				submiting:'Submiting',
@@ -712,6 +714,7 @@ export default {
 				{ title: '交换', route: '/Exchange' },
 				{ title: '公开预售', route: '/Activities' },
 			],
+			notMar: '商家保证金不足',
 			posterSuccer: '生成成功,请长按保存',
 			Postering: '正在合成海报',
 			codeDes: 'WEB3去中心化担保交易就选GAZOTC,扫码登录即可领盲盒NFT',
@@ -858,6 +861,7 @@ export default {
 			userEmail:'你的电子邮件地址*',
 			enterEmail:'请输入电子邮件地址',
 			leaveMessage:'主题',
+			invitaGAZ:'WEB3去中心化担保交易就选GAZ,扫码登录即可领盲盒NFT,Dapp地址',
 			
 			frienchOtc:{
 				select:'请选择',
@@ -1298,7 +1302,7 @@ export default {
 
 				mining: '挖矿（待开发）',
 				arbitrationMining: '仲裁挖矿',
-				orderMining: '订单挖矿(有歧义）',
+				orderMining: '订单挖矿',
 				transactionMining: '交易挖矿',
 				insuranceMining: '保险挖矿',
 				liquidityMining: '流动性挖矿',

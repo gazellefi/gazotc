@@ -708,10 +708,12 @@
 						//扩展数据
 						// console.log(ret['Uadd']);
 						// dq.ddifo['Umark_b'] =  ret['Umark'] == '0x6275790000000000000000000000000000000000000000000000000000000000' ? 'buy':'sell';
-
+                        let umark_c =  ret['Umark'] == '0x6275790000000000000000000000000000000000000000000000000000000000' ? 'buy':'sell';
 						let udd = dq.lowerCase(ret['Uadd'])
 						console.log(ret['pro'])
-						dq.ddifo['Umark_b'] = udd != dq.dquser ? 'sell' : 'buy'
+						if (udd != dq.dquser) dq.ddifo['Umark_b'] = umark_c;
+						if (udd == dq.dquser) dq.ddifo['Umark_b'] = umark_c == 'buy' ? 'sell' : 'buy' ;
+						//dq.ddifo['Umark_b'] = udd != dq.dquser ? 'sell' : 'buy'
 						for (let index = 0; index < huobijson['huobi'].length; index++) {
 
 							if (huobijson['huobi'][index]['key'] == ret['pro']) {
