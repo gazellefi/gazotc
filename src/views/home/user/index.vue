@@ -174,7 +174,8 @@
                   word-wrap: break-word;
                 "
               >
-                <span>{{ form.publickeyCopy }}</span>
+                <span>{{ form.publickey }}</span>
+				<el-link type="primary" class="marl-10" @click="copy(9)">{{$t('message.copy')}}</el-link>
               </div>
               <el-form
                 ref="form"
@@ -530,7 +531,8 @@ export default {
 			  password: ''
 	  },
 	  ciphertext: '',
-	  Plaintext: ''
+	  Plaintext: '',
+	  isLodding_ps: false
     };
   },
   watch: {
@@ -552,9 +554,10 @@ export default {
 		var Url2 = document.querySelector(".copy .van-field__control");
 		if (val == 1  && !this.Plaintext) return
 		if(val == 0 && !this.ciphertext) return
+		if(val == 9 && !this.form.publickey) return
 		const input = document.createElement('input');
 		document.body.appendChild(input);
-		input.setAttribute('value', val ==0 ? this.ciphertext : this.Plaintext);
+		input.setAttribute('value', val ==0 ? this.ciphertext : val ==1 ?  this.Plaintext : this.form.publickey);
 		input.select();
 		if (document.execCommand('copy')) {
 			document.execCommand('copy');
@@ -929,16 +932,27 @@ export default {
           }
         );
     },
+	//  修改密码
     async apply_password() {
-	  var rep = /^[a-zA-Z\d_]{8,}$/
+	  if(this.isLodding_ps) return
+	  this.isLodding_ps = true
+	  var rep = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
 	  if(!rep.test(this.form.password)){
-		  Toast('密码必须大于8位')
+		  Toast('8个以上字符至少包含字母数字')
 		  return
 	  }
       if (this.form.password != this.form.passwordAggin) {
         alert(this.$t("message.applyPwd"));
         // alert("password mismatched")
       } else {
+		var that = this
+		Toast.loading({ message: that.$t("message.wallet.loading")+'...',forbidClick: true,duration: 0 });
+		// const loading = this.$loading({
+		//   lock: true,
+		//   text: 'Loading',
+		//   spinner: 'el-icon-loading',
+		//   background: 'rgba(0, 0, 0, 0.7)'
+		// });
         const key = new SeededRSA(this.form.password);
         const value = await key.generate(2048).catch(console.log);
 		// 存到链上   15
@@ -946,24 +960,26 @@ export default {
 		  config["hyue"][config["key"]]["Letter"]["abi"],
 		  config["hyue"][config["key"]]["Letter"]["heyue"]
 		);
-		var that = this
-		Toast.loading({ message: that.$t("message.loading")+'...' });
 		that.setPublicKey(beizhucon,value.publicKey).then(()=>{
+			Toast.clear();
+			that.isLodding_ps = false
 			Dialog.alert({
 			  title: that.$t("message.prompt"),
 			  message: that.$t("message.success"),
 			}).then(() => {
 				that.form.publickey = value.publicKey;
-				that.form.publickeyCopy = res.replace("-----BEGIN PUBLIC KEY-----","").replace("-----END PUBLIC KEY-----","")
+				that.form.publickeyCopy = value.publicKey.replace("-----BEGIN PUBLIC KEY-----","").replace("-----END PUBLIC KEY-----","")
 				that.form.privatekey = value.privateKey;
-				Toast.clear();
+				
 			});
 		}).catch(()=>{
+			    Toast.clear();
+				that.isLodding_ps = false
 				Dialog.alert({
 				  title: that.$t("message.prompt"),
 				  message: that.$t("message.failed"),
 				}).then(() => {
-				  Toast.clear();
+				  
 				});
 		})
       }
@@ -1096,31 +1112,39 @@ export default {
 	    Toast('请输入私信密码或密文')
 	  }else{
 		  const key = new SeededRSA(this.inputs1.password);
-		  console.log(key);
-		  const value = await key.generate(2048).catch(console.log);
+		  const value = await key.generate(2048).catch();
 		  let { publicKey,privateKey} = value
 		  let privkey = new JSEncrypt()
 		  privkey.setPrivateKey(privateKey)
 		  let origin = privkey.decrypt(this.form.msg_decrypt)
+		  console.log(origin);
+		  let base64Matcher = new RegExp("^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})$")
 		  if(origin){
-			  let jsonOrigin = JSON.parse(Base64.decode(origin))
-			  let str = ''
-			  if (jsonOrigin.hasOwnProperty('phoneNuber')) {
-			  	str += this.$t('message.phoneNumber') + '：' + jsonOrigin.phoneNuber + ' '
+			  let endStr = origin.charAt(origin.length-1)
+			  // 加密json
+			  if(base64Matcher.test(origin)){
+				  let jsonOrigin = JSON.parse(Base64.decode(origin))
+				  let str = ''
+				  if (jsonOrigin.hasOwnProperty('phoneNuber')) {
+				  	str += this.$t('message.phoneNumber') + '：' + jsonOrigin.phoneNuber + ' '
+				  }
+				  if (jsonOrigin.hasOwnProperty('eMail')) {
+				  	str += this.$t('message.email') + '：' + jsonOrigin.eMail + ' '
+				  }
+				  if (jsonOrigin.hasOwnProperty('tele')) {
+				  	str += 'Tele：' + jsonOrigin.tele
+				  }
+				  if (jsonOrigin.hasOwnProperty('wechat')) {
+				  	str += this.$t('message.WeChat') + '：' + jsonOrigin.wechat + ' '
+				  }
+				  if (jsonOrigin.hasOwnProperty('other')) {
+				  	str += this.$t('message.other') + '：' + jsonOrigin.other + ' '
+				  }
+				  this.Plaintext = str
+			  }else{
+				  this.Plaintext = origin
 			  }
-			  if (jsonOrigin.hasOwnProperty('eMail')) {
-			  	str += this.$t('message.email') + '：' + jsonOrigin.eMail + ' '
-			  }
-			  if (jsonOrigin.hasOwnProperty('tele')) {
-			  	str += 'Tele：' + jsonOrigin.tele
-			  }
-			  if (jsonOrigin.hasOwnProperty('wechat')) {
-			  	str += this.$t('message.WeChat') + '：' + jsonOrigin.wechat + ' '
-			  }
-			  if (jsonOrigin.hasOwnProperty('other')) {
-			  	str += this.$t('message.other') + '：' + jsonOrigin.other + ' '
-			  }
-			  this.Plaintext = str
+			  
 		  }else{
 			  Toast('请输入密码有误')
 		  }

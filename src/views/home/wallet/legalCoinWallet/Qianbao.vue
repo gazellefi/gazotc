@@ -137,6 +137,8 @@
 		mounted() {
 			//初始化货币
 			var hbar = config['hbi'][config['key']];
+			// var hbar = config['fabi']['bian'];
+			console.log(hbar);
 			for (const key in hbar) {
 				this.huobi.push({
 					id: hbar[key]['id'],

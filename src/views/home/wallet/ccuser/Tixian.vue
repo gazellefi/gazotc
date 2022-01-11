@@ -109,7 +109,7 @@
 			  this.huobi[this.hbindex]['je'] = pro;
 			},
 			tixianajax() {
-			  Toast.loading({ message: this.$t('message.wallet.withdrawing') });
+			  Toast.loading({ message: this.$t('message.wallet.withdrawing'),forbidClick: true,duration: 0 });
 			  var dq_je = this.huobi[this.hbindex]['je'];
 			  var dq = this;
 			  var czconn = new web3.eth.Contract(
@@ -145,7 +145,7 @@
 			        if (ret == tk_je) {
 			          Toast.clear();
 			          // Toast.success('Successful withdrawal');
-					  Toast.success(this.$t('message.wallet.withdrawSuccess'));
+					  Toast.success(dq.$t('message.wallet.withdrawSuccess'));
 			          dq.huobi[dq.hbindex]['je'] = tk_je;
 					  dq.je = 0
 					  dq.$emit('drawal')

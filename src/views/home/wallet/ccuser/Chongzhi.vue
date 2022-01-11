@@ -141,7 +141,7 @@ export default {
         if (Number(this.hbilist[this.hbindex]['sq_je']) >= Number(this.je)) {
           //充值
           Toast.clear();
-          Toast.loading({ message: this.$t('message.wallet.depositing') });
+          Toast.loading({ message: this.$t('message.wallet.depositing'),forbidClick: true,duration: 0 });
           czhiajax();
         } else {
           //授权
@@ -216,7 +216,7 @@ export default {
         } else {
           if (sq_je >= dq.je) {
             Toast.clear();
-            Toast.loading({ message: dq.$t('message.wallet.depositing') });
+            Toast.loading({ message: dq.$t('message.wallet.depositing'),forbidClick: true,duration: 0 });
             czhiajax();
           } else {
             setTimeout(() => {
