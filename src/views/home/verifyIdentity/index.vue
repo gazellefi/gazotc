@@ -127,8 +127,8 @@
 	import QRCode from "qrcodejs2";
 	import WalletConnectProvider from "@walletconnect/web3-provider";
 	import QRCodeModal from "@walletconnect/qrcode-modal";
-	import VConsole from "vconsole";
-	new VConsole();
+	// import VConsole from "vconsole";
+	// new VConsole();
 	
 	var web3 = "";
 	var address = "";
