@@ -18,7 +18,7 @@
 		</van-swipe>
 	  </div>
 	  <div class="activte" style="text-align: center;" @click="goAct">
-	  	预售,空投，NFT盲盒请点击详情页面
+	  	{{$t('message.linkAct')}}
 	  </div>
     <!-- therefore -->
     <div class="therefore ">
@@ -811,7 +811,17 @@ export default {
 }
 .activte{
 	text-align: center;
-	cursor: pointer !important;
+	cursor: pointer;
+	font-size: 23px;
+	/* text-decoration: underline; */
+	white-space: nowrap;
+	background-color: #FF7361;
+	color: #fff;
+	margin-top: -53px;
+	padding: 10px 0;
+}
+.my-swipe{
+	cursor: auto !important;
 }
 @media screen and (max-width: 1200px) {
   .blackInfo,
@@ -824,6 +834,11 @@ export default {
       font-size: 18px !important;
       padding: 10px 0 !important;
     }
+  }
+  
+  .activte{
+  	font-size: 16px !important;
+	margin-bottom: 25px;
   }
   .carouser_nav{
   	padding:0 0 50px !important;
