@@ -811,9 +811,17 @@ export default {
 }
 .activte{
 	text-align: center;
-	cursor: pointer !important;
+	cursor: pointer;
 	font-size: 23px;
-	text-decoration: underline;
+	/* text-decoration: underline; */
+	white-space: nowrap;
+	background-color: #FF7361;
+	color: #fff;
+	margin-top: -53px;
+	padding: 10px 0;
+}
+.my-swipe{
+	cursor: auto !important;
 }
 @media screen and (max-width: 1200px) {
   .blackInfo,

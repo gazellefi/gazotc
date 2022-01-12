@@ -72,6 +72,7 @@
 				<span style="position: absolute;left: 4%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(4)"> < </span>
 				<div class="title">Continue on mobile</div>
 				<div id="qrCode" ref="qrCodeDiv"></div>
+				<div  style="position: absolute;left: 0;right:0;bottom:4%;">Powered by GazOTC</div>
 			</div>
 		</div>
 		<div class="ChooseCountry" v-show="showStepFour">
@@ -940,7 +941,7 @@
 				  }
 				  // console.log(verifyData);
 				  console.log(verifyData);
-				  axios.post("https://192.168.0.48:8083/face/faceAdd",verifyData)
+				  axios.post("https://gazotc.org:8083/face/faceAdd",verifyData)
 				  .then((res)=>{
 					  console.log(res);
 						if(res.code==0){
@@ -984,7 +985,7 @@
 					}
 					console.log(address);
 					
-					axios.post("https://192.168.0.48:8083/face/faceBack",verifyData)
+					axios.post("https://gazotc.org:8083/face/faceBack",verifyData)
 					.then((res)=>{
 					  console.log(res);
 						if(res.code==0){
@@ -1014,7 +1015,7 @@
 							groupId: this.groupId
 						}
 					  console.log(verifyData);
-					axios.post("https://192.168.0.48:8083/face/faceSearch",verifyData)
+					axios.post("https://gazotc.org:8083/face/faceSearch",verifyData)
 					.then((res)=>{
 					  console.log(res);
 						if(res.code==0){
@@ -1237,6 +1238,9 @@
 			justify-content: center;
 			.content{
 				max-width: 415px;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
 				.title{
 					font-size: 40px;
 					vertical-align: baseline;
@@ -1354,6 +1358,7 @@
 					cursor: pointer;
 					text-align: left;
 					display: flex;
+					align-items: center;
 				}
 				.mainItem:hover{
 					background-color: #dfdfdf;
