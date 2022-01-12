@@ -43,11 +43,11 @@
 						{{ scope.row.moa }} {{ scope.row.pro }}
 					</template>
 				</el-table-column>
-				<el-table-column align="center" :label="$t('message.minOrder')">
+			<!-- 	<el-table-column align="center" :label="$t('message.minOrder')">
 					<template slot-scope="scope">
 						{{ scope.row.zer }} {{ scope.row.pro }}
 					</template>
-				</el-table-column>
+				</el-table-column> -->
 				<el-table-column align="center" :label="$t('message.dapp.unitPrice')">
 					<template slot-scope="scope">
 						{{ scope.row.uni }} {{ scope.row.swap }}
@@ -124,10 +124,10 @@
 							<span class="marr-10">总数</span>
 							<span class="fz14">{{ item.moa }} {{ item.pro }}</span>
 						</div>
-						<div class="mart-10">
+						<!-- <div class="mart-10">
 							<span class="marr-10">最低数</span>
 							<span class="fz14">{{ item.zer }} {{ item.pro }}</span>
-						</div>
+						</div> -->
 					</div>
 					<div class="fc c_r">
 						

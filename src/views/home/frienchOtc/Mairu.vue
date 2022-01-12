@@ -385,6 +385,7 @@ export default {
                 }
               }
               dq.pros['mar'] = ret['mar'];
+			  console.log()
               var pro_dec = 10**config['hbi'][config['key']][huobi]['num'];
               // 组装数据
               dq.ddinfo = {
@@ -508,7 +509,9 @@ export default {
         return;
       }
 	  // 判断商家保证金
-	  if(dq.form['num'] * 0.2 / 0.5 >= dq.ddinfo.bMar){
+	  console.log(dq.ddinfo.bMar)
+	  console.log(dq.form['num'] * dq.pros['uni'] * 0.2 / dq.pros.pri)
+	  if(dq.form['num'] * dq.pros['uni'] * 0.2 / dq.pros.pri > dq.ddinfo.bMar){
 		  Notify({ type: 'warning', message: this.$t('message.notMar') });
 		  return;
 	  }
@@ -570,11 +573,11 @@ export default {
           }
         }
 		num = tools.getnume(num);
-		console.log(num);
         var doctconn = new web3.eth.Contract(dotc_abi, dotc_key);
         doctconn.methods.taker(dq.ddid, num + "").send({
           from: address
         }, (err, ret) => {
+		  jiazai.clear();
           if (!err && ret) {
 			  // console.log(ret);
 			  setTimeout(()=>{
