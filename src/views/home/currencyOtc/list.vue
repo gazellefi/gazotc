@@ -93,10 +93,10 @@
 							<span>{{$t('message.dapp.amount')}}</span>
 							<span>{{' '+item.moa}}</span>
 						</div>
-						<div class="mart-10">
+						<!-- <div class="mart-10">
 							<span>{{$t('message.dapp.minAmount')}}</span>
 							<span>{{' '+item.zer}}</span>
-						</div>
+						</div> -->
 					</div>
 					<div>
 						<el-button plain size="mini" @click="opengoumai(item)"
