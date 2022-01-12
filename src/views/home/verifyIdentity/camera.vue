@@ -170,7 +170,20 @@
             u8arr[n] = bstr.charCodeAt(n);
           }
           return new File([u8arr], filename, { type: mime });
-        }
+        },
+		callCamera () {
+			// H5调用电脑摄像头API
+			navigator.mediaDevices.getUserMedia({
+				video: true
+			}).then(success => {
+				// 摄像头开启成功
+				this.$refs['video'].srcObject = success
+				// 实时拍照效果
+				this.$refs['video'].play()
+			}).catch(error => {
+				console.error('摄像头开启失败，请检查摄像头是否可用！')
+			})
+		},
       }
     };
 </script>

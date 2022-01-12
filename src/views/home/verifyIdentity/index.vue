@@ -5,11 +5,11 @@
 				<lang style="position: absolute;left: 3%;top: 4%;cursor: pointer;"></lang>
 				<div class="content">
 					<div class="title">
+						<img src="../../../assets/img/check.png" width="30px" style="margin-right: -14px;">
 						Start verification
 					</div>
 					<div class="main">
 						<div class="topMain">
-							<!-- <img src="../../../assets/img/id.png" > -->
 							This process is designed to verify your identity and protect you from identity theft.
 						</div>
 						<div class="bottomMain">
@@ -40,9 +40,12 @@
 					<div class="mainTitle">Select ID type</div>
 					<div class="mainList">
 						<div class="topContent">Use a valid government-issued photo ID.</div>
-						<button class="mainItem" @click='showStepGo(2)'>Passport</button>
-						<button class="mainItem" @click='showStepGo(2)'>Driver's license</button>
-						<button class="mainItem" @click='showStepGo(2)'>Identity card</button>
+						<button class="mainItem" @click='showStepGo(2)'>
+							<img src="../../../assets/img/passport.png" width="21px" style="margin-right: 10px;">Passport</button>
+						<button class="mainItem" @click='showStepGo(2)'>
+							<img src="../../../assets/img/driving.png" width="21px" style="margin-right: 10px;">Driver's license</button>
+						<button class="mainItem" @click='showStepGo(2)'>
+							<img src="../../../assets/img/idChoose.png" width="21px" style="margin-right: 10px;">Identity card</button>
 					</div>
 				</div>
 				<div  style="position: absolute;left: 0;right:0;bottom:4%;">Powered by GazOTC</div>
@@ -72,6 +75,8 @@
 				<span style="position: absolute;left: 4%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(4)"> < </span>
 				<div class="title">Continue on mobile</div>
 				<div id="qrCode" ref="qrCodeDiv"></div>
+				<div class="QR">Scan QR code instead</div>
+				<div class="QRC">Scan this QR code using your mobile camera or QR code app. Please keep this page open while you are using your mobile.</div>
 				<div  style="position: absolute;left: 0;right:0;bottom:4%;">Powered by GazOTC</div>
 			</div>
 		</div>
@@ -94,23 +99,23 @@
 				
 				<div class="photoBox" v-show="showPhoto">
 					<img class="imgFace" :src="srcImg1" id="img1"/>
-					<button type="button" class="faceBox" v-show="srcImg1==''">上传身份证正面</button>
+					<button type="button" class="faceBox" v-show="srcImg1==''">Upload ID Card Of Front</button>
 					<input id="fileBtn" type="file" @change="upload1($event,'#fileBtn', '#img1');" accept="image/*"  capture="camera"  multiple v-show="srcImg1==''"/>
-					<button type="button" class="faceBox"  v-show="srcImg1!=''" @click="showStepGo(5)">下一步</button>
+					<button type="button" class="faceBox"  v-show="srcImg1!=''" @click="showStepGo(5)">Next</button>
 				</div>
 				
 				<div class="photoBox" v-show="showPhotoTwo">
 					<img class="imgFace" :src="srcImg2" id="img2"/>
-					<button type="button" class="faceBox" v-show="srcImg2==''">上传身份证背面</button>
+					<button type="button" class="faceBox" v-show="srcImg2==''">Upload ID Card Of Back</button>
 					<input id="fileBtn1" type="file" @change="upload2('#fileBtn1', '#img2');" accept="image/*" capture="camera"  multiple v-show="srcImg2==''"/>
-					<button type="button" class="faceBox"  v-show="srcImg2!=''" @click="showStepGo(6)">下一步</button>
+					<button type="button" class="faceBox"  v-show="srcImg2!=''" @click="showStepGo(6)">Next</button>
 				</div>
 				
 				<div class="photoBox" v-show="showPhotoThree">
 					<img class="imgFace" :src="srcImg3"  id="img3"/>
-					<button type="button" class="faceBox" v-show="srcImg3==''">人脸识别</button>
+					<button type="button" class="faceBox" v-show="srcImg3==''">face identification</button>
 					<input id="fileBtn2" type="file" @change="upload3('#fileBtn2', '#img3');" accept="image/*" multiple capture="camera"  v-show="srcImg3==''"/>
-					<button type="button" class="faceBox"  v-show="srcImg3!=''" @click="showStepGo(9)">下一步</button>
+					<button type="button" class="faceBox"  v-show="srcImg3!=''" @click="showStepGo(9)">Next</button>
 				</div>
 				<!-- <div class="other" v-show="takePhoto">
 					<div class="camera_outer">
@@ -152,6 +157,8 @@
 	import QRCodeModal from "@walletconnect/qrcode-modal";
 	// import VConsole from "vconsole";
 	// new VConsole();
+	import request from "../../../utils/request/request.js"
+	
 	
 	var web3 = "";
 	var address = "";
@@ -820,9 +827,18 @@
 			}
 		},
 		mounted() {
+			// this.callCamera()
+			axios.defaults.withCredentials = true;
 			for(let k in this.options){
 				this.options[k]['groupId']=k;
 			}
+			// const ipfs = window.IpfsHttpClient('localhost','5001')
+			// axios.get("	http://127.0.0.1:8081/ip4/127.0.0.1/tcp/5001").then((res)=>{
+			// 	console.log(res);
+			// 	console.log(111);
+			// }).catch((res)=>{
+			// 	console.log(res);
+			// })
 			// console.log(this.options);
 			// this.getCompetence()//进入页面就调用摄像头
 			//监测用户是否安装MASK
@@ -929,9 +945,9 @@
 					this.showStepFour=true;
 					this.showFourBtn=true;
 				}else if(e==4){
-					this.showFourBtn=false;
-					this.showPhoto=true;
-					
+					this.callCamera()
+					// this.showFourBtn=false;
+					// this.showPhoto=true
 				}else if(e==5){
 					// navigator.getUserMedia({ "video": true }, function (stream) {video.src = stream;video.play();}, ()=>{console.log(111);})
 				  let verifyData={
@@ -941,19 +957,28 @@
 				  }
 				  // console.log(verifyData);
 				  console.log(verifyData);
-				  axios.post("https://gazotc.org:8083/face/faceAdd",verifyData)
-				  .then((res)=>{
-					  console.log(res);
-						if(res.code==0){
-							this.showPhotoTwo=true;
-							this.showPhoto=false;
-						}else{
-							this.srcImg1=''
-							alert('脸部数据不详')
-						}
-				  }).catch((err)=>{
-					  console.log(err);
-				  })
+				  return request({
+				      url: 'https://gazotc.org:8083/face/faceAdd',
+				      method: 'post',
+				      data: verifyData
+				    }).then((res)=>{
+						console.log(res);
+					}).catch((err)=>{
+						console.log(err);
+					})
+				  // axios.post("https://192.168.0.48:8083/face/faceAdd",verifyData)
+				  // .then((res)=>{
+					 //  console.log(res);
+						// if(res.code==0){
+						// 	this.showPhotoTwo=true;
+						// 	this.showPhoto=false;
+						// }else{
+						// 	this.srcImg1=''
+						// 	alert('脸部数据不详')
+						// }
+				  // }).catch((err)=>{
+					 //  console.log(err);
+				  // })
 					// axios({
 					// 	method: "post",
 					// 	url: "https://192.168.0.48:8083/face/faceAdd",
@@ -1002,7 +1027,7 @@
 				}else if(e==7){
 					this.showPhotoThree=false;
 					this.takePhoto=true;
-				this.getCompetence()//进入页面就调用摄像头
+					this.getCompetence()//进入页面就调用摄像头
 				}else if(e==8){
 					console.log(this.srcImg3);
 					this.showPhotoThree=true;
@@ -1105,7 +1130,6 @@
 			    }
 			},
 			async bindQRCode() {
-				console.log(111);
 			  await this.$nextTick((e) => {
 			  });
 			  this.$refs.qrCodeDiv.innerHTML = "";
@@ -1204,6 +1228,23 @@
 				console.log(_this.srcImg3);
 				_this.showStepGo(8);
 			  },
+			callCamera () {
+				// H5调用电脑摄像头API
+				navigator.mediaDevices.getUserMedia({
+					video: true
+				}).then(success => {
+					this.showFourBtn=false;
+					this.showPhoto=true
+				}).catch(error => {
+					alert("摄像头开启失败，请检查摄像头是否可用！");
+					this.bindQRCode();
+					this.showStepFour=false;
+					this.showFourBtn=false;
+					this.showStepFive=true;
+					console.log('摄像头开启失败，请检查摄像头是否可用！')
+					
+				})
+			},
 		},
 	}
 </script>
@@ -1570,5 +1611,10 @@
 	#qrCode {
 	  border-radius: 0;
 	  transform: translateY(0px);
+	}
+	.QR{
+		font-size: 23px;
+		vertical-align: baseline;
+		font-weight: 400;
 	}
 </style>
