@@ -541,7 +541,7 @@ export default {
       var list = [];
       var dq = this;
       var contracts = new web3.eth.Contract(dotc_abi, dotc_key);
-      contracts.methods.ownerDeal(Address + "", 10 + "").call((err, result) => {
+      contracts.methods.ownerDeal(Address + "", 50 + "").call((err, result) => {
         if (result) {
 			console.log(result);
           if (result[0].length > 0) {
