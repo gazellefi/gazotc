@@ -276,6 +276,7 @@
 				var ccdotc = new web3.eth.Contract(ccdotc_abi, ccdotc_key);
 				ccdotc.methods.ownerIssue(Address + "", "9999").call((err, result) => {
 					if (result) {
+						console.log(huobi);
 						var larr = result[0];
 						var parr = result[1];
 						var list = [];
@@ -285,11 +286,13 @@
 							var swap_id = "";
 							// var swap_num = 0;
 							for (let huobii = 0; huobii < huobi.length; huobii++) {
-								if (parr[index][0] == huobi[huobii]["key"]) {
+								console.log();
+								if (parr[index][0].substring(0, 10) == huobi[huobii]["key"].substring(0, 10)) {
 									pro_num = huobi[huobii]["num"];
 									pro_id = huobi[huobii]["id"];
 									break;
 								}
+								// console.log(parr[index][0]);
 							}
 							for (let huobii = 0; huobii < huobi.length; huobii++) {
 								if (parr[index][1] == huobi[huobii]["key"]) {
@@ -298,7 +301,6 @@
 									break;
 								}
 							}
-
 							var obj = {
 								did: larr[index][0],
 								moa: tools.getnume(

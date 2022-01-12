@@ -192,12 +192,12 @@ var ethereum = window.ethereum;
 			                //                 }, 5000); 
 			            }else{
 			                Toast.clear();
-			                Toast.fail(this.$t('message.wallet.submit1'));
+			                Toast.fail(dq.$t('message.wallet.submit1'));
 			            }
 			        });
 			    }else{
 			        Toast.clear();
-			        Toast.fail(this.$t('message.wallet.cannotExceed'));
+			        Toast.fail(dq.$t('message.wallet.cannotExceed'));
 			    }
 				var mm = 0
 			
@@ -208,7 +208,7 @@ var ethereum = window.ethereum;
 			            if (ret) {
 			                if (ret == tk_je) {
 			                    Toast.clear();
-			                    Toast.success(this.$t('message.wallet.withdrawSuccess'));
+			                    Toast.success(dq.$t('message.wallet.withdrawSuccess'));
 			                    dq.gethuobizichan();
 								dq.je = 0
 								dq.$emit('drawal')
@@ -219,7 +219,7 @@ var ethereum = window.ethereum;
 									Toast.clear();
 									clearTimeout()
 									Dialog.alert({
-									    title: this.$t('message.wallet.withdrawSuccess'),
+									    title: dq.$t('message.wallet.withdrawSuccess'),
 									}).then(() => {
 										dq.gethuobizichan();
 										dq.je = 0

@@ -205,7 +205,8 @@ export default {
             return;
         }
         Toast.loading({
-            message: this.$t('message.wallet.loading')
+            message: this.$t('message.wallet.loading'),
+			forbidClick: true,duration: 0
         });
         var proconn = new web3.eth.Contract(config['hbi'][config['key']][this.hbilist[this.hbindex]['title']]['abi'],config['hbi'][config['key']][this.hbilist[this.hbindex]['title']]['heyue']);
         var dotcconn = new web3.eth.Contract(config['hyue'][config['key']]['dotc']['abi'],config['hyue'][config['key']]['dotc']['heyue']);
@@ -252,7 +253,8 @@ export default {
         //提交充值
         function chongzhiajax() {
             Toast.loading({
-                message: dq.$t('message.wallet.depositing')
+                message: dq.$t('message.wallet.depositing'),
+				forbidClick: true,duration: 0
             });
             var cznum = dq.getFNum((Number(dq.je) * dec));
             // console.log("充值中")

@@ -290,7 +290,7 @@
 			          clearTimeout(lx_time);
 			          Dialog.alert({
 			            title: dq.$t('message.wallet.transSuccess'),
-			            message: 'Transferred in ' + dq.numRu + ' Usdt to deposit',
+			            message: dq.$t('message.wallet.transfer') + dq.numRu,
 			          }).then(() => {
 						instance.confirmButtonLoading = false;
 						instance.confirmButtonText = dq.popoType == 4? dq.$t('message.changeOut'):dq.popoType == 3?dq.$t('message.changeInto') : ''
