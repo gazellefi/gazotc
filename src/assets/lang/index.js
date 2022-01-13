@@ -295,6 +295,7 @@ export default {
 				videoD:'Video Document',
 				otherD:'Other Document',
 				merryChristmas:'Merry Christmas！！！',
+				airDrop:"Ai-drop Strategy"
 			},
 			arbitration: {
 				invitetion: 'Invitation of arbitrators',
@@ -989,6 +990,7 @@ export default {
 				videoD:'视频文档',
 				otherD:'其他文档',
 				merryChristmas:'圣诞快乐！！！',
+				airDrop:"空投攻略"
 			},
 			arbitration: {
 

@@ -14,6 +14,9 @@
 				  <el-collapse-item :title="item.title" :name="(index+1)" v-for="(item,index) in list" :key="index">
 					<!-- <div  v-html="item.content"></div> -->
 				  </el-collapse-item>
+				  <div class="f18 fwb" @click="goDocument(1)">
+				  	{{$t('message.home.airDrop')}}
+				  </div>
 				</el-collapse>
 			</el-col>
 		</el-row>
@@ -41,6 +44,14 @@
 				],
 				activeName:0
 			}
+		},
+		methods:{
+			goDocument(e){
+				console.log(e);
+				if(e==1){
+					window.location.href='/airDrop.html'
+				}
+			}
 		}
 	}
 </script>
@@ -64,6 +75,10 @@
 				font-size: 18px;
 				font-weight: bolder;
 			}
+	}
+	.f18{
+		font-size: 18px;
+		padding: 14px 0;
 	}
 	@media screen and (min-width: 1200px) {
 		.news_contetn {
