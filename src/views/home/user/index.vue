@@ -934,18 +934,20 @@ export default {
     },
 	//  修改密码
     async apply_password() {
+	  var that = this
 	  if(this.isLodding_ps) return
 	  this.isLodding_ps = true
 	  var rep = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
 	  if(!rep.test(this.form.password)){
 		  Toast('8个以上字符至少包含字母数字')
+		  that.isLodding_ps = false
 		  return
 	  }
       if (this.form.password != this.form.passwordAggin) {
         alert(this.$t("message.applyPwd"));
+		that.isLodding_ps = false
         // alert("password mismatched")
       } else {
-		var that = this
 		Toast.loading({ message: that.$t("message.wallet.loading")+'...',forbidClick: true,duration: 0 });
 		// const loading = this.$loading({
 		//   lock: true,

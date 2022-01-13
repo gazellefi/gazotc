@@ -7,7 +7,7 @@
 						<img src="@/assets/img/money1.png" style="width: 20px;" class="marr-10">
 						<div> {{ $t("message.dapp.capitalAsset")}}</div>
 					</div>
-					<div class="num">{{ user_zc.toFixed(2) }}</div>
+					<!-- <div class="num">{{ user_zc.toFixed(2) }}</div> -->
 				</div>
 			</el-col>
 			<el-col :sm="24" :md="10" class="f c_r a_c">
@@ -29,7 +29,7 @@
 						<img src="@/assets/img/money1.png" style="width: 20px;" class="marr-10">
 						<div> {{ $t("message.dapp.capitalAsset")}}</div>
 					</div>
-					<div class="num">{{ user_zc.toFixed(2) }}</div>
+					<!-- <div class="num">{{ user_zc.toFixed(2) }}</div> -->
 				</div>
 			</el-col>
 			<el-col :sm="24" :md="10" class="f a_c">

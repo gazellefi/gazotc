@@ -919,13 +919,13 @@
 							if (ret) {
 								setTimeout(()=>{
 									Toast.clear();
-									Toast.success('订单已暂停，请稍后查看');
+									Toast.loading({message: '订单已暂停，请稍后查看',duration: 3000,forbidClick:true,overlay:true})
 									dq.getddinfo(dq.ddid);
 								},10000)
 								
 							} else {
 								Toast.clear();
-								Toast.fail('请同意授权！');
+								Toast.loading({message: '请同意授权！',duration: 3000,forbidClick:true,overlay:true})
 							}
 						});
 					}
@@ -937,13 +937,13 @@
 							if (ret) {
 								setTimeout(()=>{
 									Toast.clear();
-									Toast.success('押金已经增加，请稍后再查');
+									Toast.loading({message: '押金已经增加，请稍后再查',duration: 3000,forbidClick:true,overlay:true})
 									dq.getddinfo(dq.ddid);
 								},10000)
 								
 							} else {
 								Toast.clear();
-								Toast.fail('请同意授权！');
+								Toast.loading({message: '请同意授权！',duration: 3000,forbidClick:true,overlay:true})
 							}
 						});
 					}
@@ -956,13 +956,13 @@
 						if (ret) {
 							setTimeout(()=>{
 								Toast.clear();
-								Toast.success('同意保证金发放，请稍后查看');
+								Toast.loading({message: '同意保证金发放，请稍后查看',duration: 3000,forbidClick:true,overlay:true})
 								dq.getddinfo(dq.ddid);
 							},10000)
 							
 						} else {
 							Toast.clear();
-							Toast.fail('请同意授权！');
+							Toast.loading({message: '请同意授权！',duration: 3000,forbidClick:true,overlay:true})
 						}
 					});
 				}
@@ -974,13 +974,13 @@
 						if (ret) {
 							setTimeout(()=>{
 								Toast.clear();
-								Toast.success('押金已经释放了。请稍后再查');
+								Toast.loading({message: '押金已经释放了。请稍后再查',duration: 3000,forbidClick:true,overlay:true})
 								dq.getddinfo(dq.ddid);
 							},10000)
 							
 						} else {
 							Toast.clear();
-							Toast.fail('请同意授权！');
+							Toast.loading({message: '请同意授权！',duration: 3000,forbidClick:true,overlay:true})
 						}
 					});
 				}
@@ -992,12 +992,12 @@
 						if (ret) {
 							setTimeout(()=>{
 								Toast.clear();
-								Toast.success('资产已被释放。请稍后再查');
+								Toast.loading({message: '资产已被释放。请稍后再查',duration: 3000,forbidClick:true,overlay:true})
 								dq.getddinfo(dq.ddid);
 							},10000)
 						} else {
 							Toast.clear();
-							Toast.fail('请同意授权！');
+							Toast.loading({message: '请同意授权！',duration: 3000,forbidClick:true,overlay:true})
 						}
 					});
 				}
