@@ -293,9 +293,9 @@ export default {
 				cooperator:'Cooperator',
 				textD:'Text Document',
 				videoD:'Video Document',
-				otherD:'Other Document',
+				otherD:'Course Document',
 				merryChristmas:'Merry Christmas！！！',
-				airDrop:"Ai-drop Strategy"
+				airDrop:"Air-drop Strategy"
 			},
 			arbitration: {
 				invitetion: 'Invitation of arbitrators',
@@ -988,7 +988,7 @@ export default {
 				cooperator:'合作者',
 				textD:'文本文档',
 				videoD:'视频文档',
-				otherD:'其他文档',
+				otherD:'教程文档',
 				merryChristmas:'圣诞快乐！！！',
 				airDrop:"空投攻略"
 			},

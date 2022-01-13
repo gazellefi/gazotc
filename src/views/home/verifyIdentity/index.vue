@@ -25,7 +25,7 @@
 		</div>
 		<div class="ChooseCountry" v-show="showStepTwo">
 			<div class="verification">
-				<span style="position: absolute;left: 4%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(1)"> < </span>
+				<span style="position: absolute;left: 2%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(1)"> <img src="../../../assets/img/back.png" width="16px"> <span class="fz24">Back</span></span>
 				<div class="title">Choose issuing country/region</div>
 				<el-select v-model="value" @change="ChooseCountrys($event)" class="m-2 selectCountry" placeholder="Select" size="large">
 				    <el-option
@@ -53,7 +53,7 @@
 		</div>
 		<div class="ChooseCountry" v-show="showStepThree">
 			<div class="verification">
-				<span style="position: absolute;left: 4%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(2)"> < </span>
+				<span style="position: absolute;left: 2%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(2)"> <img src="../../../assets/img/back.png"  width="16px"> <span class="fz24">Back</span> </span>
 				<div class="title">Choose an upload method</div>
 				<div class="main">
 					<div class="mainList">
@@ -72,7 +72,7 @@
 		</div>
 		<div class="ChooseCountry" v-show="showStepFive">
 			<div class="verification">
-				<span style="position: absolute;left: 4%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(4)"> < </span>
+				<span style="position: absolute;left: 2%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(4)"> <img src="../../../assets/img/back.png"  width="16px"> <span class="fz24">Back</span> </span>
 				<div class="title">Continue on mobile</div>
 				<div id="qrCode" ref="qrCodeDiv"></div>
 				<div class="QR">Scan QR code instead</div>
@@ -82,9 +82,11 @@
 		</div>
 		<div class="ChooseCountry" v-show="showStepFour">
 			<div class="verification">
-				<span style="position: absolute;left: 4%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(3)"> < </span>
+				<span style="position: absolute;left: 2%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(3)"> <img src="../../../assets/img/back.png"  width="16px"> <span class="fz24">Back</span> </span>
 				<div class="title">Photo page of passport</div>
 				<img src="../../../assets/img/id.png"  width="150px" v-show="srcImg1==''">
+				<!-- <img src="../../../assets/img/id.png"  width="150px" v-show="srcImg2==''&&srcImg1!=''"> -->
+				<!-- <img src="../../../assets/img/id.png"  width="150px" v-show="srcImg3==''&&srcImg2!=''&&srcImg1!=''"> -->
 				<div class="main" v-show="showFourBtn">
 					<div class="mainTips">
 						Step 1 of 2
@@ -113,7 +115,7 @@
 				
 				<div class="photoBox" v-show="showPhotoThree">
 					<img class="imgFace" :src="srcImg3"  id="img3"/>
-					<button type="button" class="faceBox" v-show="srcImg3==''">face identification</button>
+					<button type="button" class="faceBox" v-show="srcImg3==''">Face Identification</button>
 					<input id="fileBtn2" type="file" @change="upload3('#fileBtn2', '#img3');" accept="image/*" multiple capture="camera"  v-show="srcImg3==''"/>
 					<button type="button" class="faceBox"  v-show="srcImg3!=''" @click="showStepGo(9)">Next</button>
 				</div>
@@ -137,6 +139,9 @@
 				</div> -->
 				<div  style="position: absolute;left: 0;right:0;bottom:4%;">Powered by GazOTC</div>
 			</div>
+		</div>
+		<div class="mask" v-show="maskShow==true">
+			<img src="../../../assets/img/giphy.gif" >
 		</div>
 	</div>
 	
@@ -178,6 +183,7 @@
   components: { lang },
 		data(){
 			return{
+				maskShow:false,
 		  videoWidth: 350,
 		  videoHeight: 350,
 				showStepOne:true,
@@ -943,11 +949,12 @@
 				}else if(e==3){
 					this.showStepThree=false;
 					this.showStepFour=true;
-					this.showFourBtn=true;
+					// this.showFourBtn=true;
+					this.showPhoto=true;
 				}else if(e==4){
-					this.callCamera()
-					// this.showFourBtn=false;
-					// this.showPhoto=true
+					// this.callCamera()
+					this.showFourBtn=false;
+					this.showPhoto=true;
 				}else if(e==5){
 					// navigator.getUserMedia({ "video": true }, function (stream) {video.src = stream;video.play();}, ()=>{console.log(111);})
 				  let verifyData={
@@ -957,28 +964,31 @@
 				  }
 				  // console.log(verifyData);
 				  console.log(verifyData);
-				  return request({
-				      url: 'https://gazotc.org:8083/face/faceAdd',
-				      method: 'post',
-				      data: verifyData
-				    }).then((res)=>{
-						console.log(res);
-					}).catch((err)=>{
-						console.log(err);
-					})
-				  // axios.post("https://192.168.0.48:8083/face/faceAdd",verifyData)
-				  // .then((res)=>{
-					 //  console.log(res);
-						// if(res.code==0){
-						// 	this.showPhotoTwo=true;
-						// 	this.showPhoto=false;
-						// }else{
-						// 	this.srcImg1=''
-						// 	alert('脸部数据不详')
-						// }
-				  // }).catch((err)=>{
-					 //  console.log(err);
-				  // })
+				 //  return request({
+				 //      url: 'https://192.168.0.48:8083/face/faceAdd',
+				 //      method: 'post',
+				 //      data: verifyData
+				 //    }).then((res)=>{
+					// 	console.log(res);
+					// }).catch((err)=>{
+					// 	console.log(err);
+					// })
+				  this.maskShow=true;
+				  axios.post("https://192.168.0.48:8083/face/faceAdd",verifyData)
+				  .then((res)=>{
+					  console.log(res);
+						if(res.code==0){
+							this.showPhotoTwo=true;
+							this.showPhoto=false;
+						}else{
+							this.srcImg1=''
+							alert(res.serviceMessage)
+						}
+						this.maskShow=false;
+				  }).catch((err)=>{
+					  this.maskShow=false;
+					  console.log(err);
+				  })
 					// axios({
 					// 	method: "post",
 					// 	url: "https://192.168.0.48:8083/face/faceAdd",
@@ -1010,7 +1020,8 @@
 					}
 					console.log(address);
 					
-					axios.post("https://gazotc.org:8083/face/faceBack",verifyData)
+					this.maskShow=true;
+					axios.post("https://192.168.0.48:8083/face/faceBack",verifyData)
 					.then((res)=>{
 					  console.log(res);
 						if(res.code==0){
@@ -1018,9 +1029,11 @@
 							this.showPhotoThree=true;
 						}else{
 							this.srcImg2=''
-							alert('脸部数据不详')
+							alert(res.serviceMessage)
 						}
+					  this.maskShow=false;
 					}).catch((err)=>{
+					  this.maskShow=false;
 					  console.log(err);
 					})
 					
@@ -1040,7 +1053,8 @@
 							groupId: this.groupId
 						}
 					  console.log(verifyData);
-					axios.post("https://gazotc.org:8083/face/faceSearch",verifyData)
+					this.maskShow=true;
+					axios.post("https://192.168.0.48:8083/face/faceSearch",verifyData)
 					.then((res)=>{
 					  console.log(res);
 						if(res.code==0){
@@ -1048,9 +1062,11 @@
 							this.$router.go(-1) 
 						}else{
 							this.srcImg3=''
-							alert('脸部数据不详')
+							alert(res.serviceMessage)
 						}
+					  this.maskShow=false;
 					}).catch((err)=>{
+					  this.maskShow=false;
 					  console.log(err);
 					})
 						// axios({
@@ -1250,6 +1266,22 @@
 </script>
 
 <style lang="less" scoped="scoped">
+	.mask{
+		background: #fff;
+		width: 100%;
+		height: 100%;
+		z-index: 10000;
+		position: fixed;
+		top: 0;
+		/* opacity: 0.8; */
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		opacity: 0.8;
+		img{
+			width: 25%;
+		}
+	}
 	body{
 		width: 100%;
 		height: 100%;
@@ -1269,8 +1301,8 @@
 			right: 0;
 			left: 0;
 			background-color: #fff;
-			width: 80%;
-			margin: 10%;
+			width: 50%;
+			margin: 10% 25%;
 			border-radius: 5px;
 			display: flex;
 			// flex-direction: column;
@@ -1289,13 +1321,16 @@
 				}
 				.main{
 					font-weight: 400;
-					font-size: 20px;
+					font-size: 18px;
 					line-height: 1.5;
 					text-align: left;
-					padding: 20px;
+					padding: 10px;
 					.bottomMain{
 						margin-top: 20px;
 					}
+					background-color: #eee;
+					border-radius: 5%;
+					margin: 10px;
 				}
 				.Footerbtn{
 					button{
@@ -1318,8 +1353,8 @@
 		right: 0;
 		left: 0;
 		background-color: #fff;
-		width: 80%;
-		margin: 10%;
+		width: 50%;
+		margin: 10% 25%;
 		border-radius: 5px;
 		display: flex;
 		// flex-direction: column;
@@ -1446,6 +1481,11 @@
 				}
 			}
 		}
+	.mask{
+		img{
+			width: 40% !important;
+		}
+	}
 		
 			.verification{
 				background-color: #fff;
@@ -1611,6 +1651,8 @@
 	#qrCode {
 	  border-radius: 0;
 	  transform: translateY(0px);
+      display: flex;
+      justify-content: center;
 	}
 	.QR{
 		font-size: 23px;
