@@ -130,6 +130,8 @@
         </div>
       </van-popup>
     </div>
+	  <div style="padding: 5px 15px;text-align: center;font-size: 12px;">去中心化OTC原则上不需要注册，但为了让交易双方增强互信，GAZ鼓励交易者通过第三方权威公司认证KYC。</div>
+	  	
     <!-- 空头 -->
     <div class="Airdrop">
       <div class="top">
@@ -305,7 +307,7 @@ export default {
         name: "",
         identity: "",
       },
-      ymAddr: "https://gazotc.com",
+      ymAddr: "https://gazotc.org",
       showPop: false,
       USTDVal: "",
       GAZVal: "",
@@ -786,14 +788,19 @@ export default {
             if (res.code == 0) {
               that.getsczc();
               console.log(222);
-              Toast.success("注册成功");
+			  Toast.success("Register Success");
+              // Toast.success("注册成功");
               console.log(that.air);
               that.showPop3 = false;
               // 注册成功后 调用实名认证
               // that.ruleHideAuth()
             } else {
+				if(res.seviceMessage=='Operation failed'){
+					Toast.success("Invalid Parameter")
+				}else{
+					Toast.success("Register Failed");
+				}
               console.log(111);
-              Toast.success("注册失败");
               console.log(that.air);
               that.showPop3 = false;
               // that.$confirm( res.result, '', {
