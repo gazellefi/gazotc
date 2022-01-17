@@ -130,21 +130,6 @@
     </div>
 	<img src="../../assets/img/show.svg" style="display: none;">
 	<img src="../../assets/img/link.jpg" style="display: none;">
-	
-    <!-- blackInfo -->
-    <!-- <div class="blackInfo ">
-      <div class="content">
-        <div class="title">Gazotc trading system <span>diagram</span></div>
-        <img src="@/assets/img/1111.png" alt="">
-      </div>
-    </div> -->
-    <!-- grayInfo -->
-    <!-- <div class="grayInfo">
-      <div class="content">
-        <div class="title">Gazotc contract interaction <span>system diagram</span></div>
-        <img src="@/assets/index/7.png" alt="">
-      </div>
-    </div> -->
   </div>
 </template>
 <script>
