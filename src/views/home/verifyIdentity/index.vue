@@ -207,11 +207,12 @@
 				thisVideo: null,
 				openVideo:false,
 				groupId:'',
-				verifyUrl:'https://gazotc.org:8080/verifyIdentity',
-				requestUrl:'https://gazotc.org:8083',
+				verifyUrl:'https://gazotc.com:8080/verifyIdentity',
+				requestUrl:'https://gazotc.com:8083',
 			}
 		},
 		mounted() {
+			console.log(document.body.clientWidth);
 			// this.callCamera()
 			axios.defaults.withCredentials = true;
 			for(let k in this.options){
@@ -322,8 +323,14 @@
 					if(this.groupId===''){
 						alert('请选择国家或地区')
 					}else{
-						this.showStepTwo=false;
-						this.showStepThree=true;
+						if(document.body.clientWidth<991){
+							this.showStepTwo=false;
+							this.showStepFour=true;
+							this.showPhoto=true;
+						}else{
+							this.showStepTwo=false;
+							this.showStepThree=true;
+						}
 					}
 				}else if(e==3){
 					this.showStepThree=false;

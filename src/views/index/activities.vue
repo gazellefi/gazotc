@@ -307,7 +307,7 @@ export default {
         name: "",
         identity: "",
       },
-      ymAddr: "https://gazotc.org",
+      ymAddr: "https://gazotc.com",
       showPop: false,
       USTDVal: "",
       GAZVal: "",
@@ -599,7 +599,7 @@ export default {
       // var data = await dotc.methods.message(address, 0).call();
       axios({
         method: "post",
-        url: "https://gazotc.com:8083/member/selectOne",
+        url: this.ymAddr+":8083/member/selectOne",
         data: {address: address},
         headers: {"Content-Type": "application/x-www-form-urlencoded"},
         transformRequest: function (obj) {

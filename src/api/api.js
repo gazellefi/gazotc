@@ -1,5 +1,5 @@
 import axios from './index'
-var url = 'https://gazotc.org:8083'
+var url = 'https://gazotc.com:8083'
 export default {
   // 获取USDT认领额度
   getCrowdInfo: (params) => axios.post('/common/getCrowdInfo', params),

@@ -63,6 +63,7 @@
               <span>{{ $t("message.activit.IDnumber") }}</span>
             </div> -->
           </div>
+		  <div style="padding: 5px 15px;text-align: center;font-size: 12px;">去中心化OTC原则上不需要注册，但为了让交易双方增强互信，GAZ鼓励交易者通过第三方权威公司认证KYC。</div>
         </div>
         <!-- 仲裁员昵称 -->
         <div class="one item">
