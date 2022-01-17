@@ -586,6 +586,7 @@ export default {
 				    message: dq.$t('message.frienchOtc.check'),
 				  }).then(() => {
 				    // window.location.reload();
+					dq.$router.push('/home/orderCenter/LCTransaction');
 					dq.ddcode = false;
 				    dq.getddinfo()
 				  });

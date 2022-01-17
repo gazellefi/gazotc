@@ -82,6 +82,9 @@
 				  'marginRules3',
 				  'marginRules4',
 				  'marginRules5',
+				  'marginRules6',
+				  'marginRules7',
+				  'marginRules8',
 				],
 				langList2: [
 				  'rulesOfArbitratorsOne1',
