@@ -6,6 +6,10 @@ import i18n from '@/utils/modules/VueI18n'
 
 import '@/utils'
 
+// import * as IPFS from 'ipfs-core' //或 import {create} from 'ipfs-core'
+// console.log(IPFS)
+// Vue.prototype.$ipfs = IPFS.create(); // 或 Vue.prototype.$ipfs = create();
+
 
 
 

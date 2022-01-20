@@ -66,15 +66,19 @@
 					</el-table-column>
 					<el-table-column align="center" :label="$t('message.dapp.limit')">
 						<template slot-scope="scope">
-							{{ scope.row.zer }} - {{ scope.row.mal }} 
-							<div>
-								{{ scope.row.pro }}
+							<div v-if="!scope.row.isfree">
+								{{ scope.row.zer }} - {{ scope.row.mal }}
+								<div>
+									{{ scope.row.pro }}
+								</div>
 							</div>
+							<span v-else>{{ scope.row.Moa }} {{ scope.row.pro }}</span>
 						</template>
 					</el-table-column>
 					<el-table-column align="center" :label="$t('message.dapp.unitPrice')">
 						<template slot-scope="scope">
-							<span class="cba">{{ scope.row.unit }} {{ scope.row.fiat }}</span>
+							<span class="cba" v-if="!scope.row.isfree">{{ scope.row.unit }} {{ scope.row.fiat }}</span>
+							<span v-else>0</span>
 						</template>
 					</el-table-column>
 					<el-table-column align="center" :label="$t('message.dapp.MarginRatio')">
@@ -105,56 +109,6 @@
 		</div>
 		<!-- WAP -->
 		<div class="hidden-sm-and-up ddgl_fabu_wapview">
-			<!-- <el-row style="border-bottom: 1px solid #EEEEEE;">
-				<el-col :span="12">
-					<div class="ddgl_fabu_p_head_sxan_i">
-						<span>{{ $t("message.dapp.currency")}}：</span>
-						<el-dropdown class="ddlistaa_head_item" @command="saixuanpro">
-							<span class="el-dropdown-link">
-								{{ sxarr['pro'] == "ALL"? $t('message.all'):sxarr['pro']  }} <i
-									class="el-icon-arrow-down el-icon--right"></i>
-							</span>
-							<el-dropdown-menu slot="dropdown">
-								<el-dropdown-item command="ALL">{{$t('message.all')}}</el-dropdown-item>
-								<el-dropdown-item command="USDT">USDT</el-dropdown-item>
-							</el-dropdown-menu>
-						</el-dropdown>
-					</div>
-				</el-col>
-				<el-col :span="12">
-					<div class="ddgl_fabu_p_head_sxan_i">
-						<span>{{ $t("message.dapp.type")}}：</span>
-								
-						<el-dropdown class="ddlistaa_head_item" @command="saixuantcode">
-							<span class="el-dropdown-link">
-								{{ sxarr['tcode'] == "ALL"? $t('message.all'):sxarr['tcode'] == "C" ? $t('message.dapp.sell'):$t('message.dapp.buy') }} <i
-									class="el-icon-arrow-down el-icon--right"></i>
-							</span>
-							<el-dropdown-menu slot="dropdown">
-								<el-dropdown-item command="ALL">{{$t('message.all')}}</el-dropdown-item>
-								<el-dropdown-item command="C">{{$t('message.dapp.sell')}}</el-dropdown-item>
-								<el-dropdown-item command="M">{{$t('message.dapp.buy')}}</el-dropdown-item>
-							</el-dropdown-menu>
-						</el-dropdown>
-					</div>
-				</el-col>
-				<el-col :span="12" style="margin-top: 20px;padding-bottom: 10px;">
-					<div class="ddgl_fabu_p_head_sxan_i">
-						<span>{{ $t("message.dapp.unit")}}：</span>
-								
-						<el-dropdown class="ddlistaa_head_item" @command="saixuanfli">
-							<span class="el-dropdown-link">
-								{{ sxarr['fli'] == "ALL"? $t('message.all'):sxarr['fli']  }} <i
-									class="el-icon-arrow-down el-icon--right"></i>
-							</span>
-							<el-dropdown-menu slot="dropdown">
-								<el-dropdown-item command="ALL">{{$t('message.all')}}</el-dropdown-item>
-								<el-dropdown-item command="CNY">CNY</el-dropdown-item>
-							</el-dropdown-menu>
-						</el-dropdown>
-					</div>
-				</el-col>
-			</el-row> -->
 			<!-- 列表 -->
 			<el-row>
 				<div v-if="list.length<1" class="fc a_c">
@@ -176,13 +130,14 @@
 						</div>
 						<div class="mart-10">
 							<span class="marr-10">{{$t('message.dapp.unitPrice')}}</span>
-							<span class="cba">{{ item.unit }} {{ item.fiat }}</span>
+							<span class="cba" v-if="!item.isfree">{{ item.unit }} {{ item.fiat }}</span>
+							<span v-else class="cba">0</span>
 						</div>
 						<div class="mart-10">
 							<span class="marr-10">{{$t('message.dapp.amount')}}</span>
 							<span class="fz14">{{ item.Moa }} {{ item.pro }}</span>
 						</div>
-						<div class="mart-10">
+						<div class="mart-10" v-if="!item.isfree">
 							<span class="marr-10">{{$t('message.dapp.limit')}}</span>
 							<span class="fz14">{{ item.zer }} - {{ item.mal }} {{ item.pro }}</span>
 						</div>
@@ -207,7 +162,7 @@
 				<el-form-item :label="$t('message.dapp.ModifyType')">
 					<el-select v-model="set_form.tcode" :placeholder="$t('message.SelectType')">
 						<el-option
-							v-for="item in [{code:1,name: $t('message.dapp.ModifyPrice')},{code:2,name:$t('message.dapp.ModifiedQuantity')},{code:3,name: set_form.mlive == 1 ? $t('message.undercarriage'): $t('message.grounding')}]"
+							v-for="item in [{code:1,name: !set_form.isfree ? $t('message.dapp.ModifyPrice') : $t('message.ModifyAddress')},{code:2,name:$t('message.dapp.ModifiedQuantity')},{code:3,name: set_form.mlive == 1 ? $t('message.undercarriage'): $t('message.grounding')}]"
 							:key="item.code" :label="item.name" :value="item.code">
 						</el-option>
 					</el-select>
@@ -218,7 +173,7 @@
 				<el-form-item :label="$t('message.dapp.amount')" v-if="set_form.tcode == 2">
 					<el-input v-model="set_form.num"></el-input>
 				</el-form-item>
-				<el-form-item :label="$t('message.dapp.unitPrice')" v-if="set_form.tcode == 1">
+				<el-form-item :label="!set_form.isfree ? $t('message.dapp.unitPrice') : $t('message.ModifyAddress')" v-if="set_form.tcode == 1">
 					<el-input v-model="set_form.danjia"></el-input>
 				</el-form-item>
 				<el-form-item  v-if="set_form.tcode == 1">
@@ -346,7 +301,8 @@
 				  num: this.list[index]['Moa'],
 				  danjia: this.list[index]['unit'],
 				  mlive: this.list[index]['mlive'],
-				  obj: this.list[index]
+				  obj: this.list[index],
+				  isfree: this.list[index].isfree
 				};
 
 			},
@@ -436,10 +392,9 @@
 					Toast.loading({
 						message: '正在进行修改请求。。。'
 					});
-					var danjia = Number(dq.set_form['danjia']) * 100;
-					console.log(danjia)
+					var danjia = !dq.set_form.isfree ? Number(dq.set_form['danjia']) * 100 : dq.set_form['danjia']
 					var contracts = new web3.eth.Contract(dotc_abi, dotc_key);
-					contracts.methods.modify_unit(Number(dq.set_form['obj']['ddid']), Number(danjia)).send({
+					contracts.methods.modify_unit(Number(dq.set_form['obj']['ddid']), danjia).send({
 						from: dq.uinfo['user']
 					}, (err, ret) => {
 						Toast.clear();
@@ -532,19 +487,21 @@
 										break;
 									}
 								}
+								var isfree = result[0][index][3] == 8888 * (10 ** 26)
 								var obj = {
 									ddid: Number(result[0][index][0]),
 									Moa: (Number(result[0][index][1]) / (10 ** h_num)).toFixed(2),
 									zer: (Number(result[0][index][2]) / (10 ** h_num)).toFixed(2),
 									mal: (Number(result[0][index][3]) / (10 ** h_num)).toFixed(2),
-									unit: (Number(result[0][index][4]) / 100).toFixed(2),
+									unit: !isfree?(Number(result[0][index][4]) / 100).toFixed(2) : result[0][index][4].length < 10 ? '' : web3.utils.numberToHex(result[0][index][4]),
 									mar: (Number(result[0][index][5]) / (10 ** 16)).toFixed(2),
 									mlive: Number(result[0][index][6]),
-
+									isfree,
 									Mmark: result[1][index][0],
 									pro: result[1][index][1],
 									fiat: result[1][index][2]
 								};
+								// console.log(obj.unit);
 								list.push(obj);
 							}
 							for (let index = 0; index < list.length; index++) {

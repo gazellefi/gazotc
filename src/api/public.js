@@ -37,7 +37,7 @@ var webinit = (use_metamask)=>{
 		    },
 		});
 		try{
-			console.log('初始化web3');
+			// console.log('初始化web3');
 			let data =  web3Modal.connect().then(res=>{
 				let web3 = new Web3(res);
 				let address = res.selectedAddress || res.accounts[0];
