@@ -37,7 +37,7 @@ var bian = {
         abi:Pripla
     },
     Arbdate:{
-        heyue:"0xA353Ae3FAf21833dC1fddD632aDfd82f03DDd38c",
+        heyue:"0xF46a67095a364D224Ac9b27542C2eCF92a03EA11",
         abi:Arbdate
     },
 	Letter:{

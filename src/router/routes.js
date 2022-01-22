@@ -133,6 +133,36 @@ export default [
         redirect: '/home/frienchOtc',
         component: () => import('@/views/home/layout'),
         children: [
+			{
+			    path: '/home/free',
+			    name: 'index',
+			    component: () => import('@/views/home/freeGuarantee'),
+			    meta: {
+			        name: "message.dapp.FreeGuarantee",
+			        icon: require('@/assets/dappImg/1.png')
+			    },
+			    redirect: '/home/freeGuarantee/list',
+			    children: [
+			        {
+			            path: "/home/freeGuarantee/list",
+			            meta: {name: 'message.dapp.tradeList'},
+			            component: () => import("@/views/home/freeGuarantee/list.vue"),
+			        },
+			        {
+			            path: "/home/freeGuarantee/fabu",
+			            meta: {name: 'message.dapp.ReleaseOrder'},
+			            component: () => import("@/views/home/freeGuarantee/fabu.vue"),
+			
+			        },
+					{
+					    path: '/home/freeGuarantee/detail',
+					    meta: {name: 'message.details', isHideChild: true},
+					    name: 'detail',
+					    component: () =>
+					        import('@/views/home/freeGuarantee/detail.vue')
+					},
+			    ]
+			},
             {
                 path: '/home/frienchOtc',
                 name: 'index',

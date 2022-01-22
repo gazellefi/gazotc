@@ -124,7 +124,7 @@
 		      <div class="add_form_item">
 		        <div class="add_form_item_t">{{$t('message.remarks')}}</div>
 		        <div class="add_form_item_input">
-		          <el-input type="textarea" :placeholder="form.beizhu?form.beizhu:$t('message.notFill')" maxlength="30" :disabled="maskDis" v-model="form.beizhu" show-word-limit>
+		          <el-input type="textarea" :placeholder="form.beizhu?form.beizhu:$t('message.notFill')" :disabled="maskDis" v-model="form.beizhu">
 		          </el-input>
 		        </div>
 		        <p class="add_form_item_input_p" @click="maskDis = false" v-if="maskDis">

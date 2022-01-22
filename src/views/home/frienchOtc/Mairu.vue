@@ -462,6 +462,7 @@ export default {
         var pricon = new web3.eth.Contract(dotc_abi, dotc_key);
         pricon.methods.pri().call((err, result) => {
           dq.pros['pri'] = result;
+		  console.log(dq.pros)
         })
       }
       //pros
@@ -586,6 +587,7 @@ export default {
 				    message: dq.$t('message.frienchOtc.check'),
 				  }).then(() => {
 				    // window.location.reload();
+					dq.$router.push('/home/orderCenter/LCTransaction');
 					dq.ddcode = false;
 				    dq.getddinfo()
 				  });

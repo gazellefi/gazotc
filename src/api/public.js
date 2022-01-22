@@ -3,7 +3,9 @@ import Web3Modal from "web3modal";
 import config from "@/config";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import QRCodeModal from "@walletconnect/qrcode-modal";
-
+/* 合约  */
+var dotc_abi = config["hyue"][config["key"]]["dotc"]["abi"];
+var dotc_heyue = config["hyue"][config["key"]]["dotc"]["heyue"];
 
 
 
@@ -35,7 +37,7 @@ var webinit = (use_metamask)=>{
 		    },
 		});
 		try{
-			console.log('初始化web3');
+			// console.log('初始化web3');
 			let data =  web3Modal.connect().then(res=>{
 				let web3 = new Web3(res);
 				let address = res.selectedAddress || res.accounts[0];
@@ -142,4 +144,11 @@ export default{
        return num_str;
      }
    },
+   
+   /*  
+	*  币安 合约 初始化
+	*/
+   getBian(){
+	   return new web3.eth.Contract(dotc_abi, dotc_heyue);
+   }
 }

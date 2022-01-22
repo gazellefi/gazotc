@@ -121,6 +121,9 @@
 				<el-form-item :label="$t('message.dapp.amount')">
 					<el-input v-model="mr_form.num"></el-input>
 				</el-form-item>
+				<el-form-item :label="$t('message.arbitration.numberTransaction')">
+					<el-input v-model="mr_form.ddinfo.moa" :disabled="true"></el-input>
+				</el-form-item>
 			</el-form>
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="mairucode = false">{{$t('message.cancel')}}</el-button>
@@ -350,7 +353,7 @@
 							if (ret) {
 								dq.mairucode = false;
 								dq.isLoading = false
-								dq.$message.success(this.$t('message.frienchOtc.buySuccess'));
+								dq.$message.success(this.$t('message.frienchOtc.successful'));
 							} else {
 								dq.isLoading = false
 							}

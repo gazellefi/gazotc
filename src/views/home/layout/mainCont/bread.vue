@@ -45,7 +45,7 @@ export default {
     breadcrumbList() {
       // console.log('this.$store.state.tabs.breadcrumb.matched.slice(1): ', this.$store.state.tabs.breadcrumb.matched);
 
-      console.log(this.$store.state.breadcrumb);
+      // console.log(this.$store.state.breadcrumb);
 
       return this.$store.state.breadcrumb.matched && this.$store.state.breadcrumb.matched.slice(1)
     }
