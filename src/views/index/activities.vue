@@ -676,9 +676,10 @@ export default {
     },
     ruleChangeHideAuth() {
       var that = this
-      axios.post('https://gazotc.com:8083/member/jnmioURL?address=' + address).then((res) => {
-        if (res.result.state == 'SUCCESS') { // 已实名认证
-          this.regList[2].text = '已认证';
+      axios.post('https://gazotc.com:8083/member/selectOne?address=' + address).then((res) => {
+		  console.log(res);
+        if (res.result.state == 1) { // 已实名认证
+          this.regList[2].text = this.$t('message.activit.authenticated');
           this.content = this.$t("message.activit.qualification")
         } else {
         }
@@ -687,39 +688,11 @@ export default {
     ruleHideAuth() {
       var that = this
 	  // window.nav
-	  this.$router.push('/verifyIdentity');
-      // Toast.loading({ message: "数据请求中..." });
-      // window.alert(that.$t('message.activit.realTips'));
-      // axios.post('https://gazotc.com:8083/member/jnmioURL?address='+address).then((res)=>{
-      // 	// that.msss = res
-      // 	let url = res.result.redirectUrl
-      // 	// console.log(code);
-      // 	Toast.clear()
-      // 	if(res.result.state== 'SUCCESS'){ // 已实名认证
-      // 		that.$confirm('您已实名认证', '', {
-      // 		  confirmButtonText: '确定',
-      // 		  cancelButtonText: '取消',
-      // 		  type: 'success',
-      // 		  callback: action => {
-      // 			if (action === 'confirm') {
-      // 			  console.log('按下 确定')
-      // 			}
-      // 			else {
-      // 			  console.log('按下 取消')
-      // 			}
-      // 		  }
-      // 		})
-      // 	}else if(res.result.redirectUrl){ //未实名认证
-      // 		window.location.href = url
-
-      // 		// this.$router.push({
-      // 		// 	name: 'RealName',
-      // 		// 	query: {
-      // 		// 	  url: url
-      // 		// 	}
-      // 		// })
-      // 	}
-      // })
+	  if(this.regList[2].text == this.$t('message.activit.authenticated')){
+		alert(this.$t('message.activit.authenticated'))
+	  }else{
+		this.$router.push('/verifyIdentity');
+	  }
     },
     async register() {
       var that = this
@@ -730,19 +703,6 @@ export default {
       let identity = Sha256(this.regForm.identity).toString().substring(0, 15);
       // let identity = this.regForm.identity;
       let data = `${nickname}|${name}|${identity}|${this.recommender}`;
-      // dotc.methods.commun(0, data).send(
-      //   {
-      //     from: address,
-      //   },
-      //   (err, ret) => {
-      //     if (ret) {
-      //       zcchaxun();
-      //     } else {
-      //       Toast.clear();
-      //       Toast.fail("注册失败");
-      //     }
-      //   }
-      // );
       zcchaxun();
 
       //轮询注册是否成功
@@ -760,28 +720,6 @@ export default {
             parentAddress: that.recommender || 0
           }
           // 存数据库
-
-          // axios({
-          //   method: "post",
-          //   url: "https://192.168.0.48:8083/member/register",
-          //   data: { member: data },
-          //   headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          //   transformRequest: function (obj) {
-          //     var str = [];
-          //     for (var p in obj) {
-          //       str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-          //     }
-          //     return str.join("&");
-          //   },
-          // })
-          //   .then((res) => {
-          // 			console.log(address);
-          // 			console.log(res)
-          //   })
-          //   .catch(function (error) {
-          //     alert("error");
-          //   });
-
           api.register(data).then((res) => {
             console.log('注册数据存储结果：' + res);
             console.log(res.code);

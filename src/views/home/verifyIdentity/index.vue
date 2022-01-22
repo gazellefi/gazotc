@@ -1,32 +1,32 @@
 <template>
-	<div class="verifyPage">
+	<div class="verifyPage faSF">
+		<!-- StepOne -->
 		<div class="start" style="opacity: 1;height: 100%;" v-show="showStepOne">
 			<div class="verification">
 				<lang style="position: absolute;left: 3%;top: 4%;cursor: pointer;"></lang>
 				<div class="content">
 					<div class="title">
-						<img src="../../../assets/img/check.png" width="30px" style="margin-right: -14px;">
-						Start verification
+						<img src="../../../assets/img/check.png" width="20px">
+						<span class="fz24">Start verification</span>
 					</div>
-					<div class="main">
-						<div class="topMain">
+					<div class="main c4d4">
+						<div class="topMain fz16">
 							This process is designed to verify your identity and protect you from identity theft.
 						</div>
-						<div class="bottomMain">
+						<div class="bottomMain fz16">
 							Please have your ID ready and click 'Start'.
 						</div>
 					</div>
-					<div class="Footerbtn">
-						<button type="button" @click="showStepGo(1)">Start</button>
-					</div>
 				</div>
-				<div  style="position: absolute;left: 0;right:0;bottom:4%;">Powered by GazOTC</div>
+				<button class="btn" type="button" @click="showStepGo(1)">Start</button>
+				<div  style="position: absolute;left: 0;right:0;bottom:4%;color: #999999FF;font-size: 12px;">Powered by GazOTC</div>
 			</div>
 		</div>
+		<!-- StepTwo Choose -->
 		<div class="ChooseCountry" v-show="showStepTwo">
 			<div class="verification">
-				<span style="position: absolute;left: 2%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(1)"> <img src="../../../assets/img/back.png" width="16px"> <span class="fz24">Back</span></span>
-				<div class="title">Choose issuing country/region</div>
+				<span style="position: absolute;left: 2%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(1)"> <img src="../../../assets/img/back.png" width="16px"> </span>
+				<div class="title fz24">Choose issuing country/region</div>
 				<el-select v-model="value" @change="ChooseCountrys($event)" class="m-2 selectCountry" placeholder="Select" size="large">
 				    <el-option
 				      v-for="(item,index) in options"
@@ -37,109 +37,144 @@
 				    </el-option>
 			    </el-select>
 				<div class="main">
-					<div class="mainTitle">Select ID type</div>
+					<div class="mainTitle fz24">Select ID type</div>
 					<div class="mainList">
-						<div class="topContent">Use a valid government-issued photo ID.</div>
 						<button class="mainItem" @click='showStepGo(2)'>
-							<img src="../../../assets/img/passport.png" width="21px" style="margin-right: 10px;">Passport</button>
+							<img src="../../../assets/img/passport.png" width="16px" style="margin-right: 10px;">Passport</button>
 						<button class="mainItem" @click='showStepGo(2)'>
-							<img src="../../../assets/img/driving.png" width="21px" style="margin-right: 10px;">Driver's license</button>
+							<img src="../../../assets/img/driving.png" width="16px" style="margin-right: 10px;">Driver's license</button>
 						<button class="mainItem" @click='showStepGo(2)'>
-							<img src="../../../assets/img/idChoose.png" width="21px" style="margin-right: 10px;">Identity card</button>
+							<img src="../../../assets/img/idChoose.png" width="16px" style="margin-right: 10px;">Identity card</button>
 					</div>
 				</div>
-				<div  style="position: absolute;left: 0;right:0;bottom:4%;">Powered by GazOTC</div>
+				<div  style="position: absolute;left: 0;right:0;bottom:4%;color: #999999FF;font-size: 12px;">Powered by GazOTC</div>
 			</div>
 		</div>
+		<!-- StepThree Method -->
 		<div class="ChooseCountry" v-show="showStepThree">
 			<div class="verification">
-				<span style="position: absolute;left: 2%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(2)"> <img src="../../../assets/img/back.png"  width="16px"> <span class="fz24">Back</span> </span>
-				<div class="title">Choose an upload method</div>
+				<span style="position: absolute;left: 2%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(2)"> <img src="../../../assets/img/back.png"  width="16px">  </span>
+				<div class="title fz24">Choose an upload method</div>
 				<div class="main">
-					<div class="mainList">
-						<button class="mainItem" @click='showStepGo(10)'>
-							<img src="../../../assets/img/chat.png" width="21px" style="margin-right: 10px;">
-							Continue on mobile
+					<div class="mainList" style="flex-direction: row;justify-content: space-around;">
+						<button class="mainItem" style="flex: 1;height: 140px;max-width: 140px;flex-direction: column;justify-content: center;align-items: center;margin: 10px 10px;text-align:center;" @click='showStepGo(10)'>
+							<img src="../../../assets/img/chat.png" width="50px">
+							<span style="font-size: 12px;">Continue on mobile</span>
 						</button>
-						<button class="mainItem" @click='showStepGo(3)'>
-							<img src="../../../assets/img/camera.png"  width="21px" style="margin-right: 10px;">
-							Take photo using webcam
+						<button class="mainItem" style="flex: 1;height: 140px; max-width: 140px;flex-direction: column;justify-content: center;align-items: center;margin: 10px 10px;text-align:center;" @click='showStepGo(3)'>
+							<img src="../../../assets/img/camera.png"  width="50px">
+							<span style="font-size: 12px;">Take photo using webcam</span>
 						</button>
 					</div>
 				</div>
-				<div  style="position: absolute;left: 0;right:0;bottom:4%;">Powered by GazOTC</div>
+				<div  style="position: absolute;left: 0;right:0;bottom:4%;color: #999999FF;font-size: 12px;">Powered by GazOTC</div>
 			</div>
 		</div>
+		<!-- StepFour One QR -->
 		<div class="ChooseCountry" v-show="showStepFive">
 			<div class="verification">
-				<span style="position: absolute;left: 2%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(4)"> <img src="../../../assets/img/back.png"  width="16px"> <span class="fz24">Back</span> </span>
+				<span style="position: absolute;left: 2%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(4)"> <img src="../../../assets/img/back.png"  width="16px">  </span>
 				<div class="title">Continue on mobile</div>
 				<div id="qrCode" ref="qrCodeDiv"></div>
 				<div class="QR">Scan QR code instead</div>
 				<div class="QRC">Scan this QR code using your mobile camera or QR code app. Please keep this page open while you are using your mobile.</div>
-				<div  style="position: absolute;left: 0;right:0;bottom:4%;">Powered by GazOTC</div>
+				<div  style="position: absolute;left: 0;right:0;bottom:4%;color: #999999FF;font-size: 12px;">Powered by GazOTC</div>
 			</div>
 		</div>
+		<!-- StepFour Two Upload -->
 		<div class="ChooseCountry" v-show="showStepFour">
 			<div class="verification">
-				<span style="position: absolute;left: 2%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(3)"> <img src="../../../assets/img/back.png"  width="16px"> <span class="fz24">Back</span> </span>
+				<span style="position: absolute;left: 2%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(3)"> <img src="../../../assets/img/back.png"  width="16px">  </span>
+				<img src="../../../assets/img/groupF.png" v-show="showPhoto">
+				<img src="../../../assets/img/groupB.png" v-show="showPhotoTwo">
+				<img src="../../../assets/img/groupFace.png" v-show="showPhotoThree">
 				<div class="title">Photo page of passport</div>
-				<img src="../../../assets/img/id.png"  width="150px" v-show="srcImg1==''">
-				<!-- <img src="../../../assets/img/id.png"  width="150px" v-show="srcImg2==''&&srcImg1!=''"> -->
-				<!-- <img src="../../../assets/img/id.png"  width="150px" v-show="srcImg3==''&&srcImg2!=''&&srcImg1!=''"> -->
-				<div class="main" v-show="showFourBtn">
-					<div class="mainTips">
-						Step 1 of 2
+				<div class="main">
+					<div class="mainTips" v-show="showPhoto">
+						Step 1 of 3
+					</div>
+					<div class="mainTips" v-show="showPhotoTwo">
+						Step 2 of 3
+					</div>
+					<div class="mainTips" v-show="showPhotoThree">
+						Step 3 of 3
 					</div>
 					<div class="mainList">
 						<div class="topContent">Center your ID and take a photo. Make sure all details are clear.</div>
 					</div>
-					<div class="Footerbtn">
-						<button type="button" @click="showStepGo(4)">Start</button>
-					</div>
+					<!-- <button class="btn" type="button" @click="showStepGo(4)">Start</button> -->
 				</div>
 				
 				<div class="photoBox" v-show="showPhoto">
-					<img class="imgFace" :src="srcImg1" id="img1"/>
-					<button type="button" class="faceBox" v-show="srcImg1==''">Upload ID Card Of Front</button>
-					<input id="fileBtn" type="file" @change="upload1($event,'#fileBtn', '#img1');" accept="image/*"  capture="camera"  multiple v-show="srcImg1==''"/>
-					<button type="button" class="faceBox"  v-show="srcImg1!=''" @click="showStepGo(5)">Next</button>
+					<!-- <img class="imgFace" :src="srcImg1" id="img1"/> -->
+					<button type="button" class="btn" >Start</button>
+					<input id="fileBtn" type="file" @change="upload1($event,'#fileBtn', '#img1');" accept="image/*"  capture="camera"  multiple />
+					<!-- <button type="button" class="faceBox btn btn"  v-show="srcImg1!=''" @click="showStepGo(5)">Next</button> -->
 				</div>
 				
 				<div class="photoBox" v-show="showPhotoTwo">
-					<img class="imgFace" :src="srcImg2" id="img2"/>
-					<button type="button" class="faceBox" v-show="srcImg2==''">Upload ID Card Of Back</button>
-					<input id="fileBtn1" type="file" @change="upload2('#fileBtn1', '#img2');" accept="image/*" capture="camera"  multiple v-show="srcImg2==''"/>
-					<button type="button" class="faceBox"  v-show="srcImg2!=''" @click="showStepGo(6)">Next</button>
+					<!-- <img class="imgFace" :src="srcImg2" id="img2"/> -->
+					<button type="button" class="faceBox btn">Start</button>
+					<input id="fileBtn1" type="file" @change="upload2('#fileBtn1', '#img2');" accept="image/*" capture="camera"  multiple />
+					<!-- <button type="button" class="faceBox btn"  v-show="srcImg2!=''" @click="showStepGo(6)">Next</button> -->
 				</div>
 				
 				<div class="photoBox" v-show="showPhotoThree">
-					<img class="imgFace" :src="srcImg3"  id="img3"/>
-					<button type="button" class="faceBox" v-show="srcImg3==''">Face Identification</button>
-					<input id="fileBtn2" type="file" @change="upload3('#fileBtn2', '#img3');" accept="image/*" multiple capture="camera"  v-show="srcImg3==''"/>
-					<button type="button" class="faceBox"  v-show="srcImg3!=''" @click="showStepGo(9)">Next</button>
+					<!-- <img class="imgFace" :src="srcImg3"  id="img3"/> -->
+					<button type="button" class="faceBox btn">Start</button>
+					<input id="fileBtn2" type="file" @change="upload3('#fileBtn2', '#img3');" accept="image/*" multiple capture="camera"/>
+					<!-- <button type="button" class="faceBox btn"  v-show="srcImg3!=''" @click="showStepGo(9)">Next</button> -->
 				</div>
-				<!-- <div class="other" v-show="takePhoto">
-					<div class="camera_outer">
-						<video id="videoCamera"  :width="videoWidth" :height="videoHeight" autoplay ></video>
-						<canvas style="display:none;" id="canvasCamera" :width="videoWidth" :height="videoHeight"></canvas>
-						<div v-if="srcImg3" class="img_bg_camera">
-						    <p>效果预览</p>
-						    <img :src="srcImg3" :width="videoWidth" :height="videoHeight" alt class="tx_img" />
-						</div>
-						<div class="button" style="display: flex;justify-content: center;background-color: #fff;padding: 5px 0;">
-					  <el-button @click="getCompetence()">打开摄像头</el-button>
-					  <el-button @click="stopNavigator()">关闭摄像头</el-button>
-							<div class="borderBox" style="background-color: #000;width: 50px;height: 50px;border-radius: 50%;display: flex;justify-content: center;align-items: center;border: none;">
-								<el-button @click="setImage()" style="background-color: #FF3333;width: 40px;height: 40px;border-radius: 50%;border: none;"></el-button>
-							</div>
-						</div>
-				  </div>
-					
-				</div> -->
-				<div  style="position: absolute;left: 0;right:0;bottom:4%;">Powered by GazOTC</div>
+				<div  style="position: absolute;left: 0;right:0;bottom:4%;color: #999999FF;font-size: 12px;">Powered by GazOTC</div>
 			</div>
 		</div>
+		<!-- Step ID Card -->
+		<div class="ChooseCountry" style="display: flex;flex-direction: column;justify-content: flex-start;padding-top: 80px;"  v-show="showStepSix">
+			<span style="position: absolute;left: 2%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(5)"> <img src="../../../assets/img/back.png"  width="16px">  </span>
+			<div class="imgBox" style="width: 305px; max-height: 250px;overflow: hidden;">
+				<img class="imgFace" width="305px" v-if="showPhoto" :src="srcImg1" id="img1"/>
+				<img class="imgFace" v-if="showPhotoTwo" :src="srcImg2" id="img2"/>
+				<img class="imgFace" v-if="showPhotoThree" :src="srcImg3" id="img3"/>
+			</div>
+			<div class="fz24" style="margin-top: 30px;margin-bottom: 20px;">Check  photo</div>
+			<div class="QAList" style="text-align: left;">
+				<div class="QAItem">
+					<div class="dot"></div>Can  you  read the details?
+				</div>
+				<div class="QAItem">
+					<div class="dot"></div> Can  you see the whole ID?
+				</div>
+			</div>
+			
+			<button class="btn" type="button" style="bottom: 20%;" v-if="showPhoto" @click="showStepGo(5)">Confirm</button>
+			<button class="btn" type="button" style="bottom: 20%;" v-if="showPhotoTwo" @click="showStepGo(6)">Confirm</button>
+			<button class="btn" type="button" style="bottom: 20%;" v-if="showPhotoThree" @click="showStepGo(9)">Confirm</button>
+			<button class="btn" style="color: #333;background: #fff;box-shadow: 0px 5px 10px rgba(190, 190, 190, 0.74);margin-top: 12px;" type="button" @click="BackTake()">Retake</button>
+			<div  style="position: absolute;left: 0;right:0;bottom:4%;color: #999999FF;font-size: 12px;">Powered by GazOTC</div>
+		</div>
+		<!-- Step Face -->
+		<div class="ChooseCountry" style="display: flex;flex-direction: column;justify-content: flex-start;padding-top: 20%;"  v-show="showStepSeven">
+			<span style="position: absolute;left: 2%;top: 3%; font-size: 30px;cursor: pointer;" @click="back(6)"> <img src="../../../assets/img/back.png"  width="16px">  </span>
+			<div class="imgBox" style="width: 305px; max-height: 250px;overflow: hidden;">
+				<img class="imgFace" :src="srcImg3" id="img3"/>
+			</div>
+			<div class="fz24" style="margin-top: 30px;margin-bottom: 20px;">Face  not  recognized</div>
+			<div class="QAList" style="text-align: left;">
+				<div class="QAItem">
+					<div class="dot"></div>Center your camera
+				</div>
+				<div class="QAItem">
+					<div class="dot"></div>Avoid reflections and glare on glasses.
+				</div>
+				<div class="QAItem">
+					<div class="dot"></div>Don it  click or leave the page while capturing
+				</div>
+			</div>
+			
+			<button class="btn" type="button" @click="BackTake()">Try  again</button>
+			<div  style="position: absolute;left: 0;right:0;bottom:4%;color: #999999FF;font-size: 12px;">Powered by GazOTC</div>
+		</div>
+		<!-- Mark Loading -->
 		<div class="mask" v-show="maskShow==true">
 			<img src="../../../assets/img/giphy.gif" >
 		</div>
@@ -196,6 +231,8 @@
 				showPhotoThree:false,
 				takePhoto:false,
 				showStepFive:false,
+				showStepSix:false,
+				showStepSeven:false,
 				value:'',
 				options: new Array(157),
 				srcImg1:'',
@@ -218,15 +255,6 @@
 			for(let k in this.options){
 				this.options[k]['groupId']=k;
 			}
-			// const ipfs = window.IpfsHttpClient('localhost','5001')
-			// axios.get("	http://127.0.0.1:8081/ip4/127.0.0.1/tcp/5001").then((res)=>{
-			// 	console.log(res);
-			// 	console.log(111);
-			// }).catch((res)=>{
-			// 	console.log(res);
-			// })
-			// console.log(this.options);
-			// this.getCompetence()//进入页面就调用摄像头
 			//监测用户是否安装MASK
 			console.log(typeof ethereum);
 			
@@ -303,16 +331,28 @@
 						this.showStepTwo=true;
 						this.showStepThree=false;
 				}else if(e==3){
-					this.showStepThree=true;
-					this.showStepFour=false;
-					this.showFourBtn=false;
-					this.showPhoto=false;
-					this.showPhotoTwo=false;
-					this.showPhotoThree=false;
-					this.takePhoto=false;
+					if(document.body.clientWidth<991){
+						this.showStepTwo=true;
+						this.showStepFour=false;
+						this.showPhoto=false;
+					}else{
+						this.showStepThree=true;
+						this.showStepFour=false;
+						this.showFourBtn=false;
+						this.showPhoto=false;
+						this.showPhotoTwo=false;
+						this.showPhotoThree=false;
+						this.takePhoto=false;
+					}
 				}else if(e==4){
 					this.showStepThree=true;
 					this.showStepFive=false
+				}else if(e==5){
+					this.showStepFour=true;
+					this.showStepSix=false;
+				}else if(e==6){
+					this.showStepFour=true;
+					this.showStepSeven=false;
 				}
 			},
 			showStepGo(e){
@@ -354,10 +394,12 @@
 				  .then((res)=>{
 					  console.log(res);
 						if(res.code==0){
+							this.showStepSix=false;
+							this.showStepFour=true;
 							this.showPhotoTwo=true;
 							this.showPhoto=false;
 						}else{
-							this.srcImg1=''
+							// this.srcImg1=''
 							alert(res.serviceMessage)
 						}
 						this.maskShow=false;
@@ -378,10 +420,12 @@
 					.then((res)=>{
 					  console.log(res);
 						if(res.code==0){
+							this.showStepSix=false;
+							this.showStepFour=true;
 							this.showPhotoTwo=false;
 							this.showPhotoThree=true;
 						}else{
-							this.srcImg2=''
+							// this.srcImg2=''
 							alert(res.serviceMessage)
 						}
 					  this.maskShow=false;
@@ -414,8 +458,13 @@
 							alert('实名验证成功')
 							this.$router.go(-1) 
 						}else{
-							this.srcImg3=''
-							alert(res.serviceMessage)
+							if(res.serviceMessage=="NO_FACE_DETECTED"){
+								this.showStepSeven=true;
+								this.showStepFour=false;
+							}else{
+								this.srcImg3="";
+								alert(res.serviceMessage)
+							}
 						}
 					  this.maskShow=false;
 					}).catch((err)=>{
@@ -442,7 +491,10 @@
 							that.srcImg1=e.target.result
 							console.log(address)
 						})
-			    }
+						that.showStepSix=true;
+						that.showStepFour=false;
+						console.log(that.showPhoto);
+					}
 			},
 			upload2(c, d){
 				var that = this
@@ -456,7 +508,9 @@
 							that.srcImg2=e.target.result
 							console.log(address)
 						})
-			    }
+						that.showStepSix=true;
+						that.showStepFour=false;
+					}
 			},
 			upload3(c, d){
 				var that = this
@@ -471,7 +525,9 @@
 							console.log(e.target)
 							that.srcImg3=e.target.result
 						})
-			    }
+						that.showStepSix=true;
+						that.showStepFour=false;
+					}
 			},
 			async bindQRCode() {
 			  await this.$nextTick((e) => {
@@ -508,6 +564,21 @@
 					
 				})
 			},
+			BackTake(){
+				this.showStepSix=false;
+				this.showStepFour=true;
+				if(this.showPhoto==true){
+					this.showStepSix=false;
+					this.srcImg1='';
+				}else if(this.showPhotoTwo==true){
+					this.showStepSix=false;
+					this.srcImg2='';
+				}else if(this.showPhotoThree==true){
+					this.showStepSeven=false;
+					this.srcImg3='';
+				}
+				this.showStepFour=true;
+			}
 		},
 	}
 </script>
@@ -520,7 +591,6 @@
 		z-index: 10000;
 		position: fixed;
 		top: 0;
-		/* opacity: 0.8; */
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -534,7 +604,6 @@
 		height: 100%;
 	}
 	.verifyPage{
-		font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;
 		height: 100%;
 		background-color: rgb(70, 82, 103);
 	}
@@ -552,43 +621,35 @@
 			margin: 10% 25%;
 			border-radius: 5px;
 			display: flex;
-			// flex-direction: column;
+			flex-direction: column;
 			text-align: center;
 			align-items: center;
 			justify-content: center;
 			.content{
+				line-height: 19px;
 				max-width: 415px;
 				display: flex;
 				flex-direction: column;
 				justify-content: center;
-				.title{
-					font-size: 40px;
-					vertical-align: baseline;
-					font-weight: 400;
-				}
 				.main{
 					font-weight: 400;
 					font-size: 18px;
 					line-height: 1.5;
 					text-align: left;
-					padding: 10px;
+					padding: 10px 0px;
 					.bottomMain{
 						margin-top: 20px;
 					}
-					background-color: #eee;
-					border-radius: 5%;
-					margin: 10px;
 				}
-				.Footerbtn{
-					button{
-						padding: 20px;
-						width: 100%;
-						background-color: rgb(151, 190, 13);
-						color: #fff;
-						text-shadow: rgba(0, 0, 0, 0.4) 0px 0px 3px;
-						border-radius: 5px;
-					}
-				}
+			}
+			.btn{
+				padding: 20px;
+				width: 100%;
+				color: #fff;
+				border-radius: 5px;
+				background: linear-gradient(130deg, #8E9EFF 0%, #4B62E6 100%);
+				border: none;
+				max-width: 400px;
 			}
 		}
 	}
@@ -609,13 +670,18 @@
 		align-items: center;
 		justify-content: center;
 		.title{
-			font-size: 32px;
+			font-size: 24px;
 			vertical-align: baseline;
 			font-weight: 400;
 			margin: 28px 0 6px;
 			
 		}
+		.imgFace{
+			// width: 100%;
+			width: 305px;
+		}
 		.photoBox{
+			width: 100%;
 			display: flex;
 			flex-direction: column;
 			text-align: center;
@@ -623,41 +689,19 @@
 				width: 80%;
 				margin: 0 10%;
 			}
-			.imgFace{
-				max-height: 500px;
-				max-width: 400px;
-				margin-top: 10px;
-			}
-			#fileBtn{
+			#fileBtn,#fileBtn1,#fileBtn2{
 				position: absolute;
 				opacity: 0;
 				padding: 15px;
-			}
-			#fileBtn1{
-				position: absolute;
-				opacity: 0;
-				padding: 15px;
-			}
-			#fileBtn2{
-				position: absolute;
-				opacity: 0;
-				padding: 15px;
-			}
-			.faceBox{
-				padding: 15px;
-				width: 100%;
-				background-color: rgb(151, 190, 13);
-				color: #fff;
-				text-shadow: rgba(0, 0, 0, 0.4) 0px 0px 3px;
-				border-radius: 5px;
-				margin-top: 15px;
 			}
 		}
 		.main{
+			width: 100%;
 			.mainTitle{
 				font-size: 28px;
 				margin-top:20px;
 				margin-bottom: 10px;
+				text-align: left;
 			}
 			.mainTips{
 				line-height: 28px;
@@ -668,16 +712,18 @@
 				display: flex;
 				flex-direction: column;
 				.topContent{
+					text-align: left;
 					margin-bottom: 20px;
+					line-height: 19px;
 				}
 				.mainItem{
 					margin-bottom: 10px;
 					height: 60px;
 					background-color: #fff;
-					padding: 0 28px;
+					padding: 12px 14px;
 					border-radius: 4px;
-					border: 0;
-					box-shadow: 0 0.1rem 0.2rem rgba(0,0,0,.2);
+					border: 1px solid #CCCCCCFF;
+					color: #666666FF;
 					cursor: pointer;
 					text-align: left;
 					display: flex;
@@ -688,76 +734,66 @@
 				}
 			}
 		}
-		.Footerbtn{
-			button{
-				padding: 20px;
-				width: 100%;
-				background-color: rgb(151, 190, 13);
-				color: #fff;
-				text-shadow: rgba(0, 0, 0, 0.4) 0px 0px 3px;
-				border-radius: 5px;
-			}
+		.btn{
+			padding: 20px;
+			width: 90%;
+			color: #fff;
+			border-radius: 5px;
+			background: linear-gradient(130deg, #8E9EFF 0%, #4B62E6 100%);
+			border: none;
 		}
 	}
 	@media screen and (max-width: 991px) {
-	.start{
-		box-sizing: border-box;
+		.start{
 			.verification{
-				background-color: #fff;
 				width: 100%;
 				height: 100%;
-			    margin: 0 !important;
-				display: flex;
+				margin: 0 !important;
 				border-radius: 0px;
-				padding: 10%;
-				// flex-direction: column;
+				padding: 0 28px;
 				text-align: center;
 				align-items: center;
 				justify-content: center;
 				.content{
 					max-width: 415px;
-					.Footerbut{
-						button{
-							padding: 20px;
-							width: 100%;
-							background-color: rgb(151, 190, 13);
-							color: #fff;
-							text-shadow: rgba(0, 0, 0, 0.4) 0px 0px 3px;
-						}
-					}
+				}
+				.btn{
+					width: 90%;
+					border: none;
+					position: absolute;
+					bottom: 10%;
 				}
 			}
 		}
-	.mask{
-		img{
-			width: 40% !important;
-		}
-	}
 		
-			.verification{
-				background-color: #fff;
-				width: 100%;
-				height: 100%;
-			    margin: 0 !important;
-				display: flex;
-				border-radius: 0px;
-				padding: 10%;
-				flex-direction: column;
-				text-align: center;
-				align-items: center;
-				justify-content: center;
+		.btn{
+			width: 90% !important;
+			border: none;
+			position: absolute;
+			bottom: 10%;
+		}
+		#fileBtn,#fileBtn1,#fileBtn2{
+			width: 90% !important;
+			bottom: 10%;
+		}
+		.mask{
+			img{
+				width: 40% !important;
 			}
-			.photoBox{
-				width: 100%;
-			}
-			.faceBox{
-				padding: 20px;
-				width: 100%;
-				background-color: rgb(151, 190, 13);
-				color: #fff;
-				text-shadow: rgba(0, 0, 0, 0.4) 0px 0px 3px;
-			}
+		}
+		
+		.verification{
+			margin: 0 !important;
+			display: flex;
+			border-radius: 0px;
+			padding: 0 28px;
+			flex-direction: column;
+			text-align: center;
+			align-items: center;
+			justify-content: center;
+		}
 		.ChooseCountry{
+			border-radius: 0px;
 			text-align: center;
 			position: fixed;
 			top: 0;
@@ -767,61 +803,6 @@
 			background-color: #fff;
 			width: 100% !important;
 			margin: 0 !important;
-			border-radius: 5px;
-			display: flex;
-			// flex-direction: column;
-			text-align: center;
-			align-items: center;
-			justify-content: center;
-			.title{
-				font-size: 32px;
-				vertical-align: baseline;
-				font-weight: 400;
-				margin: 28px 0 6px;
-				
-			}
-			.main{
-				.mainTitle{
-					font-size: 28px;
-					margin-top:20px;
-					margin-bottom: 10px;
-				}
-				.mainTips{
-					line-height: 28px;
-					color: #444;
-					margin: 6px 0 18px;
-				}
-				.mainList{
-					display: flex;
-					flex-direction: column;
-					.topContent{
-						margin-bottom: 20px;
-					}
-					.mainItem{
-						margin-bottom: 10px;
-						height: 60px;
-						background-color: #fff;
-						padding: 0 28px;
-						border-radius: 4px;
-						border: 0;
-						box-shadow: 0 0.1rem 0.2rem rgba(0,0,0,.2);
-						cursor: pointer;
-						text-align: left;
-					}
-					.mainItem:hover{
-						background-color: #dfdfdf;
-					}
-				}
-			}
-			.Footerbtn{
-				button{
-					padding: 20px;
-					width: 100%;
-					background-color: rgb(151, 190, 13);
-					color: #fff;
-					text-shadow: rgba(0, 0, 0, 0.4) 0px 0px 3px;
-				}
-			}
 		}
 	}
 	// 相机
@@ -905,5 +886,25 @@
 		font-size: 23px;
 		vertical-align: baseline;
 		font-weight: 400;
+	}
+	.QAList{
+		width: 100%;
+		padding: 0 34px;
+		.QAItem{
+			display: flex;
+			align-items: center;
+			font-size: 16px;
+			line-height: 19px;
+			margin-top: 12px;
+			.dot{
+				background: #999999FF;
+				width: 6px;
+				height: 6px;
+				border-radius: 50%;
+				display: inline-block;
+				line-height: 19px;
+				margin-right: 10px;
+			}
+		}
 	}
 </style>
