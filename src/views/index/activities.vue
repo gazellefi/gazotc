@@ -172,14 +172,14 @@
       <div class="ysTop">
         <div class="title">{{ $t("message.activit.partSale") }}</div>
         <div class="info">{{ $t("message.activit.630") }}</div>
-        <van-field label-width="60" v-model="USTDVal" label="USDT：" :placeholder="$t('message.activit.enterQuant')" />
+        <van-field label-width="60" v-model="USTDVal" @input="changeG" label="USDT：" :placeholder="$t('message.activit.enterQuant')" />
         <div class="tt">
-          <span> 1GAZ = 0.5USDT</span>
+          <span> 1GAZ = 0.7USDT</span>
           {{ $t("message.activit.UseUSDT") }}:{{
             Number(numberHb / 10 ** 18).toFixed(2)
           }}
         </div>
-        <van-field label-width="60" v-model="GAZVal" label="GAZ：" :placeholder="$t('message.activit.enterQuant')" />
+        <van-field label-width="60" v-model="GAZVal" @input="changeU"  label="GAZ：" :placeholder="$t('message.activit.enterQuant')" />
         <div @click="exchange" class="btn">
           {{ $t("message.activit.exchange") }}
         </div>
@@ -691,7 +691,8 @@ export default {
 	  if(this.regList[2].text == this.$t('message.activit.authenticated')){
 		alert(this.$t('message.activit.authenticated'))
 	  }else{
-		this.$router.push('/verifyIdentity');
+	    alert(this.$t('message.activit.realTips'))
+		// this.$router.push('/verifyIdentity');
 	  }
     },
     async register() {
@@ -1020,16 +1021,30 @@ export default {
 		      }).catch(function (error) {
 		        alert("error");
 		      });
+	},
+	changeU(){
+		if(this.GAZVal==''){
+			this.USTDVal = '';
+		}else{
+			this.USTDVal = (this.GAZVal * 0.7).toFixed(2);
+		}
+	},
+	changeG(){
+		if(this.USTDVal==''){
+			this.GAZVal = '';
+		}else{
+			this.GAZVal = (this.USTDVal / 0.7).toFixed(2);
+		}
 	}
   },
-  watch: {
-    USTDVal(newval) {
-      this.GAZVal = Number(newval) / 0.5;
-    },
-    GAZVal(newval) {
-      this.USTDVal = Number(newval) * 0.5;
-    },
-  },
+  // watch: {
+  //   USTDVal(newval) {
+  //     this.GAZVal = (Number(newval) / 0.7).toFixed(2);
+  //   },
+  //   GAZVal(newval) {
+  //     this.USTDVal = (Number(newval) * 0.7).toFixed(2);
+  //   },
+  // },
   computed: {
     regList() {
       return [
