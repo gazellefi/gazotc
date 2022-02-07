@@ -272,7 +272,6 @@ export default {
         sxf = shuere;
       // }
       // else { sxf = bilie; }
-
       this.ddinfo['sxf_je'] = sxf;
       this.ddinfo['sxf_shuere'] = shuere;
 
@@ -385,7 +384,6 @@ export default {
                 }
               }
               dq.pros['mar'] = ret['mar'];
-			  console.log()
               var pro_dec = 10**config['hbi'][config['key']][huobi]['num'];
               // 组装数据
               dq.ddinfo = {
@@ -403,6 +401,7 @@ export default {
                   huobi:huobi,
                   Mmark:ret.Mmark
               };
+			  console.log(dq.ddinfo)
               dq.code = false;
               dotsconn.methods.balancemar(ret.Mowner).call((errb, bzj) => {
                 if (bzj) {

@@ -1,54 +1,24 @@
 <template>
 	<div class="container fc c_c">
 		<div class="f c_b a_c top_nav mart-20">
-			<div class="">
-				<span class="btn" :class="[popType == 1 ? 'active_btn' : '']" @click="changeActive(1)">启动</span>
-				<span class="btn marl-10" :class="[popType == 0 ? 'active_btn' : '']" @click="changeActive(0)">收割</span>
-			</div>
-			<span class="btn active_btn" @click="changeActive(2)">领取</span>
-		</div>
-		<el-table v-loading="jiazai" :data="list" :header-row-class-name="headerStyle" class="table">
-			<el-table-column align=center label="开始时间">
-				<template slot-scope="scope">
-					<span class="fwb c6e">{{scope.row.time}}</span>
-				</template>
-			</el-table-column>
-			<el-table-column align=center label="质押币种">
-				<template slot-scope="scope">
-					<span class="fwb c6e">{{scope.row.type}}</span>
-				</template>
-			</el-table-column>
-			<el-table-column align=center label="质押数量">
-				<template slot-scope="scope">
-					<span class="fwb c6e">{{scope.row.num}}</span>
-				</template>
-			</el-table-column>
-			<el-table-column align=center label="区间收益">
-				<template slot-scope="scope">
-					<span class="fwb c6e">{{scope.row.profit_q}}</span>
-				</template>
-			</el-table-column>
-			<el-table-column align=center label="总收益">
-				<template slot-scope="scope">
-					<span class="fwb c6e">{{scope.row.profit_a}}</span>
-				</template>
-			</el-table-column>
-			<el-table-column align=center label="已领取收益">
-				<template slot-scope="scope">
-					<span class="fwb c361">{{scope.row.get_p}}</span>
-					<span class="fz10 marl-5">Gaz</span>
-				</template>
-			</el-table-column>
-			<div slot="empty">
-				<div style="padding-top: 20px;" class="f a_c c_c">
-					<img src="@/assets/img/empty.png" alt="" width="130" height="85" />
+			<div class="f">
+				<div class="fc a_c">
+					<span class="btn" :class="[popType == 1 ? 'active_btn' : '', isclick?'cursor': 'disable']" @click="changeActive(1)">启动</span>
+					<span class="mart-10 fz12">保证金余额</span>
+					<span class="mart-10 fz12">{{bzjNum}} Gaz</span>
 				</div>
-				<p>{{$t('message.NoData')}}</p>
+				<div class="fc a_c  marl-10">
+					<span class="btn" :class="[popType == 0 ? 'active_btn' : '', isclick && (Profit > 0) ?'cursor': 'disable']" @click="changeActive(0)">收割</span>
+					<span class="mart-10 fz12">待收益</span>
+					<span class="mart-10 fz12">{{Profit}} Gaz</span>
+				</div>
+				
 			</div>
-		</el-table>
+			<span>已领取: {{ draw }}</span>
+		</div>
 		
 		<!-- 弹框 -->
-		<van-popup v-model="show" class="pop_nav" @closed="closePop">
+<!-- 		<van-popup v-model="show" class="pop_nav" @closed="closePop">
 			<div class="pop_out">
 				<img :src="popType == 0 ? bg3 : popType == 1 ? bg1 : bg2" >
 				<div class="pop_content fc a_c c_b">
@@ -71,11 +41,19 @@
 					</div>
 				</div>
 			</div>
-		</van-popup>
+		</van-popup> -->
 	</div>
 </template>
 
 <script>
+	import tools from '@/api/public.js'
+	import config from "@/config";
+	import Web3 from "web3"
+	import { Dialog, Toast, Notify } from 'vant';
+	var dotsconn,web3,address,abrcont,ArbOne;
+	var dotc_abi = config["hyue"][config["key"]]["dotc"]["abi"];
+	var dotc_heyue = config["hyue"][config["key"]]["dotc"]["heyue"];
+	var bzjnum = config['hyue'][config['key']]['Bzj']['num'];
 	export default{
 		data(){
 			return{
@@ -84,49 +62,140 @@
 				bg1: require('@/assets/img/mine/popBg1.png'),
 				bg2: require('@/assets/img/mine/popBg2.png'),
 				bg3: require('@/assets/img/mine/popBg3.png'),
-				redeemNum: '',
 				popType: 1, // 0 ：收割    1：启动    2：领取
-				list:[
-					{
-						time: '2020-01-01  13:23:22',
-						type: 'GAZ',
-						num: 700,
-						profit_q: 33,
-						profit_a: 80,
-						get_p: 20
-					},
-					{
-						time: '2020-01-01  13:23:22',
-						type: 'GAZ',
-						num: 700,
-						profit_q: 33,
-						profit_a: 80,
-						get_p: 20
-					},
-					{
-						time: '2020-01-01  13:23:22',
-						type: 'GAZ',
-						num: 700,
-						profit_q: 33,
-						profit_a: 80,
-						get_p: 20
-					},
-					{
-						time: '2020-01-01  13:23:22',
-						type: 'GAZ',
-						num: 700,
-						profit_q: 33,
-						profit_a: 80,
-						get_p: 20
-					}
-				]
+				bzjNum: 0,  //用户保证金
+				Profit: 0, // 用户待收益数量
+				abrId: '', // 仲裁编号
+				isclick: false,  // 是否可以点击启动和收割
+				draw: 0 // 已领取数量 
 			}
 		},
+		mounted() {
+			// 监测用户是否安装MASK
+			tools.testMASK().then(res=>{
+				let {web,id} = res
+				web3 = web
+				address = id
+				// dotsconn = new web3.eth.Contract(dotc_abi, dotc_heyue);
+				abrcont = new web3.eth.Contract(config.mine[0].abi, config.mine[0].contract);
+				ArbOne = new web3.eth.Contract(
+				  config['hyue'][config['key']]['ArbOne']['abi'],
+				  config['hyue'][config['key']]['ArbOne']['heyue']
+				);
+				console.log(ArbOne);
+				this.getBlond()
+				this.getProfit()
+				this.getharvest()
+				this.getUserInfo()
+			}).catch((err)=>{
+				// web3 = new Web3(config["hyue"][config["key"]]["Url"]);
+				// dotsconn = new web3.eth.Contract(dotc_abi, dotc_heyue);
+				console.log(err);
+			})
+		},
 		methods:{
-			// 修改 列表
+			// 获取用户信息
+			getUserInfo(){
+				abrcont.methods.userInfo(address).call((err,res) =>{
+					// console.log(res);
+					this.draw = res.harved
+				})
+			},
+			// 获取用户保证金 和 仲裁编号
+			getBlond(){
+				ArbOne.methods.arber(address).call((err, res) => {
+				  //仲裁编号
+				  if (res) {
+				    this.abrId = res
+					//保证金
+					ArbOne.methods.ownermess(address + "").call((err, ret) => {
+						this.bzjNum = Number(ret[1][0]) / (10 ** bzjnum)
+						if(this.abrId && this.bzjNum){
+							this.isclick = true
+						}else{
+							this.isclick = false
+						}
+					})
+				  }
+				});
+			},
+			// 获取 待收益
+			getProfit(){
+				abrcont.methods.beharvest(address).call((err,res) =>{
+					if(res){
+						this.Profit = res
+					}
+				})
+			},
+			// 预期收割数量
+			getharvest(){
+				abrcont.methods.harvest().call((err,res) =>{
+					console.log(res);
+				})
+			},
+			// 收割
+			harvest(){
+				abrcont.methods.harvest().send({from: address},(err,res) =>{
+					console.log(res);
+				})
+			},
+			// 启动
+			start(){
+				var loading = Toast.loading({
+				  message: '请求中... ',
+				  closeOnClick: false,
+				  closeOnClickOverlay: false,
+				  loadingType: 'spinner',
+				  getContainer: "body",
+				  duration: 0,
+				  overlay: true
+				});
+				abrcont.methods.startfarm().send({from: address},(err,res) =>{
+					// 提交后轮询 交易是否成功
+					if(res){
+						let timer = setInterval(()=>{
+							web3.eth.getTransactionReceipt(res).then(res1=>{
+								// console.log(res1);
+								if(res1){
+									clearInterval(timer)
+									loading.clear()
+									console.log(res1);
+									if(res1.status){
+										Toast({
+										  message: '交易成功',
+										  overlay: true,
+										  forbidClick: true,
+										});
+									}else{
+										Toast({
+										  message: '交易失败',
+										  overlay: true,
+										  forbidClick: true,
+										});
+									}
+								}
+							})
+						},1000)
+					}else{
+						loading.clear()
+						Toast({
+						  message: '交易失败',
+						  overlay: true,
+						  forbidClick: true,
+						});
+					}
+					
+				})
+			},
+			// 显示弹框 
 			changeActive(num){
-				this.popType = num
-				this.show = true
+				if(num == 1){ //启动
+				   this.start()
+				}else if(num == 0) {// 收割
+				   this.harvest()
+				}
+				// this.popType = num
+				// this.show = true
 			},
 			// 表头样式
 			headerStyle(row, rowIndex){
@@ -134,7 +203,6 @@
 			},
 			// closePop
 			closePop(){
-				this.redeemNum = ''
 			}
 		}
 	}

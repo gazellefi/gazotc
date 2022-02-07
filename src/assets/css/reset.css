@@ -318,6 +318,10 @@ button {
 .cursor{
 	cursor: pointer;
 }
+.disable {
+	cursor:not-allowed;
+	pointer-events: none;
+}
 .fwb{
 	font-weight: bold;
 }

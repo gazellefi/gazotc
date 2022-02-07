@@ -343,7 +343,6 @@ export default{
               for (let index = 0; index < ret[0].length; index++) {
 				  if(Number(ret[0][index][0])!=0){
 					var obj = {};
-					// console.log(ret[2][index]);
 					let arr = ret[2][index].split("|")
 					obj["username"] = Base64.decode(arr[0]);
 					obj["user"] =

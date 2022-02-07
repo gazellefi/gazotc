@@ -1,13 +1,23 @@
 <template>
 	<div class="container fc c_c">
 		<div class="f c_b a_c top_nav mart-20">
-			<div class="">
-				<span class="btn" :class="[popType == 1 ? 'active_btn' : '']" @click="changeActive(1)">质押</span>
-				<span class="btn marl-10" :class="[popType == 0 ? 'active_btn' : '']" @click="changeActive(0)">赎回</span>
+			<div class="f">
+				<div class="fc a_c">
+					<span class="btn cursor" :class="[popType == 1 ? 'active_btn' : '']" @click="changeActive(1)">质押</span>
+					<span class="mart-10 fz12">质押金额</span>
+					<span class="mart-10 fz12">{{userInfo.amount}} Gaz</span>
+				</div>
+				<div class="fc a_c">
+					<span class="btn marl-10 cursor" :class="[popType == 0 ? 'active_btn' : '']" @click="changeActive(0)">赎回</span>
+				</div>
 			</div>
-			<span class="btn active_btn" @click="changeActive(2)">领取</span>
+			<div class="f a_c">
+				<span>总领取：{{userInfo.harved}}</span>
+				<span class="marl-10">待收益：{{Beharvest}}</span>
+				<span class="btn active_btn marl-10" @click="changeActive(2)">领取</span>
+			</div>
 		</div>
-		<el-table v-loading="jiazai" :data="list" :header-row-class-name="headerStyle" class="table">
+<!-- 		<el-table v-loading="jiazai" :data="list" :header-row-class-name="headerStyle" class="table">
 			<el-table-column align=center label="开始时间">
 				<template slot-scope="scope">
 					<span class="fwb c6e">{{scope.row.time}}</span>
@@ -45,7 +55,7 @@
 				</div>
 				<p>{{$t('message.NoData')}}</p>
 			</div>
-		</el-table>
+		</el-table> -->
 		
 		<!-- 弹框 -->
 		<van-popup v-model="show" class="pop_nav" @closed="closePop">
@@ -65,14 +75,14 @@
 						</div>
 						<div class="f a_c fz16 c6e fwb" v-else>
 							<span>当前可领取收益为 </span>
-							<span class="fz18 marl-5" style="color: #5CB997;">36</span>
+							<span class="fz18 marl-5" style="color: #5CB997;">{{Beharvest}}</span>
 						</div>
 						<span class="fwb fz16 c6e marl-5">GAZ</span>
 					</div>
 					<span class="ca6 mart-10">本次操作消耗 0.2 BNB,是否继续?</span>
 					<span class="fz10 ca6 mart-10" v-if="popType == 0">(赎回质押币需要区块链钱包消息签名)</span>
 					<span class="fz10 ca6 mart-10" v-if="popType == 1">(质押币需要区块链钱包消息签名)</span>
-					<span class="pop_btn mart-10 f a_c c_c pop_btn_a">是</span>
+					<span class="pop_btn mart-10 f a_c c_c pop_btn_a" @click="submit">是</span>
 					<span class="pop_btn f a_c c_c mart-10" @click="show = false">否</span>
 				</div>
 			</div>
@@ -81,16 +91,31 @@
 </template>
 
 <script>
+	import tools from '@/api/public.js'
+	import config from "@/config";
+	import Web3 from "web3"
+	import { Dialog, Toast, Notify } from 'vant';
+	
+	var dotc_abi = config["hyue"][config["key"]]["dotc"]["abi"];
+	var dotc_heyue = config["hyue"][config["key"]]["dotc"]["heyue"];
+	var dotsconn,web3,address,poolcont;
 	export default{
 		data(){
 			return{
 				jiazai: false,
 				show:false,
+				Beharvest: 0,
+				userInfo:{
+					amount: '0',
+					harved: '0',
+					rewardDebt: '0'
+				},
 				bg1: require('@/assets/img/mine/popBg1.png'),
 				bg2: require('@/assets/img/mine/popBg2.png'),
 				bg3: require('@/assets/img/mine/popBg3.png'),
 				redeemNum: '',
 				popType: 1, // 0 ：赎回    1：质押    2：领取
+				hbarr: [],
 				list:[
 					{
 						time: '2020-01-01  13:23:22',
@@ -127,7 +152,129 @@
 				]
 			}
 		},
+		mounted() {
+			//初始化货币
+			var hbar = config['hbi'][config['key']];
+			for (const key in hbar) {
+				this.hbarr.push({
+					id: hbar[key]['id'],
+					hyue: hbar[key]['heyue'],
+					num: hbar[key]['num'],
+					key: hbar[key]['key']
+				});
+			}
+			// 监测用户是否安装MASK
+			tools.testMASK().then(res=>{
+				let {web,id} = res
+				web3 = web
+				address = id
+				dotsconn = new web3.eth.Contract(dotc_abi, dotc_heyue);
+				poolcont = new web3.eth.Contract(config.mine[3].abi, config.mine[3].contract);
+				console.log(poolcont);
+				this.getBeharvest()
+				this.getUser()
+			}).catch((err)=>{
+				// web3 = new Web3(config["hyue"][config["key"]]["Url"]);
+				// dotsconn = new web3.eth.Contract(dotc_abi, dotc_heyue);
+				console.log(err);
+			})
+		},
 		methods:{
+			// 获取用户信息
+			getUser(){
+				poolcont.methods.userInfo(address).call((error, res) => {
+					console.log(res);
+				})
+			},
+			//预估收割
+			getBeharvest(){
+				poolcont.methods.beharvest(address).call((error, res) => {
+					console.log('beharvest：'+res);
+				})
+			},
+			// 提交
+			submit(){
+				if(this.popType == 1){
+					this.pledge()
+				}else if(this.popType == 0){
+					this.redeem()
+				}else{
+					this.receive()
+				}
+			},
+			// 质押
+			pledge(){
+				this.showTost()
+				poolcont.methods.deposit(Number(this.redeemNum)).send({from: address},(err, res) => {
+					console.log(res);
+					if(res){
+						this.monitor(res)
+					}else{
+						Toast.clear()
+					}
+				})
+			},
+			// 赎回
+			redeem(){
+				this.showTost()
+				poolcont.methods.withdraw(Number(this.redeemNum)).send({from: address},(err, res) => {
+					console.log(res);
+					if(res){
+						this.monitor(res)
+					}else{
+						Toast.clear()
+					}
+				})
+			},
+			// 领取
+			receive(){
+				this.showTost()
+				poolcont.methods.harvest().send({from: address},(err, res) => {
+					console.log(res);
+					if(res){
+						this.monitor(res)
+					}else{
+						Toast.clear()
+					}
+				})
+			},
+			// 轮询
+			monitor(str){
+				let timer = setInterval(()=>{
+					web3.eth.getTransactionReceipt(str).then(res1=>{
+						if(res1){
+							clearInterval(timer)
+							Toast.clear()
+							console.log(res1);
+							if(res1.status){
+								Toast({
+								  message: '交易成功',
+								  overlay: true,
+								  forbidClick: true,
+								});
+							}else{
+								Toast({
+								  message: '交易失败',
+								  overlay: true,
+								  forbidClick: true,
+								});
+							}
+						}
+					})
+				},1000)
+			},
+			// 显示加载
+			showTost(){
+				Toast.loading({
+				  message: '请求中... ',
+				  closeOnClick: false,
+				  closeOnClickOverlay: false,
+				  loadingType: 'spinner',
+				  getContainer: "body",
+				  duration: 0,
+				  overlay: true
+				});
+			},
 			// 修改 列表
 			changeActive(num){
 				this.popType = num

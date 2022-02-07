@@ -1,7 +1,7 @@
 
 <template>
   <el-row type="flex"  justify="center">
-	  <el-col :sm="24" :md="12" :lg="8">
+	  <el-col :sm="24" :md="12" :lg="8" :xl="6">
 		<div class="fabu">
 		  <div class="fabu_tab">
 		    <div class="fabu_tab_item" style="margin-left: 0px;" @click="m = '0x6275790000000000000000000000000000000000000000000000000000000000'" :class="m == '0x6275790000000000000000000000000000000000000000000000000000000000' ? 'ac':''">{{$t('message.dapp.buy')}}</div>
