@@ -291,7 +291,8 @@
 				// if (dq.form["zdnum"]) {
 				// 	sounum = dq.getFNum(dq.form["zdnum"] * 10 ** js_num);
 				// }
-				// console.log(sounum)
+				console.log(dq.huobi)
+				console.log(dq.fabi)
 				//加载列表数据
 				ccdotconn.methods.sort(dq.huobi, dq.fabi, 30, 30, sounum + "")
 					.call((error, ret) => {

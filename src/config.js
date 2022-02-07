@@ -16,6 +16,8 @@
 import huobi from "@/abi/huobi";
 import bian from "@/abi/bian";
 import etfcshiarr from "@/abi/etfcshi";
+import mine from "@/abi/mine/index.js";
+
 
 //以太坊测试网ABI资产地址
 import usdtabi from "@/abi/etfcshi/proabi/usdtabi.json";
@@ -272,7 +274,8 @@ var config = {
 				id:"CAD"
 			}
         }
-    }
+    },
+	mine
 };
 
 export default config;

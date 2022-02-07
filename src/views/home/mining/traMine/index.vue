@@ -15,21 +15,21 @@
 			</el-col>
 		</el-row>
 		<el-row v-for="(item,index) in list" :key="index" class="list_item">
-			<el-col :span="3" class="fc a_c">
+			<!-- <el-col :span="3" class="fc a_c">
 				<span class="fz12 c6e">订单ID</span>
 				<span class="fz20 fwb c6e mart-20">{{item.orderId}}</span>
-			</el-col>
-			<el-col :span="6" class="fc a_c">
+			</el-col> -->
+			<!-- <el-col :span="6" class="fc a_c">
 				<span class="fz12 c6e">成交订单时间</span>
 				<span class="fz18 fwb c6e mart-20">{{item.time}}</span>
-			</el-col>
+			</el-col> -->
 			<el-col :span="6" class="fc a_c">
 				<span class="fz12 c6e">币种</span>
-				<span class="fz20 fwb c6e mart-20">{{item.type}}</span>
+				<span class="fz20 fwb c6e mart-20">{{item.id}}</span>
 			</el-col>
 			<el-col :span="5" class="fc a_c">
 				<span class="fz12 c6e">数量</span>
-				<span class="fz20 fwb c6e mart-20">{{item.num}}</span>
+				<span class="fz20 fwb c6e mart-20">{{item.frozen}}</span>
 			</el-col>
 			<el-col :span="4" class="fc a_c">
 				<span class="fz12 c6e">奖励</span>
@@ -66,6 +66,14 @@
 </template>
 
 <script>
+	import tools from '@/api/public.js'
+	import config from "@/config";
+	import Web3 from "web3"
+	import { Dialog, Toast, Notify } from 'vant';
+	
+	var dotc_abi = config["hyue"][config["key"]]["dotc"]["abi"];
+	var dotc_heyue = config["hyue"][config["key"]]["dotc"]["heyue"];
+	var dotsconn,web3,address,tracont;
 	export default{
 		data(){
 			return{
@@ -75,51 +83,84 @@
 				bg3: require('@/assets/img/mine/popBg3.png'),
 				time: 30 * 60 * 60 * 1000,
 				popType: 0,
-				list:[
-					{
-						time: '2020-01-01  13:23:22',
-						type: 'GAZ',
-						num: 700,
-						profit_q: 33,
-						profit_a: 80,
-						get_p: 20,
-						orderId: 0
-					},
-					{
-						time: '2020-01-01  13:23:22',
-						type: 'USDT',
-						num: 700,
-						profit_q: 33,
-						profit_a: 80,
-						get_p: 20,
-						orderId: 1
-					},
-					{
-						time: '2020-01-01  13:23:22',
-						type: 'BTC',
-						num: 700,
-						profit_q: 33,
-						profit_a: 80,
-						get_p: 0,
-						orderId: 2
-					},
-					{
-						time: '2020-01-01  13:23:22',
-						type: 'ETH',
-						num: 700,
-						profit_q: 33,
-						profit_a: 80,
-						get_p: 20,
-						orderId: 3
-					}
-				]
+				list:[],
+				hbarr: [],
 			}
 		},
+		mounted() {
+			//初始化货币
+			var hbar = config['hbi'][config['key']];
+			for (const key in hbar) {
+				this.hbarr.push({
+					id: hbar[key]['id'],
+					hyue: hbar[key]['heyue'],
+					num: hbar[key]['num'],
+					key: hbar[key]['key']
+				});
+			}
+			// 监测用户是否安装MASK
+			tools.testMASK().then(res=>{
+				let {web,id} = res
+				web3 = web
+				address = id
+				dotsconn = new web3.eth.Contract(dotc_abi, dotc_heyue);
+				tracont = new web3.eth.Contract(config.mine[2].abi, config.mine[2].contract);
+				console.log(tracont);
+				this.getFrozen()
+				this.getMint()
+			}).catch((err)=>{
+				// web3 = new Web3(config["hyue"][config["key"]]["Url"]);
+				// dotsconn = new web3.eth.Contract(dotc_abi, dotc_heyue);
+				console.log(err);
+			})
+		},
 		methods:{
+			// 获取 钱包中 的冻结数量
+			getFrozen(){
+				var dq = this
+				var sqllist = [];
+				for (let index = 0; index < dq.hbarr.length; index++) {
+					sqllist.push(dq.hbarr[index].hyue)
+				}
+				dotsconn.methods.ownerpro(address, sqllist).call((error, res) => {
+					if(res){
+						let lock_yue_arr = res[1];
+						var list = []
+						for (let index = 0; index < dq.hbarr.length; index++) {
+							var num = Number(dq.hbarr[index]['num']);
+							dq.hbarr[index].frozen = (Number(lock_yue_arr[index+1]) / (10 ** num)).toFixed(2)
+							
+						}
+						dq.list = dq.hbarr.splice(0,4)
+						this.getOrdMine()
+					}
+				})
+			},
+			// 获取 预估 奖励
+			getOrdMine(){
+				var sqllist = [this.list[0].key];
+				// for (let index = 0; index < this.list.length; index++) {
+				// 	// sqllist.push(this.list[index].hyue)
+				// 	sqllist.push(this.list[index].key)
+				// }
+				console.log(sqllist);
+				// let str = web3.utils.toHex(sqllist)
+				// console.log(str);
+				// console.log(web3.utils.isHexStrict(str));
+				// tracont.methods.befarm(sqllist,address).call((error, res) => {
+				// 	console.log(res);
+				// })
+			},
+			//  获取 mint
+			getMint(){
+				tracont.methods.mint(address).call((error, res) => {
+					console.log(res);
+				})
+			},
 			// 修改 列表
 			changeActive(num){
 				this.popType = num
-				this.show = true
+				// this.show = true
 			},
 			// 表头样式
 			headerStyle(row, rowIndex){
