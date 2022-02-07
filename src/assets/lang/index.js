@@ -306,7 +306,7 @@ export default {
 				videoD:'Video Document',
 				otherD:'Course Document',
 				merryChristmas:'Merry Christmas！！！',
-				airDrop:"Air-drop Strategy"
+				airDrop:"Air-drop Strategy",
 			},
 			arbitration: {
 				invitetion: 'Invitation of arbitrators',
@@ -522,6 +522,7 @@ export default {
 				enterIdCard: 'Please enter your ID number.',
 				qualification:'Granted NFT whitelist',
 				realTips:'Real-name authentication is not enabled',
+				authenticated:'authenticated'
 			},
 			dapp: {
 				payTime: 'Payment time',
@@ -1393,6 +1394,7 @@ export default {
 				enterIdCard: '请输入身份证号',
 				qualification:'你已获得头像NFT白名单资格',
 				realTips:'实名认证暂未开通',
+				authenticated:'已认证'
 			},
 			dapp: {
 				PrivateMessage: '私信信息',
