@@ -26,6 +26,8 @@ export default {
   RealNameAfter: (params) => axios.post(url + '/member/result', params),
   // 注册 
   register: (params) => axios.post(url + '/member/register', params),
+  // 获取短链接地址
+  getShortUrl: (params) => axios.post(url + '/url', params),
 
   // 身份证正面
   // faceAdd:(params)=> axios.post(url + '/face/faceAdd', params),

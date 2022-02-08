@@ -691,7 +691,8 @@ export default {
 	  if(this.regList[2].text == this.$t('message.activit.authenticated')){
 		alert(this.$t('message.activit.authenticated'))
 	  }else{
-		this.$router.push('/verifyIdentity');
+		alert(this.$t('message.activit.authenticated'))
+		// this.$router.push('/verifyIdentity');
 	  }
     },
     async register() {
@@ -996,17 +997,33 @@ export default {
 		}, 1500);
 	},
 	getShortUrl(){
-		var dq = this
-		let str = this.ymAddr + "/Activities?ref=" + this.queryAddr + "&lang=" + this.$i18n.locale
-		let param = {
-		  "apikey": "a04c01ade69d0d345ff070b1df53246e2ccc8409",
-		  "target_url": str,
-		  "chain_title": "邀请分享"
-		}
+		// var dq = this
+		// let str = this.ymAddr + "/Activities?ref=" + this.queryAddr + "&lang=" + this.$i18n.locale
+		// let param = {
+		//   "apikey": "a04c01ade69d0d345ff070b1df53246e2ccc8409",
+		//   "target_url": str,
+		//   "chain_title": "邀请分享"
+		// }
+		// axios({
+		//     method: "post",
+		//     url: "https://openapi.aifabu.com/v1/chain/createChain",
+		//     data: param,
+		//     headers: {"Content-Type": "application/json; charset=utf-8"}
+		//   }).then((res) => {
+		// 	  let {code} = res
+		//         switch (code){
+		//         	case 1:
+		// 			    dq.friendUrl = res.result.render_url
+		//         		break;
+		//         	default:
+		//         		break;
+		//         }
+		//       }).catch(function (error) {
+		//         alert("error");
+		//       });
 		axios({
 		    method: "post",
-		    url: "https://openapi.aifabu.com/v1/chain/createChain",
-		    data: param,
+		    url: `https://gazotc.com:8083/url/${address}`,
 		    headers: {"Content-Type": "application/json; charset=utf-8"}
 		  }).then((res) => {
 			  let {code} = res
