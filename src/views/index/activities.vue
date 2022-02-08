@@ -459,7 +459,7 @@ export default {
         this.getpoints();
       }
       if (i == 2) {
-        // this.ruleHideAuth();
+        this.ruleHideAuth();
       }
       if (i == 3) {
         alert('认证成功后发放');
