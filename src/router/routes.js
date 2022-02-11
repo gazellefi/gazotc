@@ -97,7 +97,7 @@ export default [
                 name: 'Exchange',
                 component: () =>
                     import('@/views/index/Exchange'),
-            }
+            },
         ]
     },
     // 2 活动空头页面
@@ -107,6 +107,12 @@ export default [
         component: () =>
             import('@/views/index/activities'),
     },
+	{
+	    path: '/ref',
+	    name: 'ref',
+	    component: () =>
+	        import('@/views/index/ref'),
+	},
     // 3 一键注册页面
 
     {

@@ -6,6 +6,7 @@ import Ccdotc from "./bian/Ccdotc.json";
 import Arbdate from "./bian/Arbdate.json";
 import Pripla from "./bian/Pripla.json";
 import Letter from "./bian/Letter.json";
+import gaznft from "./bian/gaznft.json"
 var bian = {
     Url:'https://bsc-dataseed1.binance.org',
     Bzj:{
@@ -43,6 +44,10 @@ var bian = {
 	Letter:{
 		heyue:"0x24c133348Aac78c5a1093E58Af6914D7E7377c93",
 		abi:Letter
+	},
+	gaznft:{
+		heyue:"0xC00b8C360Af2d9282A70A939C23ee9a892262328",
+		abi:gaznft
 	}
 };
 

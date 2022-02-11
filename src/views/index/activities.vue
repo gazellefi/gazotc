@@ -172,14 +172,14 @@
       <div class="ysTop">
         <div class="title">{{ $t("message.activit.partSale") }}</div>
         <div class="info">{{ $t("message.activit.630") }}</div>
-        <van-field label-width="60" v-model="USTDVal" label="USDT：" :placeholder="$t('message.activit.enterQuant')" />
+        <van-field label-width="60" v-model="USTDVal" @input="changeG" label="USDT：" :placeholder="$t('message.activit.enterQuant')" />
         <div class="tt">
-          <span> 1GAZ = 0.5USDT</span>
+          <span> 1GAZ = 0.7USDT</span>
           {{ $t("message.activit.UseUSDT") }}:{{
             Number(numberHb / 10 ** 18).toFixed(2)
           }}
         </div>
-        <van-field label-width="60" v-model="GAZVal" label="GAZ：" :placeholder="$t('message.activit.enterQuant')" />
+        <van-field label-width="60" v-model="GAZVal" @input="changeU"  label="GAZ：" :placeholder="$t('message.activit.enterQuant')" />
         <div @click="exchange" class="btn">
           {{ $t("message.activit.exchange") }}
         </div>
@@ -383,8 +383,8 @@ export default {
 
     var dq = this;
     let isGO = location.href.includes("?ref");
+	// 获取推荐人
     if (isGO) {
-      this.$i18n.locale = this.$route.query.lang
       dq.recommender = this.$route.query.ref
     }
 
@@ -459,7 +459,7 @@ export default {
         this.getpoints();
       }
       if (i == 2) {
-        // this.ruleHideAuth();
+        this.ruleHideAuth();
       }
       if (i == 3) {
         alert('认证成功后发放');
@@ -496,7 +496,7 @@ export default {
       const input = document.createElement("input");
       document.body.appendChild(input);
 	  //  + this.$t('message.codeDes')
-      input.setAttribute("value", this.$t('message.invitaGAZ')+this.friendUrl);
+      input.setAttribute("value", this.$t('message.invitaGAZ')+ '   ' + this.friendUrl);
       input.select();
       if (document.execCommand("copy")) {
         document.execCommand("copy");
@@ -615,14 +615,11 @@ export default {
             // console.log(res)
             if (res.result != null) {
               this.nickname = res.result.nickname;
-              this.name = '***';
+              this.name = res.result.name;
               this.identity = res.result.idNo;
               if (this.identity.length > 10) {
                 let stars = "****";
-                this.identity =
-                    this.identity.substr(0, 4) +
-                    stars +
-                    this.identity.substr(this.identity.length - 4);
+                this.identity = this.identity.substr(0, 4) + stars + this.identity.substr(this.identity.length - 4);
               }
               this.air = 20;
               this.rec = res.result.score - 20;
@@ -677,7 +674,7 @@ export default {
     ruleChangeHideAuth() {
       var that = this
       axios.post('https://gazotc.com:8083/member/selectOne?address=' + address).then((res) => {
-		  console.log(res);
+		  // console.log(res);
         if (res.result.state == 1) { // 已实名认证
           this.regList[2].text = this.$t('message.activit.authenticated');
           this.content = this.$t("message.activit.qualification")
@@ -691,8 +688,8 @@ export default {
 	  if(this.regList[2].text == this.$t('message.activit.authenticated')){
 		alert(this.$t('message.activit.authenticated'))
 	  }else{
-		alert(this.$t('message.activit.authenticated'))
-		// this.$router.push('/verifyIdentity');
+	    // alert(this.$t('message.activit.realTips'))
+		this.$router.push('/verifyIdentity');
 	  }
     },
     async register() {
@@ -997,7 +994,7 @@ export default {
 		}, 1500);
 	},
 	getShortUrl(){
-		// var dq = this
+		var dq = this
 		// let str = this.ymAddr + "/Activities?ref=" + this.queryAddr + "&lang=" + this.$i18n.locale
 		// let param = {
 		//   "apikey": "a04c01ade69d0d345ff070b1df53246e2ccc8409",
@@ -1024,12 +1021,14 @@ export default {
 		axios({
 		    method: "post",
 		    url: `https://gazotc.com:8083/url/${address}`,
+			// url: `https://192.168.0.48:8083/url/${address}`,
 		    headers: {"Content-Type": "application/json; charset=utf-8"}
 		  }).then((res) => {
 			  let {code} = res
+			  // console.log(res);
 		        switch (code){
-		        	case 1:
-					    dq.friendUrl = res.result.render_url
+		        	case 0:
+					    dq.friendUrl = 'https://gazotc.com/ref?' + res.result.shareCode
 		        		break;
 		        	default:
 		        		break;
@@ -1037,16 +1036,30 @@ export default {
 		      }).catch(function (error) {
 		        alert("error");
 		      });
+	},
+	changeU(){
+		if(this.GAZVal==''){
+			this.USTDVal = '';
+		}else{
+			this.USTDVal = (this.GAZVal * 0.7).toFixed(2);
+		}
+	},
+	changeG(){
+		if(this.USTDVal==''){
+			this.GAZVal = '';
+		}else{
+			this.GAZVal = (this.USTDVal / 0.7).toFixed(2);
+		}
 	}
   },
-  watch: {
-    USTDVal(newval) {
-      this.GAZVal = Number(newval) / 0.5;
-    },
-    GAZVal(newval) {
-      this.USTDVal = Number(newval) * 0.5;
-    },
-  },
+  // watch: {
+  //   USTDVal(newval) {
+  //     this.GAZVal = (Number(newval) / 0.7).toFixed(2);
+  //   },
+  //   GAZVal(newval) {
+  //     this.USTDVal = (Number(newval) * 0.7).toFixed(2);
+  //   },
+  // },
   computed: {
     regList() {
       return [

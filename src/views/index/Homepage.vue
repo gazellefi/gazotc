@@ -8,7 +8,7 @@
 	  	</el-carousel> -->
 		<van-swipe class="my-swipe hidden-md-and-down" :autoplay="3000" indicator-color="white">
 		  <van-swipe-item  v-for="(item,index) in bannerSrc" :key="index">
-			  <img :src="item" alt="" style="width: 100%;" @click="goAct">
+			  <img :src="item" alt="" style="width: 100%;height: 100%;object-fit: cover" @click="goAct">
 		  </van-swipe-item>
 		</van-swipe>
 		<van-swipe class="my-swipe hidden-md-and-up" :autoplay="3000" indicator-color="white" :height="150">
